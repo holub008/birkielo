@@ -19,8 +19,7 @@ class App extends Component {
           Birkielo Github Repository
           </a>
         </header>
-        </div>
-      ;
+      </div>);
   }
 }
 
