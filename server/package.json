@@ -1,0 +1,15 @@
+{
+  "name": "birkelo-server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Server for Birkelo",
+  "scripts": {
+    "build": "bash ./build.bash",
+    "start": "bash ./start.bash"
+  },
+  "dependencies": {
+    "concurrently": "^4.0.1",
+    "express": "^4.16.3",
+    "nodemon": "^1.18.4"
+  }
+}

@@ -7,21 +7,20 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Welcome to the future home of Birkielo, the site for ranking and quantitative
+          analysis of cross country skiers!
+        </p>
+        <a
+          className="source-link"
+          href="https://github.com/holub008/birkielo"
           >
-            Learn React
+          Birkielo Github Repository
           </a>
         </header>
-      </div>
-    );
+        </div>
+      ;
   }
 }
 
