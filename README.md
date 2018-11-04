@@ -4,7 +4,7 @@ Ranking & quantitative analysis of cross country skiers.
 ## Installation
 
 ```sh
-npm install
+npm install --prefix server && npm install --prefix client
 ```
 
 ## Running
