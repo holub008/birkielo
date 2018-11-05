@@ -1,6 +1,8 @@
 # About
 Scraping, processing, and formatting ski results with requests, BeautifulSoup, and pandas.
 
+Note this is my first project with pandas, coming from R DataFrames; I will likely be doing things suboptimally or with ugly code.
+
 ## Installation
 Install depedencies using pipenv:
 ```sh

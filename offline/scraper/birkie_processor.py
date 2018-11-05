@@ -32,7 +32,29 @@ def process_2007_to_2015_results(df):
     df = df.assign(gender = ['male' if pd.isnull(x) else x for x in df.gender])
     return df
 
+
+def process_2016_on_results(df):
+    # since the age group isn't reported for cash winners, we just assume top 6 NaNs are men
+    is_male = np.logical_or(np.logical_and(pd.isnull(df['Ag Grp  Place']), df['Overall Place'] < 7), \
+        df['Ag Grp  Place'].str.contains('M'))
+    df = df.assign(gender = ['male' if (np.logical_and(x, not pd.isnull(x))) else 'female' for x in is_male])
+    return df
+
+def process_2006_results(df):
+    df = df.assign(gender = ['female' if(x.endswith('Women')) else 'male' for x in df.Event])
+    return df
+
 clean_2007 = handle_messups_2007(pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2007to2015.csv'))
 processed_2007 = process_2007_to_2015_results(clean_2007)
 # TODO, not suprisingly, prince haakon 2012, 2014 are hosed because men and women overlap from the start
-# these races aren't competitive, so we can safely ignore them for now
+# these races aren't competitive, so low priority for now
+
+results_2016 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2016.csv')
+results_2018 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2018.csv')
+
+processed_2016 = process_2016_on_results(results_2016)
+processed_2018 = process_2016_on_results(results_2018)
+
+results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
+processed_2006 = process_2006_results(results_2006)
+
