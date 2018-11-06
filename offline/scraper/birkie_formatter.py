@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+import race_record_processor as rrp
+
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
 
@@ -57,4 +59,15 @@ processed_2018 = process_2016_on_results(results_2018)
 
 results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
 processed_2006 = process_2006_results(results_2006)
+
+try:
+    con = rrp.get_db_connection()
+    cursor = con.cursor()
+    events = rrp.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
+    con.commit()
+    cursor.close()
+finally:
+    if con is not None:
+        con.rollback()
+        con.close()
 
