@@ -1,5 +1,9 @@
+<p align="center"> 
+<img src="/client/public/images/logo.png">
+</p>
+
 # Birkielo
-Ranking & quantitative analysis of cross country skiers.
+Ranking & quantitative analysis of cross country skiers. Find an instance of the site running at [birkielo.com](http://birkielo.com).
 
 ## Installation
 
