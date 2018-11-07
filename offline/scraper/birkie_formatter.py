@@ -1,10 +1,12 @@
 import pandas as pd
 import numpy as np
+import datetime as dt
 
 import race_record_processor as rrp
 
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
+
 
 def handle_messups_2007(df):
     # these are all missing - not a scraping issue. hypothesis is DQs
@@ -16,6 +18,7 @@ def handle_messups_2007(df):
         "Event": ["2008 50.2k Birkebeiner Classic", "2009 50k Birkebeiner Freestyle"]
     })], sort = False)
     return df_clean
+
 
 def process_2007_to_2015_results(df):
     all_event_names = set(df.Event)
@@ -37,14 +40,84 @@ def process_2007_to_2015_results(df):
 
 def process_2016_on_results(df):
     # since the age group isn't reported for cash winners, we just assume top 6 NaNs are men
-    is_male = np.logical_or(np.logical_and(pd.isnull(df['Ag Grp  Place']), df['Overall Place'] < 7), \
+    is_male = np.logical_or(np.logical_and(pd.isnull(df['Ag Grp  Place']), df['Overall Place'] < 7),
         df['Ag Grp  Place'].str.contains('M'))
     df = df.assign(gender = ['male' if (np.logical_and(x, not pd.isnull(x))) else 'female' for x in is_male])
     return df
 
+
 def process_2006_results(df):
     df = df.assign(gender = ['female' if(x.endswith('Women')) else 'male' for x in df.Event])
     return df
+
+
+# I just grabbed these online by hand
+def get_birkie_occurences():
+    return pd.DataFrame({
+        "event_id": [event_id for x in range(12)],
+        "date": ['2018-02-24', '2016-02-20', '2015-02-21', '2014-02-22', '2013-02-23',
+                 '2012-02-25', '2011-02-26', '2010-02-27', '2009-02-21', '2008-02-23', '2007-02-24', '2006-02-25']})
+
+
+def attach_race_details_2006(cursor, processed_2006, event_occurrences):
+    event_occurrences['year'] = [x.year for x in event_occurrences.date]
+    event_occurrence = event_occurrences[event_occurrences.year == 2006]
+    event_occurrence_id = event_occurrence.id.values[0]
+
+    # sic
+    processed_2006['discipline'] = processed_2006.Dvision.str.lower()
+
+    conditions = [
+        (processed_2006.Event.str.lower().str.contains('birkebeiner')),
+        (processed_2006.Event.str.lower().str.contains('kortelopet'))]
+    condition_distances = [50, 30]
+    processed_2006['distance'] = np.select(conditions, condition_distances, default=-1)
+    unique_races = processed_2006[['distance', 'discipline']].drop_duplicates()
+    unique_races['event_occurrence_id'] = event_occurrence_id
+    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+
+    return processed_2006.merge(inserted_races, on = ['distance', 'discipline'], how = 'inner')
+
+
+def attach_race_details_2007(cursor, processed_2007, event_occurences):
+    event_occurrences['year'] = [x.year for x in event_occurrences.date]
+    processed_2007['year'] = pd.to_numeric(processed_2007.Event.str.extract("^([0-9]+)")[0], errors = "coerce")
+    processed_2007['distance'] = pd.to_numeric(processed_2007.Event.str.extract(' ([0-9\\.]+)k')[0], errors = "coerce")
+    processed_2007['discipline'] = processed_2007.Event.str.extract(' ([a-zA-Z]+)$')[0].str.lower()
+    # note that haakon events don't have a discipline, so are in fact "freestyle"
+    # this is super clunky notation compared to R tidyverse, but I couldn't find a better way :/
+    processed_2007['discipline'] = np.where(processed_2007['discipline']=='haakon', 'freestyle', processed_2007['discipline'])
+
+    processed_2007_joined = processed_2007.merge(event_occurrences, on = 'year', how = 'inner')
+    unique_races = processed_2007_joined[['distance', 'discipline', 'id']].drop_duplicates()
+    unique_races['event_occurrence_id'] = unique_races.id
+    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+    # TODO the event_occurrence_id join will fail
+    return processed_2007.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
+
+
+def attach_race_details_2016(cursor, processed_results, event_occurrences):
+    processed_results['distance'] = pd.to_numeric(processed_results.Event.str.extract("^([0-9]+)k")[0], errors = "coerce")
+    processed_results['discipline'] = processed_results.Event.str.extract(' ([a-zA-Z]+)$')[0].str.lower()
+    conditions = [
+        (processed_results.discipline == 'skate'),
+        # haakon doesn't have a discipline and is therefore freestyle
+        (processed_results.discipline == 'haakon'),
+        (processed_results.discipline == 'classic')]
+    condition_disciplines = ['freestyle', 'freestyle', 'classic']
+    processed_results['discipline'] = np.select(conditions, condition_disciplines, default="to_fail")
+
+    processed_results_joined = processed_results.merge(event_occurrences, on = 'year', how = 'inner')
+    unique_races = processed_results_joined[['distance', 'discipline', 'id']].drop_duplicates()
+    unique_races['event_occurrence_id'] = unique_races.id
+    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+    # TODO the event_occurrence_id join will fail
+    return processed_results.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
+
+
+####################################
+## start control flow
+####################################
 
 clean_2007 = handle_messups_2007(pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2007to2015.csv'))
 processed_2007 = process_2007_to_2015_results(clean_2007)
@@ -52,10 +125,11 @@ processed_2007 = process_2007_to_2015_results(clean_2007)
 # these races aren't competitive, so low priority for now
 
 results_2016 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2016.csv')
+results_2016['year'] = 2016
 results_2018 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2018.csv')
-
-processed_2016 = process_2016_on_results(results_2016)
-processed_2018 = process_2016_on_results(results_2018)
+results_2018['year'] = 2018
+results_2016_on = pd.concat([results_2016, results_2018])
+processed_2016_on = process_2016_on_results(results_2016_on)
 
 results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
 processed_2006 = process_2006_results(results_2006)
@@ -64,6 +138,12 @@ try:
     con = rrp.get_db_connection()
     cursor = con.cursor()
     events = rrp.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
+    event_id = events.id[0]
+    event_occurrences = get_birkie_occurences()
+    event_occurrences = rrp.insert_and_get_event_occurrences(cursor, event_occurrences)
+    attach_race_details_2006(cursor, processed_2006, event_occurrences)
+    attach_race_details_2007(cursor, processed_2007, event_occurrences)
+    attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
     con.commit()
     cursor.close()
 finally:

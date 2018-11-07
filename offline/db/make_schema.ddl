@@ -40,23 +40,22 @@ COMMENT ON COLUMN racer.matching_data IS 'json object of arbitrary racer aspects
 
 CREATE TABLE IF NOT EXISTS race_result (
   id            SERIAL PRIMARY KEY,
-  racer_id      INTEGER NOT NULL, --TODO foreign key
+  racer_id      INTEGER, --TODO foreign key?
   race_id       INTEGER NOT NULL, --TODO foreign key
   overall_place INTEGER,
   gender_place  INTEGER,
   duration      INTERVAL,
   gender        GENDER,
   location      VARCHAR(128),
-  age_group     VARCHAR(16),
-  raw_data      VARCHAR(256),
+  age_group     VARCHAR(16)
   -- since an entry is worthless if it doesn't imply an ordering, constrain
   -- intended usage is to group result records by race & reported gender, then infer rank from gender or overall place
   CONSTRAINT orderable CHECK (overall_place IS NOT NULL OR gender_place IS NOT NULL OR duration IS NOT NULL)
 );
 
-COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record';
-COMMENT ON COLUMN race_result.gender IS 'the gender reported with the record - source of truth in comparison to racer gender';
+COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record. will contain records not tied to a racer identity';
+COMMENT ON COLUMN race_result.racer_id IS 'nullable if the result cannot be uniquely or safely tied to a racer identity';
+COMMENT ON COLUMN race_result.gender IS 'the gender reported with the record - source of truth in comparison to racer identity gender';
 -- these columns might be used for matching ambiguous records
 COMMENT ON COLUMN race_result.location IS 'unstructured location from the record. nullable';
-COMMENT ON COLUMN race_result.age_group IS 'unstructured age or age group from the record. nullable';
-COMMENT ON COLUMN race_result.raw_data IS 'unstructured data or metadata associated with the record (diagnostic purposes only). nullable';
+COMMENT ON COLUMN race_result.age_group IS 'unstructured age or age group from the record (i.e. at the time of the race). nullable';

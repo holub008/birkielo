@@ -1,3 +1,4 @@
+import pandas as pd
 import psycopg2 as pg
 import psycopg2.sql as pgs
 import psycopg2.extras as pge
