@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import datetime as dt
 
 import race_record_processor as rrp
 
@@ -63,23 +62,21 @@ def attach_race_details_2006(cursor, processed_2006, event_occurrences):
     event_occurrences['year'] = [x.year for x in event_occurrences.date]
     event_occurrence = event_occurrences[event_occurrences.year == 2006]
     event_occurrence_id = event_occurrence.id.values[0]
-
     # sic
     processed_2006['discipline'] = processed_2006.Dvision.str.lower()
-
     conditions = [
         (processed_2006.Event.str.lower().str.contains('birkebeiner')),
         (processed_2006.Event.str.lower().str.contains('kortelopet'))]
-    condition_distances = [50, 30]
+    condition_distances = [50.0, 30.0]
     processed_2006['distance'] = np.select(conditions, condition_distances, default=-1)
     unique_races = processed_2006[['distance', 'discipline']].drop_duplicates()
     unique_races['event_occurrence_id'] = event_occurrence_id
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
-
+    inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
     return processed_2006.merge(inserted_races, on = ['distance', 'discipline'], how = 'inner')
 
 
-def attach_race_details_2007(cursor, processed_2007, event_occurences):
+def attach_race_details_2007(cursor, processed_2007, event_occurrences):
     event_occurrences['year'] = [x.year for x in event_occurrences.date]
     processed_2007['year'] = pd.to_numeric(processed_2007.Event.str.extract("^([0-9]+)")[0], errors = "coerce")
     processed_2007['distance'] = pd.to_numeric(processed_2007.Event.str.extract(' ([0-9\\.]+)k')[0], errors = "coerce")
@@ -87,13 +84,13 @@ def attach_race_details_2007(cursor, processed_2007, event_occurences):
     # note that haakon events don't have a discipline, so are in fact "freestyle"
     # this is super clunky notation compared to R tidyverse, but I couldn't find a better way :/
     processed_2007['discipline'] = np.where(processed_2007['discipline']=='haakon', 'freestyle', processed_2007['discipline'])
-
     processed_2007_joined = processed_2007.merge(event_occurrences, on = 'year', how = 'inner')
-    unique_races = processed_2007_joined[['distance', 'discipline', 'id']].drop_duplicates()
-    unique_races['event_occurrence_id'] = unique_races.id
+    processed_2007_joined['event_occurrence_id'] = processed_2007_joined.id
+    processed_2007_joined.drop('id', 1)
+    unique_races = processed_2007_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
-    # TODO the event_occurrence_id join will fail
-    return processed_2007.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
+    inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
+    return processed_2007_joined.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
 
 
 def attach_race_details_2016(cursor, processed_results, event_occurrences):
@@ -106,13 +103,13 @@ def attach_race_details_2016(cursor, processed_results, event_occurrences):
         (processed_results.discipline == 'classic')]
     condition_disciplines = ['freestyle', 'freestyle', 'classic']
     processed_results['discipline'] = np.select(conditions, condition_disciplines, default="to_fail")
-
     processed_results_joined = processed_results.merge(event_occurrences, on = 'year', how = 'inner')
-    unique_races = processed_results_joined[['distance', 'discipline', 'id']].drop_duplicates()
-    unique_races['event_occurrence_id'] = unique_races.id
+    processed_results_joined['event_occurrence_id'] = processed_results_joined.id
+    processed_results_joined.drop('id', 1)
+    unique_races = processed_results_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
-    # TODO the event_occurrence_id join will fail
-    return processed_results.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
+    inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
+    return processed_results_joined.merge(inserted_races, on = ['distance', 'discipline', 'event_occurrence_id'])
 
 
 ####################################
@@ -134,6 +131,7 @@ processed_2016_on = process_2016_on_results(results_2016_on)
 results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
 processed_2006 = process_2006_results(results_2006)
 
+con = None
 try:
     con = rrp.get_db_connection()
     cursor = con.cursor()
