@@ -56,8 +56,9 @@ def process_2006_results(df):
 
 
 # I just grabbed these online by hand
-def get_birkie_occurences():
-    return pd.DataFrame(dict(date=['2018-02-24', '2016-02-20', '2015-02-21', '2014-02-22', '2013-02-23',
+def get_birkie_occurences(event_id):
+    return pd.DataFrame(dict(event_id = [event_id for x in range(12)],
+                             date=['2018-02-24', '2016-02-20', '2015-02-21', '2014-02-22', '2013-02-23',
                                    '2012-02-25', '2011-02-26', '2010-02-27', '2009-02-21', '2008-02-23', '2007-02-24',
                                    '2006-02-25']))
 
@@ -155,11 +156,11 @@ try:
     cursor = con.cursor()
     events = rrp.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
     event_id = events.id[0]
-    event_occurrences = get_birkie_occurences()
+    event_occurrences = get_birkie_occurences(event_id)
     event_occurrences = rrp.insert_and_get_event_occurrences(cursor, event_occurrences)
-    attach_race_details_2006(cursor, processed_2006, event_occurrences)
-    attach_race_details_2007(cursor, processed_2007, event_occurrences)
-    attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
+    processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
+    processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
+    processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
     con.commit()
     cursor.close()
 finally:

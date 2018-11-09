@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS event (
   name VARCHAR NOT NULL
 );
 
-COMMENT ON TABLE event IS 'an enum-like table representing the distinct set of events'
+COMMENT ON TABLE event IS 'an enum-like table representing the distinct set of events';
 
 CREATE TABLE IF NOT EXISTS event_occurrence (
   id       SERIAL PRIMARY KEY,
@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS event_occurrence (
   date     DATE    NOT NULL
 );
 
+-- note this will error if it already exists - no easy solution :(
 CREATE TYPE ski_discipline AS ENUM('classic', 'freestyle');
 
 CREATE TABLE IF NOT EXISTS race (
@@ -27,16 +28,18 @@ CREATE TYPE gender AS ENUM('male', 'female');
 
 CREATE TABLE IF NOT EXISTS racer (
   id            SERIAL PRIMARY KEY,
-  name          VARCHAR(256) NOT NULL,
-  gender        GENDER       NOT NULL,
+  first_name    VARCHAR(128) NOT NULL,
+  middle_name   VARCHAR(128) NOT NULL,
+  last_name     VARCHAR(128) NOT NULL,
+  gender        GENDER NOT NULL,
   matching_data JSON
 );
 
 COMMENT ON TABLE racer IS 'contains the set of unique set of racers believed to exist';
-COMMENT ON COLUMN racer.name IS 'a string formated "First Last", which is essentially the simplest form a name can be reduced to for comparison';
-COMMENT ON COLUMN racer.matching_data IS 'json object of arbitrary racer aspects that may be used for matching (e.g. location, age, middle initial)');
+COMMENT ON COLUMN racer.middle_name IS 'can be a full middle name or a ';
+COMMENT ON COLUMN racer.matching_data IS 'json object of arbitrary racer aspects that may be used for matching (e.g. location, age)';
 -- "believe" because 1. some racers share names 2. some racers may have several different names in results (e.g. name change)
--- this table exists to accommodate simple amendment when either of the cases are discovered
+-- this table exists to accommodate amendment when either of the cases are discovered
 
 CREATE TABLE IF NOT EXISTS race_result (
   id            SERIAL PRIMARY KEY,
