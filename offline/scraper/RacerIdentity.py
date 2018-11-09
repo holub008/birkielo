@@ -1,3 +1,5 @@
+import re
+
 
 def _extract_name(name_string):
     """
@@ -6,7 +8,26 @@ def _extract_name(name_string):
     :param name_string: a string of unknown format
     :return: a tuple of first name, middle name, and last name. any may be None
     """
-    pass
+    name_string = name_string.replace(u'\xa0', u' ')
+
+    # TODO should write tests on this, since regression is so likely
+    # TODO I'm pretty sure python caches compiled regexs
+    # match "first last" - this obviously isn't an all encompassing
+    fl_matches = re.search(r"^([a-zA-Z]+) +([a-zA-Z]+)$", name_string)
+    if fl_matches:
+        return fl_matches.group(1), None, fl_matches.group(2)
+
+    # match "first middle last" where middle could be a single letter or abbreviation
+    fml_matches = re.search(r"^([a-zA-Z]+) +([a-zA-Z]+\.?) +([a-zA-Z]+)$", name_string)
+    if fml_matches:
+        return fml_matches.group(1), fml_matches.group(2), fml_matches.group(3)
+
+    # match "last, first"
+    lf_matches = re.search(r"^([a-zA-Z]+), *([a-zA-Z]+)$", name_string)
+    if lf_matches:
+        return lf_matches.group(2), None, lf_matches.group(1)
+
+    raise ValueError('Supplied name string "%s" does conform to known name formats' % (name_string, ))
 
 
 class RacerIdentity:
