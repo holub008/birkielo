@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 
 import race_record_processor as rrp
+from RacerIdentity import RaceRecord
+from RacerIdentity import RacerSource
 
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
@@ -131,6 +133,12 @@ def attach_race_details_2016(cursor, processed_results, event_occurrences):
     return processed_results_joined.merge(inserted_races, on=['distance', 'discipline', 'event_occurrence_id'])
 
 
+def create_racer_identities_2006(race_records_raw):
+    racer_records = []
+    for index, row in race_records.iterrows():
+        race_record = RaceRecord(row.Name, None, row.gender,
+                                       RacerSource.RecordIngestion, race_id = row.id)
+        racer_records.append(race_record)
 ####################################
 ## start control flow
 ####################################

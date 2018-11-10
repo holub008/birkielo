@@ -32,12 +32,14 @@ CREATE TABLE IF NOT EXISTS racer (
   middle_name   VARCHAR(128) NOT NULL,
   last_name     VARCHAR(128) NOT NULL,
   gender        GENDER NOT NULL,
-  matching_data JSON
+  age_lower     INTEGER,
+  age_upper     INTEGER,
+  location      VARCHAR(128)
 );
 
 COMMENT ON TABLE racer IS 'contains the set of unique set of racers believed to exist';
 COMMENT ON COLUMN racer.middle_name IS 'can be a full middle name or a ';
-COMMENT ON COLUMN racer.matching_data IS 'json object of arbitrary racer aspects that may be used for matching (e.g. location, age)';
+COMMENT ON COLUMN racer.location IS 'a potentially unstructured string for the most recent residential location';
 -- "believe" because 1. some racers share names 2. some racers may have several different names in results (e.g. name change)
 -- this table exists to accommodate amendment when either of the cases are discovered
 
@@ -47,7 +49,7 @@ CREATE TABLE IF NOT EXISTS race_result (
   race_id       INTEGER NOT NULL, --TODO foreign key
   overall_place INTEGER,
   gender_place  INTEGER,
-  duration      INTERVAL,
+  duration      BIGINT,
   gender        GENDER,
   location      VARCHAR(128),
   age_group     VARCHAR(16)
@@ -58,6 +60,7 @@ CREATE TABLE IF NOT EXISTS race_result (
 
 COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record. will contain records not tied to a racer identity';
 COMMENT ON COLUMN race_result.racer_id IS 'nullable if the result cannot be uniquely or safely tied to a racer identity';
+COMMENT ON COLUMN race_result.duration IS 'time to complete the race in milliseconds';
 COMMENT ON COLUMN race_result.gender IS 'the gender reported with the record - source of truth in comparison to racer identity gender';
 -- these columns might be used for matching ambiguous records
 COMMENT ON COLUMN race_result.location IS 'unstructured location from the record. nullable';

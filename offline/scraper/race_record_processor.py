@@ -73,3 +73,13 @@ def insert_and_get_races(cursor, races):
     :return: a dataframe representing the inserted races
     """
     return _insert_and_get_generic(cursor, races, "race", ['event_occurrence_id', 'discipline', 'distance'])
+
+
+def insert_and_get_racers(cursor, racers):
+    """
+
+    :param cursor: a writable connection object. this function makes no mutation to it besides the insert and select
+    :param racers: a dataframe representing racers. required columns: "first_name", "middle_name", "last_name", "gender"
+    :return: a dataframe representing the inserted racers
+    """
+    return _insert_and_get_generic(cursor, racers, "racers", ['first_name', 'middle_name', 'last_name', 'gender'])
