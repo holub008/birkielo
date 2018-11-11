@@ -11,8 +11,8 @@ class RacerSource(Enum):
 
 
 class Gender(Enum):
-    Male = 1
-    Female = 2
+    Male = "male"
+    Female = "female"
 
 
 class RacerIdentity:
@@ -46,11 +46,20 @@ class RacerIdentity:
     def get_gender(self):
         return self._gender
 
+    def shared_name(self, other,
+                    include_middle = False):
+        return int(self.get_first_name().lower() == other.get_first_name().lower()
+                   and self.get_last_name().lower() == other.get_last_name().lower()
+                   and (not include_middle or self.get_middle_name().lower() == other.get_middle_name().lower()))
+
     def get_racer_id(self):
         """
         :return: None if the identity is not a previous match, else the racer_id for the previous match
         """
         return self._racer_id
+
+    def set_racer_id(self, racer_id):
+        self._racer_id = racer_id
 
     # TODO how to appropriately represent location?
 
@@ -82,11 +91,6 @@ def _extract_name(name_string):
     lf_matches = re.search(r"^([a-zA-Z\-\']+), *([a-zA-Z\-\.]+)$", name_string)
     if lf_matches:
         return lf_matches.group(2), None, lf_matches.group(1)
-
-    # some entries appear to just be a first name...
-    f_matches = re.search(r"^([a-zA-Z\-\.]+)$", name_string)
-    if f_matches:
-        return f_matches.group(1), None, None
 
     # TODO probably makes sense to have a proper logger
     print('Supplied name string "%s" does conform to known name formats' % (name_string, ))
@@ -172,4 +176,3 @@ class RaceRecord(RacerIdentity):
         :return: a RacerSource enum value
         """
         return self._racer_source
-

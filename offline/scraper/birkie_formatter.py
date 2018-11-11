@@ -198,7 +198,7 @@ try:
     processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
     processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
     processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
-    racer_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
+    race_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
     con.commit()
     cursor.close()
 finally:
