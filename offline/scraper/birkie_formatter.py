@@ -68,7 +68,7 @@ def get_birkie_occurences(event_id):
 def attach_race_details_2006(cursor, processed_2006, event_occurrences):
     event_occurrences['year'] = [x.year for x in event_occurrences.date]
     event_occurrence = event_occurrences[event_occurrences.year == 2006]
-    event_occurrence_id = event_occurrence.id.values[0]
+    event_occurrence_id = event_occurrence.event_occurrence_id.values[0]
     # sic
     processed_2006['discipline'] = processed_2006.Dvision.str.lower()
 
@@ -84,7 +84,11 @@ def attach_race_details_2006(cursor, processed_2006, event_occurrences):
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
-    return processed_2006.merge(inserted_races, on=['distance', 'discipline'], how='inner')
+    total_joined_results = processed_2006.merge(inserted_races, on=['distance', 'discipline'], how='inner')
+    total_joined_results['race_id'] = total_joined_results.id
+    total_joined_results = total_joined_results.drop('id', 1)
+
+    return total_joined_results
 
 
 def attach_race_details_2007(cursor, processed_2007, event_occurrences):
@@ -98,15 +102,18 @@ def attach_race_details_2007(cursor, processed_2007, event_occurrences):
     processed_2007['discipline'] = np.where(processed_2007['discipline'] == 'haakon', 'freestyle',
                                             processed_2007['discipline'])
     processed_2007_joined = processed_2007.merge(event_occurrences, on='year', how='inner')
-    processed_2007_joined['event_occurrence_id'] = processed_2007_joined.id
-    processed_2007_joined.drop('id', 1)
 
     unique_races = processed_2007_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
 
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
-    return processed_2007_joined.merge(inserted_races, on=['distance', 'discipline', 'event_occurrence_id'])
+    total_joined_results = processed_2007_joined.merge(inserted_races,
+                                                       on=['distance', 'discipline', 'event_occurrence_id'])
+    total_joined_results['race_id'] = total_joined_results.id
+    total_joined_results = total_joined_results.drop('id', 1)
+
+    return total_joined_results
 
 
 def attach_race_details_2016(cursor, processed_results, event_occurrences):
@@ -122,25 +129,45 @@ def attach_race_details_2016(cursor, processed_results, event_occurrences):
     processed_results['discipline'] = np.select(conditions, condition_disciplines, default="to_fail")
 
     processed_results_joined = processed_results.merge(event_occurrences, on='year', how='inner')
-    processed_results_joined['event_occurrence_id'] = processed_results_joined.id
-    processed_results_joined.drop('id', 1)
 
     unique_races = processed_results_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
 
     inserted_races = rrp.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
-    return processed_results_joined.merge(inserted_races, on=['distance', 'discipline', 'event_occurrence_id'])
+    total_joined_results = processed_results_joined.merge(inserted_races,
+                                                          on=['distance', 'discipline', 'event_occurrence_id'])
+    total_joined_results['race_id'] = total_joined_results.id
+    total_joined_results = total_joined_results.drop('id', 1)
+
+    return total_joined_results
 
 
-def create_racer_identities_2006(race_records_raw):
+def create_race_records(processed_2006, processed_2007, processed_2016_on):
     racer_records = []
-    for index, row in race_records.iterrows():
-        race_record = RaceRecord(row.Name, None, row.gender,
-                                       RacerSource.RecordIngestion, race_id = row.id)
+    for index, row in processed_2006.iterrows():
+        race_record = RaceRecord(row.Name, None, row.gender, row['Finish  Time'],
+                                 row['Overall Place'], row['Gender  Overall Place'], row.race_id,
+                                 RacerSource.RecordIngestion)
         racer_records.append(race_record)
+
+    for index, row in processed_2007.iterrows():
+        race_record = RaceRecord(row.Name, None, row.gender, row['Finish Time'],
+                                 row.OverallPlace, row.GenderPlace, row.race_id,
+                                 RacerSource.RecordIngestion)
+        racer_records.append(race_record)
+
+    for index, row in processed_2016_on.iterrows():
+        ag_grp_place = row['Ag Grp  Place'] if (not pd.isna(row['Ag Grp  Place'])) else None
+        race_record = RaceRecord(row.Name, ag_grp_place, row.gender, row['Finish  Time'],
+                                 row['Overall Place'], row['Gender Place'], row.race_id,
+                                 RacerSource.RecordIngestion)
+        racer_records.append(race_record)
+
+    return racer_records
+
 ####################################
-## start control flow
+# start control flow
 ####################################
 
 clean_2007 = handle_messups_2007(pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2007to2015.csv'))
@@ -166,9 +193,12 @@ try:
     event_id = events.id[0]
     event_occurrences = get_birkie_occurences(event_id)
     event_occurrences = rrp.insert_and_get_event_occurrences(cursor, event_occurrences)
+    event_occurrences['event_occurrence_id'] = event_occurrences.id
+    event_occurrences = event_occurrences.drop('id', 1)
     processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
     processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
     processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
+    racer_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
     con.commit()
     cursor.close()
 finally:
