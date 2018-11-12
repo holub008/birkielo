@@ -164,7 +164,7 @@ def create_race_records(processed_2006, processed_2007, processed_2016_on):
                                  RacerSource.RecordIngestion)
         racer_records.append(race_record)
 
-    return racer_records
+    return [rr for rr in racer_records if not rr.get_first_name() is None]
 
 ####################################
 # start control flow

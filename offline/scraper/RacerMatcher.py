@@ -38,36 +38,42 @@ class RacerMatcher:
 
     # TODO, note that we don't currently take in previous identities
     def __init__(self, race_records):
+        if len(race_records) < 1:
+            raise ValueError('Cannot match an empty list of race records')
+
         self._race_records = race_records
 
-        similarity = np.zeros((len(race_records), len(race_records)))
-        for ix1, race_record1 in enumerate(self._race_records):
-            print(ix1)
-            for ix2, race_record2 in enumerate(race_records[0:(ix1+1)]):
-                similarity[ix1, ix2] = race_record1.shared_name(race_record2)
-
-        self._similarity = similarity
-
-    def merge_to_identity(self,
-                          match_threshold=0):
+    def merge_to_identity(self):
         """
-
-        :param match_threshold: the minimum threshold on similarity for a record to be matched to a another
+        TODO this method shows somewhat poor modularity in combining the similarity, validation, and merge steps
         :return: a list of tuples. for each tuple, element 0 is the merged identity, element 1 is the race record
         indices (as input) of the match
         """
+        similarity = np.zeros((len(self._race_records), len(self._race_records)))
+        # as a quick heuristic to avoid n^2 scanning, build minimally viable subgroups on first name and last name
+        match_propensity_ordered_racers = sorted(self._race_records,
+                                                 key=lambda rr: (rr.get_first_name().lower(),
+                                                                   rr.get_last_name().lower()))
+        ranks = sorted(range(len(self._race_records)), key=lambda ix: (self._race_records[ix].get_first_name().lower(),
+                                                                 self._race_records[ix].get_last_name().lower()))
         merged_records = []
-        for race_record_ix, race_record in enumerate(self._race_records):
-            similarities = self._similarity[race_record_ix, ]
-            # TODO need to validate our subgroup by checking for overlapped names
-            subgroup = np.argwhere(similarities > match_threshold)
-            # TODO our merge strategy is to just accept the first entry
-            representative = subgroup[0]
-            # TODO need to adjust age range based on year of race & current date
-            ri = RacerIdentity(representative.get_first_name(), representative.get_middle_name(),
-                               representative.get_last_name(), representative.get_age_lower(),
-                               representative.get_age_upper(), representative.get_gender())
+        current_subgroup = [ranks[0]]
+        representative = match_propensity_ordered_racers[0]
+        for sorted_ix in range(1, match_propensity_ordered_racers):
+            rank_ix = ranks[sorted_ix]
+            racer = match_propensity_ordered_racers[sorted_ix]
+            if representative.shared_name(racer):
+                current_subgroup.append(rank_ix)
+            else:
+                # TODO need to handle overlapped names - when several identities in a subgoup where in the same race
+                # TODO just using the first representative for the identity is suboptimal
+                ri = RacerIdentity(representative.get_first_name(), representative.get_middle_name(),
+                                   representative.get_last_name(), representative.get_age_lower(),
+                                   representative.get_age_upper(), representative.get_gender())
+                merged_records.append((ri, current_subgroup))
 
-            merged_records.append((ri,subgroup))
+                current_subgroup = [rank_ix]
+                representative = racer
 
         return merged_records
+    

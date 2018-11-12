@@ -48,9 +48,23 @@ class RacerIdentity:
 
     def shared_name(self, other,
                     include_middle = False):
-        return int(self.get_first_name().lower() == other.get_first_name().lower()
-                   and self.get_last_name().lower() == other.get_last_name().lower()
-                   and (not include_middle or self.get_middle_name().lower() == other.get_middle_name().lower()))
+        if self.get_first_name().lower() == other.get_first_name().lower():
+            if self.get_last_name().lower() == other.get_last_name().lower():
+                # handle this case somewhat carefully, since middle names are often missing
+                if not include_middle:
+                    return True
+                elif self.get_middle_name() is None:
+                    # this is a questionable choice -
+                    return True
+                else:
+                    if other.get_middle_name() is None:
+                        # same choice as above
+                        return True
+                    return self.get_middle_name().lower == other.get_middle_name.lower()
+            else:
+                return False
+        else:
+            return False
 
     def get_racer_id(self):
         """
@@ -78,12 +92,12 @@ def _extract_name(name_string):
     # TODO should write tests on this, since regression is so likely
     # TODO I'm pretty sure python caches compiled regexs
     # match "first last" - this obviously isn't an all encompassing
-    fl_matches = re.search(r"^([a-zA-Z\-\.]+) +([a-zA-Z\-\' ]+)$", name_string)
+    fl_matches = re.search(r"^([a-zA-Z\-\.]+) +([a-zA-Z\-\']+) *$", name_string)
     if fl_matches:
         return fl_matches.group(1), None, fl_matches.group(2)
 
     # match "first middle last" where middle could be a single letter or abbreviation
-    fml_matches = re.search(r"^([a-zA-Z\-\.]+) +(\(?\"?[a-zA-Z\.]+\.?\"?\)?) +([a-zA-Z\-\' ]+)$", name_string)
+    fml_matches = re.search(r"^([a-zA-Z\-\.]+) +(\(?\"?[a-zA-Z\.]+\.?\"?\)?) +([a-zA-Z\-\']+) *$", name_string)
     if fml_matches:
         return fml_matches.group(1), fml_matches.group(2), fml_matches.group(3)
 
