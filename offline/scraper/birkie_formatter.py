@@ -190,18 +190,25 @@ con = None
 try:
     con = rrp.get_db_connection()
     cursor = con.cursor()
+
     events = rrp.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
     event_id = events.id[0]
+
     event_occurrences = get_birkie_occurences(event_id)
     event_occurrences = rrp.insert_and_get_event_occurrences(cursor, event_occurrences)
     event_occurrences['event_occurrence_id'] = event_occurrences.id
     event_occurrences = event_occurrences.drop('id', 1)
+
     processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
     processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
     processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
+
     race_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
+
     matcher = RacerMatcher(race_records)
-    identities = matcher.merge_to_identities()
+    racers_to_record_indices = matcher.merge_to_identities()
+    rrp.insert_racers(cursor, racers_to_record_indices, race_records)
+
     con.commit()
     cursor.close()
 finally:

@@ -75,9 +75,6 @@ class RacerIdentity:
         """
         return self._racer_id
 
-    def set_racer_id(self, racer_id):
-        self._racer_id = racer_id
-
     # TODO how to appropriately represent location?
 
 

@@ -29,7 +29,7 @@ CREATE TYPE gender AS ENUM('male', 'female');
 CREATE TABLE IF NOT EXISTS racer (
   id            SERIAL PRIMARY KEY,
   first_name    VARCHAR(128) NOT NULL,
-  middle_name   VARCHAR(128) NOT NULL,
+  middle_name   VARCHAR(128),
   last_name     VARCHAR(128) NOT NULL,
   gender        GENDER NOT NULL,
   age_lower     INTEGER,
@@ -51,8 +51,9 @@ CREATE TABLE IF NOT EXISTS race_result (
   gender_place  INTEGER,
   duration      BIGINT,
   gender        GENDER,
+  age_lower     INTEGER,
+  age_upper     INTEGER,
   location      VARCHAR(128),
-  age_group     VARCHAR(16)
   -- since an entry is worthless if it doesn't imply an ordering, constrain
   -- intended usage is to group result records by race & reported gender, then infer rank from gender or overall place
   CONSTRAINT orderable CHECK (overall_place IS NOT NULL OR gender_place IS NOT NULL OR duration IS NOT NULL)
@@ -64,4 +65,5 @@ COMMENT ON COLUMN race_result.duration IS 'time to complete the race in millisec
 COMMENT ON COLUMN race_result.gender IS 'the gender reported with the record - source of truth in comparison to racer identity gender';
 -- these columns might be used for matching ambiguous records
 COMMENT ON COLUMN race_result.location IS 'unstructured location from the record. nullable';
-COMMENT ON COLUMN race_result.age_group IS 'unstructured age or age group from the record (i.e. at the time of the race). nullable';
+COMMENT ON COLUMN race_result.age_lower IS 'the lower bound of racer age (at the time of the race). nullable';
+COMMENT ON COLUMN race_result.age_upper IS 'the upper bound of racer age (at the time of the race). nullable';
