@@ -40,8 +40,11 @@ class RacerIdentity:
     def get_middle_name(self):
         return self._middle_name
 
-    def get_age_range(self):
-        return self._age_range_lower, self._age_range_upper
+    def get_age_lower(self):
+        return self._age_range_lower
+
+    def get_age_upper(self):
+        return self._age_range_upper
 
     def get_gender(self):
         return self._gender

@@ -24,15 +24,6 @@ from RacerIdentity import RacerIdentity
 # If a subgroup did satisfy our "easy" properties for matching or merging go for it!
 ##########################
 
-def compute_similarity(record1, record2):
-    """
-    :param record1: a RacerIdentity instance for comparison
-    :param record2: a RacerIdentity instance for comparison
-    :return: a continuous valued similarity score
-    """
-    # this is an extremely simplistic start
-    return 1 if (record1.shared_name(record2)) else 0
-
 
 class RacerMatcher:
 
@@ -43,7 +34,7 @@ class RacerMatcher:
 
         self._race_records = race_records
 
-    def merge_to_identity(self):
+    def merge_to_identities(self):
         """
         TODO this method shows somewhat poor modularity in combining the similarity, validation, and merge steps
         :return: a list of tuples. for each tuple, element 0 is the merged identity, element 1 is the race record
@@ -59,7 +50,7 @@ class RacerMatcher:
         merged_records = []
         current_subgroup = [ranks[0]]
         representative = match_propensity_ordered_racers[0]
-        for sorted_ix in range(1, match_propensity_ordered_racers):
+        for sorted_ix in range(1, len(match_propensity_ordered_racers)):
             rank_ix = ranks[sorted_ix]
             racer = match_propensity_ordered_racers[sorted_ix]
             if representative.shared_name(racer):
@@ -69,11 +60,10 @@ class RacerMatcher:
                 # TODO just using the first representative for the identity is suboptimal
                 ri = RacerIdentity(representative.get_first_name(), representative.get_middle_name(),
                                    representative.get_last_name(), representative.get_age_lower(),
-                                   representative.get_age_upper(), representative.get_gender())
+                                   representative.get_age_upper(), representative.get_gender().value)
                 merged_records.append((ri, current_subgroup))
 
                 current_subgroup = [rank_ix]
                 representative = racer
 
         return merged_records
-    

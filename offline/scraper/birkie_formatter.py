@@ -4,6 +4,7 @@ import numpy as np
 import race_record_processor as rrp
 from RacerIdentity import RaceRecord
 from RacerIdentity import RacerSource
+from RacerMatcher import RacerMatcher
 
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
@@ -199,6 +200,8 @@ try:
     processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
     processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
     race_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
+    matcher = RacerMatcher(race_records)
+    identities = matcher.merge_to_identities()
     con.commit()
     cursor.close()
 finally:
