@@ -1,5 +1,4 @@
 import pandas as pd
-import psycopg2 as pg
 import psycopg2.sql as pgs
 import psycopg2.extras as pge
 
@@ -18,22 +17,6 @@ _RACER_RESULT_INSERT_QUERY = """
 # common utilities for processing (e.g. matching racers) & inserting (to db) event, race, and results
 # note that we prefer psycopg2 to standard pandas to_sql because we want the generated ids of inserted rows
 # (RETURNING clause). However, the order of RETURNING is not strictly guaranteed by postgres
-
-def get_db_connection(host="birkielo.cb5jkztmh9et.us-east-2.rds.amazonaws.com",
-                      port=5432,
-                      username="kholub",
-                      database="birkielo"):
-    """
-    get a connection to the birkielo database. note that this currently relies on a local pgpass entry
-    which obviously is not checked into source control. also note any exceptions in creation are bubbled
-
-    :param host: db host to connect to
-    :param port: port to connect to on host
-    :param username: username for db auth
-    :param database: database to connect to
-    :return: a birkielo database connection object
-    """
-    return pg.connect(dbname = database, user = username, host = host, port = port)
 
 
 def _insert_and_get_generic(cursor, df, table_name, required_columns):

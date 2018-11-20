@@ -67,3 +67,13 @@ COMMENT ON COLUMN race_result.gender IS 'the gender reported with the record - s
 COMMENT ON COLUMN race_result.location IS 'unstructured location from the record. nullable';
 COMMENT ON COLUMN race_result.age_lower IS 'the lower bound of racer age (at the time of the race). nullable';
 COMMENT ON COLUMN race_result.age_upper IS 'the upper bound of racer age (at the time of the race). nullable';
+
+CREATE TABLE IF NOT EXISTS racer_metrics (
+  id       SERIAL PRIMARY KEY,
+  racer_id INTEGER NOT NULL,
+  date     DATE    NOT NULL,
+  elo      FLOAT   NOT NULL,
+  UNIQUE (racer_id, date)
+);
+
+COMMENT ON TABLE racer_metrics IS 'represents the time series of racer metrics. sparse in the sense that only dates with metric updates are included in the table';

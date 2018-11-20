@@ -1,5 +1,5 @@
 import numpy as np
-from RacerIdentity import RacerIdentity
+from racer_identity import RacerIdentity
 
 ##########################
 # The matching strategy I'm planning is heuristic & unsupervised (minus some human eyeballing) in this iteration.

@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 
+from db import get_connection
+
 import race_record_committer as rrc
 from racer_identity import RaceRecord
 from racer_identity import RacerSource
@@ -188,7 +190,7 @@ processed_2006 = process_2006_results(results_2006)
 
 con = None
 try:
-    con = rrc.get_db_connection()
+    con = get_connection()
     cursor = con.cursor()
 
     events = rrc.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
