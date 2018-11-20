@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
 
-import race_record_processor as rrp
-from RacerIdentity import RaceRecord
-from RacerIdentity import RacerSource
-from RacerMatcher import RacerMatcher
+import race_record_committer as rrc
+from racer_identity import RaceRecord
+from racer_identity import RacerSource
+from racer_matcher import RacerMatcher
 
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
@@ -82,7 +82,7 @@ def attach_race_details_2006(cursor, processed_2006, event_occurrences):
     unique_races = processed_2006[['distance', 'discipline']].drop_duplicates()
     unique_races['event_occurrence_id'] = event_occurrence_id
 
-    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+    inserted_races = rrc.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
     total_joined_results = processed_2006.merge(inserted_races, on=['distance', 'discipline'], how='inner')
@@ -106,7 +106,7 @@ def attach_race_details_2007(cursor, processed_2007, event_occurrences):
 
     unique_races = processed_2007_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
 
-    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+    inserted_races = rrc.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
     total_joined_results = processed_2007_joined.merge(inserted_races,
@@ -133,7 +133,7 @@ def attach_race_details_2016(cursor, processed_results, event_occurrences):
 
     unique_races = processed_results_joined[['distance', 'discipline', 'event_occurrence_id']].drop_duplicates()
 
-    inserted_races = rrp.insert_and_get_races(cursor, unique_races)
+    inserted_races = rrc.insert_and_get_races(cursor, unique_races)
     inserted_races['distance'] = pd.to_numeric(inserted_races.distance)
 
     total_joined_results = processed_results_joined.merge(inserted_races,
@@ -188,14 +188,14 @@ processed_2006 = process_2006_results(results_2006)
 
 con = None
 try:
-    con = rrp.get_db_connection()
+    con = rrc.get_db_connection()
     cursor = con.cursor()
 
-    events = rrp.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
+    events = rrc.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
     event_id = events.id[0]
 
     event_occurrences = get_birkie_occurences(event_id)
-    event_occurrences = rrp.insert_and_get_event_occurrences(cursor, event_occurrences)
+    event_occurrences = rrc.insert_and_get_event_occurrences(cursor, event_occurrences)
     event_occurrences['event_occurrence_id'] = event_occurrences.id
     event_occurrences = event_occurrences.drop('id', 1)
 
@@ -207,7 +207,7 @@ try:
 
     matcher = RacerMatcher(race_records)
     racers_to_record_indices = matcher.merge_to_identities()
-    rrp.insert_racers(cursor, racers_to_record_indices, race_records)
+    rrc.insert_racers(cursor, racers_to_record_indices, race_records)
 
     con.commit()
     cursor.close()
