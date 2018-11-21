@@ -80,7 +80,7 @@ class NaiveElo:
                                                            self._log_odds_oom_differential)
 
                     p_racer = linear_scale_racer_score / (linear_scale_racer_score + linear_scale_competitor_score)
-                    outcome = 1 if race_result.overall_place > competitor_race_result.overall_place else 0
+                    outcome = 1 if race_result.overall_place < competitor_race_result.overall_place else 0
                     accumulated_score_change += self._k_factor * (outcome - p_racer)
 
             updated_score = min(max(race_result.score + accumulated_score_change, self._score_floor),
