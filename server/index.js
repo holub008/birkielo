@@ -10,13 +10,6 @@ const port = process.env.PORT || 5000;
 /**
  * API endpoints
  */
-app.get('/api/test/', (req, res) => {
-    data = {
-      text: 'Lorem Ipsum',
-    };
-
-    res.send(data);
-});
 
 app.get('/api/racer/:id', async (req, res) => {
     // TODO we should cache known racer_ids in memory and short circuit out for unknown ones
@@ -46,10 +39,20 @@ app.get('/api/racer/:id', async (req, res) => {
 
     const racerResultQuery = {
         name: "racer_results",
+        // TODO the CST is unacceptably slow (build an agg table or cache at startup time)
         text: `
+            WITH race_size AS (
+                SELECT
+                    race_id as race_id,
+                    gender,
+                    count(1) as race_size
+                FROM race_result
+                GROUP BY race_id, gender
+            )
             SELECT
                 rr.gender_place,
                 rr.overall_place,
+                rs.race_size,
                 rr.duration,
                 r.distance,
                 r.discipline,
@@ -58,6 +61,9 @@ app.get('/api/racer/:id', async (req, res) => {
             FROM race_result rr
             JOIN race r
                 ON rr.race_id = r.id
+            JOIN race_size rs
+                ON r.id = rs.race_id
+                    AND rr.gender = rs.gender
             JOIN event_occurrence eo
                 ON r.event_occurrence_id = eo.id
             JOIN event e
@@ -93,7 +99,6 @@ app.get('/api/racer/:id', async (req, res) => {
         racerMetrics && racerMetrics.rows.length) {
         const racerGender = racer.rows[0].gender;
         const racerElo = racerMetrics.rows[0].elo;
-        console.log(racerElo);
 
         // TODO this query is expensive to run on a per-request basis
         const rankQuery = {

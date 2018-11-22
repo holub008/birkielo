@@ -27,7 +27,7 @@ function About() {
               are provided, Birkielo will seek to be transparent in its methodologies.
           </Text>
           <br/>
-        <img src="/images/birkie_hills.jpg" className="about-image"/>
+        <img src="/images/birkie_hills.jpg" className="about-image" alt="trample"/>
       </Box>
     );
 }
