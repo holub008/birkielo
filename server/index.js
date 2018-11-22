@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const db = require('./db');
+const util = require('./util')
 
 const app = express();
 
@@ -18,7 +19,8 @@ app.get('/api/test/', (req, res) => {
 });
 
 app.get('/api/racer/:id', async (req, res) => {
-    const racerId = req.params.id
+    // TODO we should cache known racer_ids in memory and short circuit out for unknown ones
+    const racerId = req.params.id;
 
     const racerQuery = {
         name: "racer",
@@ -78,6 +80,7 @@ app.get('/api/racer/:id', async (req, res) => {
             FROM racer_metrics rm
             WHERE
                 rm.racer_id = $1
+            ORDER BY date desc
         `,
         values: [ racerId ]
     };
@@ -85,9 +88,12 @@ app.get('/api/racer/:id', async (req, res) => {
     const racerMetrics = await db.query(racerMetricsQuery)
         .catch(e => console.error(`Failed to query race metrics for racer_id = '${racerId}'`));
 
-    let rankings;
-    if (racer && racer.rows.length) {
+    let relativeStatistics;
+    if (racer && racer.rows.length &&
+        racerMetrics && racerMetrics.rows.length) {
         const racerGender = racer.rows[0].gender;
+        const racerElo = racerMetrics.rows[0].elo;
+        console.log(racerElo);
 
         // TODO this query is expensive to run on a per-request basis
         const rankQuery = {
@@ -109,14 +115,25 @@ app.get('/api/racer/:id', async (req, res) => {
             values: [ racerGender ]
         };
 
-        const rankings = await db.query(rankQuery)
+        const scoreResultSet = await db.query(rankQuery)
             .catch(e => console.error(`Failed to query rankings.`));
+
+        if (scoreResultSet && scoreResultSet.rows.length) {
+            const rankings = scoreResultSet.rows.map(row => row.elo);
+            relativeStatistics = {
+                totalDistribution: util.histogramBin(rankings),
+                ranking: util.rank(rankings, racerElo),
+                totalCompetitors: rankings.length
+            }
+        }
+
     }
 
     res.send({
         racer: racer && racer.rows.length ? racer.rows[0] : null,
         results: racerResults ? racerResults.rows : null,
-        metrics: racerMetrics ? racerMetrics.rows : null
+        metrics: racerMetrics ? racerMetrics.rows : null,
+        relativeStatistics: relativeStatistics,
     });
 });
 
