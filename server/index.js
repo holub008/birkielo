@@ -20,7 +20,7 @@ app.get('/api/test/', (req, res) => {
 
 app.get('/api/racer/:id', async (req, res) => {
     // TODO we should cache known racer_ids in memory and short circuit out for unknown ones
-    const racerId = req.params.id;
+    const racerId = parseInt(req.params.id);
 
     const racerQuery = {
         name: "racer",

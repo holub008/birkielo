@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
+
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import RacerSummary from "./components/RacerSummary";
+
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-        <img src="images/logo.png" className="App-logo" alt="logo" />
-        <p>
-          Welcome to the future home of Birkielo, the site for ranking and quantitative analysis of cross country skiers!
-        </p>
-        <a
-          className="source-link" href="https://github.com/holub008/birkielo">
-
-          birkielo github repository
-        </a>
-        </header>
-      </div>);
-  }
+    render() {
+        return (
+            <Router>
+                <div className="app">
+                    <NavBar/>
+                    <div className="page">
+                        <Route path="/" exact component={Home} />
+                        <Route path={"/racer/:racer_id"} render={
+                            (props) => (<RacerSummary racerId={props.match.params.racer_id}/>)
+                        }/>
+                    </div>
+                </div>
+            </Router>);
+    }
 }
 
 export default App;

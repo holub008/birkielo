@@ -1,0 +1,10 @@
+.navbar {
+    background-color: rgba(57, 62, 69, 0.82);
+    text-align: center;
+    margin: auto;
+}
+
+.navbar-logo {
+    width: auto;
+    height: 90px;
+}

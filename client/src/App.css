@@ -1,19 +1,8 @@
-.App {
-  text-align: center;
+.app {
+    overflow: auto;
+    height: 100vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.source-link {
-  color: #61dafb;
-  font-family: "Courier New";
+.page {
+    margin-top: 1%;
 }
