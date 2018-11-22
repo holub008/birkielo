@@ -1,3 +1,20 @@
+DO
+$do$
+-- create a read only user (intended usage is the web server)
+BEGIN
+  IF NOT EXISTS (
+      SELECT
+      FROM pg_catalog.pg_roles
+      WHERE
+        rolname = 'birkielo') THEN
+    CREATE USER birkielo PASSWORD 'youwish';
+  END IF;
+END
+$do$;
+
+GRANT USAGE ON SCHEMA public TO birkielo;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO birkielo;
+
 CREATE TABLE IF NOT EXISTS event (
   id   SERIAL PRIMARY KEY,
   name VARCHAR NOT NULL
