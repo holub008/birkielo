@@ -66,19 +66,17 @@ function RacerResults(props) {
         },
     ];
 
-    const results = props.results.map( result => {
+    const results = props.results.slice()
+        .sort((a,b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
+        .map( result => {
             const resultCopy = Object.assign({}, result);
             resultCopy.percent_placement = result.gender_place / result.race_size;
             return(resultCopy);
-        }
-    );
+        });
 
-    console.log(results);
-
-    // TODO need to safety check for missing columns
     return(
         <Grommet theme={grommet}>
-            <DataTable columns={columns} data={results} />
+            <DataTable columns={columns} data={results}/>
         </Grommet>
     )
 }
