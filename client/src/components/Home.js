@@ -31,7 +31,7 @@ function Home(props) {
                             <Box>
                                 <Anchor href="/racer/9264">Caitlin Gregg</Anchor>
                                 <Anchor href="/racer/22952">Matt Liebsch</Anchor>
-                                <Anchor href="/racer/22952">Brain Gregg</Anchor>
+                                <Anchor href="/racer/8858">Brain Gregg</Anchor>
                                 <Anchor href="/racer/24222">Molly Watkins</Anchor>
                                 <Anchor href={"/racer/28450"}>Spencer Davis</Anchor>
                                 <Anchor href={"/racer/17162"}>Jessie Diggins</Anchor>

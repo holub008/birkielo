@@ -5,7 +5,8 @@ import {
     XAxis,
     YAxis,
     VerticalBarSeries,
-    LineMarkSeries
+    LineMarkSeries,
+    ChartLabel
 } from 'react-vis';
 
 function MetricDistribution(props) {
@@ -40,6 +41,11 @@ function MetricDistribution(props) {
                 {x: props.racerScore, y:yDomain.max},
                 {x: props.racerScore, y:yDomain.min}
             ]} />
+            <ChartLabel
+                xPercent={0.45}
+                yPercent={0.85}
+                text={"Elo score"}
+            />
         </XYPlot>
     );
 }
