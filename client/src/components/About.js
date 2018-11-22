@@ -13,8 +13,8 @@ function About() {
       <Box>
           <br/>
           <Text margin="small">
-              From the beginning of time, skier kind has desired to know who the strongest skier is. And today, we have
-              the technology. Well, we <i>had</i> the technology for a long time, now we just have a desparate weekend
+              From the beginning of time, skier kind has desired to know who is the strongest skier. And today, we have
+              the technology. Well, we <i>had</i> the technology for a long time, now we just have a weekend
               warrior willing to employ it.
           </Text>
           <Text margin="small">

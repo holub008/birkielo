@@ -3,7 +3,7 @@ import React from 'react';
 import Spinner from './Spinner';
 import RacerResults from './RacerResults';
 
-import { Heading, Box, Grommet } from 'grommet';
+import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
 
 import {callBackend, isEmpty} from "../util/data";
@@ -32,42 +32,43 @@ class RacerSummary extends React.Component {
 
         return(
             <Grommet theme={grommet}>
-                <Box>
+                <Box direction="row-responsive" gap="small">
+                    <Box>
                     <Heading size="medium" margin="xsmall">
                         {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
                     </Heading>
+                    </Box>
+                    <Box pad="small" border="left">
+                        {
+                            this.state.racerData.racer.gender
+                        }
+                    </Box>
+                </Box>
                     <Box pad="small" gap="small" align="start">
                         <Box direction="row-responsive" gap="small">
                             <Box pad="small" border="right">
-                                {
-                                    this.state.racerData.racer.gender
-                                }
-                            </Box>
-                            <Box pad="small" border="right">
+                                <Text>
                                 {
                                     // TODO need to actually sort by date!
                                     "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
                                 }
+                                </Text>
+                                <MetricTimeline timeline={this.state.racerData.metrics}/>
+
                             </Box>
                             <Box pad="small" border="right">
+                                <Text>
                                 {
                                     "Birkielo ranking: " + this.state.racerData.relativeStatistics.ranking +
                                     " / " + this.state.racerData.relativeStatistics.totalCompetitors
                                 }
+                                </Text>
+                                <MetricDistribution totalDistribution=
+                                                        {this.state.racerData.relativeStatistics.totalDistribution}
+                                                    racerScore={this.state.racerData.metrics[0].elo}
+                                />
                             </Box>
                         </Box>
-                    </Box>
-                </Box>
-                <Box direction="row-responsive" gap="medium">
-                    <Box>
-                        <MetricTimeline timeline={this.state.racerData.metrics}/>
-                    </Box>
-                    <Box>
-                        <MetricDistribution totalDistribution=
-                                                {this.state.racerData.relativeStatistics.totalDistribution}
-                                            racerScore={this.state.racerData.metrics[0].elo}
-                        />
-                    </Box>
                 </Box>
                 <RacerResults results={this.state.racerData.results}/>
             </Grommet>

@@ -4,7 +4,8 @@ import {
     XYPlot,
     XAxis,
     YAxis,
-    VerticalBarSeries
+    VerticalBarSeries,
+    LineMarkSeries
 } from 'react-vis';
 
 function MetricDistribution(props) {
@@ -35,6 +36,10 @@ function MetricDistribution(props) {
             <VerticalBarSeries className="vertical-bar-series-example" data={metrics} />
             <XAxis />
             <YAxis />
+            <LineMarkSeries data={[
+                {x: props.racerScore, y:yDomain.max},
+                {x: props.racerScore, y:yDomain.min}
+            ]} />
         </XYPlot>
     );
 }
