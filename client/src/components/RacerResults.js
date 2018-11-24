@@ -48,7 +48,7 @@ function RacerResults(props) {
         },
         {
             property: "gender_place",
-            header: "gender_place",
+            header: "Gender Place",
             align: "end",
         },
         {
