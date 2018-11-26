@@ -16,55 +16,56 @@ function milliTimeRender(millis){
     return hours + "h" + minutes + "m"
 }
 
+const columns = [
+    {
+        property: "event_name",
+        header: <Text>Event Name</Text>,
+        primary: true,
+    },
+    {
+        property: "event_date",
+        header: "Date",
+        render: datum =>
+            datum.event_date && new Date(datum.event_date).toLocaleDateString("en-US"),
+        align: "end",
+    },
+    {
+        property: "discipline",
+        header: "Discipline",
+    },
+    {
+        property: "distance",
+        header: "Distance (K)",
+        render: datum =>
+            datum.distance
+    },
+    {
+        property: "duration",
+        header: "Time",
+        render: datum =>
+            milliTimeRender(datum.duration)
+    },
+    {
+        property: "gender_place",
+        header: "Gender Place",
+        align: "end",
+    },
+    {
+        property: "percent_placement",
+        header: "Percent Placement",
+        render: datum => (
+            <Box pad={{ vertical: "xsmall" }}>
+                <Meter
+                    values={[{ value: 100 - datum.percent_placement * 100 }]}
+                    thickness="small"
+                    size="small"
+                />
+            </Box>
+        )
+    },
+];
+
 function RacerResults(props) {
-    const columns = [
-        {
-            property: "event_name",
-            header: <Text>Event Name</Text>,
-            primary: true,
-        },
-        {
-            property: "event_date",
-            header: "Date",
-            render: datum =>
-                datum.event_date && new Date(datum.event_date).toLocaleDateString("en-US"),
-            align: "end",
-        },
-        {
-            property: "discipline",
-            header: "Discipline",
-        },
-        {
-            property: "distance",
-            header: "Distance (K)",
-            render: datum =>
-                datum.distance
-        },
-        {
-            property: "duration",
-            header: "Time",
-            render: datum =>
-                milliTimeRender(datum.duration)
-        },
-        {
-            property: "gender_place",
-            header: "Gender Place",
-            align: "end",
-        },
-        {
-            property: "percent_placement",
-            header: "Percent Placement",
-            render: datum => (
-                <Box pad={{ vertical: "xsmall" }}>
-                    <Meter
-                        values={[{ value: 100 - datum.percent_placement * 100 }]}
-                        thickness="small"
-                        size="small"
-                    />
-                </Box>
-            )
-        },
-    ];
 
     const results = props.results.slice()
         .sort((a,b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())

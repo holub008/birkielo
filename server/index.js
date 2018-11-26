@@ -11,9 +11,80 @@ const port = process.env.PORT || 5000;
  * API endpoints
  */
 
+app.get('/api/racers', async (req, res) => {
+    const gender = req.query.gender;
+    const minRank = parseInt(req.query.minRank);
+    const pageSize = 50;
+
+    if (!minRank || (gender != 'male' && gender != 'female')) {
+        res.send({});
+        return;
+    }
+
+    const rankQuery = {
+        name: "rankings",
+        text: `
+                WITH racer_to_elo AS (
+                    SELECT DISTINCT ON (rm.racer_id)
+                        rm.racer_id,
+                        r.first_name,
+                        r.middle_name,
+                        r.last_name,
+                        LAST_VALUE(elo) OVER racer_window as elo
+                    FROM racer_metrics rm
+                    JOIN racer r
+                        ON rm.racer_id = r.id
+                    WHERE
+                        r.gender = $1
+                    WINDOW racer_window AS (
+                        PARTITION BY rm.racer_id ORDER BY rm.date
+                        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                    )
+                ),
+                ranked_racers AS (
+                    SELECT
+                        roe.racer_id,
+                        roe.first_name,
+                        roe.middle_name,
+                        roe.last_name,
+                        roe.elo,
+                        RANK() OVER (ORDER BY roe.elo DESC) as rank
+                    FROM racer_to_elo roe
+                )
+                SELECT
+                    rr.racer_id,
+                    rr.first_name,
+                    rr.middle_name,
+                    rr.last_name,
+                    rr.elo,
+                    rr.rank as rank
+                FROM ranked_racers rr
+                WHERE
+                    rr.rank >= $2
+                    AND rr.rank <= $2 + $3
+        `,
+        values: [ gender, minRank, pageSize ]
+    };
+
+    const rankings = await db.query(rankQuery)
+        .catch(e => console.error(`Failed to query rankings.`));
+
+    res.send({
+        rankings: rankings ? rankings.rows : null
+    })
+});
+
+app.get('/api/search/', (req, res) => {
+
+});
+
 app.get('/api/racer/:id', async (req, res) => {
-    // TODO we should cache known racer_ids in memory and short circuit out for unknown ones
     const racerId = parseInt(req.params.id);
+
+    if (!racerId) {
+        res.send({});
+        return;
+    }
 
     const racerQuery = {
         name: "racer",
