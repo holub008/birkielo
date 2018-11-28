@@ -27,6 +27,6 @@ module.exports = {
         return(bins);
     },
     rank: (data, point) => {
-        return(data.filter(populationPoint => populationPoint > point).length);
+        return(data.filter(populationPoint => populationPoint > point).length + 1);
     },
 };
