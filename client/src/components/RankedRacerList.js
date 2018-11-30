@@ -5,8 +5,7 @@ import {
     Grommet,
     Anchor,
     Box,
-    Heading,
-    Button
+    Heading
 } from "grommet";
 import {grommet} from "grommet/themes/index";
 import {Link} from 'react-router-dom';
@@ -24,12 +23,12 @@ const columns = [
         property: "first_name",
         header: "Racer",
         render: datum =>
-            <Anchor>
-                <Link to={`/racer/${datum.racer_id}`}>{
+            <Anchor align="center">
+                <Link to={`/racer/${datum.racer_id}`}
+                      style={{color:"rgb(144,96,235)"}}>{
                 `${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                 </Link>
             </Anchor>,
-        align: "left",
     },
     {
         property: "elo",
@@ -44,17 +43,24 @@ class RankedRacerList extends React.Component {
     constructor(props) {
        super(props);
        this.state = {
-           minRank: props.minRank,
+           gender: props.gender,
            rankings: {}
        }
     }
 
-    componentDidMount() {
-        // note API gives us a fixed page size of 100 (or less)
-        callBackend(`/api/racers?minRank=${this.state.minRank}&gender=${this.props.gender}`)
-            .then(data => this.setState({ rankings: data.rankings }))
+    loadData(gender) {
+        // note API gives us a fixed page size of 50 (or less)
+        callBackend(`/api/racers?minRank=${this.props.minRank}&gender=${gender}`)
+            .then(data => this.setState({
+                rankings: data.rankings,
+                gender: gender,
+            }))
             // TODO dumping to console isn't a great long term solution
             .catch(error => console.log(error));
+    }
+
+    componentDidMount() {
+        this.loadData(this.props.gender)
     }
 
     render() {
@@ -68,14 +74,20 @@ class RankedRacerList extends React.Component {
             <Grommet theme={grommet}>
                 <Box>
                     <Box direction="row-responsive">
-                        <Heading margin="xsmall">{`${capitalizeProper(this.props.gender)} Ranking`}</Heading>
-                        <Button>
-                            <Link to={`/rank/${this.props.gender === 'female' ? 'male' : 'female'}`}>
-                                {this.props.gender === 'female' ? 'Male' : 'Female'}
-                            </Link>
-                        </Button>
+                        <Heading margin="xsmall">{`${capitalizeProper(this.state.gender)} Ranking`}</Heading>
+                        <Anchor alignSelf="end"
+                                onClick={() => {
+                                    const updatedGender= this.state.gender === 'male' ? "female" : "male";
+                                    this.loadData(updatedGender);
+                                }}>
+                                    {
+                                        this.state.gender === 'male' ? "Women" : "Men"
+                                    }
+                        </Anchor>
                     </Box>
-                    <DataTable columns={columns} data={this.state.rankings} margin="small"/>
+                    <Box style={{maxWidth:"700px"}}>
+                        <DataTable columns={columns} data={this.state.rankings} size="large"/>
+                    </Box>
                 </Box>
             </Grommet>);
     }

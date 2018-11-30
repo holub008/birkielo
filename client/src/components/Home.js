@@ -12,6 +12,7 @@ import Help from "./Help";
 import About from "./About";
 
 import '../styles/Home.css';
+import RankedRacerList from "./RankedRacerList";
 
 function Home(props) {
     return(
@@ -21,6 +22,9 @@ function Home(props) {
                     <Tabs flex>
                         <Tab title="About">
                             <About/>
+                        </Tab>
+                        <Tab title="Rankings">
+                            <RankedRacerList minRank={1} gender={'male'}/>
                         </Tab>
                         <Tab title="Helping Out">
                             <Help/>

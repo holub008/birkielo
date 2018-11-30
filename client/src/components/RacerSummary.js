@@ -3,7 +3,7 @@ import React from 'react';
 import Spinner from './Spinner';
 import RacerResults from './RacerResults';
 
-import { Heading, Box, Grommet, Text, Grid } from 'grommet';
+import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
 
 import {callBackend, isEmpty} from "../util/data";
@@ -34,18 +34,18 @@ class RacerSummary extends React.Component {
             <Grommet theme={grommet}>
                 <Box direction="row-responsive" gap="small">
                     <Box>
-                    <Heading size="medium" margin="xsmall">
-                        {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
-                    </Heading>
+                        <Heading size="medium" margin="xsmall">
+                            {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
+                        </Heading>
                     </Box>
-                    <Box pad="small" border="left">
+                    <Box pad="small" border="left" alignSelf="end">
                         {
                             this.state.racerData.racer.gender
                         }
                     </Box>
                 </Box>
-                <Grid columns={{count: 2, size: "auto"}} margin={{vertical: "large"}}>
-                    <Box pad="medium" border="right" align="center">
+                <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
+                    <Box pad="medium" border="right" align="center" fill="horizontal">
                         <Text>
                         {
                             // TODO need to actually sort by date!
@@ -55,7 +55,7 @@ class RacerSummary extends React.Component {
                         <MetricTimeline timeline={this.state.racerData.metrics}/>
 
                     </Box>
-                    <Box pad="medium" align="center">
+                    <Box pad="medium" align="center" fill="horizontal">
                         <Text>
                         {
                             "Birkielo ranking: " + this.state.racerData.relativeStatistics.ranking +
@@ -66,8 +66,8 @@ class RacerSummary extends React.Component {
                                                 {this.state.racerData.relativeStatistics.totalDistribution}
                                             racerScore={this.state.racerData.metrics[0].elo}/>
                     </Box>
-                </Grid>
-                <Box margin={{vertical: "large"}}>
+                </Box>
+                <Box margin={{vertical: "large"}} align="center">
                     <RacerResults results={this.state.racerData.results}/>
                 </Box>
             </Grommet>

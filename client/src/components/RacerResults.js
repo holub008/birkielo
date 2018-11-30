@@ -20,7 +20,6 @@ const columns = [
     {
         property: "event_name",
         header: <Text>Event Name</Text>,
-        primary: true,
     },
     {
         property: "event_date",
@@ -28,6 +27,7 @@ const columns = [
         render: datum =>
             datum.event_date && new Date(datum.event_date).toLocaleDateString("en-US"),
         align: "end",
+        primary: true,
     },
     {
         property: "discipline",
@@ -77,7 +77,8 @@ function RacerResults(props) {
 
     return(
         <Grommet theme={grommet}>
-            <DataTable columns={columns} data={results}/>
+            <DataTable columns={columns} data={results}
+                       resizable={false} size="medium" margin="small"/>
         </Grommet>
     )
 }
