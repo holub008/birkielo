@@ -11,7 +11,7 @@ import {grommet} from "grommet/themes/index";
 import {Link} from 'react-router-dom';
 
 import Spinner from "./Spinner";
-import {callBackend, isEmpty, capitalizeProper} from "../util/data";
+import {callBackend, isEmpty, properGender} from "../util/data";
 
 const columns = [
     {
@@ -74,7 +74,7 @@ class RankedRacerList extends React.Component {
             <Grommet theme={grommet}>
                 <Box>
                     <Box direction="row-responsive">
-                        <Heading margin="xsmall">{`${capitalizeProper(this.state.gender)} Ranking`}</Heading>
+                        <Heading margin="xsmall">{`Top ${properGender(this.state.gender)}`}</Heading>
                         <Anchor alignSelf="end"
                                 onClick={() => {
                                     const updatedGender= this.state.gender === 'male' ? "female" : "male";

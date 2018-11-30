@@ -32,7 +32,7 @@ class SuggestionsTextInput extends React.Component {
                 onSelect={this.onSelect}
                 suggestions={suggestions}
                 placeholder="Skier Search"
-                style={{color: "rgb(144,96,235)", backgroundColor: "white", width:"50%"}}
+                style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0", width:"50%"}}
             />
         );
     }
@@ -66,7 +66,7 @@ class NavBar extends React.Component {
                     </Box>
                     <Box alignSelf="center" style={{width:"33%"}} align="end">
                         <Box margin="medium">
-                            <Menu color="white" />
+                            <Menu color="#e6f1f0" />
                         </Box>
                     </Box>
                 </Box>

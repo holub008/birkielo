@@ -20,3 +20,7 @@ export function isEmpty(obj) {
 export function capitalizeProper(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+export function properGender(str) {
+    return str === 'male' ? "Men": "Women";
+}
