@@ -3,7 +3,7 @@
 </p>
 
 # Birkielo
-Ranking & quantitative analysis of cross country skiers. Find an instance of the site running at [https://birkielo.com](http://birkielo.com).
+Ranking & quantitative analysis of cross country skiers. Find an instance of the site running at [birkielo.com](https://birkielo.com).
 
 ## Installation
 
