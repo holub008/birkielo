@@ -1,6 +1,9 @@
 # About
-DDL for building database schema. Target is postgres. It is assumed these scripts will be run manually, e.g.
+DDL for building database schema and python tooling for connecting.
 
+## Bootstrapping db
 ```sh
 psql ... -f make_schema.ddl
 ```
+
+
