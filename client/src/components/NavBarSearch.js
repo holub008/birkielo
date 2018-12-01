@@ -63,15 +63,7 @@ class NavBarSearch extends React.Component {
         this.setState({query: event.suggestion.value});
     }
 
-    handleKeyPress(event) {
-        alert(event.charCode);
-        if (event.charCode === 13 || event.keyCode === 13){
-            alert('Should search here');
-        }
-    }
-
     render() {
-        const query = this.state.query;
         return (
             <TextInput
                 type="search"

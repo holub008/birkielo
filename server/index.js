@@ -90,19 +90,7 @@ app.get('/api/search/', (req, res) => {
         maxResults = 1000;
     }
 
-    const parsedQuery = queryString.split(/\s+/);
-
-    let matches;
-    // TODO this is obviously very rigid & might not match user expectation for some queries
-    if (parsedQuery.length == 1) {
-        matches = racerStore.searchFirstOrLastName(parsedQuery[0]).slice(0, maxResults);
-    }
-    else if (parsedQuery.length > 1) {
-        matches = racerStore.searchFirstAndLastName(parsedQuery[0], parsedQuery[1]).slice(0, maxResults);
-    }
-    else {
-        matches = [];
-    }
+    const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
 
     res.send({
         candidates: matches ? matches : null,

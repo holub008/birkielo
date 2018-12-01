@@ -1,4 +1,5 @@
 const db = require('../db');
+const util = require('../util');
 
 
 class RacerStore {
@@ -29,31 +30,23 @@ class RacerStore {
             });
     }
 
-    getContents(){
-        return this;
-    }
-
-    // performs a prefix scan for either a first or last name - use case being a simple autocomplete
-    searchFirstOrLastName(query) {
+    fuzzyRankNames(query) {
         const queryLower = query.toLowerCase();
-        return this.racers.filter(x => x.first_name && x.first_name.toLowerCase().startsWith(queryLower) ||
-            x.last_name && x.last_name.toLowerCase().startsWith(queryLower));
-    }
+        return this.racers
+            // this is a quick hack for faster responses - limit the number of things we compute levenshtein distance on
+            .filter(x => x.first_name && x.first_name.toLowerCase().startsWith(queryLower[0]) ||
+                x.last_name && x.last_name.toLowerCase().startsWith(queryLower[0]))
+            .sort((a, b) => {
+                const aLower = `${a.first_name} ${a.last_name}`.toLowerCase();
+                const bLower = `${b.first_name} ${b.last_name}`.toLowerCase();
+                // since the search may include prefixes (autocomplete), we don't wish to penalize longer names when the
+                // query is short - else short names would always rank highest
+                const aEditDistanceAdjusted = util.levenshtein(aLower, queryLower) - Math.max(0, aLower.length - queryLower.length);
+                const bEditDistanceAdjusted = util.levenshtein(bLower, queryLower) - Math.max(0, bLower.length - queryLower.length);
 
-    // performs a scan for specifically a first name and a last name
-    // if an exact match is made, returns just those. otherwise falls back to first name or last name match
-    searchFirstAndLastName(firstName, lastName) {
-        const firstNameLower = firstName.toLowerCase();
-        const lastNameLower = lastName.toLowerCase();
-        const fullMatches = this.racers.filter(x => x.first_name && x.first_name.toLowerCase() ===  firstNameLower &&
-            x.last_name && x.last_name.toLowerCase() === lastNameLower);
+                return aEditDistanceAdjusted - bEditDistanceAdjusted;
+            });
 
-        if (fullMatches.length) {
-            return fullMatches;
-        }
-
-        return this.racers.filter(x => x.first_name && x.first_name.toLowerCase() === firstNameLower ||
-            x.last_name && x.last_name.toLowerCase() === lastName.toLowerCase());
     }
 
     containsRacerId(id) {
