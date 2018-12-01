@@ -4,6 +4,7 @@ import {XYPlot, XAxis, YAxis, HorizontalGridLines, LineSeries} from 'react-vis';
 import '../../node_modules/react-vis/dist/style.css';
 
 function MetricTimeline(props) {
+    // TODO this craps out if there's only one point
     const dateToElo = props.timeline.map(point => {
         return({
             x: new Date(point.date).getTime(),

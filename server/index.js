@@ -1,11 +1,14 @@
 const express = require('express');
 const path = require('path');
 const db = require('./db');
-const util = require('./util')
+const store = require('./store');
+const util = require('./util');
 
 const app = express();
 
 const port = process.env.PORT || 5000;
+
+const racerStore = new store.RacerStore();
 
 /**
  * API endpoints
@@ -74,14 +77,42 @@ app.get('/api/racers', async (req, res) => {
     })
 });
 
+// note that maxResults returns an arbitrary set up to maxResults (i.e. not selected via relevance)
 app.get('/api/search/', (req, res) => {
+    var maxResults = req.query.maxResults;
+    const queryString = req.query.queryString;
 
+    if (!queryString) {
+        res.send({});
+        return;
+    }
+    if (!maxResults || maxResults > 1000) {
+        maxResults = 1000;
+    }
+
+    const parsedQuery = queryString.split(/\s+/);
+
+    let matches;
+    // TODO this is obviously very rigid & might not match user expectation for some queries
+    if (parsedQuery.length == 1) {
+        matches = racerStore.searchFirstOrLastName(parsedQuery[0]).slice(0, maxResults);
+    }
+    else if (parsedQuery.length > 1) {
+        matches = racerStore.searchFirstAndLastName(parsedQuery[0], parsedQuery[1]).slice(0, maxResults);
+    }
+    else {
+        matches = [];
+    }
+
+    res.send({
+        candidates: matches ? matches : null,
+    });
 });
 
 app.get('/api/racer/:id', async (req, res) => {
     const racerId = parseInt(req.params.id);
 
-    if (!racerId) {
+    if (!racerId || !racerStore.containsRacerId(racerId)) {
         res.send({});
         return;
     }

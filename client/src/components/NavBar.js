@@ -6,37 +6,12 @@ import {
     Grommet,
     Box,
     Image,
-    TextInput,
 } from "grommet";
 import { grommet } from "grommet/themes";
-
 import { Menu } from 'grommet-icons';
 
-const suggestions = Array(5)
-    .fill()
-    .map((_, i) => `suggestion ${i + 1}`);
+import NavBarSearch from './NavBarSearch';
 
-class SuggestionsTextInput extends React.Component {
-    state = { value: "" };
-
-    onChange = event => this.setState({ value: event.target.value });
-
-    onSelect = event => this.setState({ value: event.suggestion });
-
-    render() {
-        const { value } = this.state;
-        return (
-            <TextInput
-                value={value}
-                onChange={this.onChange}
-                onSelect={this.onSelect}
-                suggestions={suggestions}
-                placeholder="Skier Search"
-                style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0", width:"50%"}}
-            />
-        );
-    }
-}
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -56,7 +31,7 @@ class NavBar extends React.Component {
                          align="start"
                          margin={{left:"small"}}
                     >
-                        <SuggestionsTextInput/>
+                        <NavBarSearch maxResults={5}/>
                     </Box>
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>
                         <Link to="/">
