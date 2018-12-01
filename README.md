@@ -33,7 +33,6 @@ The site will be running on port 5000.
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
-* Improve skier search algo (using Levenshtein distance or similar)
 * Bring COLL/vasa/other results into the fold
 * Refactor elo calculation
    - Take mean of below & above finishers, treating as a single defeat/victory. This will reduce some undesirable variability.

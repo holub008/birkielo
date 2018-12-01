@@ -90,6 +90,8 @@ app.get('/api/search/', (req, res) => {
         maxResults = 1000;
     }
 
+    // since long search strings can be slow & don't add much value in a name searc
+    const queryStringLimited = queryString.slice(0, 25);
     const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
 
     res.send({

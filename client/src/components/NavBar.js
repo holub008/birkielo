@@ -6,12 +6,39 @@ import {
     Grommet,
     Box,
     Image,
+    Menu
 } from "grommet";
 import { grommet } from "grommet/themes";
-import { Menu } from 'grommet-icons';
+import { Menu as MenuIcon } from 'grommet-icons';
 
-import NavBarSearch from './NavBarSearch';
+import SearchBar from './SearchBar';
 
+class MenuDrop extends React.Component {
+    render() {
+        return (
+            <Box margin={{horizontal: "large"}}>
+                <Menu
+                    dropAlign={{ top: "top"}}
+                    items={[
+                        { label: <Link to={"/"} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                                    Home
+                                 </Link>,
+                          onClick: () => {} },
+                        { label: <Link to={"/about"} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                                    About
+                                 </Link>,
+                          onClick: () => {} },
+                        { label: <Link to={"/support"} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                                Support
+                            </Link>,
+                            onClick: () => {} },
+                    ]}
+                    icon={<MenuIcon color="#e6f1f0"/>}
+                />
+            </Box>
+        );
+    }
+}
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -31,7 +58,9 @@ class NavBar extends React.Component {
                          align="start"
                          margin={{left:"small"}}
                     >
-                        <NavBarSearch maxResults={5}/>
+                        <Box style={{wdith: "50%"}}>
+                            <SearchBar maxResults={5}/>
+                        </Box>
                     </Box>
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>
                         <Link to="/">
@@ -40,9 +69,7 @@ class NavBar extends React.Component {
                         </Link>
                     </Box>
                     <Box alignSelf="center" style={{width:"33%"}} align="end">
-                        <Box margin="medium">
-                            <Menu color="#e6f1f0" />
-                        </Box>
+                        <MenuDrop/>
                     </Box>
                 </Box>
             </Grommet>

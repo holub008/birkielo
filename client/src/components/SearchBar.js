@@ -21,11 +21,11 @@ class NavBarSearch extends React.Component {
                 label:
                     <Link to={`/racer/${suggestion.racer_id}`} style={{textDecoration: "none"}}>
                         <Box fill>
-                        <Anchor>
-                        {
-                            `${suggestion.first_name} ${suggestion.last_name}`
-                        }
-                        </Anchor>
+                            <Anchor>
+                                {
+                                    `${suggestion.first_name} ${suggestion.last_name}`
+                                }
+                            </Anchor>
                         </Box>
                     </Link>,
                 value:`${suggestion.first_name} ${suggestion.last_name}`
@@ -60,7 +60,8 @@ class NavBarSearch extends React.Component {
     }
 
     onSelect(event) {
-        this.setState({query: event.suggestion.value});
+        // TODO quite sure this is a crime against humanity 1. for not using react-router 2. for hacking out child props
+        window.location.href= event.suggestion.label.props.to;
     }
 
     render() {
@@ -71,7 +72,7 @@ class NavBarSearch extends React.Component {
                 onSelect={(event) => this.onSelect(event)}
                 suggestions={this.renderSuggestions()}
                 placeholder="Skier Search"
-                style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0", width:"50%"}}
+                style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
             />
         );
     }

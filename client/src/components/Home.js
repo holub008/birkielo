@@ -8,11 +8,10 @@ import {
 } from "grommet";
 import { grommet } from "grommet/themes";
 
-import Help from "./Help";
-import About from "./About";
-
+import Help from "./Support";
 import '../styles/Home.css';
 import RankedRacerList from "./RankedRacerList";
+import SearchBar from "./SearchBar";
 
 function Home(props) {
     return(
@@ -20,14 +19,15 @@ function Home(props) {
             <Grommet theme={grommet}>
                 <Box>
                     <Tabs flex>
-                        <Tab title="About">
-                            <About/>
+                        <Tab title="Search">
+                            <Box>
+                            <Box margin="medium" width="large" alignSelf="center">
+                                <SearchBar maxResults={20}/>
+                            </Box>
+                            </Box>
                         </Tab>
                         <Tab title="Rankings">
                             <RankedRacerList minRank={1} gender={'male'}/>
-                        </Tab>
-                        <Tab title="Helping Out">
-                            <Help/>
                         </Tab>
                     </Tabs>
                 </Box>
