@@ -36,7 +36,7 @@ class NavBarSearch extends React.Component {
     updateSuggestions(query) {
         callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
             .then(results => {
-                this.setState({suggestions: results.candidates, query: query});
+                this.setState({ suggestions: results.candidates, query: query });
             })
             // TODO dumping to console isn't a great long term solution
             .catch(error => {
@@ -75,7 +75,6 @@ class NavBarSearch extends React.Component {
         return (
             <TextInput
                 type="search"
-                value={query}
                 onChange={(event) => this.onChange(event)}
                 onSelect={(event) => this.onSelect(event)}
                 suggestions={this.renderSuggestions()}
