@@ -33,7 +33,7 @@ The site will be running on port 5000.
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
-* Bring COLL/vasa/other results into the fold
+* Bring vasa/other results into the fold
 * Refactor elo calculation
    - Take mean of below & above finishers, treating as a single defeat/victory. This will reduce some undesirable variability.
    - Normalize results to make comparisons between men and women possible.
@@ -50,4 +50,4 @@ In approximate order of `E[value/effort]`:
     - User selected skier comparison or head to head comparison
 * Pro results
 * Log requests and user actions on site
-* Allow user input for matching
+* Allow user input for matching (e.g. if someone is incorrectly matched)

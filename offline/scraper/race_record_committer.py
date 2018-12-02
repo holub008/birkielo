@@ -42,7 +42,7 @@ def insert_and_get_events(cursor, events):
     already knowing the event details & some level of fuzzy matching, it's high effort & not currently implemented.
 
     :param cursor: a writable cursor object. this function makes no mutation to it besides the insert and select
-    :param events: a dataframe representing events. required columns: "event_name"
+    :param events: a dataframe representing events. required columns: "name"
     :return: a dataframe representing the inserted events (notably including the db backed event id)
     """
     return _insert_and_get_generic(cursor, events, "event", ['name'])

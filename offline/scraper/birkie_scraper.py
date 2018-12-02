@@ -1,10 +1,7 @@
 import pandas as pd
-import numpy as np
 import requests
-from requests.adapters import HTTPAdapter
 from bs4 import BeautifulSoup
 import time
-from tabula import read_pdf
 
 # since we like the birkie, avoid straining their systems as we pull data
 TIME_BETWEEN_REQUESTS = 10
