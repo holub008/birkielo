@@ -49,7 +49,7 @@ def extract_distance_from_span(span):
         return None
 
 
-def get_occurences_to_parent_race_ids():
+def get_occurrences_to_parent_race_ids():
     res = requests.get(DATE_LIST_URL)
     soup = BeautifulSoup(res.content, 'lxml')
 
@@ -95,7 +95,22 @@ def expand_children_occurrences(occurrence_to_race_ids):
     return all_races
 
 
-def attach_race_distances(race_tuples):
+def extract_version_id_from_soup(soup):
+    anchors = soup.find_all('a')
+
+    if len(anchors) > 0:
+        for anchor in anchors:
+            spans = anchor.find_all('span')
+            if len(spans) > 0 and spans[0].text.lower().strip() == 'overall results':
+                results_href = anchor['href']
+                matches = re.search(r'version=([0-9]+)', results_href)
+                if matches:
+                    return int(matches.group(1))
+
+    return None
+
+
+def attach_race_distances_and_version_ids(race_tuples):
     all_races = []
     for date, race_id, discipline in race_tuples:
         race_page_url = RACE_PAGE_URL_FORMAT % (race_id,)
@@ -108,28 +123,63 @@ def attach_race_distances(race_tuples):
         distance_span = candidate_spans[0]
         distance_kilometers = extract_distance_from_span(distance_span.text)
 
-        all_races.append((date, race_id, discipline, distance_kilometers))
+        version_id = extract_version_id_from_soup(soup)
+        if not version_id:
+            continue
+
+        all_races.append((date, race_id, version_id, discipline, distance_kilometers))
 
     return all_races
 
 
 def get_race_results(races):
-    pass
+    results = pd.DataFrame()
+    for index, race in races.iterrows():
+        # this a safety check (as opposed to while True) in case unexpected behavior occurs - prevent hammering the site
+        # we don't expected to scrape more than 5K results from an individual race on mtec
+        total_requests = 0
+        while total_requests < 5000 / 50:
+            offset = total_requests * 50
+            url = RACE_RESULT_URL_FORMAT % (race.mtec_race_id, race.mtec_version_id, offset)
+            res = requests.get(url)  # requests automatically handles the compressed response for us :)
+            soup = BeautifulSoup(res.content, 'lxml')
+
+            tables = soup.find_all('table')
+
+            if len(tables) > 1:
+                results_table = tables[1]
+                # gosh this is awesome. it even reads in the headers as col names
+                partial_results = pd.read_html(str(results_table))[0]
+                partial_results['mtec_race_id'] = race.mtec_race_id
+
+                if partial_results.shape[1] > 0:
+                    results = results.append(partial_results, sort=False)
+                else:
+                    break  # there must be no results left for this race
+            else:
+                break
+
+            total_requests += 1
+
+    return results
+
 
 ########################
 ## start control flow
 ########################
 
-occurrence_to_race_ids = get_occurences_to_parent_race_ids()
+occurrence_to_race_ids = get_occurrences_to_parent_race_ids()
 all_races = expand_children_occurrences(occurrence_to_race_ids)
-all_races = attach_race_distances(all_races)
+all_races = attach_race_distances_and_version_ids(all_races)
 
 races_data_frame = pd.DataFrame(all_races)
-races_data_frame.columns = ['date', 'mtec_race_id', 'discipline', 'distance']
+races_data_frame.columns = ['date', 'mtec_race_id', 'mtec_version_id', 'discipline', 'distance']
 
 races_data_frame['date'] = pd.to_datetime(races_data_frame.date, format='%m/%d/%Y')
 
 races_data_frame.to_csv('/Users/kholub/coll_races.csv')
+
+race_results = get_race_results(races_data_frame)
 
 con = None
 try:
