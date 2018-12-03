@@ -176,10 +176,11 @@ races_data_frame = pd.DataFrame(all_races)
 races_data_frame.columns = ['date', 'mtec_race_id', 'mtec_version_id', 'discipline', 'distance']
 
 races_data_frame['date'] = pd.to_datetime(races_data_frame.date, format='%m/%d/%Y')
-
 races_data_frame.to_csv('/Users/kholub/coll_races.csv')
 
 race_results = get_race_results(races_data_frame)
+race_results.to_csv('/Users/kholub/coll_race_results.csv')
+
 
 con = None
 try:
