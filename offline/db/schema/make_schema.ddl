@@ -74,6 +74,7 @@ CREATE TABLE IF NOT EXISTS race_result (
   -- since an entry is worthless if it doesn't imply an ordering, constrain
   -- intended usage is to group result records by race & reported gender, then infer rank from gender or overall place
   CONSTRAINT orderable CHECK (overall_place IS NOT NULL OR gender_place IS NOT NULL OR duration IS NOT NULL)
+  -- TODO once matching logic is improved, we can unique on racer_id, race_id
 );
 
 COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record. will contain records not tied to a racer identity';

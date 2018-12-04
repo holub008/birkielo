@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 
 import race_record_committer as rrc
 from db import get_connection
+from racer_identity import RaceRecord
+from racer_matcher import RacerMatcher
 
 # URL for getting all race years & ids
 DATE_LIST_URL = "https://www.mtecresults.com/race/show/245/"
@@ -181,6 +183,7 @@ races_data_frame.to_csv('/Users/kholub/coll_races.csv')
 race_results = get_race_results(races_data_frame)
 race_results.to_csv('/Users/kholub/coll_race_results.csv')
 
+race_results = race_results.merge(races_data_frame, how='inner', on=['mtec_race_id'])
 
 con = None
 try:
@@ -196,6 +199,14 @@ try:
     races_for_insert = races_data_frame.merge(event_occurrences_inserted, how='inner', on=['date'])
     races_for_insert['event_occurrence_id'] = races_for_insert.id
     races_inserted = rrc.insert_and_get_races(cursor, races_for_insert)
+    races_inserted_joined = None  # TODO need to build the mtec_race_id <--> our race_id mapping
+
+    race_results_joined = race_results.merge(races_inserted, how='inner', on=['mtec_race_id'])
+    race_records_for_insert = [RaceRecord(rr.Name, rr.Age, rr.Sex, rr.Time, rr.Overall, rr.SexPl) for ix, rr in
+                               race_results_joined.iterrows()]
+    racer_matcher = RacerMatcher(race_records_for_insert)
+    matched_race_records = racer_matcher.merge_to_identities()
+    rrc.insert_racers(matched_race_records, race_records_for_insert)
 
     con.commit()
     cursor.close()

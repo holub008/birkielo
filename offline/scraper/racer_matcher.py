@@ -1,5 +1,6 @@
 import numpy as np
 from racer_identity import RacerIdentity
+from db import get_connection
 
 ##########################
 # The matching strategy I'm planning is heuristic & unsupervised (minus some human eyeballing) in this iteration.
@@ -25,28 +26,54 @@ from racer_identity import RacerIdentity
 ##########################
 
 
+def mode_or_random(lst):
+    """
+    this implementation is a suboptimal n^2
+    NOTE: None does not count towards towards the mode! this is desirable for the matching use case where missing data
+    truly does imply "no vote" towards the truth
+    :param lst: a list of any comparable objects
+    :return:  the mode, or, if lst is multi-modal, an arbitrary choice among the multi-modes
+    """
+    lst_present = [x for x in lst if x]
+    return max(set(lst_present), key=lst_present.count)
+
+
+def load_existing_racer_identities(connection_supplier=lambda: get_connection()):
+    cursor = connection_supplier().cursor()
+    query = "SELECT id, first_name, middle_name, last_name, age_lower, age_upper, gender FROM racer"
+    cursor.execute(query)
+    results = cursor.fetchall()
+    racer_identities = [RacerIdentity(x[1], x[2], x[3], x[4], x[5], x[6], x[0]) for x in results]
+
+    return racer_identities
+
+
 class RacerMatcher:
 
-    # TODO, note that we don't currently take in previous identities
-    def __init__(self, race_records):
+    def __init__(self, race_records, existing_identities_supplier=lambda: load_existing_racer_identities()):
         if len(race_records) < 1:
             raise ValueError('Cannot match an empty list of race records')
 
         self._race_records = race_records
+        self._existing_racer_identities = existing_identities_supplier()
 
     def merge_to_identities(self):
         """
-        TODO this method shows somewhat poor modularity in combining the similarity, validation, and merge steps
+        match new newly supplied race records to either existing or new racer identities
+        TODO this method doesn't implement all of the desired functionality in matching or use all available signals
+        TODO this method doesn't communicate when an existing identity should be updated (vs. just newly inserted)
         :return: a list of tuples. for each tuple, element 0 is the merged identity, element 1 is the race record
         indices (as input) of the match
         """
-        similarity = np.zeros((len(self._race_records), len(self._race_records)))
+        # it's critical that the input race records come first
+        all_records = self._race_records + self._existing_racer_identities
         # as a quick heuristic to avoid n^2 scanning, build minimally viable subgroups on first name and last name
-        match_propensity_ordered_racers = sorted(self._race_records,
+        # note that these two lists need to be generated from the exact same
+        match_propensity_ordered_racers = sorted(all_records,
                                                  key=lambda rr: (rr.get_first_name().lower(),
                                                                    rr.get_last_name().lower()))
         ranks = sorted(range(len(self._race_records)), key=lambda ix: (self._race_records[ix].get_first_name().lower(),
-                                                                 self._race_records[ix].get_last_name().lower()))
+                                                                       self._race_records[ix].get_last_name().lower()))
         merged_records = []
         current_subgroup = [ranks[0]]
         representative = match_propensity_ordered_racers[0]
@@ -56,14 +83,21 @@ class RacerMatcher:
             if representative.shared_name(racer):
                 current_subgroup.append(rank_ix)
             else:
-                # TODO need to handle overlapped names - when several identities in a subgoup where in the same race
-                # TODO just using the first representative for the identity is suboptimal
+                # TODO just using the first representative for the identity is suboptimal. ideally we merge to consensus
+                # doing something similar to what is done for racer id
+                racer_id = mode_or_random([r.get_racer_id() for r in self._race_records[current_subgroup]])
                 ri = RacerIdentity(representative.get_first_name(), representative.get_middle_name(),
                                    representative.get_last_name(), representative.get_age_lower(),
-                                   representative.get_age_upper(), representative.get_gender().value)
-                merged_records.append((ri, current_subgroup))
+                                   representative.get_age_upper(), representative.get_gender().value,
+                                   racer_id=racer_id)
+
+                # filters out identities already stored in DB - those we don't wish to insert
+                current_subgroup_for_insert = [rank_ix for rank_ix in current_subgroup
+                                               if rank_ix < len(self._race_records)]
+                merged_records.append((ri, current_subgroup_for_insert))
 
                 current_subgroup = [rank_ix]
                 representative = racer
 
-        return merged_records
+        # if the identity has 0 new race records, it was an existing identity & there's nothing to do
+        return [mr for mr in merged_records if len(mr[1]) > 0]

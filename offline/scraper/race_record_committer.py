@@ -87,12 +87,14 @@ def insert_racers(cursor, racers_to_race_record_indices, race_results):
 
         racer_identity = racer_to_ix[0]
         race_results_for_racer = [race_results[ix] for ix in racer_to_ix[1]]
-        cursor.execute(_RACER_INSERT_QUERY,
-                       (racer_identity.get_first_name(), racer_identity.get_middle_name(),
-                        racer_identity.get_last_name(), racer_identity.get_gender().value,
-                        racer_identity.get_age_lower(), racer_identity.get_age_upper()))
-        result_set = cursor.fetchall()
-        racer_identity_id = result_set[0][0]
+        racer_identity_id = racer_identity.get_racer_id()
+        if not racer_identity_id:
+            cursor.execute(_RACER_INSERT_QUERY,
+                           (racer_identity.get_first_name(), racer_identity.get_middle_name(),
+                            racer_identity.get_last_name(), racer_identity.get_gender().value,
+                            racer_identity.get_age_lower(), racer_identity.get_age_upper()))
+            result_set = cursor.fetchall()
+            racer_identity_id = result_set[0][0]
 
         values_for_insert = [(racer_identity_id, rr.get_race_id(), rr.get_overall_place(), rr.get_gender_place(),
                               rr.get_duration(), rr.get_gender().value, rr.get_age_lower(), rr.get_age_upper())

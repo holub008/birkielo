@@ -25,7 +25,6 @@ class RacerIdentity:
         self._first_name = first_name
         self._middle_name = middle_name
         self._last_name = last_name
-        # TODO we'll want to parse this into somethiing...
         self._age_range_lower = age_lower
         self._age_range_upper = age_upper
         self._gender = _gender_from_string(gender)
@@ -134,9 +133,9 @@ def _parse_time_millis(time_unparsed,
 
 
 def _gender_from_string(gender_string):
-    if gender_string.lower() == 'male':
+    if gender_string.lower() == 'male' or gender_string.lower() == 'm':
         return Gender.Male
-    elif gender_string.lower() == 'female':
+    elif gender_string.lower() == 'female' or gender_string.lower() == 'f':
         return Gender.Female
     else:
         raise ValueError('Supplied gender string "%s" does not match expected formats' % (gender_string,))
@@ -147,11 +146,19 @@ def _extract_age_range(unparsed_range):
     :param unparsed_range: an unparsed age group
     :return: a tuple containing the min & max of the range
     """
+    if isinstance(unparsed_range, int):
+        return unparsed_range, unparsed_range
+
     matches = re.search(r"([0-9]+)\-([0-9]+)", unparsed_range)
     if matches:
-        return matches.groups()
+        return (int(x) for x in matches.groups())
     else:
-        return None, None
+        matches = re.search(r"[0-9]+", unparsed_range)
+
+        if matches:
+            return int(matches.group(1)), int(matches.group(1))
+        else:
+            return None, None
 
 
 class RaceRecord(RacerIdentity):
