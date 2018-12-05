@@ -13,7 +13,14 @@ pipenv install
 
 ## Running
 Scripts can only be run from the parent directory (offline/), as follows:
+
+### Birkie
 ```sh
 pipenv run python scraper/birkie_scraper.py # scrapes all birkie results to local files
 pipenv run python scraper/birkie_processor.py # formats, matches, and commits birkie results
+```
+
+### City of Lakes Loppet
+```sh
+pipenv run python scraper/coll_scraper.py
 ```
