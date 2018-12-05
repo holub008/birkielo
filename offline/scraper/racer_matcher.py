@@ -1,4 +1,3 @@
-import numpy as np
 from racer_identity import RacerIdentity
 from db import get_connection
 
@@ -32,9 +31,11 @@ def mode_or_random(lst):
     NOTE: None does not count towards towards the mode! this is desirable for the matching use case where missing data
     truly does imply "no vote" towards the truth
     :param lst: a list of any comparable objects
-    :return:  the mode, or, if lst is multi-modal, an arbitrary choice among the multi-modes
+    :return:  the mode, or, if lst is multi-modal, an arbitrary choice among the multi-modes. None if no non-none elements
     """
     lst_present = [x for x in lst if x]
+    if not len(lst_present):
+        return None
     return max(set(lst_present), key=lst_present.count)
 
 
@@ -72,8 +73,8 @@ class RacerMatcher:
         match_propensity_ordered_racers = sorted(all_records,
                                                  key=lambda rr: (rr.get_first_name().lower(),
                                                                    rr.get_last_name().lower()))
-        ranks = sorted(range(len(self._race_records)), key=lambda ix: (self._race_records[ix].get_first_name().lower(),
-                                                                       self._race_records[ix].get_last_name().lower()))
+        ranks = sorted(range(len(all_records)), key=lambda ix: (all_records[ix].get_first_name().lower(),
+                                                                all_records[ix].get_last_name().lower()))
         merged_records = []
         current_subgroup = [ranks[0]]
         representative = match_propensity_ordered_racers[0]
@@ -83,9 +84,11 @@ class RacerMatcher:
             if representative.shared_name(racer):
                 current_subgroup.append(rank_ix)
             else:
+                subgroup_racers = [all_records[x] for x in current_subgroup]
+                racer_id = mode_or_random([r.get_racer_id() for r in subgroup_racers])
+
                 # TODO just using the first representative for the identity is suboptimal. ideally we merge to consensus
                 # doing something similar to what is done for racer id
-                racer_id = mode_or_random([r.get_racer_id() for r in self._race_records[current_subgroup]])
                 ri = RacerIdentity(representative.get_first_name(), representative.get_middle_name(),
                                    representative.get_last_name(), representative.get_age_lower(),
                                    representative.get_age_upper(), representative.get_gender().value,

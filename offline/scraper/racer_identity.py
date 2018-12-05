@@ -111,11 +111,12 @@ def _extract_name(name_string):
 
 
 def _parse_time_millis(time_unparsed,
-                       time_format='%H:%M:%S.%f',
-                       time_format_fallback = '%M:%S.%f'):
+                       time_format='%H:%M:%S',
+                       time_format_fallback = '%M:%S'):
     """
     :param time_unparsed: a string expected to represent time like format
     :param time_format: a datetime format string
+    :param time_format_fallback: a alternative time format string
     :return: the number of milliseconds in the input time
     """
     # note this breaks on > 24 hours. to prevent the added dependency for a better lib, live with it
@@ -126,7 +127,10 @@ def _parse_time_millis(time_unparsed,
         try:
             dt = datetime.strptime(time_unparsed, time_format_fallback)
         except:
-            print('Failed to parse a race time from "%s"' % (time_unparsed,))
+            try:
+                dt = datetime.strptime(time_unparsed, time_format_fallback_fallback)
+            except:
+                print('Failed to parse a race time from "%s"' % (time_unparsed,))
 
     delta = timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
     return delta.total_seconds() * 1000
@@ -146,14 +150,11 @@ def _extract_age_range(unparsed_range):
     :param unparsed_range: an unparsed age group
     :return: a tuple containing the min & max of the range
     """
-    if isinstance(unparsed_range, int):
-        return unparsed_range, unparsed_range
-
     matches = re.search(r"([0-9]+)\-([0-9]+)", unparsed_range)
     if matches:
         return (int(x) for x in matches.groups())
     else:
-        matches = re.search(r"[0-9]+", unparsed_range)
+        matches = re.search(r"([0-9]+)", unparsed_range)
 
         if matches:
             return int(matches.group(1)), int(matches.group(1))

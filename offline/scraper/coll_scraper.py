@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 import race_record_committer as rrc
 from db import get_connection
 from racer_identity import RaceRecord
+from racer_identity import RacerSource
 from racer_matcher import RacerMatcher
 
 # URL for getting all race years & ids
@@ -166,6 +167,13 @@ def get_race_results(races):
     return results
 
 
+def extract_place(placement):
+    matches = re.search(r'([0-9]+) ?/', placement)
+    if matches:
+        return int(matches.group(1))
+    else:
+        return None
+
 ########################
 ## start control flow
 ########################
@@ -184,7 +192,9 @@ race_results = get_race_results(races_data_frame)
 race_results.to_csv('/Users/kholub/coll_race_results.csv')
 
 race_results = race_results.merge(races_data_frame, how='inner', on=['mtec_race_id'])
-
+race_results = race_results[~pd.isnull(race_results.Sex) & ((race_results.Sex == 'M') | (race_results.Sex == 'F'))]
+# ugh, this is a hack
+race_results['Age'] = race_results['Age'].fillna(-1)
 con = None
 try:
     con = get_connection()
@@ -199,14 +209,21 @@ try:
     races_for_insert = races_data_frame.merge(event_occurrences_inserted, how='inner', on=['date'])
     races_for_insert['event_occurrence_id'] = races_for_insert.id
     races_inserted = rrc.insert_and_get_races(cursor, races_for_insert)
-    races_inserted_joined = None  # TODO need to build the mtec_race_id <--> our race_id mapping
+    races_inserted['distance'] = pd.to_numeric(races_inserted.distance)
 
-    race_results_joined = race_results.merge(races_inserted, how='inner', on=['mtec_race_id'])
-    race_records_for_insert = [RaceRecord(rr.Name, rr.Age, rr.Sex, rr.Time, rr.Overall, rr.SexPl) for ix, rr in
-                               race_results_joined.iterrows()]
+    races_inserted_joined = races_inserted.merge(races_for_insert, how="inner",
+                                                 on=['event_occurrence_id', 'discipline', 'distance'])
+    races_inserted_joined['race_id'] = races_inserted_joined.id_x
+    races_inserted_joined = races_inserted_joined[['mtec_race_id', 'race_id']]
+
+    race_results_joined = race_results.merge(races_inserted_joined, how='inner', on=['mtec_race_id'])
+    race_records_for_insert = [RaceRecord(rr.Name, str(int(rr.Age)), rr.Sex, rr.Time, extract_place(rr.Overall),
+                                          extract_place(rr.SexPl), rr.race_id, RacerSource.RecordIngestion)
+                               for ix, rr in race_results_joined.iterrows()]
+    race_records_for_insert = [rr for rr in race_records_for_insert if rr.get_first_name()]
     racer_matcher = RacerMatcher(race_records_for_insert)
     matched_race_records = racer_matcher.merge_to_identities()
-    rrc.insert_racers(matched_race_records, race_records_for_insert)
+    rrc.insert_racers(cursor, matched_race_records, race_records_for_insert)
 
     con.commit()
     cursor.close()
