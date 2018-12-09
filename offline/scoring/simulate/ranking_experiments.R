@@ -101,24 +101,30 @@ naive_elo <- function(results,
   score_history
 }
 
+mean_elo_prior <- function(rank_percentile, prior_mean, prior_sd) {
+  qnorm(rank_percentile, prior_mean, prior_sd)
+}
+
 mean_elo <- function(results,
                      log_odds_oom_differential = 400,
-                     k_factor = 1,
-                     default_score = 1000) {
+                     k_factor = 10,
+                     score_prior = function(x){mean_elo_prior(x, 1000, 200)}) {
   racers <- results %>%
     distinct(racer_id) %>%
-    mutate(score = default_score)
+    mutate(score = NA)
   
   score_history <- data.frame()
   
   updated_racers <- data.frame()
   for (ix in sort(unique(results$iteration))) {
     race_results <- results %>% 
-      filter(iteration == ix)%>%
+      filter(iteration == ix) %>%
       mutate(
         race_rank = rank(time)
       ) %>%
       inner_join(racers, by = c('racer_id' = 'racer_id'))
+    
+    n_racers <- nrow(race_results)
     
     # TODO it's likely faster to just do a self antijoin
     updated_racers <- data.frame()
@@ -129,25 +135,30 @@ mean_elo <- function(results,
           linear_scale_score = 10 ^ (score / log_odds_oom_differential)
         ) 
       
-      score_increment <- race_results %>%
-        filter(racer_id != update_racer_id) %>%
-        mutate(
-          lost = racer$race_rank < race_rank
-        ) %>%
-        group_by(lost) %>%
-        summarize(
-          mean_score = mean(score)
-        ) %>%
-        mutate(
-          linear_scale_competitor_score = 10 ^ (mean_score / log_odds_oom_differential),
-          p_racer = racer$linear_scale_score / (linear_scale_competitor_score + racer$linear_scale_score),
-          outcome = ifelse(lost, 1, 0),
-          score_change = k_factor * (outcome - p_racer)
-        ) %>%
-        pull(score_change) %>%
-        sum()
-      
-      racer$updated_score <- racer$score + score_increment
+      if (is.na(racer$score)) {
+        racer$updated_score <- score_prior(racer$race_rank / n_racers)
+      }
+      else {
+        score_increment <- race_results %>%
+          filter(racer_id != update_racer_id) %>%
+          mutate(
+            lost = racer$race_rank < race_rank
+          ) %>%
+          group_by(lost) %>%
+          summarize(
+            mean_score = mean(score)
+          ) %>%
+          mutate(
+            linear_scale_competitor_score = 10 ^ (mean_score / log_odds_oom_differential),
+            p_racer = racer$linear_scale_score / (linear_scale_competitor_score + racer$linear_scale_score),
+            outcome = ifelse(lost, 1, 0),
+            score_change = k_factor * (outcome - p_racer)
+          ) %>%
+          pull(score_change) %>%
+          sum()
+        
+        racer$updated_score <- racer$score + score_increment 
+      }
       
       updated_racers <- bind_rows(updated_racers, racer)
     }
