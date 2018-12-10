@@ -177,14 +177,23 @@ mean_elo <- function(results,
 }
 
 eds_prior <- function(rank_percentile, prior_mean = 1000, prior_sd = 400) {
-  finite_q_percentile <- max(min(rank_percentile, .99), .01)
+  finite_q_percentile <- max(min(rank_percentile, .999), .001)
   score <- qnorm(1 - finite_q_percentile, prior_mean, prior_sd)
 }
 
+# I find this method simpler & more interprettable (in terms of parameterization) than Elo based methods. But it suffers several issues, relative to Elo: 
+#  1. (without primes) assumes the range of talent is fixed over time; if you're the top racer in the race, the prime is your only incentive opportunity to improve your score
+#  2. (if implementing primes) it becomes difficult / impossible to interpret scores over time; since the score distribution would be otherwise fixed over time
+#      the prime can only have the effect of increasing the max attainable score
+# TODO smoothing_factor > 0 suffers decay, shrinking variance in scores. this is because a 20% dop in score != a 20% increase in score in absolute terms.
 empirical_distribution_smoothing <- function(results,
                                              smoothing_factor = .5,
-                                             prior_threshold = .2, # if 80% of the field was scoreless previously, we appeal to the prior - TODO this should probably be an absolute number
-                                             prior = eds_prior) {
+                                             first_place_prime = 2,
+                                             prior_threshold = .9, # if greater than 1-prior_threshold % of racers in a given race do not have a previous score, all racers are scored using the prior (but we still smooth)
+                                             prior = eds_prior,
+                                             # todo this is leaky (or poorly shared information) from the prior function
+                                             prior_mean = 1000) {
+
   racers <- results %>%
     distinct(racer_id) %>%
     mutate(score = NA)
@@ -210,7 +219,11 @@ empirical_distribution_smoothing <- function(results,
 
     updated_racers <- race_results %>%
       mutate(
-        updated_score = sapply(race_rank / n_racers, race_scorer)
+        # note that discrete rankings don't naturally map to an inclusive 0-1 range - the below makes that mapping
+        uniform_rank_percentile = (race_rank - 1) / (n_racers -1),
+        previous_score = ifelse(is.na(score), prior_mean, score),
+        raw_score = sapply(uniform_rank_percentile, race_scorer),
+        updated_score = (1 - smoothing_factor) * raw_score + smoothing_factor * previous_score
       ) %>%
       select(racer_id, updated_score)
     
@@ -242,8 +255,9 @@ rank_correlation_over_time <- function(historical_scores_joined) {
 ###########################
 ## start control flow
 ###########################
-population <- generate_population(n_racers=1e2)
-all_results <- simulate_races(population)
+
+population <- generate_population(n_racers=1e3)
+all_results <- simulate_races(population, n_trials=200)
 
 all_results %>% 
   inner_join(population, by = 'racer_id') %>% 
@@ -296,7 +310,7 @@ eds_scores %>%
     sd_score = sd(score, na.rm = T),
     min_score = min(score, na.rm=T),
     max_score = max(score, na.rm = T)
-  )
+  ) %>% View()
 
 eds_scores_joined <- eds_scores %>%
   filter(iteration == max(iteration)) %>%
@@ -311,4 +325,4 @@ eds_scores %>%
   inner_join(population, by = c('racer_id' = 'racer_id')) %>%
   rank_correlation_over_time() %>%
   ggplot() +
-  geom_point(aes(iteration, abs(true_observed_rank_correlation)))
+  geom_point(aes(iteration, true_observed_rank_correlation))
