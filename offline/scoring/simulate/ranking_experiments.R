@@ -102,7 +102,7 @@ naive_elo <- function(results,
 }
 
 mean_elo_prior <- function(rank_percentile, prior_mean, prior_sd) {
-  qnorm(rank_percentile, prior_mean, prior_sd)
+  qnorm(1 - rank_percentile, prior_mean, prior_sd)
 }
 
 mean_elo <- function(results,
@@ -115,7 +115,6 @@ mean_elo <- function(results,
   
   score_history <- data.frame()
   
-  updated_racers <- data.frame()
   for (ix in sort(unique(results$iteration))) {
     race_results <- results %>% 
       filter(iteration == ix) %>%
@@ -177,8 +176,56 @@ mean_elo <- function(results,
   score_history
 }
 
-empirical_distribution_smoothing <- function() {
+eds_prior <- function(rank_percentile, prior_mean = 1000, prior_sd = 400) {
+  finite_q_percentile <- max(min(rank_percentile, .99), .01)
+  score <- qnorm(1 - finite_q_percentile, prior_mean, prior_sd)
+}
+
+empirical_distribution_smoothing <- function(results,
+                                             smoothing_factor = .5,
+                                             prior_threshold = .2, # if 80% of the field was scoreless previously, we appeal to the prior - TODO this should probably be an absolute number
+                                             prior = eds_prior) {
+  racers <- results %>%
+    distinct(racer_id) %>%
+    mutate(score = NA)
   
+  score_history <- data.frame()
+  
+  for (ix in sort(unique(results$iteration))) {
+    race_results <- results %>% 
+      filter(iteration == ix) %>%
+      mutate(
+        race_rank = rank(time)
+      ) %>%
+      inner_join(racers, by = c('racer_id' = 'racer_id'))
+    
+    n_racers <- nrow(race_results)
+    
+    race_scorer <- prior
+    if (mean(!is.na(race_results$score)) >= prior_threshold) {
+      race_scorer <- function(percentile) {
+        quantile(race_results$score, 1 - percentile, na.rm = TRUE)
+      }
+    }
+
+    updated_racers <- race_results %>%
+      mutate(
+        updated_score = sapply(race_rank / n_racers, race_scorer)
+      ) %>%
+      select(racer_id, updated_score)
+    
+    racers <- racers %>%
+      left_join(updated_racers %>% select(racer_id, updated_score), by = c('racer_id' = 'racer_id')) %>%
+      mutate(
+        score = ifelse(!is.na(updated_score), updated_score, score)
+      ) %>%
+      select(-updated_score)
+    score_history <- bind_rows(score_history, racers %>% 
+                                 select(racer_id, score) %>%
+                                 mutate(iteration = ix))
+  }
+  
+  score_history
 }
 
 rank_correlation_over_time <- function(historical_scores_joined) {
@@ -195,7 +242,7 @@ rank_correlation_over_time <- function(historical_scores_joined) {
 ###########################
 ## start control flow
 ###########################
-population <- generate_population(n_racers=1e3)
+population <- generate_population(n_racers=1e2)
 all_results <- simulate_races(population)
 
 all_results %>% 
@@ -239,3 +286,29 @@ true_joined_history <- elo_scores %>%
 rank_correlation_over_time(true_joined_history) %>%
   ggplot() +
     geom_point(aes(iteration, abs(true_observed_rank_correlation)))
+
+#####
+eds_scores <- empirical_distribution_smoothing(all_results)
+eds_scores %>%
+  group_by(iteration) %>%
+  summarize(
+    mean_score = mean(score, na.rm = T),
+    sd_score = sd(score, na.rm = T),
+    min_score = min(score, na.rm=T),
+    max_score = max(score, na.rm = T)
+  )
+
+eds_scores_joined <- eds_scores %>%
+  filter(iteration == max(iteration)) %>%
+  mutate(
+    predicted_rank = rank(-score)
+  ) %>%
+  inner_join(population, by = c('racer_id' = 'racer_id'))
+ggplot(eds_scores_joined) +
+  geom_point(aes(true_rank, predicted_rank))
+
+eds_scores %>%
+  inner_join(population, by = c('racer_id' = 'racer_id')) %>%
+  rank_correlation_over_time() %>%
+  ggplot() +
+  geom_point(aes(iteration, abs(true_observed_rank_correlation)))
