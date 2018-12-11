@@ -8,9 +8,10 @@ class NaiveElo:
     def __init__(self,
                  default_score=1000,
                  k_factor=1,
-                 log_odds_oom_differential=400,
+                 log_odds_oom_differential=200,
                  score_floor=100,
-                 score_ceiling=3000):
+                 score_ceiling=3000,
+                 max_score_change=400):
         """
         for a simple mathemtical explanation of Elo parameters, see
         https://math.stackexchange.com/questions/1731991/why-does-the-elo-rating-system-work
@@ -21,12 +22,14 @@ class NaiveElo:
          to have a score log_odds_oom_differential higher than B
         :param score_floor: the minimum achievable score
         :param score_ceiling: the maximum achievable score
+        :param max_score_change the maximum change in score that may occur in any one race
         """
         self._default_score = default_score
         self._k_factor = k_factor
         self._log_odds_oom_differential=log_odds_oom_differential
         self._score_floor = score_floor
         self._score_ceiling = score_ceiling
+        self._max_score_change = max_score_change
 
     def blank_run(self, results):
         """
@@ -85,7 +88,8 @@ class NaiveElo:
                     outcome = 1 if race_result.overall_place < competitor_race_result.overall_place else 0
                     accumulated_score_change += self._k_factor * (outcome - p_racer)
 
-            updated_score = min(max(race_result.score + accumulated_score_change, self._score_floor),
+            capped_score_change = max(min(accumulated_score_change, self._max_score_change), -self._max_score_change)
+            updated_score = min(max(race_result.score + capped_score_change, self._score_floor),
                                 self._score_ceiling)
             score_updates = score_updates.append({"racer_id": int(race_result.racer_id),
                                                   "score": updated_score},
