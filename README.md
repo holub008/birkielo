@@ -11,6 +11,10 @@ Ranking & quantitative analysis of cross country skiers. Find an instance of the
 npm install --prefix server && npm install --prefix client
 ```
 
+A `.pgpass` file ([docs here](https://www.postgresql.org/docs/current/libpq-pgpass.html)) is required for 
+both `offline/` and `server/`. It should provide entries for the configured db [here](offline/db/connection.py) and 
+[here](/server/start.bash), respectively.
+
 ## Running
 ### Development
 Enjoy hot reloading of React (webpack development server) & Express (nodemon)
@@ -30,13 +34,23 @@ npm run build --prefix client && NODE_ENV='production' npm start --prefix server
 
 The site will be running on port 5000.
 
+### Populating data
+`offline/` houses scripts for scraping, matching, & scoring racers. The execution is currently adhoc, 
+but here's an example execution:
+
+
+```sh
+(cd offline/ && 
+    pipenv run python scraper/birkie_processor.py &&
+    pipenv run python scraper/coll_scraper.py &&
+    pipenv run python scoring/elo_executor.py)
+```
+
+
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
 * Bring vasa/other results into the fold
-* Refactor elo calculation
-   - Take mean of below & above finishers, treating as a single defeat/victory. This will reduce some undesirable variability.
-   - Normalize results to make comparisons between men and women possible.
 * Improve matching logic
  	- Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
  	- Check for more than one result in a single race (and handle or or throw out)
@@ -49,5 +63,5 @@ In approximate order of `E[value/effort]`:
 * Aggregate level analysis (e.g. top 10 skiers over all time)
     - User selected skier comparison or head to head comparison
 * Pro results
-* Log requests and user actions on site
+* Log user searches (i.e. find the most popular racers)
 * Allow user input for matching (e.g. if someone is incorrectly matched)
