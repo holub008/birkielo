@@ -3,8 +3,10 @@ import React from 'react';
 import {
     Grommet,
     Box,
+    Text,
 } from "grommet";
 import {grommet} from "grommet/themes/index";
+import {Link} from 'react-router-dom';
 
 import Spinner from './Spinner';
 import RacerList from './RacerList';
@@ -23,7 +25,13 @@ class RacerNeighborhood extends React.Component {
         // note API gives us a fixed page size of 50 (or less)
         callBackend(`/api/racers?racerId=${this.props.racerId.toString()}`)
             .then(data => this.setState({
-                racers: data.rankings,
+                racers: data.rankings.map(racer => {
+                    if (racer.racer_id === parseInt(this.props.racerId)) {
+                        racer.highlight = true;
+                    }
+
+                    return(racer);
+                }),
             }))
             // TODO dumping to console isn't a great long term solution
             .catch(error => console.log(error));
@@ -36,17 +44,12 @@ class RacerNeighborhood extends React.Component {
             );
         }
 
+        console.log(this.state.racers);
+
         return(
-            <Grommet theme={grommet}>
-                <Box>
-                    <Box direction="row-responsive">
-                        {this.props.racerId.toString() + " Neighborhood (TODO)"}
-                    </Box>
-                    <Box style={{maxWidth:"700px"}}>
-                        <RacerList racers={this.state.racers}/>
-                    </Box>
-                </Box>
-            </Grommet>);
+            <Box style={{maxWidth:"700px"}}>
+                <RacerList racers={this.state.racers}/>
+            </Box>);
     }
 }
 

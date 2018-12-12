@@ -1,12 +1,12 @@
 import React from 'react';
 
-import Spinner from './Spinner';
-import RacerResults from './RacerResults';
-
 import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
-import { Elevator, Ascend, Group} from "grommet-icons";
-import { Link } from 'react-router-dom';
+import { Elevator, Group, User } from "grommet-icons";
+
+import Spinner from './Spinner';
+import RacerResults from './RacerResults';
+import RacerNeighborhood from './RacerNeighborhood';
 
 import {callBackend, isEmpty} from "../util/data";
 import MetricDistribution from "./MetricDistribution";
@@ -16,6 +16,7 @@ class RacerSummary extends React.Component {
 
     state = {
         racerData: {},
+        profileState: "user",
     };
 
     componentDidMount() {
@@ -23,6 +24,48 @@ class RacerSummary extends React.Component {
             .then(data => this.setState({ racerData: data }))
             // TODO dumping to console isn't a great long term solution
             .catch(error => console.log(error));
+    }
+
+    renderProfile() {
+        return(
+            <div>
+                <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
+                    <Box pad="medium" border="right" align="center" fill="horizontal">
+                        <Text>
+                            {
+                                // TODO need to actually sort by date!
+                                "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
+                            }
+                        </Text>
+                        <MetricTimeline timeline={this.state.racerData.metrics}/>
+
+                    </Box>
+                    <Box pad="medium" align="center" fill="horizontal">
+                        <Text>
+                            {
+                                "Birkielo ranking: " + this.state.racerData.relativeStatistics.ranking +
+                                " / " + this.state.racerData.relativeStatistics.totalCompetitors
+                            }
+                        </Text>
+                        <MetricDistribution totalDistribution=
+                                                {this.state.racerData.relativeStatistics.totalDistribution}
+                                            racerScore={this.state.racerData.metrics[0].elo}/>
+                    </Box>
+                </Box>
+                <Box margin={{vertical: "large"}} align="center">
+                    <RacerResults results={this.state.racerData.results}/>
+                </Box>
+            </div>
+        );
+    }
+
+    getDisplayContent() {
+        if (this.state.profileState === "user") {
+            return(this.renderProfile());
+        }
+        else if (this.state.profileState === 'neighborhood') {
+            return(<RacerNeighborhood racerId={this.props.racerId}/>);
+        }
     }
 
     render() {
@@ -46,38 +89,14 @@ class RacerSummary extends React.Component {
                         }
                     </Box>
                     <Box pad="small" alignSelf="end" direction="row-responsive" gap="small" border="left">
-                        <Link to={`/neighborhood/${this.props.racerId}`}>
-                            <Elevator/>
-                        </Link>
-                        <Group/>
+                        <User onClick={() => this.setState({profileState:"user"})}/>
+                        <Elevator onClick={() => this.setState({profileState:"neighborhood"})}/>
+                        <Group onClick={() => this.setState({profileState:"compare"})}/>
                     </Box>
                 </Box>
-                <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
-                    <Box pad="medium" border="right" align="center" fill="horizontal">
-                        <Text>
-                        {
-                            // TODO need to actually sort by date!
-                            "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
-                        }
-                        </Text>
-                        <MetricTimeline timeline={this.state.racerData.metrics}/>
-
-                    </Box>
-                    <Box pad="medium" align="center" fill="horizontal">
-                        <Text>
-                        {
-                            "Birkielo ranking: " + this.state.racerData.relativeStatistics.ranking +
-                            " / " + this.state.racerData.relativeStatistics.totalCompetitors
-                        }
-                        </Text>
-                        <MetricDistribution totalDistribution=
-                                                {this.state.racerData.relativeStatistics.totalDistribution}
-                                            racerScore={this.state.racerData.metrics[0].elo}/>
-                    </Box>
-                </Box>
-                <Box margin={{vertical: "large"}} align="center">
-                    <RacerResults results={this.state.racerData.results}/>
-                </Box>
+                {
+                    this.getDisplayContent()
+                }
             </Grommet>
         )
     }

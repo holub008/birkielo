@@ -15,13 +15,21 @@ const columns = [
     {
         property: "first_name",
         header: "Racer",
-        render: datum =>
-            <Anchor align="center">
-                <Link to={`/racer/${datum.racer_id}`}
-                      style={{color:"rgb(144,96,235)"}}>{
-                    `${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
-                </Link>
-            </Anchor>,
+        render: datum => {
+            return(
+                datum.highlight ?
+                <b>
+                    {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
+                </b>:
+                <Anchor align="center">
+
+                    <Link to={`/racer/${datum.racer_id}`}
+                          style={{color: "rgb(144,96,235)"}}>
+                        {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
+                    </Link>
+                </Anchor>
+            );
+        },
     },
     {
         property: "elo",
