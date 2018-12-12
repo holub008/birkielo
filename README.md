@@ -51,17 +51,17 @@ but here's an example execution:
 In approximate order of `E[value/effort]`:
 
 * Bring vasa/other results into the fold
-* Improve matching logic
- 	- Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
- 	- Check for more than one result in a single race (and handle or or throw out)
- 	- Parse out age and location data
+* View racers with similar results 
+* User selected skier comparison or head to head comparison
 * Technical pages
  	- High level description of methodologies
  	- Stats and algos description
+* Improve matching logic
+    - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
+    - Check for more than one result in a single race (and handle or or throw out)
+    - Parse out age and location data
 * Improve site layout to be less janky on mobile
 * Cleaner ranking & listing pages
-* Aggregate level analysis (e.g. top 10 skiers over all time)
-    - User selected skier comparison or head to head comparison
 * Pro results
 * Log user searches (i.e. find the most popular racers)
 * Allow user input for matching (e.g. if someone is incorrectly matched)

@@ -3,6 +3,7 @@ const path = require('path');
 const db = require('./db');
 const store = require('./store');
 const util = require('./util');
+const data = require('./data');
 
 const app = express();
 
@@ -17,63 +18,25 @@ const racerStore = new store.RacerStore();
 app.get('/api/racers', async (req, res) => {
     const gender = req.query.gender;
     const minRank = parseInt(req.query.minRank);
+    const racerId = parseInt(req.query.racerId);
+
     const pageSize = 50;
 
-    if (!minRank || (gender != 'male' && gender != 'female')) {
+    if ((gender != 'male' && gender != 'female') || (!minRank && !racerId)) {
         res.send({});
         return;
     }
 
-    const rankQuery = {
-        name: "rankings",
-        text: `
-                WITH racer_to_elo AS (
-                    SELECT DISTINCT ON (rm.racer_id)
-                        rm.racer_id,
-                        r.first_name,
-                        r.middle_name,
-                        r.last_name,
-                        LAST_VALUE(elo) OVER racer_window as elo
-                    FROM racer_metrics rm
-                    JOIN racer r
-                        ON rm.racer_id = r.id
-                    WHERE
-                        r.gender = $1
-                    WINDOW racer_window AS (
-                        PARTITION BY rm.racer_id ORDER BY rm.date
-                        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
-                    )
-                ),
-                ranked_racers AS (
-                    SELECT
-                        roe.racer_id,
-                        roe.first_name,
-                        roe.middle_name,
-                        roe.last_name,
-                        roe.elo,
-                        RANK() OVER (ORDER BY roe.elo DESC) as rank
-                    FROM racer_to_elo roe
-                )
-                SELECT
-                    rr.racer_id,
-                    rr.first_name,
-                    rr.middle_name,
-                    rr.last_name,
-                    rr.elo,
-                    rr.rank as rank
-                FROM ranked_racers rr
-                WHERE
-                    rr.rank >= $2
-                    AND rr.rank <= $2 + $3
-        `,
-        values: [ gender, minRank, pageSize ]
-    };
-
-    const rankings = await db.query(rankQuery)
-        .catch(e => console.error(`Failed to query rankings.`));
-
+    let rankings;
+    if (racerId) {
+        rankings = await data.rankingsNeighborhood(gender, racerId, pageSize / 2);
+    }
+    // note that via a preconditions check above, minRank is defined
+    else {
+        rankings = await data.rankings(gender, minRank, pageSize);
+    }
     res.send({
-        rankings: rankings ? rankings.rows : null
+        rankings: rankings
     })
 });
 
@@ -90,7 +53,7 @@ app.get('/api/search/', (req, res) => {
         maxResults = 1000;
     }
 
-    // since long search strings can be slow & don't add much value in a name searc
+    // since long search strings can be slow & don't add much value in a name search
     const queryStringLimited = queryString.slice(0, 25);
     const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
 
