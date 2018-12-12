@@ -1,42 +1,18 @@
 import React from 'react';
 
 import {
-    DataTable,
     Grommet,
     Anchor,
     Box,
     Heading
 } from "grommet";
 import {grommet} from "grommet/themes/index";
-import {Link} from 'react-router-dom';
 
 import Spinner from "./Spinner";
+import RacerList from "./RacerList";
+
 import {callBackend, isEmpty, properGender} from "../util/data";
 
-const columns = [
-    {
-        property: "rank",
-        header: "Rank",
-        primary: true,
-    },
-    {
-        property: "first_name",
-        header: "Racer",
-        render: datum =>
-            <Anchor align="center">
-                <Link to={`/racer/${datum.racer_id}`}
-                      style={{color:"rgb(144,96,235)"}}>{
-                `${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
-                </Link>
-            </Anchor>,
-    },
-    {
-        property: "elo",
-        header: "Birkielo",
-        render: datum =>
-            datum.elo.toFixed(1)
-    },
-];
 
 class RankedRacerList extends React.Component {
 
@@ -86,7 +62,7 @@ class RankedRacerList extends React.Component {
                         </Anchor>
                     </Box>
                     <Box style={{maxWidth:"700px"}}>
-                        <DataTable columns={columns} data={this.state.rankings} size="large"/>
+                        <RacerList racers={this.state.rankings}/>
                     </Box>
                 </Box>
             </Grommet>);

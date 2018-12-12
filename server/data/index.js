@@ -53,11 +53,18 @@ module.exports ={
         return rankings ? rankings.rows : null;
     },
     // note that n is the number of neighbors both above and below the given racer id
-    rankingsNeighborhood: async (gender, racerId, n) => {
+    rankingsNeighborhood: async (racerId, n) => {
         const neighborhoodQuery = {
             name: "rankings_neighborhood",
             text: `
-                WITH racer_to_elo AS (
+                WITH center_racer_gender AS (
+                  SELECT
+                    r.gender
+                  FROM racer r
+                  WHERE
+                    r.id = $1  
+                ),
+                racer_to_elo AS (
                     SELECT DISTINCT ON (rm.racer_id)
                         rm.racer_id,
                         r.first_name,
@@ -67,8 +74,8 @@ module.exports ={
                     FROM racer_metrics rm
                     JOIN racer r
                         ON rm.racer_id = r.id
-                    WHERE
-                        r.gender = $1
+                    JOIN center_racer_gender crg
+                        ON crg.gender = r.gender
                     WINDOW racer_window AS (
                         PARTITION BY rm.racer_id ORDER BY rm.date
                         ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
@@ -89,7 +96,7 @@ module.exports ={
                         rr.rank
                     FROM ranked_racers rr
                     WHERE
-                        rr.racer_id = $2
+                        rr.racer_id = $1
                 )
                 SELECT
                     rr.racer_id,
@@ -100,10 +107,10 @@ module.exports ={
                     rr.rank as rank
                 FROM ranked_racers rr
                 JOIN center_racer cr
-                    ON cr.rank >= (rr.rank - $3) 
-                        AND cr.rank <= (rr.rank + $3) 
+                    ON cr.rank >= (rr.rank - $2) 
+                        AND cr.rank <= (rr.rank + $2) 
         `,
-            values: [ gender, racerId, n ]
+            values: [ racerId, n ]
         };
 
         const neighborhood = await db.query(neighborhoodQuery)

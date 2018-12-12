@@ -8,7 +8,6 @@ import {
 } from "grommet";
 import { grommet } from "grommet/themes";
 
-import Help from "./Support";
 import '../styles/Home.css';
 import RankedRacerList from "./RankedRacerList";
 import SearchBar from "./SearchBar";

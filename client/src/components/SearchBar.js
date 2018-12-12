@@ -34,6 +34,7 @@ class NavBarSearch extends React.Component {
     }
 
     updateSuggestions(query) {
+        // TODO there should be a timeout (e.g. 500 millis to execute the search to avoid needless requests
         callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
             .then(results => {
                 this.setState({ suggestions: results.candidates, query: query });

@@ -22,14 +22,14 @@ app.get('/api/racers', async (req, res) => {
 
     const pageSize = 50;
 
-    if ((gender != 'male' && gender != 'female') || (!minRank && !racerId)) {
+    if (((gender != 'male' && gender != 'female') || !minRank) && !racerId) {
         res.send({});
         return;
     }
 
     let rankings;
     if (racerId) {
-        rankings = await data.rankingsNeighborhood(gender, racerId, pageSize / 2);
+        rankings = await data.rankingsNeighborhood(racerId, pageSize / 2);
     }
     // note that via a preconditions check above, minRank is defined
     else {

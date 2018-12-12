@@ -5,6 +5,8 @@ import RacerResults from './RacerResults';
 
 import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
+import { Elevator, Ascend, Group} from "grommet-icons";
+import { Link } from 'react-router-dom';
 
 import {callBackend, isEmpty} from "../util/data";
 import MetricDistribution from "./MetricDistribution";
@@ -42,6 +44,12 @@ class RacerSummary extends React.Component {
                         {
                             this.state.racerData.racer.gender
                         }
+                    </Box>
+                    <Box pad="small" alignSelf="end" direction="row-responsive" gap="small" border="left">
+                        <Link to={`/neighborhood/${this.props.racerId}`}>
+                            <Elevator/>
+                        </Link>
+                        <Group/>
                     </Box>
                 </Box>
                 <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>

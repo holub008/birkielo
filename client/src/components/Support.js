@@ -38,7 +38,7 @@ function Help() {
                     <Box fill pad="small" align="center">
                         <Box pad="medium" align="center" background="dark-3" round gap="small">
                             <Currency size="large"/>
-                            <Text>Web hosting costs</Text>
+                            <Text>Web hosting costs ~$30/month</Text>
                             <Button label="Free (for now)"/>
                         </Box>
                     </Box>
