@@ -68,6 +68,15 @@ class RacerSummary extends React.Component {
         }
     }
 
+    getIconColor(contentName) {
+        if (contentName === this.state.profileState) {
+            return (null);
+        }
+        else {
+            return("rgb(144,96,235)");
+        }
+    }
+
     render() {
         if (isEmpty(this.state.racerData)) {
             return(
@@ -89,9 +98,12 @@ class RacerSummary extends React.Component {
                         }
                     </Box>
                     <Box pad="small" alignSelf="end" direction="row-responsive" gap="small" border="left">
-                        <User onClick={() => this.setState({profileState:"user"})}/>
-                        <Elevator onClick={() => this.setState({profileState:"neighborhood"})}/>
-                        <Group onClick={() => this.setState({profileState:"compare"})}/>
+                        <User onClick={() => this.setState({profileState:"user"})}
+                              color={ this.getIconColor("user") }/>
+                        <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
+                                  color={ this.getIconColor("neighborhood") }/>
+                        <Group onClick={() => this.setState({profileState:"compare"})}
+                               color={ this.getIconColor("compare") }/>
                     </Box>
                 </Box>
                 {
