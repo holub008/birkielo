@@ -24,3 +24,11 @@ export function capitalizeProper(str) {
 export function properGender(str) {
     return str === 'male' ? "Men": "Women";
 }
+
+export function apiGender(str) {
+    if (str) {
+        return str.toLowerCase() === 'men' ? 'male' : "female";
+    }
+
+    return str;
+}

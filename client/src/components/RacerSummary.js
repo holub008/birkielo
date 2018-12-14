@@ -2,7 +2,9 @@ import React from 'react';
 
 import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
-import { Elevator, Group, User } from "grommet-icons";
+import { Elevator, Group, User, StatusUnknown } from "grommet-icons";
+import { Link } from 'react-router-dom';
+
 
 import Spinner from './Spinner';
 import RacerResults from './RacerResults';
@@ -31,12 +33,17 @@ class RacerSummary extends React.Component {
             <div>
                 <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
                     <Box pad="medium" border="right" align="center" fill="horizontal">
-                        <Text>
-                            {
-                                // TODO need to actually sort by date!
-                                "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
-                            }
-                        </Text>
+                        <Box direction={"row-responsive"} align="center" gap="small">
+                            <Text>
+                                {
+                                    // TODO need to actually sort by date!
+                                    "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
+                                }
+                            </Text>
+                            <Link to="/about/birkielo" style={{textDecoration: "none"}}>
+                                <StatusUnknown color="rgb(144,96,235)"/>
+                            </Link>
+                        </Box>
                         <MetricTimeline timeline={this.state.racerData.metrics}/>
 
                     </Box>

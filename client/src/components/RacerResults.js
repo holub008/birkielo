@@ -79,7 +79,7 @@ function RacerResults(props) {
     return(
         <Grommet theme={grommet}>
             <DataTable columns={columns} data={results}
-                       size="medium" margin="small" />
+                       sortable size="medium" margin="small" />
         </Grommet>
     )
 }

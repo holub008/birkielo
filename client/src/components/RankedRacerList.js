@@ -25,14 +25,16 @@ class RankedRacerList extends React.Component {
     }
 
     loadData(gender) {
-        // note API gives us a fixed page size of 50 (or less)
-        callBackend(`/api/racers?minRank=${this.props.minRank}&gender=${gender}`)
-            .then(data => this.setState({
-                rankings: data.rankings,
-                gender: gender,
-            }))
-            // TODO dumping to console isn't a great long term solution
-            .catch(error => console.log(error));
+        if (gender === 'male' || gender === 'female') {
+            // note API gives us a fixed page size of 50 (or less)
+            callBackend(`/api/racers?minRank=${this.props.minRank}&gender=${gender}`)
+                .then(data => this.setState({
+                    rankings: data.rankings,
+                    gender: gender,
+                }))
+                // TODO dumping to console isn't a great long term solution
+                .catch(error => console.log(error));
+        }
     }
 
     componentDidMount() {

@@ -6,6 +6,9 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Support from "./components/Support";
 import RacerSummary from "./components/RacerSummary";
+import RankedRacerList from "./components/RankedRacerList";
+
+import {apiGender} from "./util/data";
 
 import './App.css';
 
@@ -26,8 +29,12 @@ class App extends Component {
                                 (props) => <RacerSummary racerId={props.match.params.racer_id}
                                                          key={props.match.params.racer_id}/>
                             }/>
-                            <Route path="/about" exact component={About}/>
+                            <Route path="/about/:feature?" render={
+                                (props) => <About feature={props.match.params.feature}/>}/>
                             <Route path="/support" exact component={Support}/>
+                            <Route path="/rankings/:sex" exact render={
+                                (props) => <RankedRacerList gender={apiGender(props.match.params.sex)}
+                                                            minRank={1}/>}/>
                         </Switch>
                     </div>
                 </div>
