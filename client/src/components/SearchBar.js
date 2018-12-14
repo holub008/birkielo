@@ -9,17 +9,34 @@ import {
 
 import { Link } from 'react-router-dom';
 
-class NavBarSearch extends React.Component {
-    state = {
-        query: "",
-        suggestions: [],
-    };
+function defaultSuggestionDecorator(racerId, content) {
+    return(
+        <Link to={`/racer/${racerId}`} style={{textDecoration: "none"}}>
+            { content }
+        </Link>
+    );
+}
+
+function defaultSelectHandler(event) {
+    window.location.href = event.suggestion.label.props.to;
+}
+
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            query: "",
+            suggestions: [],
+            suggestionDecorator: props.suggestionDecorator ? props.suggestionDecorator : defaultSuggestionDecorator,
+            selectHandler: props.selectHandler? props.selectHandler : defaultSelectHandler,
+        };
+    }
 
     renderSuggestions() {
         return(this.state.suggestions.map(suggestion => {
             return({
                 label:
-                    <Link to={`/racer/${suggestion.racer_id}`} style={{textDecoration: "none"}}>
+                    this.state.suggestionDecorator(suggestion.racer_id,
                         <Box fill>
                             <Anchor>
                                 {
@@ -27,8 +44,8 @@ class NavBarSearch extends React.Component {
                                 }
                             </Anchor>
                         </Box>
-                    </Link>,
-                value:`${suggestion.first_name} ${suggestion.last_name}`
+                    ),
+                value:`${suggestion.racer_id}`
             })
         }));
     }
@@ -60,17 +77,12 @@ class NavBarSearch extends React.Component {
         }
     }
 
-    onSelect(event) {
-        // TODO quite sure this is a crime against humanity 1. for not using react-router 2. for hacking out child props
-        window.location.href= event.suggestion.label.props.to;
-    }
-
     render() {
         return (
             <TextInput
                 type="search"
                 onChange={(event) => this.onChange(event)}
-                onSelect={(event) => this.onSelect(event)}
+                onSelect={(event) => this.state.selectHandler(event)}
                 suggestions={this.renderSuggestions()}
                 placeholder="Skier Search"
                 style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
@@ -79,4 +91,4 @@ class NavBarSearch extends React.Component {
     }
 }
 
-export default NavBarSearch;
+export default SearchBar;

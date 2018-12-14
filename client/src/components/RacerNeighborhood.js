@@ -1,12 +1,9 @@
 import React from 'react';
 
 import {
-    Grommet,
     Box,
     Text,
 } from "grommet";
-import {grommet} from "grommet/themes/index";
-import {Link} from 'react-router-dom';
 
 import Spinner from './Spinner';
 import RacerList from './RacerList';

@@ -51,7 +51,6 @@ but here's an example execution:
 In approximate order of `E[value/effort]`:
 
 * Bring vasa/other results into the fold
-* View racers with similar results 
 * User selected skier comparison or head to head comparison
 * Technical pages
  	- High level description of methodologies
