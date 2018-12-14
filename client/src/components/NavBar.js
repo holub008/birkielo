@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import {Link} from 'react-router-dom';
 
@@ -58,9 +58,13 @@ class NavBar extends React.Component {
                          align="start"
                          margin={{left:"small"}}
                     >
-                        <Box style={{wdith: "50%"}}>
-                            <SearchBar maxResults={5}/>
-                        </Box>
+                        {
+                            this.props.searchBar?
+                            <Box style={{wdith: "50%"}}>
+                                <SearchBar maxResults={5}/>
+                            </Box> :
+                            <Fragment/>
+                        }
                     </Box>
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>
                         <Link to="/">

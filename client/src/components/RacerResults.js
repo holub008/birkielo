@@ -25,7 +25,7 @@ const columns = [
         property: "event_date",
         header: "Date",
         render: datum =>
-            datum.event_date && new Date(datum.event_date).toLocaleDateString("en-US"),
+            datum.event_date && new Date(datum.event_date).toISOString().split('T')[0],
         align: "end",
         primary: true,
     },
@@ -75,10 +75,11 @@ function RacerResults(props) {
             return(resultCopy);
         });
 
+    // TODO I want this to be sortable, but grommet sometimes randomly adds rows to the table when it is sorted...
     return(
         <Grommet theme={grommet}>
             <DataTable columns={columns} data={results}
-                       resizable={false} size="medium" margin="small"/>
+                       size="medium" margin="small" />
         </Grommet>
     )
 }
