@@ -77,10 +77,8 @@ function RacerResults(props) {
 
     // TODO I want this to be sortable, but grommet sometimes randomly adds rows to the table when it is sorted...
     return(
-        <Grommet theme={grommet}>
-            <DataTable columns={columns} data={results}
-                       sortable size="medium" margin="small" />
-        </Grommet>
+        <DataTable columns={columns} data={results}
+                   sortable size="medium" margin="small" />
     )
 }
 

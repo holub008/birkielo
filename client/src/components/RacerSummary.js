@@ -13,6 +13,7 @@ import RacerNeighborhood from './RacerNeighborhood';
 import {callBackend, isEmpty} from "../util/data";
 import MetricDistribution from "./MetricDistribution";
 import MetricTimeline from "./MetricTimeline";
+import RacerComparison from "./RacerComparison";
 
 class RacerSummary extends React.Component {
 
@@ -72,6 +73,9 @@ class RacerSummary extends React.Component {
         }
         else if (this.state.profileState === 'neighborhood') {
             return(<RacerNeighborhood racerId={this.props.racerId}/>);
+        }
+        else if(this.state.profileState === 'compare') {
+            return(<RacerComparison referenceRacerId={this.props.racerId}/>)
         }
     }
 

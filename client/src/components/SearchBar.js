@@ -25,7 +25,6 @@ class SearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            query: "",
             suggestions: [],
             suggestionDecorator: props.suggestionDecorator ? props.suggestionDecorator : defaultSuggestionDecorator,
             selectHandler: props.selectHandler? props.selectHandler : defaultSelectHandler,
@@ -54,12 +53,11 @@ class SearchBar extends React.Component {
         // TODO there should be a timeout (e.g. 500 millis to execute the search to avoid needless requests
         callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
             .then(results => {
-                this.setState({ suggestions: results.candidates, query: query });
+                this.setState({ suggestions: results.candidates.slice(0, this.props.maxResults) });
             })
             // TODO dumping to console isn't a great long term solution
             .catch(error => {
                 console.log(error);
-                this.setState({query: query});
             });
     }
 
@@ -71,7 +69,6 @@ class SearchBar extends React.Component {
         }
         else {
             this.setState({
-                query: query,
                 suggestions: [],
             });
         }
