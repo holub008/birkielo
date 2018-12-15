@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-    Grommet,
     Box,
     Text,
     DataTable,
@@ -65,7 +64,7 @@ class RacerComparison extends React.Component {
     }
 
     render() {
-        if (this.state.racers.length === 0 && this.props.referenceRacerId) {
+        if (isEmpty(this.state.racers.length) && this.props.referenceRacerId) {
             return(<Spinner/>);
         }
 

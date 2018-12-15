@@ -2,12 +2,10 @@ import React from 'react';
 
 import {
     DataTable,
-    Grommet,
     Text,
     Box,
     Meter,
 } from "grommet";
-import { grommet } from "grommet/themes";
 
 function milliTimeRender(millis){
     // TODO it's too late to figure this out elegantly :)
