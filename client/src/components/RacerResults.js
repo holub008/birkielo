@@ -6,6 +6,9 @@ import {
     Box,
     Meter,
 } from "grommet";
+import { Contract, Expand } from 'grommet-icons';
+
+const LINK_COLOR = "rgb(144,96,235)";
 
 function milliTimeRender(millis){
     // TODO it's too late to figure this out elegantly :)
@@ -93,20 +96,59 @@ function dedupeDates(raceResults) {
     return finalResults;
 }
 
-function RacerResults(props) {
-    const resultsWithDedupedDates = dedupeDates(props.results.slice());
-    const resultsForRender = resultsWithDedupedDates
-        .sort((a,b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
-        .map( result => {
-            const resultCopy = Object.assign({}, result);
-            resultCopy.percent_placement = result.gender_place / result.race_size;
-            return(resultCopy);
-        });
+// produces a limited (higher importance) set of columns from input columns
+function shrinkColumns(columns) {
+    return columns
+        .filter(col => ['event_name', 'event_date_deduped', 'duration', 'gender_place'].includes(col.property))
+}
 
-    return(
-        <DataTable columns={columns} data={resultsForRender}
-                   sortable size="medium" margin="small" />
-    )
+class RacerResults extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            shrinkTable: false,
+        };
+    }
+
+    render() {
+        const resultsWithDedupedDates = dedupeDates(this.props.results.slice());
+        const resultsForRender = resultsWithDedupedDates
+            .sort((a, b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
+            .map(result => {
+                const resultCopy = Object.assign({}, result);
+                resultCopy.percent_placement = result.gender_place / result.race_size;
+                return (resultCopy);
+            });
+
+        const columnsForRender = this.state.shrinkTable ? shrinkColumns(columns) : columns;
+
+        return (
+            <Box>
+                <Box
+                    margin={{left: "small"}}
+                    onClick={() => this.setState({shrinkTable: !this.state.shrinkTable})}>
+                    {
+                        !this.state.shrinkTable ?
+                            <Box direction="row">
+                                <Text color = {LINK_COLOR}>
+                                    Trouble viewing?
+                                </Text>
+                                < Contract color={LINK_COLOR} />
+                            </Box> :
+                            <Box direction="row">
+                                <Text color = {LINK_COLOR}>
+                                    View more columns?
+                                </Text>
+                                <Expand color = {LINK_COLOR} />
+                            </Box>
+                    }
+                </Box>
+                <DataTable columns={columnsForRender} data={resultsForRender}
+                           sortable size="medium" margin="small"/>
+            </Box>
+        );
+    }
 }
 
 export default RacerResults;

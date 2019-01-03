@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
     DataTable,
-    Anchor,
+    Text,
 } from "grommet";
 import {Link} from 'react-router-dom';
 
@@ -16,13 +16,13 @@ const alwaysColumns = [
                     <b>
                         {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                     </b>:
-                    <Anchor align="center">
+                    <Text align="center">
 
                         <Link to={`/racer/${datum.racer_id}`}
                               style={{color: "rgb(144,96,235)"}}>
                             {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                         </Link>
-                    </Anchor>
+                    </Text>
             );
         },
     },

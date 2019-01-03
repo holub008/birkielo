@@ -60,10 +60,9 @@ class NavBar extends React.Component {
                     >
                         {
                             this.props.searchBar?
-                            <Box style={{wdith: "50%"}}>
                                 <SearchBar maxResults={5}/>
-                            </Box> :
-                            <Fragment/>
+                            :
+                                <Fragment/>
                         }
                     </Box>
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>

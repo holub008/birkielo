@@ -28,7 +28,7 @@ function Home(props) {
         <div className="home">
             <Grommet theme={grommet}>
                 <Box margin={{top:"medium"}}>
-                    <Box direction="row-responsive" alignSelf="center" gap="small">
+                    <Box direction="row" alignSelf="center" gap="small">
                         <Box border="right" alignSelf="center">
                             <Text margin={{right:"small"}}> Search </Text>
                         </Box>

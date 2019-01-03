@@ -15,6 +15,8 @@ import MetricDistribution from "./MetricDistribution";
 import MetricTimeline from "./MetricTimeline";
 import RacerComparison from "./RacerComparison";
 
+const LINK_COLOR = "rgb(144,96,235)";
+
 class RacerSummary extends React.Component {
 
     state = {
@@ -34,12 +36,12 @@ class RacerSummary extends React.Component {
             <div>
                 <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
                     <Box pad="medium" border="right" align="center" fill="horizontal">
-                        <Box direction={"row-responsive"} align="center" gap="small">
+                        <Box direction="row" align="center" gap="small">
                             <Text>
                                 {
-                                    "Birkielo: " + this.state.racerData.metrics.
-                                        sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                                        [0].elo.toFixed(1)
+                                    "Birkielo: " + this.state.racerData.metrics
+                                        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0].elo
+                                        .toFixed(1)
                                 }
                             </Text>
                             <Link to="/about/birkielo" style={{textDecoration: "none"}}>
@@ -88,7 +90,7 @@ class RacerSummary extends React.Component {
             return (null);
         }
         else {
-            return("rgb(144,96,235)");
+            return(LINK_COLOR); // todo this belongs in an even higher shared location
         }
     }
 
@@ -102,19 +104,21 @@ class RacerSummary extends React.Component {
         return(
             <Grommet theme={grommet}>
                 <Box direction="row-responsive" gap="small">
-                    <Box>
-                        <Heading size="medium" margin="xsmall">
-                            {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
-                        </Heading>
+                    <Box direction="row">
+                        <Box>
+                            <Heading size="medium" margin="xsmall">
+                                {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
+                            </Heading>
+                        </Box>
+                        <Box pad="small" border="left">
+                            <Text>
+                            {
+                                this.state.racerData.racer.gender
+                            }
+                            </Text>
+                        </Box>
                     </Box>
-                    <Box pad="small" border="left" alignSelf="left">
-                        <Text>
-                        {
-                            this.state.racerData.racer.gender
-                        }
-                        </Text>
-                    </Box>
-                    <Box pad="small" align="center" alignSelf="left" direction="row-responsive" gap="small" border="left">
+                    <Box pad="small" align="center" direction="row" gap="small" border="left">
                         <User onClick={() => this.setState({profileState:"user"})}
                               color={ this.getIconColor("user") }/>
                         <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
