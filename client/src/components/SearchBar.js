@@ -28,6 +28,7 @@ class SearchBar extends React.Component {
             suggestions: [],
             suggestionDecorator: props.suggestionDecorator ? props.suggestionDecorator : defaultSuggestionDecorator,
             selectHandler: props.selectHandler? props.selectHandler : defaultSelectHandler,
+            query:"",
         };
     }
 
@@ -63,6 +64,7 @@ class SearchBar extends React.Component {
 
     onChange(event) {
         const query = event.target.value;
+        this.setState({query: query});
 
         if (query.length >= 3) {
             this.updateSuggestions(query);
@@ -71,6 +73,13 @@ class SearchBar extends React.Component {
             this.setState({
                 suggestions: [],
             });
+        }
+    }
+
+    // this is gross, but grommet does not seem to provide a method for handling "enter"
+    checkForAndHandleEnter(event) {
+        if (event.key === 'Enter') {
+            window.location.href = `/search/query=${this.state.query}`
         }
     }
 
@@ -83,6 +92,7 @@ class SearchBar extends React.Component {
                 suggestions={this.renderSuggestions()}
                 placeholder="Skier Search"
                 style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
+                onKeyPress={(event) => this.checkForAndHandleEnter(event)}
             />
         );
     }

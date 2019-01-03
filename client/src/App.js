@@ -11,6 +11,7 @@ import RankedRacerList from "./components/RankedRacerList";
 import {apiGender} from "./util/data";
 
 import './App.css';
+import SearchResults from "./components/SearchResults";
 
 class App extends Component {
     render() {
@@ -35,6 +36,9 @@ class App extends Component {
                             <Route path="/rankings/:sex" exact render={
                                 (props) => <RankedRacerList gender={apiGender(props.match.params.sex)}
                                                             minRank={1}/>}/>
+                            <Route path="/search/:query" exact render={
+                                (props) => <SearchResults query={props.match.params.query}/>
+                            }/>
                         </Switch>
                     </div>
                 </div>
