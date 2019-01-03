@@ -36,7 +36,7 @@ class App extends Component {
                             <Route path="/rankings/:sex" exact render={
                                 (props) => <RankedRacerList gender={apiGender(props.match.params.sex)}
                                                             minRank={1}/>}/>
-                            <Route path="/search" exact render={
+                            <Route path="/search/:query" exact render={
                                 (props) => <SearchResults query={props.match.params.query}/>
                             }/>
                         </Switch>

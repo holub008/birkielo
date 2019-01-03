@@ -79,7 +79,7 @@ class SearchBar extends React.Component {
     // this is gross, but grommet does not seem to provide a method for handling "enter"
     checkForAndHandleEnter(event) {
         if (event.key === 'Enter') {
-            window.location.href = `/search?query=${this.state.query}`
+            window.location.href = `/search/${this.state.query}`
         }
     }
 
