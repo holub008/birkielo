@@ -41,8 +41,6 @@ class RacerNeighborhood extends React.Component {
             );
         }
 
-        console.log(this.state.racers);
-
         return(
             <Box style={{maxWidth:"700px"}} margin={{top:"medium", left:"medium"}}>
                 <Text size="large">Surrounding 50 Competitors</Text>

@@ -6,30 +6,33 @@ import {
 } from "grommet";
 import {Link} from 'react-router-dom';
 
-const columns = [
-    {
-        property: "rank",
-        header: "Rank",
-        primary: true,
-    },
+const alwaysColumns = [
     {
         property: "first_name",
         header: "Racer",
         render: datum => {
             return(
                 datum.highlight ?
-                <b>
-                    {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
-                </b>:
-                <Anchor align="center">
-
-                    <Link to={`/racer/${datum.racer_id}`}
-                          style={{color: "rgb(144,96,235)"}}>
+                    <b>
                         {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
-                    </Link>
-                </Anchor>
+                    </b>:
+                    <Anchor align="center">
+
+                        <Link to={`/racer/${datum.racer_id}`}
+                              style={{color: "rgb(144,96,235)"}}>
+                            {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
+                        </Link>
+                    </Anchor>
             );
         },
+    },
+];
+
+const defaultAdditionalColumns = [
+    {
+        property: "rank",
+        header: "Rank",
+        primary: true,
     },
     {
         property: "elo",
@@ -40,8 +43,9 @@ const columns = [
 ];
 
 function RacerList(props) {
-    return(
-        <DataTable columns={columns} data={props.racers} size="large"/>);
+    const additionalColumns = props.additionalColumns ? props.additionalColumns : defaultAdditionalColumns;
+    const columns = alwaysColumns.slice().concat(additionalColumns);
+    return(<DataTable columns={columns} data={props.racers} size="large"/>);
 }
 
 export default RacerList;

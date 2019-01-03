@@ -64,7 +64,7 @@ class RankedRacerList extends React.Component {
                         </Anchor>
                     </Box>
                     <Box style={{maxWidth:"700px"}}>
-                        <RacerList racers={this.state.rankings}/>
+                        <RacerList racers={this.state.rankings} />
                     </Box>
                 </Box>
             </Grommet>);

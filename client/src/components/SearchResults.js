@@ -1,7 +1,14 @@
 import React from "react";
-import {callBackend} from "../util/data";
 
-import { DataTable } from "grommet";
+import {
+    Grommet,
+} from "grommet";
+import { grommet } from "grommet/themes";
+
+import {callBackend, isEmpty} from "../util/data";
+
+import RacerList from "./RacerList";
+import Spinner from "./Spinner";
 
 class SearchResults extends React.Component {
     constructor(props) {
@@ -13,7 +20,7 @@ class SearchResults extends React.Component {
     }
 
     updateResults(query) {
-        callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
+        callBackend(`/api/search?queryString=${query}&maxResults=${this.state.maxResults}`)
             .then(results => {
                 this.setState({ results: results.candidates.slice(0, this.state.maxResults) });
             })
@@ -28,7 +35,16 @@ class SearchResults extends React.Component {
     }
 
     render() {
-        return(<DataTable />);
+        if (isEmpty(this.state.results)) {
+            // TODO differentiate unfinished request and no results (but current search is never empty)
+            return(<Spinner />);
+        }
+        else {
+            return(
+                <Grommet theme={grommet}>
+                    <RacerList racers={this.state.results} additionalColumns={null} />
+                </Grommet>);
+        }
     }
 }
 
