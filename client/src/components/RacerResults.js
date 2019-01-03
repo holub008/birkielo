@@ -19,13 +19,13 @@ function milliTimeRender(millis){
 
 const columns = [
     {
-        property: "event_name",
-        header: <Text>Event Name</Text>,
-    },
-    {
         property: "event_date_deduped",
         header: "Date",
         primary: true,
+    },
+    {
+        property: "event_name",
+        header: "Event Name",
     },
     {
         property: "discipline",
@@ -98,8 +98,20 @@ function dedupeDates(raceResults) {
 
 // produces a limited (higher importance) set of columns from input columns
 function shrinkColumns(columns) {
-    return columns
-        .filter(col => ['event_name', 'event_date_deduped', 'duration', 'gender_place'].includes(col.property))
+    const columnSubset = columns
+        .filter(col => ['event_name', 'event_date_deduped', 'duration', 'gender_place'].includes(col.property));
+    const shrunkenColumns = columnSubset.map(
+        col => {
+            const colCopy = Object.assign({}, col);
+            colCopy.render = col.property === 'event_name' ?
+                datum => datum.event_name.split(/[ ]+/).map(str => str.slice(0,7)).join(" ")
+                :
+                colCopy.render;
+            return colCopy;
+        }
+    )
+
+    return shrunkenColumns;
 }
 
 class RacerResults extends React.Component {
