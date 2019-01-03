@@ -131,16 +131,20 @@ class RacerResults extends React.Component {
                     {
                         !this.state.shrinkTable ?
                             <Box direction="row">
-                                <Text color = {LINK_COLOR}>
+                                <Text color = {LINK_COLOR}
+                                      size="xsmall"
+                                      margin={{right:"xsmall"}}>
                                     Trouble viewing?
                                 </Text>
-                                < Contract color={LINK_COLOR} />
+                                < Contract color={LINK_COLOR} size="small" />
                             </Box> :
                             <Box direction="row">
-                                <Text color = {LINK_COLOR}>
+                                <Text color = {LINK_COLOR}
+                                      size="xsmall"
+                                      margin={{right:"xsmall"}}>
                                     View more columns?
                                 </Text>
-                                <Expand color = {LINK_COLOR} />
+                                <Expand color = {LINK_COLOR} size="small" />
                             </Box>
                     }
                 </Box>

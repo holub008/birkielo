@@ -73,6 +73,7 @@ class RacerComparison extends React.Component {
                 <Box direction="row-responsive">
                     <Box width="medium">
                         <Text>
+                            Note this page is a work in progress - not yet complete! <br/>
                             Pick racers for comparison:
                         </Text>
                         <Box margin={{top:"small"}}>
