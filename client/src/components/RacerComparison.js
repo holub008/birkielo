@@ -78,7 +78,8 @@ class RacerComparison extends React.Component {
                         <Box margin={{top:"small"}}>
                             <SearchBar maxResults={20}
                                        suggestionDecorator={(racerId, content) => this.racerSelectDecorator(racerId, content)}
-                                       selectHandler={(event) => this.racerSelectHandler(event)}/>
+                                       selectHandler={(event) => this.racerSelectHandler(event)}
+                                       preventSearchRedirect/>
                         </Box>
                     </Box>
                     <Box>

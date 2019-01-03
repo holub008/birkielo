@@ -46,7 +46,6 @@ class RacerSummary extends React.Component {
                             </Link>
                         </Box>
                         <MetricTimeline timeline={this.state.racerData.metrics}/>
-
                     </Box>
                     <Box pad="medium" align="center" fill="horizontal">
                         <Text>
@@ -103,12 +102,14 @@ class RacerSummary extends React.Component {
                             {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
                         </Heading>
                     </Box>
-                    <Box pad="small" border="left" alignSelf="end">
+                    <Box pad="small" border="left" alignSelf="left">
+                        <Text>
                         {
                             this.state.racerData.racer.gender
                         }
+                        </Text>
                     </Box>
-                    <Box pad="small" alignSelf="end" direction="row-responsive" gap="small" border="left">
+                    <Box pad="small" align="center" alignSelf="left" direction="row-responsive" gap="small" border="left">
                         <User onClick={() => this.setState({profileState:"user"})}
                               color={ this.getIconColor("user") }/>
                         <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
