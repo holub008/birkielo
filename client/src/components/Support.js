@@ -5,7 +5,7 @@ import {
     Button,
     Grommet,
 } from "grommet";
-import { MailOption, Cli, Currency } from 'grommet-icons';
+import { MailOption, Github, Currency } from 'grommet-icons';
 import { grommet } from "grommet/themes";
 
 function Help() {
@@ -21,7 +21,7 @@ function Help() {
                     width="xx-large">
                     <Box fill pad="small" align="center">
                         <Box pad="medium" align="center" background="dark-3" round gap="small">
-                            <Cli size="large"/>
+                            <Github size="large"/>
                             <Text>Accepting pull requests & issues</Text>
                             <Button label="On GitHub" href="https://github.com/holub008/birkielo"/>
                         </Box>

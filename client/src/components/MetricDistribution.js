@@ -34,7 +34,7 @@ function MetricDistribution(props) {
             height={300}
             yDomain={[yDomain.min, yDomain.max]}
         >
-            <VerticalBarSeries className="vertical-bar-series-example" data={metrics} />
+            <VerticalBarSeries data={metrics} />
             <XAxis />
             <YAxis />
             <LineMarkSeries data={[
@@ -44,7 +44,7 @@ function MetricDistribution(props) {
             <ChartLabel
                 xPercent={0.45}
                 yPercent={0.85}
-                text={"Elo score"}
+                text={"Birkielo score"}
             />
         </XYPlot>
     );

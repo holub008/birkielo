@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
-import { Elevator, Group, User, StatusUnknown } from "grommet-icons";
+import { Elevator, Group, User, StatusUnknown, StatusCritical } from "grommet-icons";
 import { Link } from 'react-router-dom';
 
 
@@ -37,15 +37,20 @@ class RacerSummary extends React.Component {
                         <Box direction={"row-responsive"} align="center" gap="small">
                             <Text>
                                 {
-                                    // TODO need to actually sort by date!
-                                    "Birkielo: " + this.state.racerData.metrics[0].elo.toFixed(1)
+                                    "Birkielo: " + this.state.racerData.metrics.
+                                        sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+                                        [0].elo.toFixed(1)
                                 }
                             </Text>
                             <Link to="/about/birkielo" style={{textDecoration: "none"}}>
                                 <StatusUnknown color="rgb(144,96,235)"/>
                             </Link>
                         </Box>
-                        <MetricTimeline timeline={this.state.racerData.metrics}/>
+                        {
+                            this.state.racerData.metrics.length > 1 ?
+                                <MetricTimeline timeline={this.state.racerData.metrics}/>
+                                : <StatusCritical size="large"/>
+                        }
                     </Box>
                     <Box pad="medium" align="center" fill="horizontal">
                         <Text>

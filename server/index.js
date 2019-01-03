@@ -94,7 +94,7 @@ app.get('/api/racer/:id', async (req, res) => {
 
     const racerResultQuery = {
         name: "racer_results",
-        // TODO the CST is unacceptably slow (build an agg table or cache at startup time)
+        // TODO the race size calculation is a full table scan & this query may not quite produce a valid ranking
         text: `
             WITH race_size AS (
                 SELECT

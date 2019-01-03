@@ -60,7 +60,6 @@ In approximate order of `E[value/effort]`:
     - Check for more than one result in a single race (and handle or or throw out)
     - Parse out age and location data
 * Improve site layout to be less janky on mobile
-* Cleaner ranking & listing pages
 * Pro results
 * Log user searches (i.e. find the most popular racers)
 * Allow user input for matching (e.g. if someone is incorrectly matched)

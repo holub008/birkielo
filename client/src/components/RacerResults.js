@@ -103,7 +103,6 @@ function RacerResults(props) {
             return(resultCopy);
         });
 
-    // TODO I want this to be sortable, but grommet sometimes randomly adds rows to the table when it is sorted...
     return(
         <DataTable columns={columns} data={resultsForRender}
                    sortable size="medium" margin="small" />
