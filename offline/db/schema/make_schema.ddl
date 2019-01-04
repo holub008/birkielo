@@ -95,3 +95,20 @@ CREATE TABLE IF NOT EXISTS racer_metrics (
 );
 
 COMMENT ON TABLE racer_metrics IS 'represents the time series of racer metrics. sparse in the sense that only dates with metric updates are included in the table';
+
+CREATE TYPE site_event AS ENUM ('racer_summary', -- triggered when a user requests data for a specific racer
+                                'racer_comparison', -- triggered when a user adds a racer to the comparison functionality
+                                'site_load' -- triggered by app loads (in the context of a SPA, the first request)
+                              );
+
+-- only two professionals refer to clients as "users" - software engineers & drug dealers
+CREATE TABLE IF NOT EXISTS user_tracking (
+  id SERIAL PRIMARY KEY,
+  event_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  ip_address INET NOT NULL, -- note this is a postgres specific data type
+  user_agent TEXT NOT NULL,
+  event site_event NOT NULL,
+  racer_id INTEGER -- intentionally not foreign-keyed in the event of record deletions, nullable for some events
+);
+
+GRANT INSERT ON TABLE user_tracking TO birkielo;
