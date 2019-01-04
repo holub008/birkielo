@@ -1,7 +1,6 @@
 #!/bin/bash
 
 export PGUSER=birkielo
-# note this is a RO user
 export PGHOST=birkielo.cb5jkztmh9et.us-east-2.rds.amazonaws.com
 export PGDATABASE=birkielo
 export PGPORT=5432

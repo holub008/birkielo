@@ -208,6 +208,7 @@ app.get('/api/racer/:id', async (req, res) => {
 // TODO it might be worthwhile to prop up nginx or similar in front of express, to reduce dependency on AWS behavior
 function requireHTTPS(req, res, next) {
     if (req.get('X-Forwarded-Proto') !== 'https') {
+        console.log('running https redirect');
         return res.redirect('https://' + req.get('host') + req.url);
     }
     next();
@@ -220,7 +221,7 @@ function requireHTTPS(req, res, next) {
  */
 if (isProduction) {
     app.use(express.static(path.join(__dirname, '../client/build')));
-    app.use(requireHTTPS());
+    app.use(requireHTTPS);
 
     // down the line, we need to consider how routing should be handled. for now, allow react to handle everything
     app.get('*', function(req, res) {
