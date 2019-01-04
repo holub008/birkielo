@@ -49,16 +49,6 @@ class RacerComparison extends React.Component {
         }
     }
 
-    racerSelectDecorator(racerId, content) {
-        return(
-            <Box onClick={() => this.addRacer(racerId)} >
-                {
-                    content
-                }
-            </Box>
-        );
-    }
-
     racerSelectHandler(event) {
         this.addRacer(parseInt(event.suggestion.value));
     }
@@ -78,7 +68,6 @@ class RacerComparison extends React.Component {
                         </Text>
                         <Box margin={{top:"small"}}>
                             <SearchBar maxResults={20}
-                                       suggestionDecorator={(racerId, content) => this.racerSelectDecorator(racerId, content)}
                                        selectHandler={(event) => this.racerSelectHandler(event)}
                                        preventSearchRedirect/>
                         </Box>

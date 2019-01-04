@@ -7,21 +7,19 @@ import {
     Box,
 } from "grommet";
 
-import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 function defaultSuggestionDecorator(racerId, content) {
-    return(
-        <Link to={`/racer/${racerId}`} style={{textDecoration: "none"}}>
-            { content }
-        </Link>
-    );
+    return(content);
 }
 
-function defaultSelectHandler(event) {
-    window.location.href = event.suggestion.label.props.to;
+// note that history is react-router history - this is tantamount to a redirect (SPA)
+// TODO is best UX to clear out the search bar after a selection is made?
+function defaultSelectHandler(event, history) {
+    history.push(`/racer/${event.suggestion.value}`);
 }
 
-class SearchBar extends React.Component {
+class UnwrappedSearchBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -79,7 +77,7 @@ class SearchBar extends React.Component {
     // this is gross, but grommet does not seem to provide a method for handling "enter"
     checkForAndHandleEnter(event) {
         if (event.key === 'Enter' && !this.props.preventSearchRedirect) {
-            window.location.href = `/search/${this.state.query}`
+            this.props.history.push(`/search/${this.state.query}`);
         }
     }
 
@@ -88,7 +86,7 @@ class SearchBar extends React.Component {
             <TextInput
                 type="search"
                 onChange={(event) => this.onChange(event)}
-                onSelect={(event) => this.state.selectHandler(event)}
+                onSelect={(event) => this.state.selectHandler(event, this.props.history)}
                 suggestions={this.renderSuggestions()}
                 placeholder="Skier Search"
                 style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
@@ -97,5 +95,8 @@ class SearchBar extends React.Component {
         );
     }
 }
+
+const SearchBar = withRouter(({history, ...forwardedProps}) =>
+    <UnwrappedSearchBar history={history} {...forwardedProps}/>)
 
 export default SearchBar;

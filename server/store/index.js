@@ -36,11 +36,14 @@ class RacerStore {
             // this is a quick hack for faster responses - limit the number of things we compute levenshtein distance on
             .filter(x => x.first_name && x.first_name.toLowerCase().startsWith(queryLower[0]) ||
                 x.last_name && x.last_name.toLowerCase().startsWith(queryLower[0]))
+            // TODO levenshtein computation should be pulled out - reducing nlgn ops to yield n ops
             .sort((a, b) => {
                 const aLower = `${a.first_name} ${a.last_name}`.toLowerCase();
                 const bLower = `${b.first_name} ${b.last_name}`.toLowerCase();
                 // since the search may include prefixes (autocomplete), we don't wish to penalize longer names when the
                 // query is short - else short names would always rank highest
+                // TODO subtraction yields funky search results for small strings. this should be smoothed on query
+                // length or made a ratio
                 const aEditDistanceAdjusted = util.levenshtein(aLower, queryLower) - Math.max(0, aLower.length - queryLower.length);
                 const bEditDistanceAdjusted = util.levenshtein(bLower, queryLower) - Math.max(0, bLower.length - queryLower.length);
 

@@ -62,8 +62,8 @@ class SearchResults extends React.Component {
                             <Select
                                 id="select"
                                 name="select"
-                                value={this.state.maxResults}
-                                options={[10, 25, 50]}
+                                value={this.state.maxResults.toString()}
+                                options={["10", "25", "50"]}
                                 onChange={({ option }) => this.updateResults(query, option)}
                             />
                         </Box>
