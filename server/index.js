@@ -8,6 +8,7 @@ const data = require('./data');
 const app = express();
 
 const port = process.env.PORT || 5000;
+const isProduction = process.env.NODE_ENV === "production";
 
 const racerStore = new store.RacerStore();
 
@@ -197,13 +198,29 @@ app.get('/api/racer/:id', async (req, res) => {
     });
 });
 
+// tsl redirect logic
+// this function is highly deployment specific & will likely need to change depending on it
+// in current deployment, all requests (http on 80 & https on 443) resolve to AWS ELB
+// ELB forwards all these requests to the server EC2 instance over http.
+// the X-Forwarded-Proto header represents the protocol of the ELB requests. if request to ELB is over http, we'd like
+// the server to issue a https redirect. if the request to ELB is over https, all is well & the ELB <-> EC2 commune is
+// over http
+// TODO it might be worthwhile to prop up nginx or similar in front of express, to reduce dependency on AWS behavior
+function requireHTTPS(req, res, next) {
+    if (req.get('X-Forwarded-Proto') !== 'https') {
+        return res.redirect('https://' + req.get('host') + req.url);
+    }
+    next();
+}
+
 /**
  * Serve the client side application
  * We don't expect this endpoint to be hit in dev, where webpack should be serving the hot-reloaded application
  * So, technically this gross conditional check isn't necessary, but it's kept on the off chance of weird bugs
  */
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
     app.use(express.static(path.join(__dirname, '../client/build')));
+    app.use(requireHTTPS());
 
     // down the line, we need to consider how routing should be handled. for now, allow react to handle everything
     app.get('*', function(req, res) {
