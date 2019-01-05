@@ -40,7 +40,10 @@ const featureTabs = {
                     its methodologies.
                 </Text>
                 <br/>
-                <img src="/images/birkie_hills.jpg" className="about-image" alt="trample"/>
+                <img src="/images/birkie_hills.jpg"
+                     className="about-image"
+                     alt="trample"
+                     style={{width:"75%", maxWidth: "500px"}}/>
             </Box>
         </Tab>,
     birkielo:

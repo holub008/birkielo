@@ -5,6 +5,7 @@ import {
     Grommet,
     DropButton,
     Text,
+    Image,
 } from "grommet";
 import { grommet } from "grommet/themes";
 import { Link } from 'react-router-dom';
@@ -45,6 +46,9 @@ function Home(props) {
                     <Box margin="medium" width="large" alignSelf="center">
                         <SearchBar maxResults={20}/>
                     </Box>
+                </Box>
+                <Box align="center" margin={{top:"medium"}}>
+                    <Image src="/images/skier.gif" style={{width:"35%", maxWidth:"400px"}}/>
                 </Box>
             </Grommet>
         </div>
