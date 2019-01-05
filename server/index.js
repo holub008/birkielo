@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const db = require('./db');
 const store = require('./store');
+const logging = require('./logging');
+
 const util = require('./util');
 const data = require('./data');
 
@@ -11,6 +13,7 @@ const port = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === "production";
 
 const racerStore = new store.RacerStore();
+const eventLogger = new logging.EventLogger();
 
 /**
  * API endpoints
@@ -93,6 +96,9 @@ app.get('/api/search/', (req, res) => {
 
 app.get('/api/racer/:id', async (req, res) => {
     const racerId = parseInt(req.params.id);
+
+    // async, does not block progression
+    eventLogger.logForELBForwardedRequest(req, "racer_summary", racerId);
 
     if (!racerId || !racerStore.containsRacerId(racerId)) {
         res.send({});
@@ -236,6 +242,7 @@ if (isProduction) {
 
     // down the line, we need to consider how routing should be handled. for now, allow react to handle everything
     app.get('*', function(req, res) {
+        eventLogger.logForELBForwardedRequest(req, "site_load");
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     });
 }

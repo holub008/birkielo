@@ -1,6 +1,7 @@
 {
   "short_name": "Birkielo",
   "name": "Birkielo",
+  "description": "Nordic ski result aggregation & ranking",
   "author": "karljholub@gmail.com",
   "icons": [
     {

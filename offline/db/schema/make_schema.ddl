@@ -106,9 +106,10 @@ CREATE TABLE IF NOT EXISTS user_tracking (
   id SERIAL PRIMARY KEY,
   event_time TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
   ip_address INET NOT NULL, -- note this is a postgres specific data type
-  user_agent TEXT NOT NULL,
+  user_agent TEXT,
   event site_event NOT NULL,
   racer_id INTEGER -- intentionally not foreign-keyed in the event of record deletions, nullable for some events
 );
 
 GRANT INSERT ON TABLE user_tracking TO birkielo;
+GRANT USAGE, SELECT ON SEQUENCE user_tracking_id_seq TO birkielo;
