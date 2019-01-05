@@ -13,6 +13,33 @@ import { Link } from 'react-router-dom';
 import '../styles/Home.css';
 import SearchBar from "./SearchBar";
 
+const rotationImages = [
+    {
+        filename: "skier.gif",
+        alt: "credit Walt Disney",
+    },
+    {
+        filename: "back.JPG",
+        alt: "fair use",
+    },
+    {
+        filename: "baby.JPG",
+        alt: "credit fasterskier.com"
+    },
+    {
+        filename: "birkie_hills.jpg",
+        alt: "credit star tribune"
+    },
+];
+
+function getRandomImage() {
+    const index = Math.floor(Math.random() * rotationImages.length);
+    const image = rotationImages[index];
+    return(
+        <Image src={`/images/${image.filename}`} alt={image.alt} style={{width:"35%", maxWidth:"400px"}}/>
+    )
+}
+
 const DropContent = ({ onClose }) => (
     <Box pad="small">
         <Link to="/rankings/women" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
@@ -48,7 +75,9 @@ function Home(props) {
                     </Box>
                 </Box>
                 <Box align="center" margin={{top:"medium"}}>
-                    <Image src="/images/skier.gif" style={{width:"35%", maxWidth:"400px"}}/>
+                    {
+                        getRandomImage()
+                    }
                 </Box>
             </Grommet>
         </div>

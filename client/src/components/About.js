@@ -10,6 +10,7 @@ import {
     Heading,
     Accordion,
     AccordionPanel,
+    Image
 } from "grommet";
 import { grommet } from "grommet/themes";
 import { Link } from 'react-router-dom';
@@ -42,15 +43,18 @@ const featureTabs = {
                     its methodologies.
                 </Text>
                 <br/>
-                <img src="/images/birkie_hills.jpg"
-                     className="about-image"
-                     alt="trample"
-                     style={{width:"75%", maxWidth: "500px"}}/>
+                <Box align="center">
+                    <Image src="/images/birkie_hills.jpg"
+                         style={{width:"75%", maxWidth: "500px"}}/>
+                </Box>
             </Box>
         </Tab>,
     birkielo:
         <Tab title="Birkielo Computation">
             <Box margin="medium">
+                <Box align="center">
+                    <Image src="/images/calc.jpg" style={{maxWidth:"100px"}}/>
+                </Box>
                 <Text>
                     Explain as if I'm:
                 </Text>
