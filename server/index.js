@@ -238,10 +238,20 @@ app.get('/api/racer/:id', async (req, res) => {
  * So, technically this gross conditional check isn't necessary, but it's kept on the off chance of weird bugs
  */
 if (isProduction) {
+    // this middleware just for logging site load when the root is hit
+    // pretty gross, but I don't know how to inject logging into express.static
+    app.get('*', function(req, res, next) {
+        if (req.path === "/") {
+            eventLogger.logForELBForwardedRequest(req, "site_load");
+        }
+        next();
+    });
+
     app.use(express.static(path.join(__dirname, '../client/build')));
 
     // down the line, we need to consider how routing should be handled. for now, allow react to handle everything
     app.get('*', function(req, res) {
+        eventLogger.logForELBForwardedRequest(req, "site_load");
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     });
 }
