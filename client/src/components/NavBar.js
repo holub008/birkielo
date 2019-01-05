@@ -66,10 +66,12 @@ class NavBar extends React.Component {
                         }
                     </Box>
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>
-                        <Link to="/">
-                            <Image src="/images/logo.png" alt="" fit="cover"
-                                   style={{height: "50%", width:"50%"}}/>
-                        </Link>
+                            <Link to="/">
+                                <Box align="center">
+                                    <Image src="/images/logo.png" alt="" fit="cover"
+                                           style={{height: "50%", width:"50%"}}/>
+                                </Box>
+                            </Link>
                     </Box>
                     <Box alignSelf="center" style={{width:"33%"}} align="end">
                         <MenuDrop/>

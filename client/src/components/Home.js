@@ -40,7 +40,7 @@ function getRandomImage() {
     const index = Math.floor(Math.random() * rotationImages.length);
     const image = rotationImages[index];
     return(
-        <Image src={`/images/${image.filename}`} alt={image.alt} style={{width:"35%", maxWidth:"400px"}}/>
+        <Image src={`/images/${image.filename}`} alt={image.alt} style={{width:"50%", maxWidth:"400px"}}/>
     )
 }
 
