@@ -242,8 +242,6 @@ if (isProduction) {
 
     // down the line, we need to consider how routing should be handled. for now, allow react to handle everything
     app.get('*', function(req, res) {
-        eventLogger.logForELBForwardedRequest(req, "site_load");
-        console.log('Site load occurred');
         res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
     });
 }

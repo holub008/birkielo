@@ -30,6 +30,10 @@ const rotationImages = [
         filename: "birkie_hills.jpg",
         alt: "credit star tribune"
     },
+    {
+        filename: "cheesin.jpg",
+        alt: "cheesy"
+    },
 ];
 
 function getRandomImage() {
