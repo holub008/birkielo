@@ -8,6 +8,8 @@ import {
     Tabs,
     Tab,
     Heading,
+    Accordion,
+    AccordionPanel,
 } from "grommet";
 import { grommet } from "grommet/themes";
 import { Link } from 'react-router-dom';
@@ -50,9 +52,81 @@ const featureTabs = {
         <Tab title="Birkielo Computation">
             <Box margin="medium">
                 <Text>
-                    This is a work in progress. It will contain layered descriptions of how Birkielo computation is
-                    performed.
+                    Explain as if I'm:
                 </Text>
+                <Accordion>
+                    <AccordionPanel label="A Child">
+                        <Box margin="small">
+                            <Text>
+                                Every ski racer gets a score. Over time, if a skier races well & beats other skiers, they get
+                                a higher score. If a skier does not race well, they get a lower score.
+                            </Text>
+                        </Box>
+                    </AccordionPanel>
+                    <AccordionPanel label="An Adult">
+                        <Box margin="small">
+                            <Text margin="small">
+                                Every ski racer gets a score, with the average score around 1000. This score gives some
+                                expectation for how well a skier should do in any given race. If the average score of racers
+                                in a race is 1100 and my score is 1100, I should expect to beat half the competitors & lose
+                                to half the competitors. Imagine the scenarios:
+                                <ul>
+                                    <li>I beat (and lose to) exactly half. My score must be just about right.</li>
+                                    <li>I beat more than half. My score should be adjusted upwards a bit (but not too much,
+                                        in case the race was a fluke).</li>
+                                    <li>I beat less than half. My score should be adjusted downwards a bit (but not too much,
+                                        in case the race was a fluke).</li>
+                                    <li>I won the race. My score should be adjusted upwards substantially - it's clear I'm
+                                    much better than my current score.</li>
+                                </ul>
+                            </Text>
+                            <Text margin="small">
+                                The key outcome to note is that score changes are relative to the competitiveness of race
+                                the score is being updated for. A good skier winning a race of bad skiers doesn't say much
+                                about their ability, and vice versa.
+                            </Text>
+                            <Text margin="small">
+                                So, how are scores determined? For a given race & racer, take all other competitors in the
+                                race that were beaten; for each competitor, add an amount to the racer score
+                                inversely proportional to the score difference between the racer & competitor. Now take
+                                all the competitors that beat the racer; for each competitor, subtract an amount from
+                                the racer score inversely proportional to the score difference between the racer &
+                                competitor.
+                            </Text>
+                        </Box>
+                    </AccordionPanel>
+                    <AccordionPanel label="A Computer Scientist">
+                        <Box margin="small">
+                            <Text>
+                                The scoring algorithm has not been finalized. In the interest of not rewriting this section
+                                with future changes it is left for a later date. Do feel free to read the&nbsp;
+                                <Anchor href="https://github.com/holub008/birkielo/tree/master/offline/scoring">
+                                code
+                                </Anchor>
+                                .
+                            </Text>
+                        </Box>
+                    </AccordionPanel>
+                    <AccordionPanel label="A Statistician">
+                        <Box margin="small">
+                            <Text>
+                                The scoring algorithm has not been finalized. In the interest of not rewriting this section
+                                with future changes it is left for a later date. The procedure is highly derivative of the&nbsp;
+                                <Anchor href="https://en.wikipedia.org/wiki/Elo_rating_system#Theory">
+                                    Elo rating
+                                </Anchor>
+                                &nbsp;as in chess and will share much of the math.
+
+                                If you are interested in running some statistical simulations or seeing methods explored in
+                                the development of Birkielo, see&nbsp;
+                                <Anchor href="https://github.com/holub008/birkielo/blob/master/offline/scoring/simulate/ranking_experiments.R">
+                                    here
+                                </Anchor>
+                                .
+                            </Text>
+                        </Box>
+                    </AccordionPanel>
+                </Accordion>
             </Box>
         </Tab>,
     results:

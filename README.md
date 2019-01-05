@@ -52,9 +52,6 @@ In approximate order of `E[value/effort]`:
 
 * Bring vasa/pepsi/other results into the fold
 * User selected skier comparison or head to head comparison
-* Technical pages
- 	- High level description of methodologies
- 	- Stats and algos description
 * Improve matching logic
     - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
     - Check for more than one result in a single race (and handle or or throw out)
