@@ -16,6 +16,13 @@ const racerStore = new store.RacerStore();
  * API endpoints
  */
 
+// this just for AWS ELB health checks, an endpoint with no https redirect :(
+app.get('/status', (req, res) => {
+    res.send({
+        content: "hail overlord bezos"
+    });
+});
+
 // tsl redirect logic
 // this function is highly deployment specific & will likely need to change depending on it
 // in current deployment, all requests (http on 80 & https on 443) resolve to AWS ELB
@@ -24,6 +31,8 @@ const racerStore = new store.RacerStore();
 // the server to issue a https redirect. if the request to ELB is over https, all is well & the ELB <-> EC2 commune is
 // over http
 // TODO it might be worthwhile to prop up nginx or similar in front of express, to reduce dependency on AWS behavior
+// this would also allow deployment of HSTS (which isn't a big deal for this site, with no cookies & little incentive
+// for mitm)
 function requireHTTPS(req, res, next) {
     if (req.get('X-Forwarded-Proto') !== 'https') {
         return res.redirect('https://' + req.get('host') + req.url);
@@ -31,7 +40,6 @@ function requireHTTPS(req, res, next) {
     next();
 }
 
-// note that https redirect is crucially ordered first - it preempts all other middleware
 if (isProduction) {
     app.use(requireHTTPS);
 }
