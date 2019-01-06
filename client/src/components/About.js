@@ -21,28 +21,38 @@ const featureTabs = {
     concept:
         <Tab title="Concept">
             <Box>
-                <br/>
                 <Text margin="small">
-                    From the beginning of time, skier kind has desired to know who the strongest skier is.
-                    And today, we have
-                    the technology. Well, we <i>had</i> the technology for a long time, now we just have a
-                    weekend
-                    warrior willing to employ it.
+                    How do you find ski results? What do you hope do with them?
                 </Text>
                 <Text margin="small">
-                    Birkielo is an application of the&nbsp;
+                    In all likellihood, the answer to the first question is some combination of trawling skinnyski &
+                    googling. Answers to the second question may vary:
+                    <ul>
+                        <li>
+                            Commit them to memory
+                        </li>
+                        <li>
+                            Compare races and racers.
+                        </li>
+                        <li>
+                            Analyze how a racer's performance has changed over time.
+                        </li>
+                    </ul>
+                    All of these approaches are inefficient, inaccurate, and non-reproducible.
+                </Text>
+                <Text margin="small">
+                    Birkielo.com is both a web scraper and an application of the&nbsp;
                     <Anchor href="https://en.wikipedia.org/wiki/Elo_rating_system">
                         Elo rating system
                     </Anchor>
-                    &nbsp;(commonly used in chess) to cross country ski results. This is a fairly complex
-                    effort involving
-                    web scraping, algorithmics, & mathematical statistics, so please excuse any errors &
-                    omissions.
-                    While in its early stages no explanation of scores are provided, Birkielo will seek to
-                    be transparent in
-                    its methodologies.
+                    &nbsp;(commonly used in chess) to cross country ski results. It provides indexed and searchable
+                    access to ski results and produces a rating system for comparison between racers, between races, and
+                    with racers over time. To these ends, the site contains search tools and visualizations. The end
+                    result is improved analysis & insight and saved time.
                 </Text>
-                <br/>
+                <Text margin="small">
+                    Chase trails, not links.
+                </Text>
                 <Box align="center">
                     <Image src="/images/birkie_hills.jpg"
                          style={{width:"75%", maxWidth: "500px"}}/>
@@ -53,7 +63,7 @@ const featureTabs = {
         <Tab title="Birkielo Computation">
             <Box margin="medium">
                 <Box align="center">
-                    <Image src="/images/calc.jpg" style={{maxWidth:"100px"}}/>
+                    <Image src="/images/calc.jpg" style={{maxWidth:"150px"}}/>
                 </Box>
                 <Text>
                     Explain as if I'm:
@@ -175,9 +185,9 @@ const featureTabs = {
                     human effort), these e-graveyards can be cheaply & quickly accessed. For the uninitiated, web
                     scraping is the process of extracting data from the internet; this frequently involves parsing html,
                     the text data underlying most of the content you see in a browser. In fact, the majority of race
-                    results that are not PDFs are structured as html "tables"- html objects that have generally well
-                    structured content (think excel spreadsheets for the internet). Using simple web request & parsing
-                    tools (Birkielo utilizes&nbsp;
+                    results that are not PDFs are structured as html "tables"- html objects that have generally
+                    well-structured content (think excel spreadsheets for the internet). Using simple web request &
+                    parsing tools (Birkielo utilizes&nbsp;
                     <Anchor href="https://www.crummy.com/software/BeautifulSoup/">
                         BeautifulSoup
                     </Anchor>
@@ -190,17 +200,16 @@ const featureTabs = {
                     <Anchor href="http://birkie.pttiming.com/results/2018/?page=1150&r_page=division&divID=2">
                         has consistent columns
                     </Anchor>
-                    ), the attributes of the data may have&nbsp;
+                    ), the attributes of the data may have arbitrary content . For example, a race time of 1 hour, 3
+                    minutes, and 37 seconds may be reported as "1:03:37", "1:03:37.00", "1:04", "1:03.37", etc. A place
+                    of 23 out of 100 may be reported as "23/100", "23" (where the total number of racers is in another
+                    column, or implicit) - then add in the complexity introduced by including gender placement. Names
+                    may be reported as "Karl Holub", "Karl J Holub", "Holub, Karl", or&nbsp;
                     <Anchor href="http://results.birkie.com/participant.php?event_id=38&bib=57">
-                        "arbitrary" content
+                        "Karl 599 Hwy 20 Holub"
                     </Anchor>
-                    . For a practical example, a race time of 1 hour, 3 minutes, and 37 seconds may be reported as
-                    "1:03:37", "1:03:37.00", "1:04", "1:03.37", etc. A place of 23 out of 100 may be reported as
-                    "23/100", "23" (where the total number of racers is in another column, or implicit) - then add in
-                    the complexity introduced by including gender placement. Names may be reported as "Karl Holub",
-                    "Karl J Holub", "Holub, Karl", or "Karl 599 Hwy 20 Holub". Results may or may not include the racer
-                    gender. How can we programmatically - that is, as if you were writing a cooking recipe for data -
-                    express how to coerce this data to similar format?
+                    . Results may or may not include the racer gender. How can we programmatically - that is, as if we
+                    were writing a cooking recipe for data - express how to coerce this data to similar format?
                 </Text>
                 <br/>
                 <Text>
@@ -228,7 +237,8 @@ const featureTabs = {
                     data is) and 2. the number of racers in the race. These are measures of how much utility the races
                     provide. To date, only the Birkie & City of Lakes
                     Loppet have been consumed - they are the two lowest hanging fruits in this regard. Future planned
-                    adds are the Vasaloppet & Pepsi Challenge. If you would like to see other races added,&nbsp;
+                    adds are the Vasaloppet, Noquemanon, Pepsi Challenge, Great Bear Chase, and Seeley Hills Classic.
+                    If you would like to see other races added,&nbsp;
                     <Link to="/support" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
                         let me know or contribute
                     </Link>
