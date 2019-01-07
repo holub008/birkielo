@@ -36,7 +36,7 @@ class EventLogger {
                               event,
                               racerId=null) {
         // note we fall back to standard headers in the event of dev testing logging
-        const ipAddress = request.headers['X-Forwarded-For'] || request.connection.remoteAddress;
+        const ipAddress = request.headers['x-forwarded-for'] || request.connection.remoteAddress;
         const userAgent = request.headers['user-agent'];
 
         this.log(ipAddress, userAgent, event, racerId);
