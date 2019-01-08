@@ -105,5 +105,8 @@ st_events_followable = [st_events[ix] for ix in original_indices]
 events = [(e[1], e[0][1], e[0][2]) for e in zip(st_events_followable, mrr_urls)]
 
 results = get_all_results(events)
-
 results.to_csv(STORAGE_DIRECTORY + "mrr_raw.csv")
+# TODO handle the following failures:
+# Failed to handle event at: https://www.superiortiming.com/2013/01/noquemanon-ski-marathon-2013-live-results/
+# Failed to handle event at: https://my3.raceresult.com/details/index.php?eventid=10035
+# Failed to handle event at: https://my2.raceresult.com/details/index.php?eventid=9194&lang=en
