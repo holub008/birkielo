@@ -1,0 +1,1234 @@
+,Bib,Name,Sex,Age,City,State,Overall,SexPl,DivPl,Time,mtec_race_id,date,distance_meters,discipline
+0,326,Per Nelson,M,38.0,Saint Paul,MN,1 / 24,1 / 15,1 / 1,28:09,615,1/29/2012,10500.0,freestyle
+1,327,John Schneider,M,46.0,Plymouth,MN,2 / 24,2 / 15,1 / 5,29:18,615,1/29/2012,10500.0,freestyle
+2,302,Bill Callas,M,52.0,Stillwater,MN,3 / 24,3 / 15,1 / 5,30:09,615,1/29/2012,10500.0,freestyle
+3,347,Dallas Johnson,M,46.0,Wayzata,MN,4 / 24,4 / 15,2 / 5,32:28,615,1/29/2012,10500.0,freestyle
+4,304,Amy Johnson,F,44.0,Wayzata,MN,5 / 24,1 / 9,1 / 3,32:56,615,1/29/2012,10500.0,freestyle
+5,15,Katie Brekke,F,26.0,Marine On St Croix,MN,6 / 24,2 / 9,1 / 2,34:21,615,1/29/2012,10500.0,freestyle
+6,111,Matthew Trumper,M,15.0,Stillwater,MN,7 / 24,5 / 15,1 / 2,34:30,615,1/29/2012,10500.0,freestyle
+7,312,Andrea Schultz,F,26.0,Hastings,MN,8 / 24,3 / 9,2 / 2,34:45,615,1/29/2012,10500.0,freestyle
+8,81,Peter Rayne,M,50.0,Ellsworth,WI,9 / 24,6 / 15,2 / 5,35:15,615,1/29/2012,10500.0,freestyle
+9,282,Rachel Jensen,F,15.0,Shell Lake,WI,10 / 24,4 / 9,1 / 1,35:17,615,1/29/2012,10500.0,freestyle
+10,319,Mark Schneider,M,59.0,Saint Paul,MN,11 / 24,7 / 15,3 / 5,35:20,615,1/29/2012,10500.0,freestyle
+11,334,Jeffery Dubois,M,56.0,White Bear Lake,MN,12 / 24,8 / 15,4 / 5,36:25,615,1/29/2012,10500.0,freestyle
+12,105,Scott Swedin,M,46.0,Scandia,MN,13 / 24,9 / 15,3 / 5,37:16,615,1/29/2012,10500.0,freestyle
+13,39,Ted Haland,M,42.0,Afton,MN,14 / 24,10 / 15,4 / 5,38:58,615,1/29/2012,10500.0,freestyle
+14,317,Burgess Eberhardt,M,70.0,International Fall,MN,15 / 24,11 / 15,1 / 2,39:19,615,1/29/2012,10500.0,freestyle
+15,8,John Baker,M,49.0,Maplewood,MN,16 / 24,12 / 15,5 / 5,42:29,615,1/29/2012,10500.0,freestyle
+16,341,Gina Oesterreich,F,49.0,Marine On Saint Cr,MN,17 / 24,5 / 9,2 / 3,43:26,615,1/29/2012,10500.0,freestyle
+17,24,Lynn Cornell,F,37.0,Rochester,MN,18 / 24,6 / 9,1 / 2,45:22,615,1/29/2012,10500.0,freestyle
+18,308,Rick Villalta,M,50.0,Saint Louis Park,MN,19 / 24,13 / 15,5 / 5,45:55,615,1/29/2012,10500.0,freestyle
+19,4,Lachlan Anders-Macleod,M,12.0,Minneapolis,MN,20 / 24,14 / 15,2 / 2,47:53,615,1/29/2012,10500.0,freestyle
+20,116,Ami Voeltz,F,38.0,Minneapolis,MN,21 / 24,7 / 9,2 / 2,48:03,615,1/29/2012,10500.0,freestyle
+21,266,Kathryn Ryan,F,58.0,New Brighton,MN,22 / 24,8 / 9,1 / 1,48:34,615,1/29/2012,10500.0,freestyle
+22,338,Kathy Carlson,F,41.0,Woodbury,MN,23 / 24,9 / 9,3 / 3,52:56,615,1/29/2012,10500.0,freestyle
+23,17,Keith Canny,M,72.0,Andover,MN,24 / 24,15 / 15,2 / 2,1:23:13,615,1/29/2012,10500.0,freestyle
+0,275,Isaak Ridge,M,17.0,New Brighton,MN,1 / 14,1 / 9,1 / 1,29:51,617,1/29/2012,10500.0,classic
+1,43,Karl Holub,M,18.0,New Brighton,MN,2 / 14,2 / 9,1 / 1,29:57,617,1/29/2012,10500.0,classic
+2,48,Kevin Ivens,M,51.0,Champlin,MN,3 / 14,3 / 9,1 / 2,34:12,617,1/29/2012,10500.0,classic
+3,301,Nick Sokolowski,M,15.0,Saint Louis Park,MN,4 / 14,4 / 9,1 / 2,34:46,617,1/29/2012,10500.0,classic
+4,295,Angie Robinson,F,44.0,Roseville,MN,5 / 14,1 / 5,1 / 3,35:31,617,1/29/2012,10500.0,classic
+5,299,Linder Wendt,M,14.0,Marine On Saint Cr,MN,6 / 14,5 / 9,2 / 2,36:44,617,1/29/2012,10500.0,classic
+6,274,Anna Watts,F,18.0,New Brighton,MN,7 / 14,2 / 5,1 / 1,39:33,617,1/29/2012,10500.0,classic
+7,288,Rachel Peterson,F,14.0,Hastings,MN,8 / 14,3 / 5,1 / 1,45:25,617,1/29/2012,10500.0,classic
+8,84,James Remington,M,63.0,New Richmond,WI,9 / 14,6 / 9,1 / 2,50:19,617,1/29/2012,10500.0,classic
+9,310,James Hainlen,M,63.0,Stillwater,MN,10 / 14,7 / 9,2 / 2,52:01,617,1/29/2012,10500.0,classic
+10,294,Jack McCoy,M,55.0,White Bear Lake,MN,11 / 14,8 / 9,2 / 2,54:12,617,1/29/2012,10500.0,classic
+11,306,Wayne Smestad,M,45.0,Deronda,WI,12 / 14,9 / 9,1 / 1,58:03,617,1/29/2012,10500.0,classic
+12,86,Beth Robelia,F,41.0,St. Paul,MN,13 / 14,4 / 5,2 / 3,1:11:23,617,1/29/2012,10500.0,classic
+13,333,Jocelyn Har,F,48.0,Edina,MN,14 / 14,5 / 5,3 / 3,1:19:07,617,1/29/2012,10500.0,classic
+0,117,Derek Wallen,M,32.0,Apple Valley,MN,1 / 97,1 / 70,1 / 4,50:53,619,1/29/2012,21000.0,freestyle
+1,91,Andrew Schakel,M,37.0,Minneapolis,MN,2 / 97,2 / 70,2 / 4,52:42,619,1/29/2012,21000.0,freestyle
+2,83,Scott Ree,M,48.0,Plymouth,MN,3 / 97,3 / 70,1 / 19,52:42,619,1/29/2012,21000.0,freestyle
+3,108,Ian Torchia,M,15.0,Rochester,MN,4 / 97,4 / 70,1 / 6,52:43,619,1/29/2012,21000.0,freestyle
+4,337,Will Nielsen,M,22.0,Richfield,MN,5 / 97,5 / 70,1 / 11,52:57,619,1/29/2012,21000.0,freestyle
+5,329,Mark Michals,M,27.0,Minneapolis,MN,6 / 97,6 / 70,2 / 11,53:48,619,1/29/2012,21000.0,freestyle
+6,14,Christian Brekke,M,29.0,Marine On St Croix,MN,7 / 97,7 / 70,3 / 11,53:54,619,1/29/2012,21000.0,freestyle
+7,45,John Hopkins,M,45.0,Savage,MN,8 / 97,8 / 70,2 / 19,56:28,619,1/29/2012,21000.0,freestyle
+8,321,Hilary Patzer,F,32.0,Saint Paul,MN,9 / 97,1 / 27,1 / 3,57:27,619,1/29/2012,21000.0,freestyle
+9,336,Craig Rudd,M,42.0,Plymouth,MN,10 / 97,9 / 70,3 / 19,58:00,619,1/29/2012,21000.0,freestyle
+10,93,Paul Schoening,M,46.0,Plymouth,MN,11 / 97,10 / 70,4 / 19,58:08,619,1/29/2012,21000.0,freestyle
+11,292,Eli Johnson,M,18.0,Minneapolis,MN,12 / 97,11 / 70,1 / 2,58:54,619,1/29/2012,21000.0,freestyle
+12,29,Brad Dieringer,M,46.0,St Paul,MN,13 / 97,12 / 70,5 / 19,59:21,619,1/29/2012,21000.0,freestyle
+13,78,Trent Ping,M,26.0,Minneapolis,MN,14 / 97,13 / 70,4 / 11,59:32,619,1/29/2012,21000.0,freestyle
+14,54,Wade Johnson,M,48.0,Minneapolis,MN,15 / 97,14 / 70,6 / 19,59:43,619,1/29/2012,21000.0,freestyle
+15,270,Todd White,M,44.0,Roseville,MN,16 / 97,15 / 70,7 / 19,59:45,619,1/29/2012,21000.0,freestyle
+16,100,Sevve Stember,M,27.0,Minneapolis,MN,17 / 97,16 / 70,5 / 11,1:00:35,619,1/29/2012,21000.0,freestyle
+17,293,Brian Wickland,M,46.0,Marine On Saint Cr,MN,18 / 97,17 / 70,8 / 19,1:00:38,619,1/29/2012,21000.0,freestyle
+18,58,Kip Krueger,M,25.0,Wayzata,MN,19 / 97,18 / 70,6 / 11,1:00:44,619,1/29/2012,21000.0,freestyle
+19,96,Cheryl Senechal-Dubois,F,50.0,North Oaks,MN,20 / 97,2 / 27,1 / 4,1:00:54,619,1/29/2012,21000.0,freestyle
+20,99,Kathryn Splan,F,35.0,St. Paul,MN,21 / 97,3 / 27,2 / 3,1:01:02,619,1/29/2012,21000.0,freestyle
+21,118,Molly Watkins,F,21.0,Minneapolis,MN,22 / 97,4 / 27,1 / 4,1:01:06,619,1/29/2012,21000.0,freestyle
+22,62,Ryan Marita-Davis,M,15.0,Minneapolis,MN,23 / 97,19 / 70,2 / 6,1:01:28,619,1/29/2012,21000.0,freestyle
+23,49,Loren Jacot,M,52.0,Oakdale,MN,24 / 97,20 / 70,1 / 13,1:01:29,619,1/29/2012,21000.0,freestyle
+24,309,Sam Shaneen,M,16.0,Minneapolis,MN,25 / 97,21 / 70,1 / 11,1:01:29,619,1/29/2012,21000.0,freestyle
+25,80,Scott Rake,M,44.0,Elko,MN,26 / 97,22 / 70,9 / 19,1:01:31,619,1/29/2012,21000.0,freestyle
+26,19,Brianna Carlson,F,25.0,Hastings,MN,27 / 97,5 / 27,2 / 4,1:01:54,619,1/29/2012,21000.0,freestyle
+27,41,Eric Hedman,M,42.0,Saint Paul,MN,28 / 97,23 / 70,10 / 19,1:01:55,619,1/29/2012,21000.0,freestyle
+28,289,Grant Moos,M,56.0,,,29 / 97,24 / 70,2 / 13,1:03:17,619,1/29/2012,21000.0,freestyle
+29,343,Samuel Cody,M,16.0,Minneapolis,MN,30 / 97,25 / 70,2 / 11,1:03:17,619,1/29/2012,21000.0,freestyle
+30,335,John Stamm,M,61.0,Afton,MN,31 / 97,26 / 70,1 / 4,1:03:42,619,1/29/2012,21000.0,freestyle
+31,3,Graeme Alexander,M,16.0,Minneapolis,MN,32 / 97,27 / 70,3 / 11,1:03:47,619,1/29/2012,21000.0,freestyle
+32,42,Scott Hervey,M,49.0,Decorah,IA,33 / 97,28 / 70,11 / 19,1:03:49,619,1/29/2012,21000.0,freestyle
+33,23,Ryan Cooke,M,27.0,Buffalo,MN,34 / 97,29 / 70,7 / 11,1:04:08,619,1/29/2012,21000.0,freestyle
+34,339,Paul Earl-Tornianinen,M,42.0,Saint Paul,MN,35 / 97,30 / 70,12 / 19,1:04:10,619,1/29/2012,21000.0,freestyle
+35,313,Jason Dalebroux,M,33.0,Minneapolis,MN,36 / 97,31 / 70,3 / 4,1:04:30,619,1/29/2012,21000.0,freestyle
+36,331,Andy Powell,M,42.0,Marine On Saint Cr,MN,37 / 97,32 / 70,13 / 19,1:05:10,619,1/29/2012,21000.0,freestyle
+37,286,David Treichel,M,40.0,Hugo,MN,38 / 97,33 / 70,14 / 19,1:05:19,619,1/29/2012,21000.0,freestyle
+38,296,John Boller,M,60.0,Brooklyn Center,MN,39 / 97,34 / 70,2 / 4,1:05:20,619,1/29/2012,21000.0,freestyle
+39,344,Denny Carlson,M,16.0,Minneapolis,MN,40 / 97,35 / 70,4 / 11,1:05:21,619,1/29/2012,21000.0,freestyle
+40,5,Soren Anders-Macleod,M,15.0,Minneapolis,MN,41 / 97,36 / 70,3 / 6,1:05:24,619,1/29/2012,21000.0,freestyle
+41,330,Joseph Moser,M,21.0,River Falls,WI,42 / 97,37 / 70,8 / 11,1:05:54,619,1/29/2012,21000.0,freestyle
+42,115,Matt Villalta,M,15.0,Mpls,MN,43 / 97,38 / 70,4 / 6,1:06:21,619,1/29/2012,21000.0,freestyle
+43,342,Keith Bengtson,M,52.0,Rochester,MN,44 / 97,39 / 70,3 / 13,1:08:16,619,1/29/2012,21000.0,freestyle
+44,332,Will Johnston,M,48.0,West Saint Paul,MN,45 / 97,40 / 70,15 / 19,1:08:29,619,1/29/2012,21000.0,freestyle
+45,291,Frank Lederle,M,59.0,Edina,MN,46 / 97,41 / 70,4 / 13,1:08:56,619,1/29/2012,21000.0,freestyle
+46,12,Andrea Breen,F,45.0,Minneapolis,MN,47 / 97,6 / 27,1 / 2,1:09:07,619,1/29/2012,21000.0,freestyle
+47,69,Daniel Milavitz,M,17.0,Minneapolis,MN,48 / 97,42 / 70,5 / 11,1:09:24,619,1/29/2012,21000.0,freestyle
+48,95,Joel Sehloff,M,19.0,River Falls,WI,49 / 97,43 / 70,2 / 2,1:09:27,619,1/29/2012,21000.0,freestyle
+49,89,Allie Rykken,F,23.0,St. Paul,MN,50 / 97,7 / 27,3 / 4,1:09:35,619,1/29/2012,21000.0,freestyle
+0,322,Larry Mulenburg,M,59.0,Glencoe,MN,51 / 97,44 / 70,5 / 13,1:09:49,619,1/29/2012,21000.0,freestyle
+1,47,Dan Inderieden,M,47.0,Bloomington,MN,52 / 97,45 / 70,16 / 19,1:09:57,619,1/29/2012,21000.0,freestyle
+2,328,Richard Anderson,M,59.0,Plymouth,MN,53 / 97,46 / 70,6 / 13,1:11:03,619,1/29/2012,21000.0,freestyle
+3,264,John Ahlness,M,23.0,Mora,MN,54 / 97,47 / 70,9 / 11,1:11:06,619,1/29/2012,21000.0,freestyle
+4,9,Steve Barone,M,40.0,Minneapolis,MN,55 / 97,48 / 70,17 / 19,1:11:13,619,1/29/2012,21000.0,freestyle
+5,290,Charles Duede,M,68.0,Cottage Grove,MN,56 / 97,49 / 70,3 / 4,1:11:39,619,1/29/2012,21000.0,freestyle
+6,284,Jim Hagstrom,M,57.0,Afton,MN,57 / 97,50 / 70,7 / 13,1:11:48,619,1/29/2012,21000.0,freestyle
+7,10,Jedd Beach,M,43.0,Chetek,WI,58 / 97,51 / 70,18 / 19,1:11:49,619,1/29/2012,21000.0,freestyle
+8,265,Heather Cichanowski,F,38.0,Saint Paul,MN,59 / 97,8 / 27,3 / 3,1:12:04,619,1/29/2012,21000.0,freestyle
+9,68,David Melcher,M,55.0,Richfield,MN,60 / 97,52 / 70,8 / 13,1:12:18,619,1/29/2012,21000.0,freestyle
+10,307,Tyler Johnson,M,25.0,Plymouth,MN,61 / 97,53 / 70,10 / 11,1:12:54,619,1/29/2012,21000.0,freestyle
+11,31,Walter Ebertz,M,53.0,St Paul,MN,62 / 97,54 / 70,9 / 13,1:13:00,619,1/29/2012,21000.0,freestyle
+12,25,David Dahl,M,62.0,Maple Grove,MN,63 / 97,55 / 70,4 / 4,1:14:12,619,1/29/2012,21000.0,freestyle
+13,325,Joe Michl,M,54.0,Edina,MN,64 / 97,56 / 70,10 / 13,1:14:36,619,1/29/2012,21000.0,freestyle
+14,345,Matt Stavish,M,44.0,Inver Grove Height,MN,65 / 97,57 / 70,19 / 19,1:14:52,619,1/29/2012,21000.0,freestyle
+15,77,Clara Ping,F,25.0,Minneapolis,MN,66 / 97,9 / 27,4 / 4,1:15:26,619,1/29/2012,21000.0,freestyle
+16,21,Eamonn Casey,M,15.0,Minneapolis,MN,67 / 97,58 / 70,5 / 6,1:15:27,619,1/29/2012,21000.0,freestyle
+17,297,Jim Kuzzy,M,58.0,Robbinsdale,MN,68 / 97,59 / 70,11 / 13,1:16:10,619,1/29/2012,21000.0,freestyle
+18,87,Jim Rokke,M,16.0,Minneapolis,MN,69 / 97,60 / 70,6 / 11,1:17:32,619,1/29/2012,21000.0,freestyle
+19,2,Carie Alexander,F,49.0,Minneapolis,MN,70 / 97,10 / 27,2 / 2,1:19:34,619,1/29/2012,21000.0,freestyle
+20,340,Ji Chen,M,50.0,Woodbury,MN,71 / 97,61 / 70,12 / 13,1:20:04,619,1/29/2012,21000.0,freestyle
+21,71,Roger Miller,M,17.0,Minneapolis,MN,72 / 97,62 / 70,7 / 11,1:20:35,619,1/29/2012,21000.0,freestyle
+22,323,Daniel McMahon,M,30.0,North Saint Paul,MN,73 / 97,63 / 70,4 / 4,1:22:44,619,1/29/2012,21000.0,freestyle
+23,94,Guillermo Secundino,M,21.0,Rockford,MN,74 / 97,64 / 70,11 / 11,1:23:31,619,1/29/2012,21000.0,freestyle
+24,52,Maia Johnson,F,16.0,Minneapolis,MN,75 / 97,11 / 27,1 / 7,1:23:43,619,1/29/2012,21000.0,freestyle
+25,36,Mary Grace,F,16.0,Minneapolis,MN,76 / 97,12 / 27,2 / 7,1:23:49,619,1/29/2012,21000.0,freestyle
+26,273,Pamela Dougall,F,57.0,Hugo,MN,77 / 97,13 / 27,2 / 4,1:23:53,619,1/29/2012,21000.0,freestyle
+27,320,Markus Johnson,M,53.0,Saint Paul,MN,78 / 97,65 / 70,13 / 13,1:27:38,619,1/29/2012,21000.0,freestyle
+28,101,Lauren Stufft,F,18.0,Plymouth,MN,79 / 97,14 / 27,1 / 1,1:28:22,619,1/29/2012,21000.0,freestyle
+29,44,Patricia Hoolihan,F,57.0,Minneapolis,MN,80 / 97,15 / 27,3 / 4,1:28:58,619,1/29/2012,21000.0,freestyle
+30,37,Judy Griesedieck,F,58.0,Minneapolis,MN,81 / 97,16 / 27,4 / 4,1:29:52,619,1/29/2012,21000.0,freestyle
+31,35,Christopher Fuguet,M,17.0,Minnetonka,MN,82 / 97,66 / 70,8 / 11,1:33:12,619,1/29/2012,21000.0,freestyle
+32,11,Morgan Bolstad,M,16.0,Eden Prairie,MN,83 / 97,67 / 70,9 / 11,1:37:01,619,1/29/2012,21000.0,freestyle
+33,33,Sylvia Eisenbeis,F,16.0,Mpls,MN,84 / 97,17 / 27,3 / 7,1:37:47,619,1/29/2012,21000.0,freestyle
+34,314,Tahlia Simon,F,16.0,Minneapolis,MN,85 / 97,18 / 27,4 / 7,1:37:47,619,1/29/2012,21000.0,freestyle
+35,13,Shira Breen,F,15.0,Minneapolis,MN,86 / 97,19 / 27,1 / 6,1:37:47,619,1/29/2012,21000.0,freestyle
+36,76,Maria Pfister,F,15.0,Minneapolis,MN,87 / 97,20 / 27,2 / 6,1:42:57,619,1/29/2012,21000.0,freestyle
+37,88,Noah Rothman,M,15.0,Minneapolis,MN,88 / 97,68 / 70,6 / 6,1:43:36,619,1/29/2012,21000.0,freestyle
+38,61,Andi Mackin,F,14.0,Mineeapolis,MN,89 / 97,21 / 27,3 / 6,1:43:54,619,1/29/2012,21000.0,freestyle
+39,97,Stennar Skoglund-Anderso,M,16.0,Hopkins,MN,90 / 97,69 / 70,10 / 11,1:44:36,619,1/29/2012,21000.0,freestyle
+40,285,Claire Marti,F,14.0,Hopkins,MN,91 / 97,22 / 27,4 / 6,1:48:49,619,1/29/2012,21000.0,freestyle
+41,18,Emily Caouette,F,16.0,Minnetonka,MN,92 / 97,23 / 27,5 / 7,1:48:54,619,1/29/2012,21000.0,freestyle
+42,276,Ruby Krietzman,F,13.0,Minnetonka,MN,93 / 97,24 / 27,5 / 6,1:49:03,619,1/29/2012,21000.0,freestyle
+43,51,Madeline Johnson,F,16.0,Minnetonka,MN,94 / 97,25 / 27,6 / 7,1:49:04,619,1/29/2012,21000.0,freestyle
+44,346,Hollis Britton,F,14.0,Minneapolis,MN,95 / 97,26 / 27,6 / 6,1:54:44,619,1/29/2012,21000.0,freestyle
+45,70,Emma Miller,F,16.0,Minneapolis,MN,96 / 97,27 / 27,7 / 7,1:55:16,619,1/29/2012,21000.0,freestyle
+46,50,Haydn Johnson,M,17.0,Minnetonka,MN,97 / 97,70 / 70,11 / 11,1:56:17,619,1/29/2012,21000.0,freestyle
+0,287,Andrew Tilman,M,22.0,Saint Louis Park,MN,1 / 24,1 / 14,1 / 1,59:56,621,1/29/2012,21000.0,classic
+1,7,Devin Arenz,M,34.0,Saint Paul,MN,2 / 24,2 / 14,1 / 5,1:03:18,621,1/29/2012,21000.0,classic
+2,6,Brett Arenz,M,32.0,Falcon Heights,MN,3 / 24,3 / 14,2 / 5,1:04:07,621,1/29/2012,21000.0,classic
+3,98,Erik Solberg,M,30.0,Eagan,MN,4 / 24,4 / 14,3 / 5,1:06:31,621,1/29/2012,21000.0,classic
+4,66,Michael McKinney,M,37.0,Saint Paul,MN,5 / 24,5 / 14,4 / 5,1:09:56,621,1/29/2012,21000.0,classic
+5,269,Sara Zimmermann-White,F,42.0,Roseville,MN,6 / 24,1 / 10,1 / 5,1:13:02,621,1/29/2012,21000.0,classic
+6,32,Robert Edman,M,31.0,Saint Paul,MN,7 / 24,6 / 14,5 / 5,1:18:45,621,1/29/2012,21000.0,classic
+7,107,Tyler Thomegreene,M,15.0,Minneapolis,MN,8 / 24,7 / 14,1 / 1,1:19:45,621,1/29/2012,21000.0,classic
+8,110,Mark Trumper,M,50.0,Stillwater,MN,9 / 24,8 / 14,1 / 4,1:22:44,621,1/29/2012,21000.0,classic
+9,119,Bob Woodruff,M,68.0,Mounds View,MN,10 / 24,9 / 14,1 / 2,1:22:56,621,1/29/2012,21000.0,classic
+10,324,Xena Huff,F,44.0,Minneapolis,MN,11 / 24,2 / 10,2 / 5,1:23:42,621,1/29/2012,21000.0,classic
+11,46,Jennifer Huelsmann,F,42.0,Minneapolis,MN,12 / 24,3 / 10,3 / 5,1:29:23,621,1/29/2012,21000.0,classic
+12,315,Daniel Gerdts,M,52.0,Saint Louis Park,MN,13 / 24,10 / 14,2 / 4,1:29:43,621,1/29/2012,21000.0,classic
+13,72,Larry Myers,M,71.0,Plymouth,MN,14 / 24,11 / 14,1 / 1,1:30:43,621,1/29/2012,21000.0,classic
+14,283,David Gorman,M,58.0,Maple Grove,MN,15 / 24,12 / 14,3 / 4,1:32:22,621,1/29/2012,21000.0,classic
+15,103,Karl Svedberg,M,50.0,Woodbury,MN,16 / 24,13 / 14,4 / 4,1:41:26,621,1/29/2012,21000.0,classic
+16,303,Cate McKinney,F,46.0,Saint Paul,MN,17 / 24,4 / 10,4 / 5,1:49:16,621,1/29/2012,21000.0,classic
+17,90,Allison Schaefer,F,18.0,Minnetonka,MN,18 / 24,5 / 10,1 / 2,1:50:02,621,1/29/2012,21000.0,classic
+18,112,Indy Valters,M,65.0,Circle Pines,MN,19 / 24,14 / 14,2 / 2,2:00:18,621,1/29/2012,21000.0,classic
+19,67,Miriam Mechache,F,17.0,Brooklyn Park,MN,20 / 24,6 / 10,1 / 1,2:08:02,621,1/29/2012,21000.0,classic
+20,16,Emma Burnett,F,15.0,Minnetonka,MN,21 / 24,7 / 10,1 / 2,2:08:06,621,1/29/2012,21000.0,classic
+21,104,Danielle Swaiman,F,18.0,Minnetonka,MN,22 / 24,8 / 10,2 / 2,2:08:11,621,1/29/2012,21000.0,classic
+22,106,Mady Taylor,F,15.0,Minneapolis,MN,23 / 24,9 / 10,2 / 2,2:22:55,621,1/29/2012,21000.0,classic
+23,109,Patricia Torchia,F,49.0,Rochester,MN,24 / 24,10 / 10,5 / 5,2:27:19,621,1/29/2012,21000.0,classic
+0,42,Jack Degonda,M,18.0,Stillwater,MN,1 / 32,1 / 22,1 / 3,36:40,6404,1/28/2018,12500.0,freestyle
+1,36,Anders Olson,M,19.0,Bloomington,MN,2 / 32,2 / 22,2 / 3,37:11,6404,1/28/2018,12500.0,freestyle
+2,38,Carter Scheele,M,20.0,St. Cloud,MN,3 / 32,3 / 22,1 / 3,39:18,6404,1/28/2018,12500.0,freestyle
+3,84,Laura Cattaneo,F,22.0,Rochester,MN,4 / 32,1 / 10,1 / 1,40:33,6404,1/28/2018,12500.0,freestyle
+4,58,Jeff Johnson,M,58.0,White Bear Lake,MN,5 / 32,4 / 22,1 / 5,42:52,6404,1/28/2018,12500.0,freestyle
+5,44,David Armstrong,M,68.0,Silver Spring,MD,6 / 32,5 / 22,1 / 3,43:13,6404,1/28/2018,12500.0,freestyle
+6,32,Ethan Ferry,M,20.0,Saint Paul,MN,7 / 32,6 / 22,2 / 3,44:36,6404,1/28/2018,12500.0,freestyle
+7,33,Ben Hauge,M,19.0,Ramsey,MN,8 / 32,7 / 22,3 / 3,44:47,6404,1/28/2018,12500.0,freestyle
+8,34,Maddie McDermott,F,18.0,Mendota Heights,MN,9 / 32,2 / 10,1 / 2,47:03,6404,1/28/2018,12500.0,freestyle
+9,31,Levi Button,M,15.0,Stillwater,MN,10 / 32,8 / 22,1 / 3,47:31,6404,1/28/2018,12500.0,freestyle
+10,35,Connor Miller,M,21.0,Apple Valley,MN,11 / 32,9 / 22,3 / 3,49:41,6404,1/28/2018,12500.0,freestyle
+11,28,David Wagner,M,55.0,Saint Paul,MN,12 / 32,10 / 22,2 / 5,50:59,6404,1/28/2018,12500.0,freestyle
+12,191,Tyler Johnson,M,16.0,Stillwater,MN,13 / 32,11 / 22,1 / 2,51:39,6404,1/28/2018,12500.0,freestyle
+13,30,Vitaly Brown,M,17.0,Stillwater,MN,14 / 32,12 / 22,2 / 2,52:34,6404,1/28/2018,12500.0,freestyle
+14,189,Ted Haland,M,48.0,Afton,MN,15 / 32,13 / 22,1 / 3,52:43,6404,1/28/2018,12500.0,freestyle
+15,49,Gretchen Piper,F,49.0,Wayzata,MN,16 / 32,3 / 10,1 / 4,52:46,6404,1/28/2018,12500.0,freestyle
+16,45,Emma Bourne,F,14.0,Marine On St Croix,MN,17 / 32,4 / 10,1 / 1,52:58,6404,1/28/2018,12500.0,freestyle
+17,23,Walter Ebertz,M,64.0,St Paul,MN,18 / 32,14 / 22,2 / 3,56:53,6404,1/28/2018,12500.0,freestyle
+18,41,Max Smitten,M,15.0,Marine On St Croix,MN,19 / 32,15 / 22,2 / 3,57:33,6404,1/28/2018,12500.0,freestyle
+19,57,Tanya Adelman,F,38.0,Saint Paul,MN,20 / 32,5 / 10,1 / 1,59:26,6404,1/28/2018,12500.0,freestyle
+20,56,Jason Elhardt,M,47.0,Saint Paul,MN,21 / 32,16 / 22,2 / 3,59:27,6404,1/28/2018,12500.0,freestyle
+21,29,Dan Wenkel,M,46.0,Saint Paul,MN,22 / 32,17 / 22,3 / 3,1:00:24,6404,1/28/2018,12500.0,freestyle
+22,24,Mark Roisum,M,65.0,Woodbury,MN,23 / 32,18 / 22,3 / 3,1:00:53,6404,1/28/2018,12500.0,freestyle
+23,40,Kristina Smitten,F,45.0,Marine On St Croix,MN,24 / 32,6 / 10,2 / 4,1:01:39,6404,1/28/2018,12500.0,freestyle
+24,25,Dennis Rosemark,M,52.0,St. Paul,MN,25 / 32,19 / 22,3 / 5,1:01:52,6404,1/28/2018,12500.0,freestyle
+25,63,Owen Lindseth,M,13.0,Minneapolis,MN,26 / 32,20 / 22,3 / 3,1:04:36,6404,1/28/2018,12500.0,freestyle
+26,51,Dan Pagels,M,57.0,Hudson,MN,27 / 32,21 / 22,4 / 5,1:06:11,6404,1/28/2018,12500.0,freestyle
+27,37,Annalise Schaaf,F,16.0,Harris,MN,28 / 32,7 / 10,1 / 1,1:08:35,6404,1/28/2018,12500.0,freestyle
+28,27,Isabella Varanasi,F,18.0,St. Paul,MN,29 / 32,8 / 10,2 / 2,1:09:45,6404,1/28/2018,12500.0,freestyle
+29,26,Katie Schaaf,F,42.0,Minneapolis,MN,30 / 32,9 / 10,3 / 4,1:10:39,6404,1/28/2018,12500.0,freestyle
+30,186,Craig Agney,M,52.0,Minneapolis,MN,31 / 32,22 / 22,5 / 5,1:16:48,6404,1/28/2018,12500.0,freestyle
+31,64,Kristin Benson,F,48.0,Minneapolis,MN,32 / 32,10 / 10,4 / 4,1:36:25,6404,1/28/2018,12500.0,freestyle
+0,21,Andrew Comfort,M,51.0,Minneapolis,MN,1 / 10,1 / 6,1 / 2,44:46,6406,1/28/2018,12500.0,classic
+1,46,Gregory Pratt,M,65.0,Minneapolis,MN,2 / 10,2 / 6,1 / 2,54:55,6406,1/28/2018,12500.0,classic
+2,117,Amanda Susnik,F,18.0,Duluth,MN,3 / 10,1 / 4,1 / 1,58:59,6406,1/28/2018,12500.0,classic
+3,52,Duane Lee,M,63.0,Lindstrom,MN,4 / 10,3 / 6,2 / 2,1:00:25,6406,1/28/2018,12500.0,classic
+4,47,Amelia Lehmann,F,14.0,Stillwater,MN,5 / 10,2 / 4,1 / 1,1:01:40,6406,1/28/2018,12500.0,classic
+5,116,Anna Meyer,F,22.0,Northfield,MN,6 / 10,3 / 4,1 / 1,1:07:27,6406,1/28/2018,12500.0,classic
+6,39,Bill Smitten,M,51.0,Marine On St Croix,MN,7 / 10,4 / 6,2 / 2,1:14:54,6406,1/28/2018,12500.0,classic
+7,22,Beth Robelia,F,47.0,Saint Paul,MN,8 / 10,4 / 4,1 / 1,1:34:01,6406,1/28/2018,12500.0,classic
+8,43,Joe Schaaf,M,18.0,Scandia,MN,9 / 10,5 / 6,1 / 1,1:42:40,6406,1/28/2018,12500.0,classic
+9,20,Delany Brenner,M,30.0,Minneapolis,MN,10 / 10,6 / 6,1 / 1,2:05:14,6406,1/28/2018,12500.0,classic
+0,150,Tyler Radtke,M,20.0,Minneapolis,MN,1 / 85,1 / 63,1 / 11,1:08:24,6408,1/28/2018,25000.0,freestyle
+1,175,Spencer Davis,M,25.0,Chaska,MN,2 / 85,2 / 63,2 / 11,1:10:14,6408,1/28/2018,25000.0,freestyle
+2,67,Nick Ross,M,29.0,Minneapolis,MN,3 / 85,3 / 63,3 / 11,1:11:24,6408,1/28/2018,25000.0,freestyle
+3,152,Simon Stouffer,M,19.0,Ely,MN,4 / 85,4 / 63,1 / 5,1:11:30,6408,1/28/2018,25000.0,freestyle
+4,87,Denny Green,M,42.0,Elk River,MN,5 / 85,5 / 63,1 / 18,1:12:27,6408,1/28/2018,25000.0,freestyle
+5,187,Dennis Curran,M,32.0,Plymouth,MN,6 / 85,6 / 63,1 / 6,1:13:08,6408,1/28/2018,25000.0,freestyle
+6,160,Ben Alcorn,M,20.0,Stillwater,MN,7 / 85,7 / 63,4 / 11,1:13:24,6408,1/28/2018,25000.0,freestyle
+7,159,Tom Krenz,M,25.0,Chicago City,MN,8 / 85,8 / 63,5 / 11,1:13:47,6408,1/28/2018,25000.0,freestyle
+8,131,Dalton Pauly,M,21.0,Minneapolis,MN,9 / 85,9 / 63,6 / 11,1:14:24,6408,1/28/2018,25000.0,freestyle
+9,66,Marit Sonnesyn,F,24.0,Minneapolis,MN,10 / 85,1 / 22,1 / 6,1:15:12,6408,1/28/2018,25000.0,freestyle
+10,128,Sam O'Donnell-Hoff,M,19.0,Roseville,MN,11 / 85,10 / 63,2 / 5,1:15:45,6408,1/28/2018,25000.0,freestyle
+11,148,Mike Moulsoff,M,54.0,Saint Paul,MN,12 / 85,11 / 63,1 / 16,1:16:11,6408,1/28/2018,25000.0,freestyle
+12,132,Joseph Rauzi,M,20.0,Minneapolis,MN,13 / 85,12 / 63,7 / 11,1:16:20,6408,1/28/2018,25000.0,freestyle
+13,170,William Bogenschultz,M,19.0,Saint Paul,MN,14 / 85,13 / 63,3 / 5,1:16:21,6408,1/28/2018,25000.0,freestyle
+14,124,Connor Canfield,M,21.0,Plymouth,MN,15 / 85,14 / 63,8 / 11,1:17:05,6408,1/28/2018,25000.0,freestyle
+15,179,Charles Anderson,M,45.0,Blaine,MN,16 / 85,15 / 63,2 / 18,1:17:20,6408,1/28/2018,25000.0,freestyle
+16,174,Brad Skillicorn,M,48.0,Winona,MN,17 / 85,16 / 63,3 / 18,1:18:24,6408,1/28/2018,25000.0,freestyle
+17,92,Gary Johnson,M,56.0,Bloomington,MN,18 / 85,17 / 63,2 / 16,1:19:32,6408,1/28/2018,25000.0,freestyle
+18,134,Quentin Schodde,M,21.0,Marine On Saint Cr,MN,19 / 85,18 / 63,9 / 11,1:19:37,6408,1/28/2018,25000.0,freestyle
+19,127,Colden Longley,M,15.0,Bloomington,MN,20 / 85,19 / 63,1 / 2,1:20:26,6408,1/28/2018,25000.0,freestyle
+20,91,John Hopkins,M,51.0,Savage,MN,21 / 85,20 / 63,3 / 16,1:20:34,6408,1/28/2018,25000.0,freestyle
+21,137,Ian Wright,M,22.0,Minneapolis,MN,22 / 85,21 / 63,10 / 11,1:20:45,6408,1/28/2018,25000.0,freestyle
+22,104,Michael Phernetton,M,42.0,Hudson,WI,23 / 85,22 / 63,4 / 18,1:21:11,6408,1/28/2018,25000.0,freestyle
+23,88,Gregg Hietpas,M,47.0,Stillwater,MN,24 / 85,23 / 63,5 / 18,1:21:30,6408,1/28/2018,25000.0,freestyle
+24,98,Aaron Nelson,M,41.0,St. Paul Mn,MN,25 / 85,24 / 63,6 / 18,1:21:32,6408,1/28/2018,25000.0,freestyle
+25,122,Samuel Abegglen,M,19.0,Mound,MN,26 / 85,25 / 63,4 / 5,1:21:33,6408,1/28/2018,25000.0,freestyle
+26,176,Tim Wilkie,M,54.0,St Croix Falls,WI,27 / 85,26 / 63,4 / 16,1:22:26,6408,1/28/2018,25000.0,freestyle
+27,177,Paul Ellis,M,37.0,North Oaks,MN,28 / 85,27 / 63,2 / 6,1:22:38,6408,1/28/2018,25000.0,freestyle
+28,107,Randy Shelerud,M,56.0,Byron,MN,29 / 85,28 / 63,5 / 16,1:22:48,6408,1/28/2018,25000.0,freestyle
+29,168,Will Mitchell,M,33.0,Saint Paul,MN,30 / 85,29 / 63,3 / 6,1:23:35,6408,1/28/2018,25000.0,freestyle
+30,185,James Simons,M,44.0,Minneapolis,MN,31 / 85,30 / 63,7 / 18,1:23:37,6408,1/28/2018,25000.0,freestyle
+31,153,Melissa Berman,F,23.0,Eden Prairie,MN,32 / 85,2 / 22,2 / 6,1:23:45,6408,1/28/2018,25000.0,freestyle
+32,154,Todd White,M,50.0,Roseville,MN,33 / 85,31 / 63,6 / 16,1:24:20,6408,1/28/2018,25000.0,freestyle
+33,69,Dmytro Koshevy,M,30.0,Minneapolis,MN,34 / 85,32 / 63,4 / 6,1:24:21,6408,1/28/2018,25000.0,freestyle
+34,54,Dallas Johnson,M,52.0,Wayzata,MN,35 / 85,33 / 63,7 / 16,1:24:29,6408,1/28/2018,25000.0,freestyle
+35,158,David Benson,M,44.0,Lake Elmo,MN,36 / 85,34 / 63,8 / 18,1:25:08,6408,1/28/2018,25000.0,freestyle
+36,83,Elena Cattaneo,F,19.0,Rochester,MN,37 / 85,3 / 22,1 / 4,1:25:46,6408,1/28/2018,25000.0,freestyle
+37,164,Bill Hittler,M,59.0,Plymouth,MN,38 / 85,35 / 63,8 / 16,1:25:47,6408,1/28/2018,25000.0,freestyle
+38,125,Grant Halvorson,M,20.0,Minneapolis,MN,39 / 85,36 / 63,11 / 11,1:25:48,6408,1/28/2018,25000.0,freestyle
+39,99,Heather Norton-Bower,F,45.0,St. Paul,MN,40 / 85,4 / 22,1 / 7,1:28:37,6408,1/28/2018,25000.0,freestyle
+40,61,Jesse Pearson,M,36.0,Minneapolis,MN,41 / 85,37 / 63,5 / 6,1:29:25,6408,1/28/2018,25000.0,freestyle
+41,157,Grant Moos,M,62.0,Saint Paul,MN,42 / 85,38 / 63,1 / 5,1:30:43,6408,1/28/2018,25000.0,freestyle
+42,81,Steve Barone,M,46.0,Minneapolis,MN,43 / 85,39 / 63,9 / 18,1:31:37,6408,1/28/2018,25000.0,freestyle
+43,173,Caroline Frischmon,F,19.0,Eden Prairie,MN,44 / 85,5 / 22,2 / 4,1:31:43,6408,1/28/2018,25000.0,freestyle
+44,60,Louisa Ward,F,13.0,Afton,MN,45 / 85,6 / 22,1 / 1,1:32:02,6408,1/28/2018,25000.0,freestyle
+45,59,Emmerson Ward,M,40.0,Afton,MN,46 / 85,40 / 63,10 / 18,1:32:03,6408,1/28/2018,25000.0,freestyle
+46,138,Brad Nidersson,M,47.0,Stillwater,MN,47 / 85,41 / 63,11 / 18,1:32:44,6408,1/28/2018,25000.0,freestyle
+47,140,Jedd Beach,M,49.0,Chetek,WI,48 / 85,42 / 63,12 / 18,1:33:05,6408,1/28/2018,25000.0,freestyle
+48,178,Kerry Bogenreif,F,57.0,Lino Lakes,MN,49 / 85,7 / 22,1 / 3,1:34:02,6408,1/28/2018,25000.0,freestyle
+49,103,Jeffrey Penman,M,49.0,Ellsworth,WI,50 / 85,43 / 63,13 / 18,1:34:04,6408,1/28/2018,25000.0,freestyle
+0,55,Amy Johnson,F,50.0,Wayzata,MN,51 / 85,8 / 22,2 / 3,1:34:07,6408,1/28/2018,25000.0,freestyle
+1,82,Matt Bower,M,44.0,St Paul,MN,52 / 85,44 / 63,14 / 18,1:35:53,6408,1/28/2018,25000.0,freestyle
+2,123,Eleanor Babcock,F,22.0,Tonka Bay,MN,53 / 85,9 / 22,3 / 6,1:36:24,6408,1/28/2018,25000.0,freestyle
+3,184,Will Johnston,M,54.0,Mendota Heights,MN,54 / 85,45 / 63,9 / 16,1:36:34,6408,1/28/2018,25000.0,freestyle
+4,79,Ray Aponte,M,56.0,Minneapolis,MN,55 / 85,46 / 63,10 / 16,1:37:37,6408,1/28/2018,25000.0,freestyle
+5,190,Elissa Cedarleaf Dahl,F,39.0,Minneapolis,MN,56 / 85,10 / 22,1 / 1,1:37:37,6408,1/28/2018,25000.0,freestyle
+6,96,David Melcher,M,61.0,Richfield,MN,57 / 85,47 / 63,2 / 5,1:38:30,6408,1/28/2018,25000.0,freestyle
+7,188,Ellen Heine,F,44.0,Maple Grove,MN,58 / 85,11 / 22,2 / 7,1:39:22,6408,1/28/2018,25000.0,freestyle
+8,172,Mike Keyes,M,48.0,Minneapolis,MN,59 / 85,48 / 63,15 / 18,1:39:38,6408,1/28/2018,25000.0,freestyle
+9,89,Laura Hjort,F,51.0,Elk River,MN,60 / 85,12 / 22,3 / 3,1:42:01,6408,1/28/2018,25000.0,freestyle
+10,192,Ji Chen,M,57.0,Woodbury,MN,61 / 85,49 / 63,11 / 16,1:42:26,6408,1/28/2018,25000.0,freestyle
+11,106,Joshua Schneider,M,40.0,Minneapolis,MN,62 / 85,50 / 63,16 / 18,1:42:40,6408,1/28/2018,25000.0,freestyle
+12,65,Erik Lindeth,M,48.0,Minneapolis,MN,63 / 85,51 / 63,17 / 18,1:43:17,6408,1/28/2018,25000.0,freestyle
+13,95,Amy Lundell,F,49.0,St. Paul,MN,64 / 85,13 / 22,3 / 7,1:43:38,6408,1/28/2018,25000.0,freestyle
+14,130,Alison Oosterhuis,F,22.0,Minneapolis,MN,65 / 85,14 / 22,4 / 6,1:43:42,6408,1/28/2018,25000.0,freestyle
+15,85,Roberto Cattaneo,M,60.0,Rochester,MN,66 / 85,52 / 63,3 / 5,1:46:33,6408,1/28/2018,25000.0,freestyle
+16,97,Stephen Narveson,M,65.0,Hayward,WI,67 / 85,53 / 63,4 / 5,1:47:28,6408,1/28/2018,25000.0,freestyle
+17,193,Paul Weium,M,57.0,Saint Paul,MN,68 / 85,54 / 63,12 / 16,1:47:45,6408,1/28/2018,25000.0,freestyle
+18,126,Austin Koester,M,19.0,"Mahtomedi,",MN,69 / 85,55 / 63,5 / 5,1:48:36,6408,1/28/2018,25000.0,freestyle
+19,133,Claire Roth,F,20.0,Victoria,MN,70 / 85,15 / 22,5 / 6,1:50:31,6408,1/28/2018,25000.0,freestyle
+20,80,John Baker,M,55.0,Maplewood,MN,71 / 85,56 / 63,13 / 16,1:50:52,6408,1/28/2018,25000.0,freestyle
+21,136,Madeline Wall,F,20.0,Loma Linda,CA,72 / 85,16 / 22,6 / 6,1:51:02,6408,1/28/2018,25000.0,freestyle
+22,161,Mark Leach,M,60.0,Hopkns,MN,73 / 85,57 / 63,5 / 5,1:51:41,6408,1/28/2018,25000.0,freestyle
+23,86,Michael Craemer,M,54.0,Minnetonka,MN,74 / 85,58 / 63,14 / 16,1:51:41,6408,1/28/2018,25000.0,freestyle
+24,90,Elisabeth Hoff,F,46.0,Minneapolis,MN,75 / 85,17 / 22,4 / 7,1:52:12,6408,1/28/2018,25000.0,freestyle
+25,94,Josh Leonard,M,40.0,Stillwater,MN,76 / 85,59 / 63,18 / 18,1:52:16,6408,1/28/2018,25000.0,freestyle
+26,105,Andrea Potyondy-Smith,F,41.0,Brooklyn Park,MN,77 / 85,18 / 22,5 / 7,1:52:41,6408,1/28/2018,25000.0,freestyle
+27,93,Saul Lacoursiere,M,35.0,Fridley,MN,78 / 85,60 / 63,6 / 6,1:55:24,6408,1/28/2018,25000.0,freestyle
+28,101,Jack Okan,M,15.0,Centerville,MN,79 / 85,61 / 63,2 / 2,1:55:48,6408,1/28/2018,25000.0,freestyle
+29,135,Izzy Valento,F,18.0,Minneapolis,MN,80 / 85,19 / 22,3 / 4,1:56:32,6408,1/28/2018,25000.0,freestyle
+30,129,Julia Olenchek,F,18.0,Brookfield,WI,81 / 85,20 / 22,4 / 4,1:56:32,6408,1/28/2018,25000.0,freestyle
+31,180,Dayton Lang,M,57.0,Shoreview,MN,82 / 85,62 / 63,15 / 16,2:00:32,6408,1/28/2018,25000.0,freestyle
+32,62,Sarah Johnsons,F,43.0,Rochester,MN,83 / 85,21 / 22,6 / 7,2:03:18,6408,1/28/2018,25000.0,freestyle
+33,171,Jim Kent,M,50.0,Marine On St Croix,MN,84 / 85,63 / 63,16 / 16,2:05:35,6408,1/28/2018,25000.0,freestyle
+34,68,Jennifer Books,F,47.0,Forest Lake,MN,85 / 85,22 / 22,7 / 7,2:09:31,6408,1/28/2018,25000.0,freestyle
+0,165,Henry Wortman,M,19.0,Saint Paul,MN,1 / 35,1 / 27,1 / 5,1:19:35,6410,1/28/2018,25000.0,classic
+1,149,Spencer Warejoncas,M,19.0,Northfield,MN,2 / 35,2 / 27,2 / 5,1:19:52,6410,1/28/2018,25000.0,classic
+2,114,Tony Mathie,M,19.0,Edinboro,PA,3 / 35,3 / 27,3 / 5,1:20:18,6410,1/28/2018,25000.0,classic
+3,166,Mitchell Miller,M,21.0,Prior Lake,MN,4 / 35,4 / 27,1 / 8,1:25:06,6410,1/28/2018,25000.0,classic
+4,163,Andrew Larson,M,21.0,Edina,MN,5 / 35,5 / 27,2 / 8,1:27:17,6410,1/28/2018,25000.0,classic
+5,110,Sean Daly,M,18.0,Duluth,MN,6 / 35,6 / 27,4 / 5,1:28:08,6410,1/28/2018,25000.0,classic
+6,144,Tom Jorgenson,M,29.0,Minneapolis,MN,7 / 35,7 / 27,3 / 8,1:28:41,6410,1/28/2018,25000.0,classic
+7,112,Matthew Hempe,M,18.0,Corcoran,MN,8 / 35,8 / 27,5 / 5,1:28:44,6410,1/28/2018,25000.0,classic
+8,78,Brian Wicklund,M,52.0,Marine On St. Croi,MN,9 / 35,9 / 27,1 / 5,1:32:34,6410,1/28/2018,25000.0,classic
+9,115,Andrew McIntyre,M,22.0,Maplewood,MN,10 / 35,10 / 27,4 / 8,1:33:24,6410,1/28/2018,25000.0,classic
+10,74,Patrick Horst,M,35.0,Minneapolis,MN,11 / 35,11 / 27,1 / 5,1:33:28,6410,1/28/2018,25000.0,classic
+11,169,Brett Arenz,M,38.0,Falcon Heights,MN,12 / 35,12 / 27,2 / 5,1:33:36,6410,1/28/2018,25000.0,classic
+12,111,Jed Friedrich,M,38.0,Saint Peter,MN,13 / 35,13 / 27,3 / 5,1:34:51,6410,1/28/2018,25000.0,classic
+13,139,Andy Powell,M,48.0,Marine On St Croix,MN,14 / 35,14 / 27,1 / 2,1:36:05,6410,1/28/2018,25000.0,classic
+14,109,Eric Branch,M,21.0,St. Paul,MN,15 / 35,15 / 27,5 / 8,1:36:41,6410,1/28/2018,25000.0,classic
+15,76,Jesse Longley,M,51.0,Bloomington,MN,16 / 35,16 / 27,2 / 5,1:36:57,6410,1/28/2018,25000.0,classic
+16,113,Jonah Hudson-Erdman,M,21.0,Northfield,MN,17 / 35,17 / 27,6 / 8,1:37:23,6410,1/28/2018,25000.0,classic
+17,143,Daniel Kueffer,M,34.0,Minneapolis,MN,18 / 35,18 / 27,4 / 5,1:39:10,6410,1/28/2018,25000.0,classic
+18,155,Sara Zimmermann-White,F,48.0,Roseville,MN,19 / 35,1 / 8,1 / 2,1:41:28,6410,1/28/2018,25000.0,classic
+19,151,Stephanie Balas,F,19.0,Manitowish Waters,WI,20 / 35,2 / 8,1 / 1,1:43:12,6410,1/28/2018,25000.0,classic
+20,118,Megan Weaver,F,20.0,Stillwater,MN,21 / 35,3 / 8,1 / 3,1:43:56,6410,1/28/2018,25000.0,classic
+21,162,David Leske,M,49.0,Golden Valley,MN,22 / 35,19 / 27,2 / 2,1:48:53,6410,1/28/2018,25000.0,classic
+22,156,Patti Bohaty,F,49.0,Minneapolis,MN,23 / 35,4 / 8,2 / 2,1:55:41,6410,1/28/2018,25000.0,classic
+23,121,Clara Wicklund,F,22.0,Minneapolis,MN,24 / 35,5 / 8,2 / 3,2:01:10,6410,1/28/2018,25000.0,classic
+24,120,Sofie Wicklund,F,21.0,Marine On St. Croi,MN,25 / 35,6 / 8,3 / 3,2:01:10,6410,1/28/2018,25000.0,classic
+25,146,Paul Schaaf,M,55.0,Scandia,MN,26 / 35,20 / 27,3 / 5,2:02:57,6410,1/28/2018,25000.0,classic
+26,75,Jason Lamppa,M,60.0,St. Paul,MN,27 / 35,21 / 27,1 / 2,2:04:15,6410,1/28/2018,25000.0,classic
+27,141,Linda Bjornberg,F,67.0,Mendota Heights,MN,28 / 35,7 / 8,1 / 1,2:24:56,6410,1/28/2018,25000.0,classic
+28,71,Kerry Cashman,F,53.0,Minneapolis,MN,29 / 35,8 / 8,1 / 1,2:27:06,6410,1/28/2018,25000.0,classic
+29,119,Cullen White,M,20.0,Duluth,MN,30 / 35,22 / 27,7 / 8,2:29:19,6410,1/28/2018,25000.0,classic
+30,72,Nils Dybvig,M,51.0,Minneapolis,MN,31 / 35,23 / 27,4 / 5,2:33:09,6410,1/28/2018,25000.0,classic
+31,70,Frederick Bowen,M,31.0,St Paul,MN,32 / 35,24 / 27,5 / 5,2:45:35,6410,1/28/2018,25000.0,classic
+32,73,Wallace Hansen,M,58.0,Hugo,MN,33 / 35,25 / 27,5 / 5,2:48:11,6410,1/28/2018,25000.0,classic
+33,142,Edward Usset,M,61.0,Mendota Heights,MN,34 / 35,26 / 27,2 / 2,2:52:10,6410,1/28/2018,25000.0,classic
+34,147,Brianna McIntyre,M,24.0,Maplewood,MN,35 / 35,27 / 27,8 / 8,2:53:00,6410,1/28/2018,25000.0,classic
+0,107,Paul Peterson,M,52.0,Hastings,MN,1 / 34,1 / 20,1 / 1,40:03,3783,1/24/2016,12500.0,freestyle
+1,124,Luke Israel,M,21.0,Saint Peter,MN,2 / 34,2 / 20,1 / 4,41:35,3783,1/24/2016,12500.0,freestyle
+2,129,Steve Swartz,M,39.0,Eau Claire,WI,3 / 34,3 / 20,1 / 4,42:01,3783,1/24/2016,12500.0,freestyle
+3,120,Carl Branch,M,19.0,Minneapolis,MN,4 / 34,4 / 20,1 / 4,43:16,3783,1/24/2016,12500.0,freestyle
+4,102,Jed Friedrich,M,36.0,St. Peter,MN,5 / 34,5 / 20,2 / 4,44:29,3783,1/24/2016,12500.0,freestyle
+5,134,Aaron Nelson,M,39.0,Saint Paul,MN,6 / 34,6 / 20,3 / 4,44:51,3783,1/24/2016,12500.0,freestyle
+6,133,Patrick Welch,M,14.0,Northfield,MN,7 / 34,7 / 20,1 / 1,45:20,3783,1/24/2016,12500.0,freestyle
+7,116,Connor Sandok,M,18.0,Marshfield,WI,8 / 34,8 / 20,2 / 4,45:21,3783,1/24/2016,12500.0,freestyle
+8,132,Timothy Dalberg,M,67.0,Grantsburg,WI,9 / 34,9 / 20,1 / 3,46:17,3783,1/24/2016,12500.0,freestyle
+9,119,Kathryn Williams,F,19.0,Saint Cloud,MN,10 / 34,1 / 14,1 / 2,46:41,3783,1/24/2016,12500.0,freestyle
+10,117,Blake Slette,M,18.0,Woodbury,MN,11 / 34,10 / 20,3 / 4,47:17,3783,1/24/2016,12500.0,freestyle
+11,125,Erin Keane,F,22.0,Minneapolis,MN,12 / 34,2 / 14,1 / 3,47:22,3783,1/24/2016,12500.0,freestyle
+12,101,Dustin Kilness,M,33.0,Eau Claire,WI,13 / 34,11 / 20,4 / 4,48:54,3783,1/24/2016,12500.0,freestyle
+13,118,Mitchell Gardner,M,18.0,Minneapolis,MN,14 / 34,12 / 20,4 / 4,50:20,3783,1/24/2016,12500.0,freestyle
+14,260,Teresa Stanley,F,33.0,Northfield,MN,15 / 34,3 / 14,1 / 2,50:53,3783,1/24/2016,12500.0,freestyle
+15,115,Adam Shore,M,16.0,Stillwater,MN,16 / 34,13 / 20,1 / 1,51:24,3783,1/24/2016,12500.0,freestyle
+16,108,Lori Belz,F,54.0,Stillwater,MN,17 / 34,4 / 14,1 / 3,51:36,3783,1/24/2016,12500.0,freestyle
+17,128,David Peters,M,41.0,Eau Claire,WI,18 / 34,14 / 20,1 / 2,51:44,3783,1/24/2016,12500.0,freestyle
+18,122,Anna Engel,F,20.0,Rhinelander,WI,19 / 34,5 / 14,2 / 3,52:22,3783,1/24/2016,12500.0,freestyle
+19,100,Brian Remington,M,28.0,New Richmond,WI,20 / 34,15 / 20,2 / 4,54:40,3783,1/24/2016,12500.0,freestyle
+20,121,Eli Larson,M,20.0,St. Peter,MN,21 / 34,16 / 20,3 / 4,55:02,3783,1/24/2016,12500.0,freestyle
+21,127,Tim Mess,M,29.0,Eau Claire,WI,22 / 34,17 / 20,4 / 4,56:49,3783,1/24/2016,12500.0,freestyle
+22,110,James Remington,M,67.0,New Richmond,WI,23 / 34,18 / 20,2 / 3,57:40,3783,1/24/2016,12500.0,freestyle
+23,123,Mikaela Algren,F,21.0,Prior Lake,MN,24 / 34,6 / 14,3 / 3,57:53,3783,1/24/2016,12500.0,freestyle
+24,130,Ami Voelt,F,42.0,Lake Elmo,MN,25 / 34,7 / 14,1 / 2,57:59,3783,1/24/2016,12500.0,freestyle
+25,131,Sydney Peterson,F,13.0,Lake Elmo,MN,26 / 34,8 / 14,1 / 2,1:04:33,3783,1/24/2016,12500.0,freestyle
+26,104,Daniel Wenkel,M,44.0,St. Paul,MN,27 / 34,19 / 20,2 / 2,1:05:44,3783,1/24/2016,12500.0,freestyle
+27,105,Kristina Smitten,F,45.0,Marine On St. Croi,MN,28 / 34,9 / 14,2 / 2,1:07:01,3783,1/24/2016,12500.0,freestyle
+28,311,Kalie Manke,F,19.0,Minneapolis,MN,29 / 34,10 / 14,2 / 2,1:07:42,3783,1/24/2016,12500.0,freestyle
+29,109,Mark Roisum,M,63.0,Woodbury,MN,30 / 34,20 / 20,3 / 3,1:10:24,3783,1/24/2016,12500.0,freestyle
+30,291,Mary Hauff,F,55.0,Minnetonka,MN,31 / 34,11 / 14,2 / 3,1:14:12,3783,1/24/2016,12500.0,freestyle
+31,103,Renee Swanson,F,38.0,St. Paul,MN,32 / 34,12 / 14,2 / 2,1:17:10,3783,1/24/2016,12500.0,freestyle
+32,106,Wendy Ward,F,52.0,Marine On St Croix,MN,33 / 34,13 / 14,3 / 3,1:19:00,3783,1/24/2016,12500.0,freestyle
+33,126,Elizabeth Hauff,F,15.0,Minnetonka,MN,34 / 34,14 / 14,2 / 2,1:53:03,3783,1/24/2016,12500.0,freestyle
+0,38,Everett Myers,M,49.0,Stillwater,MN,1 / 19,1 / 10,1 / 4,46:55,3785,1/24/2016,12500.0,classic
+1,30,Tyler Thompson,M,21.0,Chaska,MN,2 / 19,2 / 10,1 / 2,50:31,3785,1/24/2016,12500.0,classic
+2,33,Megan Weaver,F,18.0,Stillwater,MN,3 / 19,1 / 9,1 / 2,51:07,3785,1/24/2016,12500.0,classic
+3,112,Evan Dybvig,M,15.0,Stillwater,MN,4 / 19,3 / 10,1 / 1,52:37,3785,1/24/2016,12500.0,classic
+4,35,Jacob Endres,M,19.0,Maple Grove,MN,5 / 19,4 / 10,1 / 2,54:28,3785,1/24/2016,12500.0,classic
+5,37,Haley Bell,F,21.0,St. Peter,MN,6 / 19,2 / 9,1 / 5,58:25,3785,1/24/2016,12500.0,classic
+6,39,Eddie Day,M,43.0,Saint Paul,MN,7 / 19,5 / 10,2 / 4,58:58,3785,1/24/2016,12500.0,classic
+7,26,Brooks Moening,M,43.0,Lake Elmo,MN,8 / 19,6 / 10,3 / 4,59:08,3785,1/24/2016,12500.0,classic
+8,34,Sofie Wicklund,F,19.0,St. Peter,MN,9 / 19,3 / 9,2 / 2,1:00:49,3785,1/24/2016,12500.0,classic
+9,36,Clara Wicklund,F,20.0,St. Peter,MN,10 / 19,4 / 9,2 / 5,1:00:49,3785,1/24/2016,12500.0,classic
+10,215,Laura Bailly,F,21.0,Eagan,MN,11 / 19,5 / 9,3 / 5,1:01:43,3785,1/24/2016,12500.0,classic
+11,222,Matthew Freeman,M,19.0,White Bear Lake,MN,12 / 19,7 / 10,2 / 2,1:05:47,3785,1/24/2016,12500.0,classic
+12,200,Madison Haugen,F,20.0,Hugo,MN,13 / 19,6 / 9,4 / 5,1:05:48,3785,1/24/2016,12500.0,classic
+13,29,William Farquhar,M,56.0,Plymouth,MN,14 / 19,8 / 10,1 / 1,1:07:58,3785,1/24/2016,12500.0,classic
+14,25,Eli Skinner,F,21.0,St. Louis Park,MN,15 / 19,7 / 9,5 / 5,1:10:34,3785,1/24/2016,12500.0,classic
+15,31,Danielle Snow,F,16.0,West Lakeland,MN,16 / 19,8 / 9,1 / 1,1:14:41,3785,1/24/2016,12500.0,classic
+16,28,Bill Smitten,M,49.0,Marine On St. Croi,MN,17 / 19,9 / 10,4 / 4,1:21:29,3785,1/24/2016,12500.0,classic
+17,27,Beth Robelia,F,45.0,St. Paul,MN,18 / 19,9 / 9,1 / 1,1:29:14,3785,1/24/2016,12500.0,classic
+18,40,Delany Brenner,M,28.0,Minneapolis,MN,19 / 19,10 / 10,2 / 2,1:51:18,3785,1/24/2016,12500.0,classic
+0,269,Matt Zak,M,42.0,Eveleth,MN,1 / 78,1 / 62,1 / 18,1:16:04,3787,1/24/2016,25000.0,freestyle
+1,258,David Andresen,M,28.0,Oakdale,MN,2 / 78,2 / 62,1 / 13,1:16:22,3787,1/24/2016,25000.0,freestyle
+2,252,Peter Olejniczak,M,23.0,Roseville,MN,3 / 78,3 / 62,2 / 13,1:16:25,3787,1/24/2016,25000.0,freestyle
+3,336,Henrik Velle,M,24.0,Minneapolis,MN,4 / 78,4 / 62,3 / 13,1:17:31,3787,1/24/2016,25000.0,freestyle
+4,324,Josh Doubbert,M,27.0,Minneapolis,MN,5 / 78,5 / 62,4 / 13,1:18:16,3787,1/24/2016,25000.0,freestyle
+5,289,Scott Elertson,M,54.0,Albert Lea,MN,6 / 78,6 / 62,1 / 15,1:18:27,3787,1/24/2016,25000.0,freestyle
+6,327,Andrew Schakel,M,41.0,Lake Elmo,MN,7 / 78,7 / 62,2 / 18,1:18:43,3787,1/24/2016,25000.0,freestyle
+7,285,Scott Ree,M,52.0,Plymouth,MN,8 / 78,8 / 62,2 / 15,1:18:47,3787,1/24/2016,25000.0,freestyle
+8,310,Quentin Ikuta,M,19.0,Marine On Saint Cr,MN,9 / 78,9 / 62,1 / 5,1:18:48,3787,1/24/2016,25000.0,freestyle
+9,263,Nathan Lillie,M,36.0,Altoona,WI,10 / 78,10 / 62,1 / 6,1:18:52,3787,1/24/2016,25000.0,freestyle
+10,261,Dennis Curran,M,33.0,Plymouth,MN,11 / 78,11 / 62,2 / 6,1:22:22,3787,1/24/2016,25000.0,freestyle
+11,262,Benjamin Mullin,M,36.0,Lindstrom,MN,12 / 78,12 / 62,3 / 6,1:22:40,3787,1/24/2016,25000.0,freestyle
+12,278,Steven Yore,M,47.0,Minneapolis,MN,13 / 78,13 / 62,3 / 18,1:23:15,3787,1/24/2016,25000.0,freestyle
+13,303,Andrew McIntyre,M,20.0,Maplewood,MN,14 / 78,14 / 62,5 / 13,1:23:34,3787,1/24/2016,25000.0,freestyle
+14,312,Dalton Pauly,M,19.0,Shoreview,MN,15 / 78,15 / 62,2 / 5,1:24:01,3787,1/24/2016,25000.0,freestyle
+15,266,Denny Green,M,40.0,Elk River,MN,16 / 78,16 / 62,4 / 18,1:24:16,3787,1/24/2016,25000.0,freestyle
+16,257,Peter Samuels,M,28.0,Minneapolis,MN,17 / 78,17 / 62,6 / 13,1:24:27,3787,1/24/2016,25000.0,freestyle
+17,265,Michael Phernetton,M,40.0,Huson,WI,18 / 78,18 / 62,5 / 18,1:24:33,3787,1/24/2016,25000.0,freestyle
+18,334,Paul Schoening,M,50.0,Minneapolis,MN,19 / 78,19 / 62,3 / 15,1:26:20,3787,1/24/2016,25000.0,freestyle
+19,318,Kai Larsen,M,21.0,Minneapolis,MN,20 / 78,20 / 62,7 / 13,1:26:40,3787,1/24/2016,25000.0,freestyle
+20,282,Brian Wicklund,M,50.0,Marine On St. Croi,MN,21 / 78,21 / 62,4 / 15,1:27:04,3787,1/24/2016,25000.0,freestyle
+21,331,Charles Anderson,M,43.0,Minneapolis,MN,22 / 78,22 / 62,6 / 18,1:27:07,3787,1/24/2016,25000.0,freestyle
+22,259,Mark Michals,M,31.0,Minneapolis,MN,23 / 78,23 / 62,4 / 6,1:27:07,3787,1/24/2016,25000.0,freestyle
+23,304,Jared Grootwassink,M,20.0,Eden Prairie,MN,24 / 78,24 / 62,8 / 13,1:27:10,3787,1/24/2016,25000.0,freestyle
+24,326,Frederick Spiegel,M,35.0,Saint Paul,MN,25 / 78,25 / 62,5 / 6,1:27:29,3787,1/24/2016,25000.0,freestyle
+25,271,Jacob Kjome,M,43.0,Maple Grove,MN,26 / 78,26 / 62,7 / 18,1:27:51,3787,1/24/2016,25000.0,freestyle
+26,323,Justin Rumley,M,40.0,Saint Paul,MN,27 / 78,27 / 62,8 / 18,1:28:27,3787,1/24/2016,25000.0,freestyle
+27,330,Andy Powell,M,46.0,Marine On Saint Cr,AN,28 / 78,28 / 62,9 / 18,1:28:37,3787,1/24/2016,25000.0,freestyle
+28,309,Aidan Lee,M,18.0,Minneapolis,MN,29 / 78,29 / 62,3 / 5,1:28:43,3787,1/24/2016,25000.0,freestyle
+29,321,Emily Davis,F,24.0,Duluth,MN,30 / 78,1 / 16,1 / 9,1:28:45,3787,1/24/2016,25000.0,freestyle
+30,254,Ryan Wright,M,24.0,Minneapolis,MN,31 / 78,30 / 62,9 / 13,1:29:08,3787,1/24/2016,25000.0,freestyle
+31,329,Angustus Pendleton,M,19.0,Minneapolis,MN,32 / 78,31 / 62,4 / 5,1:29:35,3787,1/24/2016,25000.0,freestyle
+32,317,Laura Cattaneo,F,20.0,Rochester,MN,33 / 78,2 / 16,2 / 9,1:30:25,3787,1/24/2016,25000.0,freestyle
+33,325,Todd White,M,48.0,Saint Paul,MN,34 / 78,32 / 62,10 / 18,1:31:30,3787,1/24/2016,25000.0,freestyle
+34,335,Heather Norton-Bower,F,43.0,Saint Paul,MN,35 / 78,3 / 16,1 / 4,1:31:40,3787,1/24/2016,25000.0,freestyle
+35,250,Melissa Berman,F,21.0,Eden Prairie,MN,36 / 78,4 / 16,3 / 9,1:31:54,3787,1/24/2016,25000.0,freestyle
+36,287,Brad Miller,M,53.0,Rochester,MN,37 / 78,33 / 62,5 / 15,1:32:37,3787,1/24/2016,25000.0,freestyle
+37,300,John Boller,M,64.0,Brooklyn Park,MN,38 / 78,34 / 62,1 / 4,1:32:39,3787,1/24/2016,25000.0,freestyle
+38,268,Artie Huber,M,41.0,Otsego,MN,39 / 78,35 / 62,11 / 18,1:32:39,3787,1/24/2016,25000.0,freestyle
+39,328,Daniel Korus,M,19.0,Eden Prairie,MN,40 / 78,36 / 62,5 / 5,1:33:11,3787,1/24/2016,25000.0,freestyle
+40,314,Ian Wright,M,20.0,Minneapolis,MN,41 / 78,37 / 62,10 / 13,1:34:15,3787,1/24/2016,25000.0,freestyle
+41,251,Dan Brudvig,M,23.0,Roseville,MN,42 / 78,38 / 62,11 / 13,1:34:32,3787,1/24/2016,25000.0,freestyle
+42,274,Paul Earl-Torniainen,M,46.0,St. Paul,MN,43 / 78,39 / 62,12 / 18,1:34:51,3787,1/24/2016,25000.0,freestyle
+43,297,Greg Klave,M,61.0,Minneapolis,MN,44 / 78,40 / 62,2 / 4,1:35:34,3787,1/24/2016,25000.0,freestyle
+44,316,Steph Hart,F,20.0,Grand Rapids,MN,45 / 78,5 / 16,4 / 9,1:37:03,3787,1/24/2016,25000.0,freestyle
+45,264,Matthew Swanson,M,39.0,St. Paul,MN,46 / 78,41 / 62,6 / 6,1:40:06,3787,1/24/2016,25000.0,freestyle
+46,281,Todd Johnson,M,50.0,St. Paul,MN,47 / 78,42 / 62,6 / 15,1:40:10,3787,1/24/2016,25000.0,freestyle
+47,290,Timothy Rogers,M,54.0,St. Paul,MN,48 / 78,43 / 62,7 / 15,1:40:21,3787,1/24/2016,25000.0,freestyle
+48,275,Andrew Hall,M,46.0,Minneapolis,MN,49 / 78,44 / 62,13 / 18,1:40:26,3787,1/24/2016,25000.0,freestyle
+49,277,Jeffrey Penman,M,47.0,Ellsworth,WI,50 / 78,45 / 62,14 / 18,1:41:18,3787,1/24/2016,25000.0,freestyle
+0,306,Caitlin McGoldrick,F,21.0,Deephaven,MN,51 / 78,6 / 16,5 / 9,1:41:26,3787,1/24/2016,25000.0,freestyle
+1,273,Steve Barone,M,44.0,Minneapolis,MN,52 / 78,46 / 62,15 / 18,1:41:35,3787,1/24/2016,25000.0,freestyle
+2,301,Ken Mogren,M,67.0,Winona,MN,53 / 78,47 / 62,3 / 4,1:41:39,3787,1/24/2016,25000.0,freestyle
+3,270,Ellen Heine,F,42.0,Maple Grove,MN,54 / 78,7 / 16,2 / 4,1:42:52,3787,1/24/2016,25000.0,freestyle
+4,319,Andrew Schwebach,M,21.0,Minnetonka,MN,55 / 78,48 / 62,12 / 13,1:44:01,3787,1/24/2016,25000.0,freestyle
+5,320,Christina Lundgren,F,22.0,St. Paul,MN,56 / 78,8 / 16,6 / 9,1:46:21,3787,1/24/2016,25000.0,freestyle
+6,305,Eleanor Babcock,F,20.0,Tonka Bay,MN,57 / 78,9 / 16,7 / 9,1:46:22,3787,1/24/2016,25000.0,freestyle
+7,332,Jim Manolis,M,50.0,Minneapolis,MN,58 / 78,49 / 62,8 / 15,1:46:28,3787,1/24/2016,25000.0,freestyle
+8,256,Kierstin Andresen,F,27.0,Oakdale,MN,59 / 78,10 / 16,8 / 9,1:47:01,3787,1/24/2016,25000.0,freestyle
+9,288,John Baker,M,53.0,Maplewood,MN,60 / 78,50 / 62,9 / 15,1:47:05,3787,1/24/2016,25000.0,freestyle
+10,313,Mallory Adams,F,19.0,Zimmerman,MN,61 / 78,11 / 16,1 / 1,1:47:06,3787,1/24/2016,25000.0,freestyle
+11,293,Mark Hennessy,M,56.0,Red Wing,MN,62 / 78,51 / 62,10 / 15,1:47:08,3787,1/24/2016,25000.0,freestyle
+12,333,Amy Lundell,F,47.0,Saint Paul,MN,63 / 78,12 / 16,3 / 4,1:47:28,3787,1/24/2016,25000.0,freestyle
+13,315,Alison Oosterhuis,F,20.0,Minneapoils,MN,64 / 78,13 / 16,9 / 9,1:48:10,3787,1/24/2016,25000.0,freestyle
+14,279,Jedd Beach,M,47.0,Chetek,WI,65 / 78,52 / 62,16 / 18,1:48:53,3787,1/24/2016,25000.0,freestyle
+15,276,Mike Keyes,M,46.0,Minneapolis,MN,66 / 78,53 / 62,17 / 18,1:50:11,3787,1/24/2016,25000.0,freestyle
+16,272,Elisabeth Hoff,F,44.0,Minneapolis,MN,67 / 78,14 / 16,4 / 4,1:50:33,3787,1/24/2016,25000.0,freestyle
+17,283,Mike Wright,M,52.0,Wyoming,MN,68 / 78,54 / 62,11 / 15,1:51:34,3787,1/24/2016,25000.0,freestyle
+18,302,Erik Jordahl,M,,Vadnais Heights,MN,69 / 78,55 / 62,1 / 1,1:54:15,3787,1/24/2016,25000.0,freestyle
+19,296,Mark Leach,M,58.0,Hopkins,MN,70 / 78,56 / 62,12 / 15,1:54:42,3787,1/24/2016,25000.0,freestyle
+20,298,Walter Ebertz,M,62.0,St Paul,MN,71 / 78,57 / 62,4 / 4,1:55:02,3787,1/24/2016,25000.0,freestyle
+21,286,Michael Craemer,M,52.0,Minnetonka,MN,72 / 78,58 / 62,13 / 15,1:55:59,3787,1/24/2016,25000.0,freestyle
+22,292,Paul Weium,M,55.0,Saint Paul,MN,73 / 78,59 / 62,14 / 15,1:56:46,3787,1/24/2016,25000.0,freestyle
+23,284,Scott Sponheim,M,52.0,Minneapolis,MN,74 / 78,60 / 62,15 / 15,2:00:24,3787,1/24/2016,25000.0,freestyle
+24,267,Derick Podratz,M,41.0,Lino Lakes,MN,75 / 78,61 / 62,18 / 18,2:00:25,3787,1/24/2016,25000.0,freestyle
+25,253,Stefan Bruvelis,M,23.0,Little Canada,MN,76 / 78,62 / 62,13 / 13,2:07:40,3787,1/24/2016,25000.0,freestyle
+26,228,Kate Dwyer,F,14.0,Minneapolis,MN,77 / 78,15 / 16,1 / 2,2:41:53,3787,1/24/2016,25000.0,freestyle
+27,307,Christina Schindler,F,15.0,Minnetrista,MN,78 / 78,16 / 16,2 / 2,3:18:46,3787,1/24/2016,25000.0,freestyle
+0,224,Karl Holub,M,22.0,Minneapolis,MN,1 / 30,1 / 26,1 / 8,1:27:48,3789,1/24/2016,25000.0,classic
+1,201,Romain Pagnier,M,30.0,Minneapolis,MN,2 / 30,2 / 26,1 / 3,1:28:06,3789,1/24/2016,25000.0,classic
+2,229,Nate Rhode,M,21.0,Saint Paul,MN,3 / 30,3 / 26,2 / 8,1:29:52,3789,1/24/2016,25000.0,classic
+3,202,Brett Arenz,M,36.0,Falcon Heights,MN,4 / 30,4 / 26,2 / 3,1:30:54,3789,1/24/2016,25000.0,classic
+4,230,Tyler Gilbert,M,20.0,Minneapolis,MN,5 / 30,5 / 26,3 / 8,1:33:27,3789,1/24/2016,25000.0,classic
+5,225,Jonah Gilbert,M,22.0,Arden Hills,MN,6 / 30,6 / 26,4 / 8,1:34:01,3789,1/24/2016,25000.0,classic
+6,214,Matt Lerick,M,21.0,Savage,MN,7 / 30,7 / 26,5 / 8,1:34:19,3789,1/24/2016,25000.0,classic
+7,212,Connor Canfield,M,19.0,Plymouth,MN,8 / 30,8 / 26,1 / 3,1:35:58,3789,1/24/2016,25000.0,classic
+8,217,Joseph Rabaey,M,21.0,Hastings,MN,9 / 30,9 / 26,6 / 8,1:38:44,3789,1/24/2016,25000.0,classic
+9,221,Matt Trumper,M,19.0,Stillwater,MN,10 / 30,10 / 26,2 / 3,1:39:37,3789,1/24/2016,25000.0,classic
+10,213,Zach Dietz,M,20.0,Elko,MN,11 / 30,11 / 26,7 / 8,1:41:22,3789,1/24/2016,25000.0,classic
+11,236,Devin Aremz,M,38.0,Saint Paul,MN,12 / 30,12 / 26,3 / 3,1:45:59,3789,1/24/2016,25000.0,classic
+12,208,Bill Callas,M,56.0,Stillwater,MN,13 / 30,13 / 26,1 / 2,1:50:36,3789,1/24/2016,25000.0,classic
+13,226,Brad Erickson,M,61.0,Minneapolis,MN,14 / 30,14 / 26,1 / 1,1:52:12,3789,1/24/2016,25000.0,classic
+14,223,Logan Rudolph Lavalier,M,20.0,Duluth,MN,15 / 30,15 / 26,8 / 8,1:52:12,3789,1/24/2016,25000.0,classic
+15,232,Andrew Comfort,M,49.0,Minneapolis,MN,16 / 30,16 / 26,1 / 4,1:53:32,3789,1/24/2016,25000.0,classic
+16,211,Ethan Ferry,M,18.0,Saint Paul,MN,17 / 30,17 / 26,3 / 3,1:56:11,3789,1/24/2016,25000.0,classic
+17,216,Kim Lidstone,F,21.0,Minnetonka,MN,18 / 30,1 / 4,1 / 1,1:56:26,3789,1/24/2016,25000.0,classic
+18,231,Xena Huff,F,48.0,Minneapolis,MN,19 / 30,2 / 4,1 / 1,2:01:53,3789,1/24/2016,25000.0,classic
+19,234,Erik Torniainen,M,46.0,Maple Grove,MN,20 / 30,18 / 26,2 / 4,2:03:54,3789,1/24/2016,25000.0,classic
+20,210,Peter Dorsen,M,71.0,Eden Prairie,MN,21 / 30,19 / 26,1 / 3,2:03:54,3789,1/24/2016,25000.0,classic
+21,207,Mark Trumper,M,54.0,Stillwater,MN,22 / 30,20 / 26,2 / 2,2:07:45,3789,1/24/2016,25000.0,classic
+22,203,Christopher Berger,M,41.0,Minneapolis,MN,23 / 30,21 / 26,3 / 4,2:18:59,3789,1/24/2016,25000.0,classic
+23,220,Ethan Nelson,M,17.0,Minneapolis,MN,24 / 30,22 / 26,1 / 2,2:18:59,3789,1/24/2016,25000.0,classic
+24,219,Ethan Davenport,M,16.0,Minneapolis,MN,25 / 30,23 / 26,2 / 2,2:19:10,3789,1/24/2016,25000.0,classic
+25,204,Nils Dybvig,M,49.0,Minneapolis,MN,26 / 30,24 / 26,4 / 4,2:45:17,3789,1/24/2016,25000.0,classic
+26,233,James Johnson,M,75.0,Minneapolis,MN,27 / 30,25 / 26,2 / 3,2:47:16,3789,1/24/2016,25000.0,classic
+27,227,Larry Myers,M,75.0,Minneapolis,MN,28 / 30,26 / 26,3 / 3,2:58:02,3789,1/24/2016,25000.0,classic
+28,205,Genevieve Emery,F,50.0,Siren,WI,29 / 30,3 / 4,1 / 2,3:39:30,3789,1/24/2016,25000.0,classic
+29,206,Jessica Standefer,F,53.0,Columbus,MN,30 / 30,4 / 4,2 / 2,3:54:14,3789,1/24/2016,25000.0,classic
+0,131,Shad Kraftson,M,16.0,Bayport,MN,1 / 42,1 / 22,1 / 6,28:22,2896,1/18/2015,10000.0,freestyle
+1,122,Linder Wendt,M,17.0,Stillwater,MN,2 / 42,2 / 22,2 / 6,28:29,2896,1/18/2015,10000.0,freestyle
+2,127,Noah Kneeskern,M,16.0,Stillwater,MN,3 / 42,3 / 22,3 / 6,28:43,2896,1/18/2015,10000.0,freestyle
+3,123,Ben Wicklund,M,15.0,Marine,MN,4 / 42,4 / 22,1 / 5,29:26,2896,1/18/2015,10000.0,freestyle
+4,126,Matthew Trumper,M,18.0,Stillwater,MN,5 / 42,5 / 22,1 / 3,30:13,2896,1/18/2015,10000.0,freestyle
+5,128,Erik Nelson,M,16.0,Stillwater,MN,6 / 42,6 / 22,4 / 6,31:39,2896,1/18/2015,10000.0,freestyle
+6,160,Brian Olson,M,15.0,Lakeland,MN,7 / 42,7 / 22,2 / 5,31:45,2896,1/18/2015,10000.0,freestyle
+7,124,Nolan Noer,M,16.0,Stillwater,MN,8 / 42,8 / 22,5 / 6,31:53,2896,1/18/2015,10000.0,freestyle
+8,150,Colin Gram,M,15.0,Stillwater,MN,9 / 42,9 / 22,3 / 5,33:37,2896,1/18/2015,10000.0,freestyle
+9,144,Ethan Christenson,M,16.0,Stillwater,MN,10 / 42,10 / 22,6 / 6,33:45,2896,1/18/2015,10000.0,freestyle
+10,130,Fredrika Von Essen,F,18.0,Stillwater,MN,11 / 42,1 / 20,1 / 4,34:02,2896,1/18/2015,10000.0,freestyle
+11,153,Matthew Freeman,M,18.0,White Bear Lake,MN,12 / 42,11 / 22,2 / 3,35:25,2896,1/18/2015,10000.0,freestyle
+12,141,Carl Bohacek,M,14.0,Afton,MN,13 / 42,12 / 22,4 / 5,35:58,2896,1/18/2015,10000.0,freestyle
+13,121,Madison Haugen,F,19.0,Hugo,MN,14 / 42,2 / 20,2 / 4,36:55,2896,1/18/2015,10000.0,freestyle
+14,142,Daria Terenteva,F,19.0,Saint Peter,MN,15 / 42,3 / 20,3 / 4,36:57,2896,1/18/2015,10000.0,freestyle
+15,152,Pedro Pesta,M,50.0,Northfield,MN,16 / 42,13 / 22,1 / 4,37:25,2896,1/18/2015,10000.0,freestyle
+16,129,Anya Nelson,F,16.0,Stillwater,MN,17 / 42,4 / 20,1 / 2,37:39,2896,1/18/2015,10000.0,freestyle
+17,213,Mike Wright,M,51.0,Wyoming,MN,18 / 42,14 / 22,2 / 4,38:34,2896,1/18/2015,10000.0,freestyle
+18,156,Zoe Camp,F,12.0,Minneapolis,MN,19 / 42,5 / 20,1 / 6,39:01,2896,1/18/2015,10000.0,freestyle
+19,114,Robyn Sjostrom,F,36.0,Stillwater,MN,20 / 42,6 / 20,1 / 2,40:05,2896,1/18/2015,10000.0,freestyle
+20,125,Danielle Trajano,F,18.0,Savage,MN,21 / 42,7 / 20,4 / 4,40:16,2896,1/18/2015,10000.0,freestyle
+21,151,Eli Larson,M,19.0,Saint Peter,MN,22 / 42,15 / 22,3 / 3,41:15,2896,1/18/2015,10000.0,freestyle
+22,159,Bethany Olson,F,13.0,Lakeland,MN,23 / 42,8 / 20,2 / 6,41:22,2896,1/18/2015,10000.0,freestyle
+23,158,Hannah Peterson,F,14.0,Hastings,MN,24 / 42,9 / 20,3 / 6,42:22,2896,1/18/2015,10000.0,freestyle
+24,155,Cooper Camp,M,11.0,Minneapolis,MN,25 / 42,16 / 22,5 / 5,42:44,2896,1/18/2015,10000.0,freestyle
+25,120,Gabi Danielson,F,14.0,Stillwater,MN,26 / 42,10 / 20,4 / 6,42:48,2896,1/18/2015,10000.0,freestyle
+26,133,Meade Acers,F,13.0,Stillwater,MN,27 / 42,11 / 20,5 / 6,42:53,2896,1/18/2015,10000.0,freestyle
+27,111,Dan Wenkel,M,43.0,St. Paul,MN,28 / 42,17 / 22,1 / 2,43:34,2896,1/18/2015,10000.0,freestyle
+28,157,Tessa Johnson,F,14.0,Saint Paul,MN,29 / 42,12 / 20,6 / 6,44:45,2896,1/18/2015,10000.0,freestyle
+29,106,James Remington,M,66.0,New Richmond,WI,30 / 42,18 / 22,1 / 2,45:33,2896,1/18/2015,10000.0,freestyle
+30,271,Alice Johnson,F,50.0,Saint Paul,MN,31 / 42,13 / 20,1 / 3,46:52,2896,1/18/2015,10000.0,freestyle
+31,161,Kristina Smitten,F,42.0,Marine On Saint Cr,MN,32 / 42,14 / 20,1 / 3,46:59,2896,1/18/2015,10000.0,freestyle
+32,206,David E. Miller,M,60.0,Mendota Heights,MN,33 / 42,19 / 22,2 / 2,47:10,2896,1/18/2015,10000.0,freestyle
+33,110,Robin Anderson,F,50.0,Wyoming,MN,34 / 42,15 / 20,2 / 3,48:06,2896,1/18/2015,10000.0,freestyle
+34,154,Ami Voeltz,F,41.0,Lake Elmo,MN,35 / 42,16 / 20,2 / 3,48:19,2896,1/18/2015,10000.0,freestyle
+35,143,Curt Kaler,M,54.0,Lakeville,MN,36 / 42,20 / 22,3 / 4,50:22,2896,1/18/2015,10000.0,freestyle
+36,113,Marie Torkelson,F,59.0,Zumbrota,MN,37 / 42,17 / 20,3 / 3,52:04,2896,1/18/2015,10000.0,freestyle
+37,109,Al Anderson,M,56.0,Wyoming,MN,38 / 42,21 / 22,4 / 4,52:51,2896,1/18/2015,10000.0,freestyle
+38,115,Rhiannon Williams,F,39.0,Minneapolis,MN,39 / 42,18 / 20,2 / 2,53:09,2896,1/18/2015,10000.0,freestyle
+39,226,Andi Mackin,F,17.0,Minneapolis,MN,40 / 42,19 / 20,2 / 2,57:40,2896,1/18/2015,10000.0,freestyle
+40,107,Kristina Casper,F,42.0,Minneapolis,MN,41 / 42,20 / 20,3 / 3,57:57,2896,1/18/2015,10000.0,freestyle
+41,116,Paul Huckels,M,49.0,Stillwater,MN,42 / 42,22 / 22,2 / 2,1:14:11,2896,1/18/2015,10000.0,freestyle
+0,117,Jack Lange,M,14.0,Stillwater,MN,1 / 18,1 / 13,1 / 5,32:52,2898,1/18/2015,10000.0,classic
+1,218,Nicholas Acton,M,20.0,Eagan,MN,2 / 18,2 / 13,1 / 1,34:33,2898,1/18/2015,10000.0,classic
+2,137,Stuart Gordon,M,19.0,Northfield,MN,3 / 18,3 / 13,1 / 2,34:56,2898,1/18/2015,10000.0,classic
+3,138,Jeremy Storvick,M,19.0,Northfield,MN,4 / 18,4 / 13,2 / 2,35:33,2898,1/18/2015,10000.0,classic
+4,139,Rachel Peterson,F,17.0,Hastings,MN,5 / 18,1 / 5,1 / 1,43:04,2898,1/18/2015,10000.0,classic
+5,136,Haley Bell,F,20.0,Saint Peter,MN,6 / 18,2 / 5,1 / 1,43:07,2898,1/18/2015,10000.0,classic
+6,146,Adam Humpal,M,14.0,Stillwater,MN,7 / 18,5 / 13,2 / 5,45:06,2898,1/18/2015,10000.0,classic
+7,149,Hannah Beech,F,15.0,Lake Elmo,MN,8 / 18,3 / 5,1 / 2,45:13,2898,1/18/2015,10000.0,classic
+8,145,Ahvo Taipale,M,68.0,Saint Paul,MN,9 / 18,6 / 13,1 / 2,45:23,2898,1/18/2015,10000.0,classic
+9,148,Dan Beech,M,56.0,Lake Elmo,MN,10 / 18,7 / 13,1 / 1,46:16,2898,1/18/2015,10000.0,classic
+10,134,Evan Dybvig,M,14.0,Stillwater,MN,11 / 18,8 / 13,3 / 5,49:01,2898,1/18/2015,10000.0,classic
+11,147,Eli Roll,M,14.0,Stillwater,MN,13 / 18,10 / 13,5 / 5,49:01,2898,1/18/2015,10000.0,classic
+12,135,Grant Hietpas,M,14.0,Stillwater,MN,12 / 18,9 / 13,4 / 5,49:01,2898,1/18/2015,10000.0,classic
+13,140,Danielle Snow,F,15.0,Stillwater,MN,14 / 18,4 / 5,2 / 2,49:14,2898,1/18/2015,10000.0,classic
+14,101,Theodore Fabel,M,30.0,Minneapolis,MN,15 / 18,11 / 13,1 / 2,54:28,2898,1/18/2015,10000.0,classic
+15,100,David Gorman,M,61.0,Lindstrom,MN,16 / 18,12 / 13,2 / 2,1:00:45,2898,1/18/2015,10000.0,classic
+16,103,Beth Robelia,F,44.0,St. Paul,MN,17 / 18,5 / 5,1 / 1,1:06:12,2898,1/18/2015,10000.0,classic
+17,102,Casey Dickinson,M,30.0,Minneapolis,MN,18 / 18,13 / 13,2 / 2,1:13:15,2898,1/18/2015,10000.0,classic
+0,268,Alex Reich,M,25.0,Marine On Saint Cr,MN,1 / 56,1 / 43,1 / 8,56:33,2900,1/18/2015,20000.0,freestyle
+1,212,Peter Coenen,M,29.0,Saint Paul,MN,2 / 56,2 / 43,2 / 8,58:14,2900,1/18/2015,20000.0,freestyle
+2,264,Bryan Fish,M,40.0,Rhinelander,WI,3 / 56,3 / 43,1 / 13,59:02,2900,1/18/2015,20000.0,freestyle
+3,237,Torry Kraftson,M,41.0,Bayport,MN,4 / 56,4 / 43,2 / 13,1:00:15,2900,1/18/2015,20000.0,freestyle
+4,250,Paul Peterson,M,51.0,Hastings,MN,5 / 56,5 / 43,1 / 13,1:00:36,2900,1/18/2015,20000.0,freestyle
+5,210,David Andresen,M,27.0,Saint Paul,MN,6 / 56,6 / 43,3 / 8,1:01:25,2900,1/18/2015,20000.0,freestyle
+6,247,Philip Rogers,M,51.0,Esko,MN,7 / 56,7 / 43,2 / 13,1:01:47,2900,1/18/2015,20000.0,freestyle
+7,257,Thomas Krenz,M,53.0,Chisago City,MN,8 / 56,8 / 43,3 / 13,1:01:53,2900,1/18/2015,20000.0,freestyle
+8,249,Luke Israel,M,20.0,Duluth,MN,9 / 56,9 / 43,4 / 8,1:02:57,2900,1/18/2015,20000.0,freestyle
+9,267,Gary Johnson,M,53.0,Bloomington,MN,10 / 56,10 / 43,4 / 13,1:03:13,2900,1/18/2015,20000.0,freestyle
+10,224,Dalton Pauly,M,18.0,Shoreview,MN,11 / 56,11 / 43,1 / 1,1:03:27,2900,1/18/2015,20000.0,freestyle
+11,244,Dmytro Koshevy,M,27.0,Saint Louis Park,MN,12 / 56,12 / 43,5 / 8,1:05:16,2900,1/18/2015,20000.0,freestyle
+12,207,Benjamin Mullin,M,35.0,Lindstrom,MN,13 / 56,13 / 43,1 / 6,1:06:07,2900,1/18/2015,20000.0,freestyle
+13,209,John Hopkins,M,48.0,Savage,MN,14 / 56,14 / 43,3 / 13,1:06:17,2900,1/18/2015,20000.0,freestyle
+14,252,Michael Phernetton,M,39.0,Hudson,WI,15 / 56,15 / 43,2 / 6,1:06:19,2900,1/18/2015,20000.0,freestyle
+15,208,Brian Wicklund,M,49.0,Marine On St. Croi,MN,16 / 56,16 / 43,4 / 13,1:06:55,2900,1/18/2015,20000.0,freestyle
+16,261,Todd White,M,47.0,Roseville,MN,17 / 56,17 / 43,5 / 13,1:07:27,2900,1/18/2015,20000.0,freestyle
+17,273,Sara Graves,F,32.0,Saint Paul,MN,18 / 56,1 / 13,1 / 2,1:07:33,2900,1/18/2015,20000.0,freestyle
+18,239,Doran O'Brien,M,43.0,Scandia,MN,19 / 56,18 / 43,6 / 13,1:07:48,2900,1/18/2015,20000.0,freestyle
+19,274,Andy Powell,M,45.0,Marine On Saint Cr,MN,20 / 56,19 / 43,7 / 13,1:08:51,2900,1/18/2015,20000.0,freestyle
+20,216,Will Mitchell,M,30.0,Madison,WI,21 / 56,20 / 43,3 / 6,1:08:53,2900,1/18/2015,20000.0,freestyle
+21,259,Anna Nelson,F,19.0,Saint Paul,MN,22 / 56,2 / 13,1 / 2,1:09:57,2900,1/18/2015,20000.0,freestyle
+22,227,Erin Keane,F,21.0,Minneapolis,MN,23 / 56,3 / 13,1 / 5,1:10:54,2900,1/18/2015,20000.0,freestyle
+23,256,Dieter Heinz,M,43.0,Stillwater,MN,24 / 56,21 / 43,8 / 13,1:11:13,2900,1/18/2015,20000.0,freestyle
+24,204,Loren Jacot,M,55.0,Oakdale,MN,25 / 56,22 / 43,5 / 13,1:11:19,2900,1/18/2015,20000.0,freestyle
+25,258,Melissa Berman,F,20.0,Eden Prairie,MN,26 / 56,4 / 13,2 / 5,1:11:27,2900,1/18/2015,20000.0,freestyle
+26,246,John Boller,M,63.0,Brooklyn Center,MN,27 / 56,23 / 43,1 / 2,1:11:49,2900,1/18/2015,20000.0,freestyle
+27,260,Joel Sehloff,M,21.0,River Falls,WI,28 / 56,24 / 43,6 / 8,1:12:06,2900,1/18/2015,20000.0,freestyle
+28,211,Kierstin Andresen,F,26.0,St. Paul,MN,29 / 56,5 / 13,3 / 5,1:12:10,2900,1/18/2015,20000.0,freestyle
+29,241,Trevor Cotter,M,23.0,Duluth,MN,30 / 56,25 / 43,7 / 8,1:12:44,2900,1/18/2015,20000.0,freestyle
+30,248,Grant Moos,M,59.0,,,31 / 56,26 / 43,6 / 13,1:12:59,2900,1/18/2015,20000.0,freestyle
+31,231,John Miller,M,58.0,Stillwater,MN,32 / 56,27 / 43,7 / 13,1:13:05,2900,1/18/2015,20000.0,freestyle
+32,225,Stephanie Hart,F,19.0,Grand Rapids,MN,33 / 56,6 / 13,2 / 2,1:13:40,2900,1/18/2015,20000.0,freestyle
+33,230,Benjamin Jonjak,M,39.0,Chippewa Falls,WI,34 / 56,28 / 43,4 / 6,1:14:27,2900,1/18/2015,20000.0,freestyle
+34,235,David Melcher,M,58.0,Richfield,MN,35 / 56,29 / 43,8 / 13,1:14:46,2900,1/18/2015,20000.0,freestyle
+35,245,Michael Bono,M,62.0,Minneapolis,MN,36 / 56,30 / 43,2 / 2,1:15:20,2900,1/18/2015,20000.0,freestyle
+36,270,Todd Johnson,M,49.0,Saint Paul,MN,37 / 56,31 / 43,9 / 13,1:15:48,2900,1/18/2015,20000.0,freestyle
+37,238,Ellen Heine,F,41.0,Maple Grove,MN,38 / 56,7 / 13,1 / 2,1:15:53,2900,1/18/2015,20000.0,freestyle
+38,263,Carolyn Fletcher,F,57.0,Saint Paul,MN,39 / 56,8 / 13,1 / 2,1:17:35,2900,1/18/2015,20000.0,freestyle
+39,228,Sarah Nygaard,F,21.0,Richfield,MN,40 / 56,9 / 13,4 / 5,1:18:06,2900,1/18/2015,20000.0,freestyle
+40,236,Jeff Penman,M,46.0,Ellsworth,WI,41 / 56,32 / 43,10 / 13,1:18:39,2900,1/18/2015,20000.0,freestyle
+41,265,Chris Van Hoven,M,31.0,Hopkins,MN,42 / 56,33 / 43,5 / 6,1:19:14,2900,1/18/2015,20000.0,freestyle
+42,243,Steve Barone,M,43.0,Minneapolis,MN,43 / 56,34 / 43,11 / 13,1:19:21,2900,1/18/2015,20000.0,freestyle
+43,205,Jedd Beach,M,46.0,Chetek,WI,44 / 56,35 / 43,12 / 13,1:19:47,2900,1/18/2015,20000.0,freestyle
+44,276,Kristin Burger,F,47.0,Minneapolis,MN,45 / 56,10 / 13,2 / 2,1:20:46,2900,1/18/2015,20000.0,freestyle
+45,215,Paul Weium,M,54.0,Saint Paul,MN,46 / 56,36 / 43,9 / 13,1:22:08,2900,1/18/2015,20000.0,freestyle
+46,201,Katie Beutel,F,30.0,Madison,WI,47 / 56,11 / 13,2 / 2,1:23:30,2900,1/18/2015,20000.0,freestyle
+47,242,Collin Randolph,M,22.0,Minneapolis,MN,48 / 56,37 / 43,8 / 8,1:23:34,2900,1/18/2015,20000.0,freestyle
+48,269,Jeff Wolf,M,48.0,Osceola,WI,49 / 56,38 / 43,13 / 13,1:23:58,2900,1/18/2015,20000.0,freestyle
+49,229,Mandie Gribben,F,22.0,Eden Priairie,MN,50 / 56,12 / 13,5 / 5,1:24:40,2900,1/18/2015,20000.0,freestyle
+0,234,Tim Rogers,M,53.0,St. Paul,MN,51 / 56,39 / 43,10 / 13,1:27:25,2900,1/18/2015,20000.0,freestyle
+1,275,Scott Sponheim,M,51.0,Minneapolis,MN,52 / 56,40 / 43,11 / 13,1:28:45,2900,1/18/2015,20000.0,freestyle
+2,266,Ron Lowrie,M,59.0,Edina,MN,53 / 56,41 / 43,12 / 13,1:28:46,2900,1/18/2015,20000.0,freestyle
+3,217,Christopher Stauthammer,M,36.0,St. Paul,MN,54 / 56,42 / 43,6 / 6,1:29:02,2900,1/18/2015,20000.0,freestyle
+4,233,Mary Ryan,F,59.0,Minnetrista,MN,55 / 56,13 / 13,2 / 2,1:39:51,2900,1/18/2015,20000.0,freestyle
+5,272,Tom Hillstrom,M,51.0,Saint Louis Park,MN,56 / 56,43 / 43,13 / 13,1:44:08,2900,1/18/2015,20000.0,freestyle
+0,254,Tyler Gilbert,M,19.0,Minneapolis,MN,1 / 12,1 / 11,1 / 1,1:02:10,2902,1/18/2015,20000.0,classic
+1,255,Nathan Rhode,M,20.0,New Brighton,MN,2 / 12,2 / 11,1 / 4,1:04:00,2902,1/18/2015,20000.0,classic
+2,253,Jonah Gilbert,M,21.0,New Brighton,MN,3 / 12,3 / 11,2 / 4,1:06:59,2902,1/18/2015,20000.0,classic
+3,219,Karl Holub,M,21.0,Minneapolis,MN,4 / 12,4 / 11,3 / 4,1:07:05,2902,1/18/2015,20000.0,classic
+4,262,Kevin Brochman,M,55.0,North Saint Paul,MN,5 / 12,5 / 11,1 / 2,1:08:57,2902,1/18/2015,20000.0,classic
+5,240,Spencer Davis,M,22.0,Chaska,MN,6 / 12,6 / 11,4 / 4,1:10:45,2902,1/18/2015,20000.0,classic
+6,251,Kathleen De Wahl,F,28.0,Saint Paul,MN,7 / 12,1 / 1,1 / 1,1:13:57,2902,1/18/2015,20000.0,classic
+7,203,Mark Trumper,M,53.0,Stillwater,MN,8 / 12,7 / 11,2 / 2,1:30:43,2902,1/18/2015,20000.0,classic
+8,202,Peter Dorsen,M,70.0,Eden Prairie,MN,9 / 12,8 / 11,1 / 1,1:36:01,2902,1/18/2015,20000.0,classic
+9,222,Ethan Nelson,M,16.0,Minneapolis,MN,10 / 12,9 / 11,1 / 1,1:57:24,2902,1/18/2015,20000.0,classic
+10,221,Rami Azzazi,M,15.0,Minneapolis,MN,11 / 12,10 / 11,1 / 2,2:47:33,2902,1/18/2015,20000.0,classic
+11,223,Declan McGuire,M,15.0,Minneapolis,MN,12 / 12,11 / 11,2 / 2,2:49:07,2902,1/18/2015,20000.0,classic
+0,349,Nick Sokolowski,M,17.0,St. Louis Park,MN,1 / 56,1 / 32,1 / 7,39:01,2016,1/26/2014,12500.0,freestyle
+1,323,Quentin Ikuta,M,18.0,Marine On Saint Cr,MN,2 / 56,2 / 32,1 / 2,39:48,2016,1/26/2014,12500.0,freestyle
+2,463,Linder Wendt,M,16.0,Stillwater,MN,3 / 56,3 / 32,2 / 7,40:41,2016,1/26/2014,12500.0,freestyle
+3,454,Nolan Noer,M,15.0,Stillwater,MN,4 / 56,4 / 32,1 / 7,41:52,2016,1/26/2014,12500.0,freestyle
+4,339,Conrad Phelan,M,15.0,St Louis Park,MN,5 / 56,5 / 32,2 / 7,42:39,2016,1/26/2014,12500.0,freestyle
+5,465,Davis Gray,M,17.0,Stillwater,MN,6 / 56,6 / 32,3 / 7,45:07,2016,1/26/2014,12500.0,freestyle
+6,324,Reis Jones,M,17.0,Stillwater,MN,7 / 56,7 / 32,4 / 7,45:33,2016,1/26/2014,12500.0,freestyle
+7,461,David Ross,M,18.0,Stillwater,MN,8 / 56,8 / 32,2 / 2,45:33,2016,1/26/2014,12500.0,freestyle
+8,472,Benedict Chong,M,16.0,Saint Louis Park,MN,9 / 56,9 / 32,5 / 7,45:35,2016,1/26/2014,12500.0,freestyle
+9,460,Will Mitchell,M,29.0,Madison,WI,10 / 56,10 / 32,1 / 1,45:53,2016,1/26/2014,12500.0,freestyle
+10,469,David Holmes,M,15.0,Stillwater,MN,11 / 56,11 / 32,3 / 7,47:18,2016,1/26/2014,12500.0,freestyle
+11,314,Dan Ender,M,15.0,New Richmond,WI,12 / 56,12 / 32,4 / 7,48:50,2016,1/26/2014,12500.0,freestyle
+12,317,Max Haland,M,16.0,Afton,MN,13 / 56,13 / 32,6 / 7,49:01,2016,1/26/2014,12500.0,freestyle
+13,300,Jens Albright,M,15.0,St. Louis Park,MN,14 / 56,14 / 32,5 / 7,49:33,2016,1/26/2014,12500.0,freestyle
+14,456,Mike Ray,M,61.0,River Falls,WI,15 / 56,15 / 32,1 / 3,50:02,2016,1/26/2014,12500.0,freestyle
+15,313,Jackson Eilers,M,16.0,St. Louis Park,MN,16 / 56,16 / 32,7 / 7,50:06,2016,1/26/2014,12500.0,freestyle
+16,112,Rebecca Ireland,F,36.0,Minneapolis,MN,17 / 56,1 / 24,1 / 8,51:46,2016,1/26/2014,12500.0,freestyle
+17,471,Greg Mikunda,M,55.0,Barron,WI,18 / 56,17 / 32,1 / 6,52:39,2016,1/26/2014,12500.0,freestyle
+18,357,Benjamin Wicklund,M,14.0,Marine,MN,19 / 56,18 / 32,6 / 7,53:22,2016,1/26/2014,12500.0,freestyle
+19,358,Sofie Wicklund,F,17.0,Marine,MN,20 / 56,2 / 24,1 / 3,53:41,2016,1/26/2014,12500.0,freestyle
+20,466,Cecelia Peterson,F,16.0,Marine On Saint Cr,MN,21 / 56,3 / 24,2 / 3,53:41,2016,1/26/2014,12500.0,freestyle
+21,467,Megan Weaver,F,16.0,Stillwater,MN,22 / 56,4 / 24,3 / 3,53:41,2016,1/26/2014,12500.0,freestyle
+22,455,Anna Hagtrom,F,31.0,Saint Paul,MN,23 / 56,5 / 24,2 / 8,55:52,2016,1/26/2014,12500.0,freestyle
+23,470,Mark Elers,M,51.0,Saint Louis Park,MN,24 / 56,19 / 32,2 / 6,56:22,2016,1/26/2014,12500.0,freestyle
+24,327,Laura Kuzzy,F,26.0,St. Paul,MN,25 / 56,6 / 24,1 / 2,56:32,2016,1/26/2014,12500.0,freestyle
+25,350,Matthew Swanson,M,37.0,St. Paul,MN,26 / 56,20 / 32,1 / 1,57:00,2016,1/26/2014,12500.0,freestyle
+26,316,Ellie Haland,F,14.0,Afton,MN,27 / 56,7 / 24,1 / 2,57:15,2016,1/26/2014,12500.0,freestyle
+27,347,Kristina Smitten,F,41.0,Marine On St. Croi,MN,28 / 56,8 / 24,1 / 5,58:59,2016,1/26/2014,12500.0,freestyle
+28,474,Jennifer Ringold,F,40.0,Lake Elmo,MN,29 / 56,9 / 24,2 / 5,59:12,2016,1/26/2014,12500.0,freestyle
+29,464,Jerry Beutel,M,63.0,Afton,MN,30 / 56,21 / 32,2 / 3,1:00:04,2016,1/26/2014,12500.0,freestyle
+30,322,Kate Hokanson,F,19.0,North Oaks,MN,31 / 56,10 / 24,1 / 1,1:00:10,2016,1/26/2014,12500.0,freestyle
+31,355,Dan Wenkel,M,42.0,Saint Paul,MN,32 / 56,22 / 32,1 / 4,1:01:05,2016,1/26/2014,12500.0,freestyle
+32,332,David Miller,M,48.0,Falcon Heights,MN,33 / 56,23 / 32,2 / 4,1:02:33,2016,1/26/2014,12500.0,freestyle
+33,304,Stas Bednarski,M,10.0,Minneapolis,MN,34 / 56,24 / 32,7 / 7,1:04:08,2016,1/26/2014,12500.0,freestyle
+34,343,Andrea Saterbak,F,50.0,Stillwater,MN,35 / 56,11 / 24,1 / 2,1:06:17,2016,1/26/2014,12500.0,freestyle
+35,330,Mike McNaughton,M,52.0,Woodbury,MN,36 / 56,25 / 32,3 / 6,1:06:21,2016,1/26/2014,12500.0,freestyle
+36,353,Rick Villalta,M,52.0,Mpls,MN,37 / 56,26 / 32,4 / 6,1:07:48,2016,1/26/2014,12500.0,freestyle
+37,219,Kristen Weaver,F,45.0,Stillwater,MN,38 / 56,12 / 24,3 / 5,1:08:11,2016,1/26/2014,12500.0,freestyle
+38,451,Ami Voeltz,F,40.0,Minneapolis,MN,39 / 56,13 / 24,4 / 5,1:08:26,2016,1/26/2014,12500.0,freestyle
+39,462,Bethany Olson,F,12.0,Lakeland,MN,40 / 56,14 / 24,2 / 2,1:09:14,2016,1/26/2014,12500.0,freestyle
+40,224,Anastasia Woodruff,F,26.0,Minneapolis,MN,41 / 56,15 / 24,2 / 2,1:09:28,2016,1/26/2014,12500.0,freestyle
+41,187,Thomas Reinartz,M,52.0,Saint Paul,MN,42 / 56,27 / 32,5 / 6,1:12:01,2016,1/26/2014,12500.0,freestyle
+42,193,Laura Schmieg,F,41.0,St. Louis Park,MN,43 / 56,16 / 24,5 / 5,1:17:29,2016,1/26/2014,12500.0,freestyle
+43,85,Jason Elhardt,M,43.0,Saint Paul,MN,44 / 56,28 / 32,3 / 4,1:24:40,2016,1/26/2014,12500.0,freestyle
+44,32,Tanya Adelman,F,34.0,Saint Paul,MN,45 / 56,17 / 24,3 / 8,1:24:43,2016,1/26/2014,12500.0,freestyle
+45,351,Renee Swanson,F,36.0,St. Paul,MN,46 / 56,18 / 24,4 / 8,1:27:04,2016,1/26/2014,12500.0,freestyle
+46,468,Criag Agney,M,48.0,Minneapolis,MN,47 / 56,29 / 32,4 / 4,1:29:04,2016,1/26/2014,12500.0,freestyle
+47,328,Nancy Lyner,F,67.0,Stillwater,MN,48 / 56,19 / 24,1 / 1,1:30:57,2016,1/26/2014,12500.0,freestyle
+48,311,Jim Dorsey,M,61.0,Grant,MN,49 / 56,30 / 32,3 / 3,1:31:01,2016,1/26/2014,12500.0,freestyle
+49,119,Sarah Johnson,F,39.0,Rochester,MN,50 / 56,20 / 24,5 / 8,1:31:44,2016,1/26/2014,12500.0,freestyle
+0,473,Kelly Schuna,F,34.0,Stillwater,MN,51 / 56,21 / 24,6 / 8,1:32:39,2016,1/26/2014,12500.0,freestyle
+1,356,Elizabeth Westerhaus,F,35.0,Stillwater,MN,52 / 56,22 / 24,7 / 8,1:32:56,2016,1/26/2014,12500.0,freestyle
+2,354,Adrienne Walts,F,33.0,Minneapolis,MN,53 / 56,23 / 24,8 / 8,1:43:11,2016,1/26/2014,12500.0,freestyle
+3,325,Dorothy Jung,F,57.0,Minnetonka,MN,54 / 56,24 / 24,2 / 2,1:49:02,2016,1/26/2014,12500.0,freestyle
+4,309,Keith Canny,M,74.0,Andover,MN,55 / 56,31 / 32,1 / 1,1:53:35,2016,1/26/2014,12500.0,freestyle
+5,320,Craig Hedberg,M,59.0,Minnetonka,MN,56 / 56,32 / 32,6 / 6,2:00:05,2016,1/26/2014,12500.0,freestyle
+0,348,Jackson Sokolowski,M,14.0,St. Louis Park,MN,1 / 50,1 / 30,1 / 4,44:36,2018,1/26/2014,12500.0,classic
+1,352,Matthew Trumper,M,17.0,Stillwater,MN,2 / 50,2 / 30,1 / 3,46:45,2018,1/26/2014,12500.0,classic
+2,331,Aidan McVey,M,16.0,St. Paul,MN,3 / 50,3 / 30,2 / 3,49:16,2018,1/26/2014,12500.0,classic
+3,234,Ben Dubay,M,30.0,Maple Grove,MN,4 / 50,4 / 30,1 / 2,49:25,2018,1/26/2014,12500.0,classic
+4,312,Cheryl Dubois,F,52.0,North Oaks,MN,5 / 50,1 / 20,1 / 3,51:18,2018,1/26/2014,12500.0,classic
+5,344,Jacob Scheckman,M,29.0,Minneapolis,MN,6 / 50,5 / 30,1 / 2,53:11,2018,1/26/2014,12500.0,classic
+6,310,Andrew Comfort,M,47.0,Minneapolis,MN,7 / 50,6 / 30,1 / 3,53:17,2018,1/26/2014,12500.0,classic
+7,305,Kerry Bogenreif,F,53.0,Lino Lakes,MN,8 / 50,2 / 20,2 / 3,53:19,2018,1/26/2014,12500.0,classic
+8,276,Xena Huff,F,46.0,Minneapolis,MN,9 / 50,3 / 20,1 / 4,54:41,2018,1/26/2014,12500.0,classic
+9,452,Colin Gray,M,14.0,Stillwater,MN,10 / 50,7 / 30,2 / 4,55:45,2018,1/26/2014,12500.0,classic
+10,338,Rachel Peterson,F,16.0,Hastings,MN,11 / 50,4 / 20,1 / 2,56:04,2018,1/26/2014,12500.0,classic
+11,306,Ralph Bovard,M,61.0,Minneapolis,MN,12 / 50,8 / 30,1 / 8,56:28,2018,1/26/2014,12500.0,classic
+12,340,Gregory Pratt,M,61.0,Minneapolis,MN,13 / 50,9 / 30,2 / 8,57:19,2018,1/26/2014,12500.0,classic
+13,448,Haley Beech,F,17.0,Lake Elmo,MN,15 / 50,6 / 20,2 / 2,57:44,2018,1/26/2014,12500.0,classic
+14,449,Hannah Beech,F,14.0,Lake Elmo,MN,14 / 50,5 / 20,1 / 6,57:44,2018,1/26/2014,12500.0,classic
+15,54,Peter Bohacek,M,50.0,Afton,MN,16 / 50,10 / 30,1 / 7,58:53,2018,1/26/2014,12500.0,classic
+16,217,Chris Wakefield,M,19.0,New Brighton,MN,17 / 50,11 / 30,1 / 1,59:10,2018,1/26/2014,12500.0,classic
+17,444,Pedro Pesta,M,49.0,Northfield,MN,18 / 50,12 / 30,2 / 3,59:33,2018,1/26/2014,12500.0,classic
+18,450,John Talbot,M,17.0,Stillwater,MN,19 / 50,13 / 30,3 / 3,1:00:15,2018,1/26/2014,12500.0,classic
+19,458,Greg Richert,M,53.0,Forest Lake,MN,20 / 50,14 / 30,2 / 7,1:00:20,2018,1/26/2014,12500.0,classic
+20,443,Madeleine Guillery,F,15.0,Minneapolis,MN,21 / 50,7 / 20,2 / 6,1:00:36,2018,1/26/2014,12500.0,classic
+21,233,Karen Casper,F,49.0,Saint Paul,MN,22 / 50,8 / 20,2 / 4,1:01:17,2018,1/26/2014,12500.0,classic
+22,447,Dan Beech,M,55.0,Lake Elmo,MN,23 / 50,15 / 30,3 / 7,1:03:07,2018,1/26/2014,12500.0,classic
+23,318,Henry Hall,M,13.0,Minneapolis,MN,24 / 50,16 / 30,3 / 4,1:03:11,2018,1/26/2014,12500.0,classic
+24,303,Kasia Bednarski,F,12.0,Minneapolis,MN,25 / 50,9 / 20,3 / 6,1:03:26,2018,1/26/2014,12500.0,classic
+25,302,Amber Anderson,F,21.0,Wyoming,MN,26 / 50,10 / 20,1 / 4,1:03:45,2018,1/26/2014,12500.0,classic
+26,446,Tom Rowe,M,65.0,Hugo,MN,27 / 50,17 / 30,3 / 8,1:04:12,2018,1/26/2014,12500.0,classic
+27,445,Robb Lageson,M,58.0,St. Paul,MN,28 / 50,18 / 30,4 / 7,1:04:33,2018,1/26/2014,12500.0,classic
+28,335,Brian Olson,M,14.0,Lakeland,MN,29 / 50,19 / 30,4 / 4,1:05:41,2018,1/26/2014,12500.0,classic
+29,229,Brianna McIntrye,F,20.0,Maplewood,MN,30 / 50,11 / 20,2 / 4,1:06:48,2018,1/26/2014,12500.0,classic
+30,459,Kathleen Trescony,F,21.0,Minneapolis,MN,31 / 50,12 / 20,3 / 4,1:07:04,2018,1/26/2014,12500.0,classic
+31,341,James Remington,M,65.0,New Richmond,WI,32 / 50,20 / 30,4 / 8,1:09:32,2018,1/26/2014,12500.0,classic
+32,237,John Bischoff,M,68.0,Lakeland,MN,33 / 50,21 / 30,5 / 8,1:10:17,2018,1/26/2014,12500.0,classic
+33,81,Nils Dybvig,M,47.0,Minneapolis,MN,34 / 50,22 / 30,3 / 3,1:10:36,2018,1/26/2014,12500.0,classic
+34,457,Katie Lenglet,F,25.0,Shoreview,MN,35 / 50,13 / 20,4 / 4,1:12:41,2018,1/26/2014,12500.0,classic
+35,319,Sudie Hall,F,10.0,Minneapolis,MN,36 / 50,14 / 20,4 / 6,1:14:53,2018,1/26/2014,12500.0,classic
+36,308,Kari Bull,F,19.0,Minneapolis,MN,37 / 50,15 / 20,1 / 1,1:15:17,2018,1/26/2014,12500.0,classic
+37,326,Bill Kerker,M,53.0,Minneapolis,MN,38 / 50,23 / 30,5 / 7,1:15:55,2018,1/26/2014,12500.0,classic
+38,336,Jerod Pekuri,M,27.0,Minnetonka,MN,39 / 50,24 / 30,2 / 2,1:16:18,2018,1/26/2014,12500.0,classic
+39,453,Sandra Knaeble,F,56.0,Stillwater,MN,40 / 50,16 / 20,3 / 3,1:17:50,2018,1/26/2014,12500.0,classic
+40,231,Sofie Solheim,F,14.0,Stillwater,MN,41 / 50,17 / 20,5 / 6,1:20:04,2018,1/26/2014,12500.0,classic
+41,333,Jim Moore,M,69.0,North Saint Paul,MN,42 / 50,25 / 30,6 / 8,1:20:24,2018,1/26/2014,12500.0,classic
+42,97,Stephen Greenwood,M,61.0,St. Paul,MN,43 / 50,26 / 30,7 / 8,1:20:40,2018,1/26/2014,12500.0,classic
+43,321,Brian Hirsch,M,55.0,Stillwater,MN,44 / 50,27 / 30,6 / 7,1:20:46,2018,1/26/2014,12500.0,classic
+44,342,Beth Robelia,F,43.0,Saint Paul,MN,45 / 50,18 / 20,3 / 4,1:20:46,2018,1/26/2014,12500.0,classic
+45,253,Sophie Dwyer,F,14.0,Minneapolis,MN,46 / 50,19 / 20,6 / 6,1:20:55,2018,1/26/2014,12500.0,classic
+46,334,Courtland Nelson,M,63.0,Forest Lake,MN,47 / 50,28 / 30,8 / 8,1:21:03,2018,1/26/2014,12500.0,classic
+47,337,Matt Pekuri,M,32.0,Woodbury,MN,48 / 50,29 / 30,2 / 2,1:21:59,2018,1/26/2014,12500.0,classic
+48,307,Michele Braley,F,47.0,Minneapolis,MN,49 / 50,20 / 20,4 / 4,1:25:43,2018,1/26/2014,12500.0,classic
+49,315,Donald Giesting,M,53.0,Wayzata,MN,50 / 50,30 / 30,7 / 7,1:49:15,2018,1/26/2014,12500.0,classic
+0,263,Derek Wallen,M,34.0,Kenosha,WI,1 / 152,1 / 116,1 / 23,1:17:46,2020,1/26/2014,25000.0,freestyle
+1,137,Christian Kvalseth,M,21.0,Savage,MN,2 / 152,2 / 116,1 / 15,1:18:55,2020,1/26/2014,25000.0,freestyle
+2,180,Ryan Ping,M,37.0,Winona,MN,3 / 152,3 / 116,2 / 23,1:18:55,2020,1/26/2014,25000.0,freestyle
+3,48,Wyatt Behrends,M,21.0,Hastings,MN,4 / 152,4 / 116,2 / 15,1:19:03,2020,1/26/2014,25000.0,freestyle
+4,71,Collin Cousins,M,27.0,Minneapolis,MN,5 / 152,5 / 116,3 / 15,1:19:04,2020,1/26/2014,25000.0,freestyle
+5,223,Ryan Wilson,M,31.0,Minneapolis,MN,6 / 152,6 / 116,3 / 23,1:19:10,2020,1/26/2014,25000.0,freestyle
+6,267,Tyler Olson,M,28.0,Minneapolis,MN,7 / 152,7 / 116,4 / 15,1:19:13,2020,1/26/2014,25000.0,freestyle
+7,256,Tom Krenz,M,52.0,Chisago City,MN,8 / 152,8 / 116,1 / 32,1:19:30,2020,1/26/2014,25000.0,freestyle
+8,258,Henry Walker,M,47.0,Rochester,MN,9 / 152,9 / 116,1 / 25,1:19:56,2020,1/26/2014,25000.0,freestyle
+9,132,Torry Kraftson,M,40.0,Bayport,MN,10 / 152,10 / 116,2 / 25,1:20:02,2020,1/26/2014,25000.0,freestyle
+10,84,Jay Eidem,M,32.0,Savage,MN,11 / 152,11 / 116,4 / 23,1:20:13,2020,1/26/2014,25000.0,freestyle
+11,235,Ben Mogren,M,31.0,Ashwaubenon,WI,12 / 152,12 / 116,5 / 23,1:20:32,2020,1/26/2014,25000.0,freestyle
+12,165,Michael Moulsoff,M,50.0,Saint Paul,MN,13 / 152,13 / 116,2 / 32,1:20:53,2020,1/26/2014,25000.0,freestyle
+13,283,Garrett Ping,M,34.0,Winona,MN,14 / 152,14 / 116,6 / 23,1:23:03,2020,1/26/2014,25000.0,freestyle
+14,246,Paul Ellis,M,33.0,White Bear Lake,MN,15 / 152,15 / 116,7 / 23,1:23:27,2020,1/26/2014,25000.0,freestyle
+15,213,Mary Beth Tuttle,F,50.0,Pine Springs,MN,16 / 152,1 / 36,1 / 7,1:23:29,2020,1/26/2014,25000.0,freestyle
+16,108,Artie Huber,M,39.0,Otsego,MN,17 / 152,16 / 116,8 / 23,1:23:33,2020,1/26/2014,25000.0,freestyle
+17,282,Darren Halzle,M,32.0,Champlin,MN,18 / 152,17 / 116,9 / 23,1:23:34,2020,1/26/2014,25000.0,freestyle
+18,64,Tom Camp,M,48.0,Minneapolis,MN,19 / 152,18 / 116,3 / 25,1:23:47,2020,1/26/2014,25000.0,freestyle
+19,278,Josh Doebbert,M,25.0,Minneapolis,MN,20 / 152,19 / 116,5 / 15,1:25:19,2020,1/26/2014,25000.0,freestyle
+20,107,John Hopkins,M,47.0,Savage,MN,21 / 152,20 / 116,4 / 25,1:26:38,2020,1/26/2014,25000.0,freestyle
+21,249,Andrew Schakel,M,39.0,Minneapolis,MN,22 / 152,21 / 116,10 / 23,1:26:40,2020,1/26/2014,25000.0,freestyle
+22,171,Paul Olson,M,34.0,Andover,MN,23 / 152,22 / 116,11 / 23,1:27:03,2020,1/26/2014,25000.0,freestyle
+23,115,Gary Johnson,M,52.0,Bloomington,MN,24 / 152,23 / 116,3 / 32,1:27:33,2020,1/26/2014,25000.0,freestyle
+24,179,Megan Ping,F,36.0,Winona,MN,25 / 152,2 / 36,1 / 3,1:28:17,2020,1/26/2014,25000.0,freestyle
+25,252,Michael Noer,M,45.0,Stillwater,MN,26 / 152,24 / 116,5 / 25,1:28:34,2020,1/26/2014,25000.0,freestyle
+26,261,Patrick Jopp,M,53.0,Elk River,MN,27 / 152,25 / 116,4 / 32,1:29:07,2020,1/26/2014,25000.0,freestyle
+27,281,Marcus Magnuson,M,59.0,Champlin,MN,28 / 152,26 / 116,5 / 32,1:29:07,2020,1/26/2014,25000.0,freestyle
+28,150,Jason Magozzi,M,45.0,Maplewood,MN,29 / 152,27 / 116,6 / 25,1:29:08,2020,1/26/2014,25000.0,freestyle
+29,158,Brad Miller,M,51.0,Rochester,MN,30 / 152,28 / 116,6 / 32,1:29:14,2020,1/26/2014,25000.0,freestyle
+30,273,Tim Wilkie,M,50.0,Shell Lake,WI,31 / 152,29 / 116,7 / 32,1:29:44,2020,1/26/2014,25000.0,freestyle
+31,153,Ryan Marita-Davis,M,17.0,Minneapolis,MN,32 / 152,30 / 116,1 / 3,1:30:19,2020,1/26/2014,25000.0,freestyle
+32,36,Graeme Alexander,M,18.0,Minneapolis,MN,33 / 152,31 / 116,1 / 3,1:30:25,2020,1/26/2014,25000.0,freestyle
+33,37,Dick Anderson,M,64.0,Minneapolis,MN,34 / 152,32 / 116,1 / 9,1:31:03,2020,1/26/2014,25000.0,freestyle
+34,131,Mike Kosowski,M,29.0,Minneapolis,MN,35 / 152,33 / 116,6 / 15,1:31:33,2020,1/26/2014,25000.0,freestyle
+35,264,Justin Rumley,M,38.0,Woodbury,MN,36 / 152,34 / 116,12 / 23,1:31:43,2020,1/26/2014,25000.0,freestyle
+36,206,Daniel Svedberg,M,18.0,Woodbury,MN,37 / 152,35 / 116,2 / 3,1:32:17,2020,1/26/2014,25000.0,freestyle
+37,121,Andrew Jones,M,24.0,Champlin,MN,38 / 152,36 / 116,7 / 15,1:32:21,2020,1/26/2014,25000.0,freestyle
+38,192,Noah Rothman,M,16.0,Minneapolis,MN,39 / 152,37 / 116,2 / 3,1:32:36,2020,1/26/2014,25000.0,freestyle
+39,236,Michael Phernetton,M,37.0,Hudson,WI,40 / 152,38 / 116,13 / 23,1:33:01,2020,1/26/2014,25000.0,freestyle
+40,69,Christopher Coffey,M,32.0,Minneapolis,MN,41 / 152,39 / 116,14 / 23,1:33:29,2020,1/26/2014,25000.0,freestyle
+41,114,Doug Johnson,M,57.0,Minneapolis,MN,42 / 152,40 / 116,8 / 32,1:33:53,2020,1/26/2014,25000.0,freestyle
+42,155,Lindsey Marshall,F,24.0,Minneapolis,MN,43 / 152,3 / 36,1 / 13,1:34:00,2020,1/26/2014,25000.0,freestyle
+43,82,Paul Earl-Torniainen,M,44.0,St. Paul,MN,44 / 152,41 / 116,7 / 25,1:34:01,2020,1/26/2014,25000.0,freestyle
+44,162,Grant Moos,M,58.0,St. Paul,MN,45 / 152,42 / 116,9 / 32,1:34:15,2020,1/26/2014,25000.0,freestyle
+45,270,David Benson,M,40.0,Lake Elmo,MN,46 / 152,43 / 116,8 / 25,1:34:26,2020,1/26/2014,25000.0,freestyle
+46,215,Matt Villalta,M,17.0,Mpls,MN,47 / 152,44 / 116,3 / 3,1:34:27,2020,1/26/2014,25000.0,freestyle
+47,166,Benjamin Mullin,M,34.0,Lindstrom,MN,48 / 152,45 / 116,15 / 23,1:34:28,2020,1/26/2014,25000.0,freestyle
+48,34,Dan Albright,M,46.0,St. Louis Park,MN,49 / 152,46 / 116,9 / 25,1:34:37,2020,1/26/2014,25000.0,freestyle
+49,55,John Boller,M,62.0,Brooklyn Park,MN,50 / 152,47 / 116,2 / 9,1:34:59,2020,1/26/2014,25000.0,freestyle
+0,126,Erin Keane,F,20.0,Minneapolis,MN,51 / 152,4 / 36,2 / 13,1:35:18,2020,1/26/2014,25000.0,freestyle
+1,218,Carolyn Warren,F,24.0,Eau Claire,WI,52 / 152,5 / 36,3 / 13,1:36:34,2020,1/26/2014,25000.0,freestyle
+2,184,Dan Ralston,M,38.0,Stillwater,MN,53 / 152,48 / 116,16 / 23,1:37:15,2020,1/26/2014,25000.0,freestyle
+3,271,John Mundahl,M,62.0,Hayward,WI,54 / 152,49 / 116,3 / 9,1:37:24,2020,1/26/2014,25000.0,freestyle
+4,124,Dann Kann,M,66.0,Rice Lake,WI,55 / 152,50 / 116,4 / 9,1:37:31,2020,1/26/2014,25000.0,freestyle
+5,174,Jesse Pearson,M,32.0,Minneapolis,MN,56 / 152,51 / 116,17 / 23,1:37:45,2020,1/26/2014,25000.0,freestyle
+6,57,Andrea Breen,F,47.0,Minneapolis,MN,57 / 152,6 / 36,1 / 8,1:38:12,2020,1/26/2014,25000.0,freestyle
+7,182,Tom Prentice,M,54.0,Lake Elmo,MN,58 / 152,52 / 116,10 / 32,1:38:39,2020,1/26/2014,25000.0,freestyle
+8,191,Joshua Rolnitzky,M,32.0,Minneapolis,MN,59 / 152,53 / 116,18 / 23,1:39:00,2020,1/26/2014,25000.0,freestyle
+9,53,Melissa Berman,F,19.0,Eden Prairie,MN,60 / 152,7 / 36,1 / 1,1:39:07,2020,1/26/2014,25000.0,freestyle
+10,287,Gretchen Mueller,F,22.0,Northfield,MN,61 / 152,8 / 36,4 / 13,1:39:19,2020,1/26/2014,25000.0,freestyle
+11,105,Bill Hittler,M,55.0,Plymouth,MN,62 / 152,54 / 116,11 / 32,1:39:37,2020,1/26/2014,25000.0,freestyle
+12,197,Joel Sehloff,M,21.0,Malone,WI,63 / 152,55 / 116,8 / 15,1:39:55,2020,1/26/2014,25000.0,freestyle
+13,170,Conlan Olson,M,15.0,Minneapolis,MN,64 / 152,56 / 116,1 / 6,1:40:13,2020,1/26/2014,25000.0,freestyle
+14,45,Laura Bednarski,F,46.0,Minneapolis,MN,65 / 152,9 / 36,2 / 8,1:40:37,2020,1/26/2014,25000.0,freestyle
+15,280,David Leske,M,45.0,Golden Valley,MN,66 / 152,57 / 116,10 / 25,1:41:48,2020,1/26/2014,25000.0,freestyle
+16,130,John Kosowski,M,26.0,Minneapolis,MN,67 / 152,58 / 116,9 / 15,1:42:05,2020,1/26/2014,25000.0,freestyle
+17,104,Scott Hervey,M,51.0,Decorah,IA,68 / 152,59 / 116,12 / 32,1:42:10,2020,1/26/2014,25000.0,freestyle
+18,111,Dan Inderieden,M,49.0,Bloomington,MN,69 / 152,60 / 116,11 / 25,1:42:11,2020,1/26/2014,25000.0,freestyle
+19,94,Keith Gilbert,M,50.0,Arden Hills,MN,70 / 152,61 / 116,13 / 32,1:42:17,2020,1/26/2014,25000.0,freestyle
+20,251,Frank Lederle,M,61.0,Edina,MN,71 / 152,62 / 116,5 / 9,1:42:35,2020,1/26/2014,25000.0,freestyle
+21,160,Joe Mitchell,M,25.0,Minneapolis,MN,72 / 152,63 / 116,10 / 15,1:42:44,2020,1/26/2014,25000.0,freestyle
+22,173,Katelyn Palmatier,F,20.0,Minneapolis,MN,73 / 152,10 / 36,5 / 13,1:43:00,2020,1/26/2014,25000.0,freestyle
+23,272,Charles Curry,M,58.0,Woodbury,MN,74 / 152,64 / 116,14 / 32,1:43:29,2020,1/26/2014,25000.0,freestyle
+24,46,Sam Behrends,M,25.0,Bruce,WI,75 / 152,65 / 116,11 / 15,1:43:41,2020,1/26/2014,25000.0,freestyle
+25,61,Kristin Burger,F,46.0,Minneapolis,MN,76 / 152,11 / 36,3 / 8,1:43:55,2020,1/26/2014,25000.0,freestyle
+26,157,David Melcher,M,57.0,Richfield,MN,77 / 152,66 / 116,15 / 32,1:44:15,2020,1/26/2014,25000.0,freestyle
+27,122,Benjamin Jonjak,M,38.0,Chippewa Falls,WI,78 / 152,67 / 116,19 / 23,1:44:19,2020,1/26/2014,25000.0,freestyle
+28,91,Joe Gerard,M,35.0,Duluth,MN,79 / 152,68 / 116,20 / 23,1:44:26,2020,1/26/2014,25000.0,freestyle
+29,100,Andrew Hall,M,44.0,Minneapolis,MN,80 / 152,69 / 116,12 / 25,1:44:34,2020,1/26/2014,25000.0,freestyle
+30,266,Aaron Johnson,M,35.0,Stillwater,MN,81 / 152,70 / 116,21 / 23,1:44:35,2020,1/26/2014,25000.0,freestyle
+31,284,Will Johnston,M,50.0,West Saint Paul,MN,82 / 152,71 / 116,16 / 32,1:44:55,2020,1/26/2014,25000.0,freestyle
+32,73,Julia Curry,F,24.0,Woodbury,MN,83 / 152,12 / 36,6 / 13,1:45:07,2020,1/26/2014,25000.0,freestyle
+33,40,Kierstin Andresen,F,25.0,Marine On St. Croi,MN,84 / 152,13 / 36,7 / 13,1:45:40,2020,1/26/2014,25000.0,freestyle
+34,145,Mike Lyner,M,60.0,Stillwater,MN,85 / 152,72 / 116,6 / 9,1:45:50,2020,1/26/2014,25000.0,freestyle
+35,169,Chad Olson,M,44.0,Star Prairie,WI,86 / 152,73 / 116,13 / 25,1:45:56,2020,1/26/2014,25000.0,freestyle
+36,210,Tonnis Ter Veldhuis,M,47.0,Saint Paul,MN,87 / 152,74 / 116,14 / 25,1:46:29,2020,1/26/2014,25000.0,freestyle
+37,286,Matthew Milanda,M,18.0,Barron,WI,88 / 152,75 / 116,3 / 3,1:46:46,2020,1/26/2014,25000.0,freestyle
+38,70,Trevor Cotter,M,22.0,Duluth,MN,89 / 152,76 / 116,12 / 15,1:46:52,2020,1/26/2014,25000.0,freestyle
+39,42,Benjamin Bachmeier,M,22.0,Minneapolis,MN,90 / 152,77 / 116,13 / 15,1:47:01,2020,1/26/2014,25000.0,freestyle
+40,260,Michael Risse,M,57.0,Brooklyn Center,MN,91 / 152,78 / 116,17 / 32,1:48:08,2020,1/26/2014,25000.0,freestyle
+41,98,Maureen Haggerty,F,46.0,Mendota Heights,MN,92 / 152,14 / 36,4 / 8,1:48:21,2020,1/26/2014,25000.0,freestyle
+42,39,David Andresen,M,26.0,Marine On St. Croi,MN,93 / 152,79 / 116,14 / 15,1:48:36,2020,1/26/2014,25000.0,freestyle
+43,44,Jedd Beach,M,45.0,Chetek,WI,94 / 152,80 / 116,15 / 25,1:48:37,2020,1/26/2014,25000.0,freestyle
+44,154,Carol Markham-Cousins,F,58.0,Minneapolis,MN,95 / 152,15 / 36,2 / 7,1:49:16,2020,1/26/2014,25000.0,freestyle
+45,269,Krstyn Benson,F,39.0,Lake Elmo,MN,96 / 152,16 / 36,2 / 3,1:49:21,2020,1/26/2014,25000.0,freestyle
+46,135,Thomas Kunau,M,55.0,St. Paul,MN,97 / 152,81 / 116,18 / 32,1:49:27,2020,1/26/2014,25000.0,freestyle
+47,67,Ji Chen,M,52.0,Woodbury,MN,98 / 152,82 / 116,19 / 32,1:49:31,2020,1/26/2014,25000.0,freestyle
+48,275,Steve Barone,M,42.0,Minneapolis,MN,99 / 152,83 / 116,16 / 25,1:49:59,2020,1/26/2014,25000.0,freestyle
+49,60,Micah Bruns,M,26.0,Albertville,MN,100 / 152,84 / 116,15 / 15,1:50:01,2020,1/26/2014,25000.0,freestyle
+0,268,Jeff Wolf,M,47.0,Osceola,WI,101 / 152,85 / 116,17 / 25,1:50:50,2020,1/26/2014,25000.0,freestyle
+1,265,Dave Evenson,M,49.0,Savage,MN,102 / 152,86 / 116,18 / 25,1:51:33,2020,1/26/2014,25000.0,freestyle
+2,259,Ron Lowrie,M,58.0,Edina,MN,103 / 152,87 / 116,20 / 32,1:52:43,2020,1/26/2014,25000.0,freestyle
+3,127,Foss Kerker,M,15.0,Minneapolis,MN,104 / 152,88 / 116,2 / 6,1:53:00,2020,1/26/2014,25000.0,freestyle
+4,277,Emmerson Ward,M,36.0,Saint Paul,MN,105 / 152,89 / 116,22 / 23,1:53:06,2020,1/26/2014,25000.0,freestyle
+5,99,Ted Haland,M,44.0,Afton,MN,106 / 152,90 / 116,19 / 25,1:53:10,2020,1/26/2014,25000.0,freestyle
+6,76,Jon Dicus,M,47.0,Minneapolis,MN,107 / 152,91 / 116,20 / 25,1:54:02,2020,1/26/2014,25000.0,freestyle
+7,279,Laura Hjort,F,47.0,Elk River,MN,108 / 152,17 / 36,5 / 8,1:54:03,2020,1/26/2014,25000.0,freestyle
+8,204,Matt Stavish,M,46.0,Scandia,MN,109 / 152,92 / 116,21 / 25,1:54:07,2020,1/26/2014,25000.0,freestyle
+9,50,Lori Belz,F,51.0,Stillwater,MN,110 / 152,18 / 36,3 / 7,1:54:11,2020,1/26/2014,25000.0,freestyle
+10,79,Pam Dougall,F,59.0,Stillwater,MN,111 / 152,19 / 36,4 / 7,1:54:18,2020,1/26/2014,25000.0,freestyle
+11,83,Walter Ebertz,M,55.0,St Paul,MN,112 / 152,93 / 116,21 / 32,1:54:18,2020,1/26/2014,25000.0,freestyle
+12,244,Brianna Chu,F,22.0,Racine,WI,113 / 152,20 / 36,8 / 13,1:55:51,2020,1/26/2014,25000.0,freestyle
+13,90,Kari Gates,F,35.0,Duluth,MN,114 / 152,21 / 36,3 / 3,1:56:16,2020,1/26/2014,25000.0,freestyle
+14,209,Chandler Taylor,M,47.0,Minnetonka,MN,115 / 152,94 / 116,22 / 25,1:56:19,2020,1/26/2014,25000.0,freestyle
+15,214,Jim Van Iwaarden,M,58.0,Minneapolis,MN,116 / 152,95 / 116,22 / 32,1:57:02,2020,1/26/2014,25000.0,freestyle
+16,220,Paul Weium,M,50.0,Saint Paul,MN,117 / 152,96 / 116,23 / 32,1:57:33,2020,1/26/2014,25000.0,freestyle
+17,274,Katie Beutel,F,29.0,Madison,WI,118 / 152,22 / 36,9 / 13,1:57:38,2020,1/26/2014,25000.0,freestyle
+18,172,Tina Olson,F,46.0,River Falls,WI,119 / 152,23 / 36,6 / 8,1:57:41,2020,1/26/2014,25000.0,freestyle
+19,80,Joseph Doyle,M,15.0,Minneapolis,MN,120 / 152,97 / 116,3 / 6,1:58:12,2020,1/26/2014,25000.0,freestyle
+20,38,Lance Anderson,M,50.0,Stillwater,MN,121 / 152,98 / 116,24 / 32,1:58:38,2020,1/26/2014,25000.0,freestyle
+21,175,Jeffrey Penman,M,45.0,Ellsworth,WI,122 / 152,99 / 116,23 / 25,1:59:14,2020,1/26/2014,25000.0,freestyle
+22,136,Jim Kuzzy,M,60.0,Minneapolis,MN,123 / 152,100 / 116,7 / 9,1:59:16,2020,1/26/2014,25000.0,freestyle
+23,92,Anna Giesting,F,14.0,Wayzata,MN,124 / 152,24 / 36,1 / 2,2:00:32,2020,1/26/2014,25000.0,freestyle
+24,35,Carie Alexander,F,51.0,Minneapolis,MN,125 / 152,25 / 36,5 / 7,2:01:03,2020,1/26/2014,25000.0,freestyle
+25,103,John Hedberg,M,15.0,Minnetonka,MN,126 / 152,101 / 116,4 / 6,2:01:29,2020,1/26/2014,25000.0,freestyle
+26,152,Sam Maret,M,14.0,Minneapolis,MN,127 / 152,102 / 116,5 / 6,2:01:56,2020,1/26/2014,25000.0,freestyle
+27,176,Billy Perkiss,M,51.0,Minneapolis,MN,128 / 152,103 / 116,25 / 32,2:01:57,2020,1/26/2014,25000.0,freestyle
+28,190,John Roeller,M,46.0,Seattle,WA,129 / 152,104 / 116,24 / 25,2:03:08,2020,1/26/2014,25000.0,freestyle
+29,125,Karen Katz,F,26.0,Saint Paul,MN,130 / 152,26 / 36,10 / 13,2:03:37,2020,1/26/2014,25000.0,freestyle
+30,242,Art Rutscher,M,53.0,Somerset,WI,131 / 152,105 / 116,26 / 32,2:03:40,2020,1/26/2014,25000.0,freestyle
+31,285,Anna De Mers,F,29.0,Shell Lake,WI,132 / 152,27 / 36,11 / 13,2:05:30,2020,1/26/2014,25000.0,freestyle
+32,72,Michael Craemer,M,50.0,Minnetonka,MN,133 / 152,106 / 116,27 / 32,2:06:18,2020,1/26/2014,25000.0,freestyle
+33,123,Megan Kack,F,26.0,Minneapolis,MN,134 / 152,28 / 36,12 / 13,2:06:39,2020,1/26/2014,25000.0,freestyle
+34,117,Mark Johnson,M,55.0,Saint Paul,MN,135 / 152,107 / 116,28 / 32,2:08:05,2020,1/26/2014,25000.0,freestyle
+35,128,Mike Keyes,M,44.0,Minneapolis,MN,136 / 152,108 / 116,25 / 25,2:08:21,2020,1/26/2014,25000.0,freestyle
+36,65,Danita Carlson,F,47.0,Minneapolis,MN,137 / 152,29 / 36,7 / 8,2:08:42,2020,1/26/2014,25000.0,freestyle
+37,143,Christina Lundgren,F,20.0,St. Paul,MN,138 / 152,30 / 36,13 / 13,2:09:11,2020,1/26/2014,25000.0,freestyle
+38,216,Don Voss,M,58.0,Eden Prairie,MN,139 / 152,109 / 116,29 / 32,2:09:39,2020,1/26/2014,25000.0,freestyle
+39,245,Dan Kimmel,M,62.0,Burnsville,MN,140 / 152,110 / 116,8 / 9,2:11:13,2020,1/26/2014,25000.0,freestyle
+40,140,Charles Larson,M,58.0,Minnetonka,MN,141 / 152,111 / 116,30 / 32,2:11:21,2020,1/26/2014,25000.0,freestyle
+41,168,Gina Oesterreich,F,51.0,Stillwater,MN,142 / 152,31 / 36,6 / 7,2:15:39,2020,1/26/2014,25000.0,freestyle
+42,202,Scott Sponheim,M,50.0,Minneapolis,MN,143 / 152,112 / 116,31 / 32,2:19:20,2020,1/26/2014,25000.0,freestyle
+43,148,Andi Mackin,F,16.0,Minneapolis,MN,144 / 152,32 / 36,1 / 2,2:19:36,2020,1/26/2014,25000.0,freestyle
+44,138,Saul Lacoursiere,M,31.0,Fridley,PL,145 / 152,113 / 116,23 / 23,2:22:10,2020,1/26/2014,25000.0,freestyle
+45,86,Linda Evert,F,45.0,Circle Pines,MN,146 / 152,33 / 36,8 / 8,2:24:48,2020,1/26/2014,25000.0,freestyle
+46,77,Susan Diem,F,50.0,Minneapolis,MN,147 / 152,34 / 36,7 / 7,2:28:14,2020,1/26/2014,25000.0,freestyle
+47,58,Tova Breen,F,14.0,Minneapolis,MN,148 / 152,35 / 36,2 / 2,2:44:07,2020,1/26/2014,25000.0,freestyle
+48,133,Rebecca Krasky,F,17.0,Minneapolis,MN,149 / 152,36 / 36,2 / 2,2:44:12,2020,1/26/2014,25000.0,freestyle
+49,43,Jeff Bangen,M,53.0,Plymouth,MN,150 / 152,114 / 116,32 / 32,2:50:28,2020,1/26/2014,25000.0,freestyle
+0,181,David Piper,M,60.0,Minneapolis,MN,151 / 152,115 / 116,9 / 9,3:11:00,2020,1/26/2014,25000.0,freestyle
+1,177,Kirby Peterson,M,14.0,Minneapolis,MN,152 / 152,116 / 116,6 / 6,3:33:34,2020,1/26/2014,25000.0,freestyle
+0,95,Tyler Gilbert,M,18.0,Arden Hills,MN,1 / 71,1 / 59,1 / 5,1:26:48,2022,1/26/2014,25000.0,classic
+1,49,Eugene Beletskiy,M,28.0,Minneapolis,MN,2 / 71,2 / 59,1 / 13,1:30:54,2022,1/26/2014,25000.0,classic
+2,240,Craig Stolen,M,44.0,New Brighton,MN,3 / 71,3 / 59,1 / 12,1:32:04,2022,1/26/2014,25000.0,classic
+3,102,Chris Harvey,M,27.0,Bloomington,MN,4 / 71,4 / 59,2 / 13,1:32:15,2022,1/26/2014,25000.0,classic
+4,139,Rody Lageson,M,28.0,St. Paul,MN,5 / 71,5 / 59,3 / 13,1:32:59,2022,1/26/2014,25000.0,classic
+5,208,Paavo Taipale,M,28.0,Lauderdale,MN,6 / 71,6 / 59,4 / 13,1:34:00,2022,1/26/2014,25000.0,classic
+6,199,Logan Smestad,M,25.0,Minneapolis,MN,7 / 71,7 / 59,5 / 13,1:34:10,2022,1/26/2014,25000.0,classic
+7,59,Kevin Brochman,M,55.0,Maplewood,MN,8 / 71,8 / 59,1 / 14,1:34:49,2022,1/26/2014,25000.0,classic
+8,31,Nicholas Acton,M,19.0,Eagan,MN,9 / 71,9 / 59,2 / 5,1:34:50,2022,1/26/2014,25000.0,classic
+9,93,Jonah Gilbert,M,20.0,Arden Hills,MN,10 / 71,10 / 59,6 / 13,1:35:42,2022,1/26/2014,25000.0,classic
+10,144,Anthony Lushanko,M,38.0,Forest Lake,MN,11 / 71,11 / 59,1 / 4,1:35:47,2022,1/26/2014,25000.0,classic
+11,68,David Christopherson,M,63.0,St Anthony,MN,12 / 71,12 / 59,1 / 8,1:35:50,2022,1/26/2014,25000.0,classic
+12,241,Hans Harlane,M,25.0,Saint Paul,MN,13 / 71,13 / 59,7 / 13,1:37:08,2022,1/26/2014,25000.0,classic
+13,232,Bjorn Adelsman,M,19.0,New Brighton,MN,14 / 71,14 / 59,3 / 5,1:37:35,2022,1/26/2014,25000.0,classic
+14,151,Joe Manns,M,49.0,Maplewood,MN,15 / 71,15 / 59,2 / 12,1:37:36,2022,1/26/2014,25000.0,classic
+15,33,Mark Ahlers,M,48.0,Roseville,MN,16 / 71,16 / 59,3 / 12,1:37:41,2022,1/26/2014,25000.0,classic
+16,250,Bonnie Weiskopf Albrech,F,45.0,Stillwater,MN,17 / 71,1 / 12,1 / 5,1:37:42,2022,1/26/2014,25000.0,classic
+17,41,Elias Anoszko,M,26.0,Saint Paul,MN,18 / 71,17 / 59,8 / 13,1:37:54,2022,1/26/2014,25000.0,classic
+18,106,Karl Holub,M,20.0,New Brighton,MN,19 / 71,18 / 59,9 / 13,1:39:07,2022,1/26/2014,25000.0,classic
+19,243,Phil Guillery,M,53.0,Minneapolis,MN,20 / 71,19 / 59,2 / 14,1:40:22,2022,1/26/2014,25000.0,classic
+20,222,Brian Wicklund,M,48.0,Marine On St. Croi,MN,21 / 71,20 / 59,4 / 12,1:40:40,2022,1/26/2014,25000.0,classic
+21,52,Jeff Berg,M,44.0,Mpls,MN,22 / 71,21 / 59,5 / 12,1:41:02,2022,1/26/2014,25000.0,classic
+22,75,Spencer Davis,M,21.0,Chaska,MN,23 / 71,22 / 59,10 / 13,1:41:09,2022,1/26/2014,25000.0,classic
+23,262,Andy Powell,M,44.0,Marine On Saint Cr,MN,24 / 71,23 / 59,6 / 12,1:42:12,2022,1/26/2014,25000.0,classic
+24,120,Wade Johnson,M,50.0,Minneapolis,MN,25 / 71,24 / 59,3 / 14,1:42:36,2022,1/26/2014,25000.0,classic
+25,186,Brodie Rau,M,37.0,Brooklyn Park,MN,26 / 71,25 / 59,2 / 4,1:43:01,2022,1/26/2014,25000.0,classic
+26,101,Kris Hansen,F,44.0,Afton,MN,27 / 71,2 / 12,2 / 5,1:43:11,2022,1/26/2014,25000.0,classic
+27,163,Pete Moran,M,44.0,Minneapolis,MN,28 / 71,26 / 59,7 / 12,1:43:15,2022,1/26/2014,25000.0,classic
+28,230,Sara Zimmermann-White,F,44.0,Roseville,MN,29 / 71,3 / 12,3 / 5,1:46:20,2022,1/26/2014,25000.0,classic
+29,221,Robin Welling,F,21.0,Minneapolis,MN,30 / 71,4 / 12,1 / 4,1:46:22,2022,1/26/2014,25000.0,classic
+30,63,Bill Callas,M,54.0,Stillwater,MN,31 / 71,27 / 59,4 / 14,1:46:53,2022,1/26/2014,25000.0,classic
+31,198,Allan Shuros,M,39.0,St. Paul,MN,32 / 71,28 / 59,3 / 4,1:47:19,2022,1/26/2014,25000.0,classic
+32,56,Joel Braden,M,23.0,Stillwater,MN,33 / 71,29 / 59,11 / 13,1:48:00,2022,1/26/2014,25000.0,classic
+33,129,Greg Klave,M,59.0,Minneapolis,MN,34 / 71,30 / 59,5 / 14,1:48:11,2022,1/26/2014,25000.0,classic
+34,442,Kevin Ivens,M,53.0,Champlin,MN,35 / 71,31 / 59,6 / 14,1:48:38,2022,1/26/2014,25000.0,classic
+35,228,Scott Wurdinger,M,56.0,Mankato,MN,36 / 71,32 / 59,7 / 14,1:49:25,2022,1/26/2014,25000.0,classic
+36,239,Peter Samuels,M,26.0,Minneapolis,MN,37 / 71,33 / 59,12 / 13,1:49:50,2022,1/26/2014,25000.0,classic
+37,247,Jason Dalebroux,M,35.0,Minneapolis,MN,38 / 71,34 / 59,4 / 4,1:49:51,2022,1/26/2014,25000.0,classic
+38,110,Thomas Hutchinson,M,50.0,Minneapolis,MN,39 / 71,35 / 59,8 / 14,1:50:02,2022,1/26/2014,25000.0,classic
+39,146,Ted Lystig,M,42.0,Shoreview,MN,40 / 71,36 / 59,8 / 12,1:52:23,2022,1/26/2014,25000.0,classic
+40,238,Hannah Specht,F,27.0,Minneapolis,MN,41 / 71,5 / 12,2 / 4,1:52:57,2022,1/26/2014,25000.0,classic
+41,66,Drew Carlson,M,22.0,Vadnais Heighst,MN,42 / 71,37 / 59,13 / 13,1:52:58,2022,1/26/2014,25000.0,classic
+42,257,Erick Tornianen,M,45.0,Osseo,MN,43 / 71,38 / 59,9 / 12,1:53:59,2022,1/26/2014,25000.0,classic
+43,195,Kieran Schwartz,M,18.0,Minneapolis,MN,44 / 71,39 / 59,4 / 5,1:54:07,2022,1/26/2014,25000.0,classic
+44,248,Robert Golin,M,46.0,Mayer,MN,45 / 71,40 / 59,10 / 12,1:54:32,2022,1/26/2014,25000.0,classic
+45,227,Newell Wunrow,M,19.0,St. Paul,MN,46 / 71,41 / 59,5 / 5,1:56:49,2022,1/26/2014,25000.0,classic
+46,185,Amy Rau,F,32.0,Brooklyn Park,MN,47 / 71,6 / 12,1 / 1,1:58:24,2022,1/26/2014,25000.0,classic
+47,74,Emily Davis,F,22.0,Minneapolis,MN,48 / 71,7 / 12,3 / 4,2:01:21,2022,1/26/2014,25000.0,classic
+48,142,Nicole Lepinski,F,26.0,Bloomington,MN,49 / 71,8 / 12,4 / 4,2:01:33,2022,1/26/2014,25000.0,classic
+49,78,Peter Dorsen,M,69.0,Eden Prairie,MN,50 / 71,42 / 59,2 / 8,2:02:09,2022,1/26/2014,25000.0,classic
+0,201,Neil Soltis,M,60.0,Hudson,WI,51 / 71,43 / 59,3 / 8,2:02:10,2022,1/26/2014,25000.0,classic
+1,194,Sandy Schreyer,F,48.0,Shoreview,MN,52 / 71,9 / 12,4 / 5,2:02:48,2022,1/26/2014,25000.0,classic
+2,87,Bill Farquhar,M,54.0,Plymouth,MN,53 / 71,44 / 59,9 / 14,2:03:55,2022,1/26/2014,25000.0,classic
+3,212,Mark Trumper,M,52.0,Stillwater,MN,54 / 71,45 / 59,10 / 14,2:04:56,2022,1/26/2014,25000.0,classic
+4,62,David Byrne,M,56.0,Saint Paul,MN,55 / 71,46 / 59,11 / 14,2:05:52,2022,1/26/2014,25000.0,classic
+5,226,Bob Woodruff,M,70.0,Mounds View,MN,56 / 71,47 / 59,1 / 1,2:06:10,2022,1/26/2014,25000.0,classic
+6,178,Mark Peugh,M,47.0,Maple Grove,MN,57 / 71,48 / 59,11 / 12,2:06:14,2022,1/26/2014,25000.0,classic
+7,189,Jim Risendal,M,51.0,Minneapolis,MN,58 / 71,49 / 59,12 / 14,2:07:07,2022,1/26/2014,25000.0,classic
+8,51,Tom Bengel,M,63.0,Stpaul,MN,59 / 71,50 / 59,4 / 8,2:13:51,2022,1/26/2014,25000.0,classic
+9,149,Andrew Magill,M,41.0,Minneapolis,MN,60 / 71,51 / 59,12 / 12,2:16:35,2022,1/26/2014,25000.0,classic
+10,255,Randall Farrow,M,53.0,Mankato,MN,61 / 71,52 / 59,13 / 14,2:21:09,2022,1/26/2014,25000.0,classic
+11,205,Fred Storti,M,66.0,Stillwaer,MN,62 / 71,53 / 59,5 / 8,2:21:24,2022,1/26/2014,25000.0,classic
+12,167,Erik Nelson,M,16.0,Golden Valley,MN,63 / 71,54 / 59,1 / 1,2:28:22,2022,1/26/2014,25000.0,classic
+13,109,Ryan Hunwardsen,M,15.0,Eden Prairie,MN,64 / 71,55 / 59,1 / 1,2:30:21,2022,1/26/2014,25000.0,classic
+14,47,Tim Behrends,M,62.0,Hastings,MN,65 / 71,56 / 59,6 / 8,2:33:05,2022,1/26/2014,25000.0,classic
+15,183,Lisa Pugh,F,43.0,Minneapolis,MN,66 / 71,10 / 12,5 / 5,2:39:20,2022,1/26/2014,25000.0,classic
+16,96,David Gorman,M,60.0,Lindstrom,MN,67 / 71,57 / 59,7 / 8,2:39:32,2022,1/26/2014,25000.0,classic
+17,254,Ed Usset,M,57.0,West Saint Paul,MN,68 / 71,58 / 59,14 / 14,2:48:26,2022,1/26/2014,25000.0,classic
+18,225,Barb Woodruff,F,60.0,Mounds View,MN,69 / 71,11 / 12,1 / 1,2:52:31,2022,1/26/2014,25000.0,classic
+19,159,Cheryl Mills,F,57.0,Maple Grove,MN,70 / 71,12 / 12,1 / 1,2:53:49,2022,1/26/2014,25000.0,classic
+20,164,David Morris,M,66.0,Marine On Saint Cr,MN,71 / 71,59 / 59,8 / 8,3:15:03,2022,1/26/2014,25000.0,classic
+0,435,Jes Pedersen,M,16.0,Luck,WI,1 / 54,1 / 29,1 / 4,38:28,1287,1/27/2013,12500.0,freestyle
+1,397,Micheal Noer,M,44.0,Stillwater,MN,2 / 54,2 / 29,1 / 6,39:46,1287,1/27/2013,12500.0,freestyle
+2,468,Anna Nelson,F,18.0,Saint Paul,MN,3 / 54,1 / 25,1 / 1,40:25,1287,1/27/2013,12500.0,freestyle
+3,120,Scott Hervey,M,50.0,Decorah,IA,4 / 54,3 / 29,1 / 7,40:31,1287,1/27/2013,12500.0,freestyle
+4,211,David Treichel,M,41.0,Lino Lakes,MN,5 / 54,4 / 29,2 / 6,42:44,1287,1/27/2013,12500.0,freestyle
+5,413,Todd Johnson,M,47.0,Saint Paul,MN,6 / 54,5 / 29,3 / 6,43:05,1287,1/27/2013,12500.0,freestyle
+6,178,Greg Pratt,M,60.0,Minneapolis,MN,7 / 54,6 / 29,1 / 4,43:13,1287,1/27/2013,12500.0,freestyle
+7,73,Kerry Bogenreif,F,52.0,Lino Lakes,MN,8 / 54,2 / 25,1 / 4,43:18,1287,1/27/2013,12500.0,freestyle
+8,126,Quentin Ikuta,M,16.0,Marine On Saint Cr,MN,9 / 54,7 / 29,2 / 4,43:21,1287,1/27/2013,12500.0,freestyle
+9,398,Nolan Noer,M,14.0,Stillwater,MN,10 / 54,8 / 29,1 / 4,43:39,1287,1/27/2013,12500.0,freestyle
+10,461,Mike Ray,M,60.0,River Falls,WI,11 / 54,9 / 29,2 / 4,44:31,1287,1/27/2013,12500.0,freestyle
+11,405,Kate Schaaf,F,15.0,Scandia,MN,12 / 54,3 / 25,1 / 2,44:40,1287,1/27/2013,12500.0,freestyle
+12,213,Matthew Trumper,M,16.0,Stillwater,MN,13 / 54,10 / 29,3 / 4,45:04,1287,1/27/2013,12500.0,freestyle
+13,444,Linder Wendt,M,15.0,Marine On Saint Cr,MN,14 / 54,11 / 29,2 / 4,45:04,1287,1/27/2013,12500.0,freestyle
+14,367,Heather Cichanowski,F,39.0,Saint Paul,MN,15 / 54,4 / 25,1 / 4,46:55,1287,1/27/2013,12500.0,freestyle
+15,487,Brock Lundberg,M,37.0,Osseo,WI,16 / 54,12 / 29,1 / 2,47:32,1287,1/27/2013,12500.0,freestyle
+16,489,Dana Colestock,F,33.0,Saint Paul,MN,17 / 54,5 / 25,2 / 4,47:58,1287,1/27/2013,12500.0,freestyle
+17,481,Jim Rokke,M,17.0,Minneapolis,MN,18 / 54,13 / 29,4 / 4,48:53,1287,1/27/2013,12500.0,freestyle
+18,402,Racheal Jensen,F,16.0,,,19 / 54,6 / 25,1 / 5,49:10,1287,1/27/2013,12500.0,freestyle
+19,457,Pedro Pesta,M,48.0,Northfield,MN,20 / 54,14 / 29,4 / 6,49:11,1287,1/27/2013,12500.0,freestyle
+20,158,Stephanie Michals,F,25.0,Minneapolis,MN,21 / 54,7 / 25,1 / 2,49:14,1287,1/27/2013,12500.0,freestyle
+21,156,David Meyer,M,43.0,Cedar Falls,IA,22 / 54,15 / 29,5 / 6,49:17,1287,1/27/2013,12500.0,freestyle
+22,464,Brian Olson,M,13.0,Lakeland,MN,23 / 54,16 / 29,3 / 4,49:26,1287,1/27/2013,12500.0,freestyle
+23,497,Tim Morse,M,35.0,St. Paul,MN,24 / 54,17 / 29,2 / 2,50:49,1287,1/27/2013,12500.0,freestyle
+24,498,Sara Morse,F,33.0,Saint Paul,MN,25 / 54,8 / 25,3 / 4,50:52,1287,1/27/2013,12500.0,freestyle
+25,101,Mark Eilers,M,50.0,Minneapolis,MN,26 / 54,18 / 29,2 / 7,51:24,1287,1/27/2013,12500.0,freestyle
+26,381,Kayo Aslagson,M,64.0,Starbuck,MN,27 / 54,19 / 29,3 / 4,52:12,1287,1/27/2013,12500.0,freestyle
+27,54,Dan Albright,M,45.0,St. Louis Park,MN,28 / 54,20 / 29,6 / 6,52:25,1287,1/27/2013,12500.0,freestyle
+28,153,Mark Mason,M,56.0,Maplewood,MN,29 / 54,21 / 29,3 / 7,52:34,1287,1/27/2013,12500.0,freestyle
+29,184,Anna Roberts,F,23.0,Fergus Falls,MN,30 / 54,9 / 25,2 / 2,53:02,1287,1/27/2013,12500.0,freestyle
+30,369,Ceclia Peterson,F,15.0,Marine On Saint Cr,MN,31 / 54,10 / 25,2 / 2,55:28,1287,1/27/2013,12500.0,freestyle
+31,370,Sophie Wicklund,F,16.0,Marine On Saint Cr,MN,32 / 54,11 / 25,2 / 5,55:28,1287,1/27/2013,12500.0,freestyle
+32,202,Matt Smith,M,54.0,Stillwater,MN,33 / 54,22 / 29,4 / 7,55:58,1287,1/27/2013,12500.0,freestyle
+33,412,Alice Johnson,F,48.0,Saint Paul,MN,34 / 54,12 / 25,1 / 5,56:12,1287,1/27/2013,12500.0,freestyle
+34,473,Abbey Johnson,F,16.0,Marine On Saint Cr,MN,35 / 54,13 / 25,3 / 5,57:08,1287,1/27/2013,12500.0,freestyle
+35,82,Linda Christianson,F,60.0,Lindstrom,MN,36 / 54,14 / 25,1 / 2,57:48,1287,1/27/2013,12500.0,freestyle
+36,494,Jennifer Ringold,F,39.0,Lake Elmo,MN,37 / 54,15 / 25,4 / 4,58:05,1287,1/27/2013,12500.0,freestyle
+37,79,Mitch Carlson,M,14.0,Woodbury,MN,38 / 54,23 / 29,4 / 4,58:55,1287,1/27/2013,12500.0,freestyle
+38,168,Gina Oesterreich,F,50.0,Marine On Saint Cr,MN,39 / 54,16 / 25,2 / 4,58:58,1287,1/27/2013,12500.0,freestyle
+39,480,Ann Harris,F,50.0,Forest Lake,MN,40 / 54,17 / 25,3 / 4,1:00:33,1287,1/27/2013,12500.0,freestyle
+40,490,Kathryn Ryan,F,59.0,Arden Hills,MN,41 / 54,18 / 25,4 / 4,1:01:15,1287,1/27/2013,12500.0,freestyle
+41,474,Sierra Lammi,F,16.0,Marine On Saint Cr,MN,42 / 54,19 / 25,4 / 5,1:02:53,1287,1/27/2013,12500.0,freestyle
+42,216,Rick Villalta,M,51.0,Mpls,MN,43 / 54,24 / 29,5 / 7,1:02:57,1287,1/27/2013,12500.0,freestyle
+43,80,Kathy Carlson,F,42.0,Woodbury,MN,44 / 54,20 / 25,2 / 5,1:03:37,1287,1/27/2013,12500.0,freestyle
+44,482,Lisa Pugh,F,42.0,Minneapolis,MN,45 / 54,21 / 25,3 / 5,1:05:22,1287,1/27/2013,12500.0,freestyle
+45,180,Mark Relson,M,22.0,Ann Arbor,MI,46 / 54,25 / 29,1 / 1,1:06:00,1287,1/27/2013,12500.0,freestyle
+46,471,Melissa MacKimm,F,44.0,Minneapolis,MN,47 / 54,22 / 25,4 / 5,1:15:06,1287,1/27/2013,12500.0,freestyle
+47,203,Kristina Smitten,F,40.0,Marine On St. Croi,MN,48 / 54,23 / 25,5 / 5,1:15:34,1287,1/27/2013,12500.0,freestyle
+48,491,Emma Miller,F,17.0,Edina,MN,49 / 54,24 / 25,5 / 5,1:15:57,1287,1/27/2013,12500.0,freestyle
+49,418,Mik McNaughton,M,51.0,Woodbury,MN,50 / 54,26 / 29,6 / 7,1:17:35,1287,1/27/2013,12500.0,freestyle
+0,59,Alan Anderson,M,54.0,Wyoming,MN,51 / 54,27 / 29,7 / 7,1:21:24,1287,1/27/2013,12500.0,freestyle
+1,143,Nancy Lyner,F,66.0,Stillwater,MN,52 / 54,25 / 25,2 / 2,1:21:27,1287,1/27/2013,12500.0,freestyle
+2,219,Steve Wendt,M,60.0,Osceola,WI,53 / 54,28 / 29,4 / 4,1:26:48,1287,1/27/2013,12500.0,freestyle
+3,400,Wally Hed,M,80.0,Cambridge,MN,54 / 54,29 / 29,1 / 1,1:30:59,1287,1/27/2013,12500.0,freestyle
+0,379,Brad Moening,M,44.0,Saint Paul,MN,1 / 26,1 / 21,1 / 4,42:32,1289,1/27/2013,12500.0,classic
+1,85,Andrew Comfort,M,46.0,Minneapolis,MN,2 / 26,2 / 21,2 / 4,44:22,1289,1/27/2013,12500.0,classic
+2,419,Davis Gray,M,16.0,Stillwater,MN,3 / 26,3 / 21,1 / 1,45:26,1289,1/27/2013,12500.0,classic
+3,174,Conrad Phelan,M,14.0,St Louis Park,MN,4 / 26,4 / 21,1 / 6,45:28,1289,1/27/2013,12500.0,classic
+4,424,Benendict Chong,M,15.0,Saint Louis Park,MN,5 / 26,5 / 21,2 / 6,48:08,1289,1/27/2013,12500.0,classic
+5,193,Jacob Scheckman,M,28.0,Minneapolis,MN,6 / 26,6 / 21,1 / 1,48:56,1289,1/27/2013,12500.0,classic
+6,100,Jackson Eilers,M,15.0,Minneapolis,MN,7 / 26,7 / 21,3 / 6,48:58,1289,1/27/2013,12500.0,classic
+7,55,Jens Albright,M,14.0,St. Louis Park,MN,8 / 26,8 / 21,4 / 6,49:36,1289,1/27/2013,12500.0,classic
+8,96,Peter Dorsen,M,68.0,Eden Priarie,MN,9 / 26,9 / 21,1 / 5,51:44,1289,1/27/2013,12500.0,classic
+9,385,Jack Lange,M,12.0,Stillwater,MN,10 / 26,10 / 21,5 / 6,53:09,1289,1/27/2013,12500.0,classic
+10,173,Rachel Peterson,F,15.0,Hastings,MN,11 / 26,1 / 5,1 / 1,54:14,1289,1/27/2013,12500.0,classic
+11,172,Paul Peterson,M,49.0,Hastings,MN,12 / 26,11 / 21,3 / 4,54:15,1289,1/27/2013,12500.0,classic
+12,422,John Bischoff,M,67.0,Lakeland,MN,13 / 26,12 / 21,2 / 5,1:04:44,1289,1/27/2013,12500.0,classic
+13,376,Charles Strike,M,61.0,Marine On Saint Cr,MN,14 / 26,13 / 21,3 / 5,1:05:09,1289,1/27/2013,12500.0,classic
+14,75,Stephen Bullard,M,55.0,Minneapolis,MN,15 / 26,14 / 21,1 / 3,1:05:56,1289,1/27/2013,12500.0,classic
+15,472,Cate McKinney,F,47.0,Saint Paul,MN,16 / 26,2 / 5,1 / 2,1:07:02,1289,1/27/2013,12500.0,classic
+16,448,Jerry Engen,M,71.0,Stillwater,MN,17 / 26,15 / 21,1 / 1,1:09:42,1289,1/27/2013,12500.0,classic
+17,384,James Hainlen,M,64.0,Stillwater,MN,18 / 26,16 / 21,4 / 5,1:10:14,1289,1/27/2013,12500.0,classic
+18,183,Beth Robelia,F,42.0,St. Paul,MN,19 / 26,3 / 5,2 / 2,1:14:06,1289,1/27/2013,12500.0,classic
+19,51,Tanya Adelman,F,33.0,Saint Paul,MN,20 / 26,4 / 5,1 / 1,1:17:27,1289,1/27/2013,12500.0,classic
+20,102,Jason Elhardt,M,42.0,Saint Paul,MN,21 / 26,17 / 21,4 / 4,1:17:30,1289,1/27/2013,12500.0,classic
+21,483,Ben Wicklund,M,12.0,Marine On Saint Cr,MN,22 / 26,18 / 21,6 / 6,1:20:16,1289,1/27/2013,12500.0,classic
+22,485,Courtland Nelson,M,62.0,Forest Lake,MN,23 / 26,19 / 21,5 / 5,1:22:47,1289,1/27/2013,12500.0,classic
+23,225,Jasmine Wiley,F,25.0,Clintonville,WI,24 / 26,5 / 5,1 / 1,1:30:42,1289,1/27/2013,12500.0,classic
+24,454,Larry Lundberg,M,57.0,Eagan,MN,25 / 26,20 / 21,2 / 3,1:36:38,1289,1/27/2013,12500.0,classic
+25,89,Blaine Cross,M,50.0,Minneapolis,MN,26 / 26,21 / 21,3 / 3,1:37:58,1289,1/27/2013,12500.0,classic
+0,185,Wynn Roberts,M,24.0,Fergus Falls,MN,1 / 158,1 / 113,1 / 13,1:05:37,1291,1/27/2013,25000.0,freestyle
+1,152,Lucas Mason,M,18.0,Maplewood,MN,2 / 158,2 / 113,1 / 2,1:06:58,1291,1/27/2013,25000.0,freestyle
+2,449,Nathan Porath,M,30.0,Northfield,MN,3 / 158,3 / 113,1 / 21,1:07:10,1291,1/27/2013,25000.0,freestyle
+3,119,Gabe Hanson,M,20.0,Stillwater,MN,4 / 158,4 / 113,2 / 13,1:08:35,1291,1/27/2013,25000.0,freestyle
+4,71,Evgeny Beletskiy,M,27.0,Minneapolis,MN,5 / 158,5 / 113,3 / 13,1:08:50,1291,1/27/2013,25000.0,freestyle
+5,139,Fred Kueffer,M,33.0,Falcon Heights,MN,6 / 158,6 / 113,2 / 21,1:09:01,1291,1/27/2013,25000.0,freestyle
+6,208,Alec Steward,M,31.0,Roseville,MN,7 / 158,7 / 113,3 / 21,1:09:40,1291,1/27/2013,25000.0,freestyle
+7,488,Bob Baldwin,M,27.0,Sauk Rapids,MN,8 / 158,8 / 113,4 / 13,1:11:07,1291,1/27/2013,25000.0,freestyle
+8,187,Phil Rogers,M,49.0,Esko,MN,9 / 158,9 / 113,1 / 34,1:11:08,1291,1/27/2013,25000.0,freestyle
+9,423,Knute Sands,M,28.0,Saint Louis Park,MN,10 / 158,10 / 113,5 / 13,1:11:10,1291,1/27/2013,25000.0,freestyle
+10,396,Craig Stolen,M,43.0,New Brighton,MN,11 / 158,11 / 113,2 / 34,1:11:20,1291,1/27/2013,25000.0,freestyle
+11,221,Jay Wenner,M,51.0,Saint Paul,MN,12 / 158,12 / 113,1 / 21,1:11:22,1291,1/27/2013,25000.0,freestyle
+12,77,Craig Cardinal,M,30.0,Northfield,MN,13 / 158,13 / 113,4 / 21,1:11:42,1291,1/27/2013,25000.0,freestyle
+13,111,Jonah Gilbert,M,19.0,Arden Hills,MN,14 / 158,14 / 113,2 / 2,1:13:42,1291,1/27/2013,25000.0,freestyle
+14,138,Danny Kueffer,M,29.0,St. Paul,MN,15 / 158,15 / 113,6 / 13,1:14:22,1291,1/27/2013,25000.0,freestyle
+15,192,Andrew Schakel,M,38.0,Minneapolis,MN,16 / 158,16 / 113,5 / 21,1:14:22,1291,1/27/2013,25000.0,freestyle
+16,199,Brad Skillicorn,M,43.0,Winona,MN,17 / 158,17 / 113,3 / 34,1:14:33,1291,1/27/2013,25000.0,freestyle
+17,157,Mark Michals,M,28.0,Minneapolis,MN,18 / 158,18 / 113,7 / 13,1:15:07,1291,1/27/2013,25000.0,freestyle
+18,399,Matt Nistler,M,24.0,Bemidji,MN,19 / 158,19 / 113,8 / 13,1:15:15,1291,1/27/2013,25000.0,freestyle
+19,99,Robert Edman,M,32.0,Saint Paul,MN,20 / 158,20 / 113,6 / 21,1:16:03,1291,1/27/2013,25000.0,freestyle
+20,61,Charles Anderson,M,40.0,Blaine,MN,21 / 158,21 / 113,4 / 34,1:16:10,1291,1/27/2013,25000.0,freestyle
+21,470,Hilary Patzer,F,33.0,Saint Paul,MN,22 / 158,1 / 45,1 / 5,1:16:24,1291,1/27/2013,25000.0,freestyle
+22,452,Marybeth Tuttle,F,49.0,White Bear Lake,MN,23 / 158,2 / 45,1 / 10,1:16:26,1291,1/27/2013,25000.0,freestyle
+23,432,Jason Magozi,M,45.0,Saint Paul,MN,24 / 158,22 / 113,5 / 34,1:16:32,1291,1/27/2013,25000.0,freestyle
+24,124,John Hopkins,M,46.0,Savage,MN,25 / 158,23 / 113,6 / 34,1:16:38,1291,1/27/2013,25000.0,freestyle
+25,169,Brendon O'Flanagan,M,35.0,St. Paul,MN,26 / 158,24 / 113,7 / 21,1:16:47,1291,1/27/2013,25000.0,freestyle
+26,226,Ryan Wilson,M,30.0,Minneapolis,MN,27 / 158,25 / 113,8 / 21,1:16:50,1291,1/27/2013,25000.0,freestyle
+27,118,Darren Halzle,M,31.0,Rogers,MN,28 / 158,26 / 113,9 / 21,1:16:54,1291,1/27/2013,25000.0,freestyle
+28,91,Dennis Curran,M,30.0,Plymouth,MN,29 / 158,27 / 113,10 / 21,1:17:13,1291,1/27/2013,25000.0,freestyle
+29,200,Kelly Skillicorn,F,49.0,Winona,MN,30 / 158,3 / 45,2 / 10,1:17:18,1291,1/27/2013,25000.0,freestyle
+30,223,Todd White,M,43.0,Roseville,MN,31 / 158,28 / 113,7 / 34,1:17:24,1291,1/27/2013,25000.0,freestyle
+31,207,Sevve Stember,M,28.0,Minneapolis,MN,32 / 158,29 / 113,9 / 13,1:17:54,1291,1/27/2013,25000.0,freestyle
+32,227,Johanna Winters,F,28.0,Minneapolis,MN,33 / 158,4 / 45,1 / 8,1:18:05,1291,1/27/2013,25000.0,freestyle
+33,149,Lindsey Marshall,F,23.0,Shoreview,MN,34 / 158,5 / 45,2 / 8,1:19:05,1291,1/27/2013,25000.0,freestyle
+34,408,Eleanor Magnuson,F,22.0,Champlin,MN,35 / 158,6 / 45,3 / 8,1:19:05,1291,1/27/2013,25000.0,freestyle
+35,176,Trent Ping,M,27.0,Minneapolis,MN,36 / 158,30 / 113,10 / 13,1:19:11,1291,1/27/2013,25000.0,freestyle
+36,224,Brian Wicklund,M,47.0,Marine On St. Croi,MN,37 / 158,31 / 113,8 / 34,1:19:41,1291,1/27/2013,25000.0,freestyle
+37,496,Doug Sams,M,54.0,Long Lake,MN,38 / 158,32 / 113,2 / 21,1:19:47,1291,1/27/2013,25000.0,freestyle
+38,475,Micheal McKinney,M,38.0,Saint Paul,MN,39 / 158,33 / 113,11 / 21,1:20:52,1291,1/27/2013,25000.0,freestyle
+39,146,Steven Mach,M,40.0,La Crosse,WI,40 / 158,34 / 113,9 / 34,1:21:17,1291,1/27/2013,25000.0,freestyle
+40,133,Wade Johnson,M,49.0,Minneapolis,MN,41 / 158,35 / 113,10 / 34,1:21:53,1291,1/27/2013,25000.0,freestyle
+41,495,Erik Tornianen,M,43.0,Osseo,MN,42 / 158,36 / 113,11 / 34,1:21:57,1291,1/27/2013,25000.0,freestyle
+42,103,Anne Ellefson,F,47.0,Park Rapids,MN,43 / 158,7 / 45,3 / 10,1:22:12,1291,1/27/2013,25000.0,freestyle
+43,479,Ben Mullin,M,33.0,Lindstrom,MN,44 / 158,37 / 113,12 / 21,1:22:32,1291,1/27/2013,25000.0,freestyle
+44,460,Dan Berntson,M,61.0,Edina,MN,45 / 158,38 / 113,1 / 9,1:22:40,1291,1/27/2013,25000.0,freestyle
+45,430,Jon Faust,M,46.0,Plymouth,MN,46 / 158,39 / 113,12 / 34,1:22:43,1291,1/27/2013,25000.0,freestyle
+46,392,Sebastian Corby,M,27.0,Minneapolis,MN,47 / 158,40 / 113,11 / 13,1:22:55,1291,1/27/2013,25000.0,freestyle
+47,129,Loren Jacot,M,53.0,Oakdale,MN,48 / 158,41 / 113,3 / 21,1:23:05,1291,1/27/2013,25000.0,freestyle
+48,104,Jack Ellefson,M,49.0,Park Rapids,MN,49 / 158,42 / 113,13 / 34,1:23:16,1291,1/27/2013,25000.0,freestyle
+49,446,Justin Rumley,M,37.0,Woodbury,MN,50 / 158,43 / 113,13 / 21,1:23:26,1291,1/27/2013,25000.0,freestyle
+0,121,Gregg Hietpas,M,42.0,Stillwater,MN,51 / 158,44 / 113,14 / 34,1:23:28,1291,1/27/2013,25000.0,freestyle
+1,450,Pat Jopp,M,52.0,Elk River,MN,52 / 158,45 / 113,4 / 21,1:24:08,1291,1/27/2013,25000.0,freestyle
+2,154,Peter Maves,M,29.0,Rochester,MN,53 / 158,46 / 113,12 / 13,1:24:13,1291,1/27/2013,25000.0,freestyle
+3,148,Robert Marks-Kerst,M,43.0,Minnepolis,MN,54 / 158,47 / 113,15 / 34,1:24:25,1291,1/27/2013,25000.0,freestyle
+4,206,Andrea Stember,F,27.0,Minneapolis,MN,55 / 158,8 / 45,4 / 8,1:24:29,1291,1/27/2013,25000.0,freestyle
+5,205,Kathryn Splan,F,36.0,St. Paul,MN,56 / 158,9 / 45,2 / 5,1:24:40,1291,1/27/2013,25000.0,freestyle
+6,476,David Benson,M,39.0,Lake Elmo,MN,57 / 158,48 / 113,14 / 21,1:24:50,1291,1/27/2013,25000.0,freestyle
+7,389,Frank Campbell,M,48.0,Lake Elmo,MN,58 / 158,49 / 113,16 / 34,1:24:56,1291,1/27/2013,25000.0,freestyle
+8,198,Allan Shuros,M,38.0,St. Paul,MN,59 / 158,50 / 113,15 / 21,1:25:06,1291,1/27/2013,25000.0,freestyle
+9,163,Grant Moos,M,57.0,St. Paul,MN,60 / 158,51 / 113,5 / 21,1:25:17,1291,1/27/2013,25000.0,freestyle
+10,130,Doug Johnson,M,56.0,Minneapolis,MN,61 / 158,52 / 113,6 / 21,1:25:27,1291,1/27/2013,25000.0,freestyle
+11,74,John Boller,M,61.0,Brooklyn Park,MN,62 / 158,53 / 113,2 / 9,1:25:54,1291,1/27/2013,25000.0,freestyle
+12,477,John Mundahl,M,61.0,Hayward,WI,63 / 158,54 / 113,3 / 9,1:27:10,1291,1/27/2013,25000.0,freestyle
+13,469,Allen Overturf,M,45.0,Maple Plain,MN,64 / 158,55 / 113,17 / 34,1:27:11,1291,1/27/2013,25000.0,freestyle
+14,456,Daniel Svedberg,M,17.0,Woodbury,MN,65 / 158,56 / 113,1 / 7,1:27:18,1291,1/27/2013,25000.0,freestyle
+15,228,Mark Wirt,M,52.0,Minneapolis,MN,66 / 158,57 / 113,7 / 21,1:27:35,1291,1/27/2013,25000.0,freestyle
+16,84,Christopher Coffey,M,31.0,Minneapolis,MN,67 / 158,58 / 113,16 / 21,1:27:36,1291,1/27/2013,25000.0,freestyle
+17,142,Mike Lyner,M,59.0,Stillwater,MN,68 / 158,59 / 113,8 / 21,1:28:19,1291,1/27/2013,25000.0,freestyle
+18,97,Paul Earl-Torniainen,M,43.0,St. Paul,MN,69 / 158,60 / 113,18 / 34,1:28:22,1291,1/27/2013,25000.0,freestyle
+19,125,Devon Hutton,F,29.0,Saint Paul,MN,70 / 158,10 / 45,5 / 8,1:28:44,1291,1/27/2013,25000.0,freestyle
+20,434,Paul Pedersen,M,50.0,Luck,WI,71 / 158,61 / 113,9 / 21,1:29:03,1291,1/27/2013,25000.0,freestyle
+21,135,Ron Kadera,M,53.0,Roseville,MN,72 / 158,62 / 113,10 / 21,1:29:12,1291,1/27/2013,25000.0,freestyle
+22,436,Mark Schneider,M,60.0,Saint Paul,MN,73 / 158,63 / 113,4 / 9,1:29:14,1291,1/27/2013,25000.0,freestyle
+23,197,Joel Sehloff,M,20.0,Malone,WI,74 / 158,64 / 113,13 / 13,1:29:14,1291,1/27/2013,25000.0,freestyle
+24,117,Andrew Hall,M,43.0,Minneapolis,MN,75 / 158,65 / 113,19 / 34,1:30:07,1291,1/27/2013,25000.0,freestyle
+25,462,Dallas Wynne,M,38.0,Dresser,WI,76 / 158,66 / 113,17 / 21,1:30:49,1291,1/27/2013,25000.0,freestyle
+26,63,Ray Aponte,M,51.0,Minneapolis,MN,77 / 158,67 / 113,11 / 21,1:30:54,1291,1/27/2013,25000.0,freestyle
+27,68,Steve Barone,M,41.0,Minneapolis,MN,78 / 158,68 / 113,20 / 34,1:30:55,1291,1/27/2013,25000.0,freestyle
+28,451,Jeff Penman,M,44.0,Ellsworth,WI,79 / 158,69 / 113,21 / 34,1:30:58,1291,1/27/2013,25000.0,freestyle
+29,62,Jeff Annesley,M,32.0,Minneapolis,MN,80 / 158,70 / 113,18 / 21,1:31:08,1291,1/27/2013,25000.0,freestyle
+30,196,Sue Schroeder,F,47.0,Minneapolis,MN,81 / 158,11 / 45,4 / 10,1:31:14,1291,1/27/2013,25000.0,freestyle
+31,453,Tonnis Terveldhuis,M,46.0,Saint Paul,MN,82 / 158,71 / 113,22 / 34,1:32:01,1291,1/27/2013,25000.0,freestyle
+32,70,Laura Bednarski,F,45.0,Minneapolis,MN,83 / 158,12 / 45,5 / 10,1:32:12,1291,1/27/2013,25000.0,freestyle
+33,388,Tom Prentice,M,53.0,Lake Elmo,MN,84 / 158,72 / 113,12 / 21,1:32:35,1291,1/27/2013,25000.0,freestyle
+34,72,Lori Belz,F,51.0,Inver Grove Height,MN,85 / 158,13 / 45,1 / 5,1:32:48,1291,1/27/2013,25000.0,freestyle
+35,155,David Melcher,M,56.0,Richfield,MN,86 / 158,73 / 113,13 / 21,1:33:02,1291,1/27/2013,25000.0,freestyle
+36,420,Nck Bobich,M,49.0,West Saint Paul,MN,87 / 158,74 / 113,23 / 34,1:33:33,1291,1/27/2013,25000.0,freestyle
+37,437,Wilson Cross,M,17.0,Minneapolis,MN,88 / 158,75 / 113,2 / 7,1:33:46,1291,1/27/2013,25000.0,freestyle
+38,145,Ryan M,M,16.0,Minneapolis,MN,89 / 158,76 / 113,3 / 7,1:34:28,1291,1/27/2013,25000.0,freestyle
+39,447,Frank Lederle,M,60.0,Edina,MN,90 / 158,77 / 113,5 / 9,1:34:40,1291,1/27/2013,25000.0,freestyle
+40,215,Matt Villalta,M,16.0,Mpls,MN,91 / 158,78 / 113,4 / 7,1:34:45,1291,1/27/2013,25000.0,freestyle
+41,395,Jemiah Aitch,M,35.0,Minneapolis,MN,92 / 158,79 / 113,19 / 21,1:35:49,1291,1/27/2013,25000.0,freestyle
+42,81,Elissa Cedarleaf Dahl,F,34.0,Minneapolis,MN,93 / 158,14 / 45,3 / 5,1:36:09,1291,1/27/2013,25000.0,freestyle
+43,127,Alex Ilyushev,M,15.0,Minneapolis,MN,94 / 158,80 / 113,1 / 4,1:36:19,1291,1/27/2013,25000.0,freestyle
+44,175,Clara Ping,F,26.0,Minneapolis,MN,95 / 158,15 / 45,6 / 8,1:36:24,1291,1/27/2013,25000.0,freestyle
+45,191,Steve Sands,M,67.0,Minnetonka,MN,96 / 158,81 / 113,6 / 9,1:36:29,1291,1/27/2013,25000.0,freestyle
+46,466,Kurt Stromberg,M,39.0,Saint Paul,MN,97 / 158,82 / 113,20 / 21,1:36:50,1291,1/27/2013,25000.0,freestyle
+47,189,Noah Rothman,M,16.0,Minneapolis,MN,98 / 158,83 / 113,5 / 7,1:38:43,1291,1/27/2013,25000.0,freestyle
+48,107,Susan Feyereisen,F,45.0,Minneapolis,MN,99 / 158,16 / 45,6 / 10,1:41:26,1291,1/27/2013,25000.0,freestyle
+49,69,Jedd Beach,M,44.0,Chetek,WI,100 / 158,84 / 113,24 / 34,1:41:45,1291,1/27/2013,25000.0,freestyle
+0,190,Tom Rowe,M,64.0,Centerville,MN,101 / 158,85 / 113,7 / 9,1:41:58,1291,1/27/2013,25000.0,freestyle
+1,467,Amy Royce,F,24.0,Minneapolis,MN,102 / 158,17 / 45,7 / 8,1:42:01,1291,1/27/2013,25000.0,freestyle
+2,134,Brian Johnston,M,41.0,Maple Grove,MN,103 / 158,86 / 113,25 / 34,1:42:14,1291,1/27/2013,25000.0,freestyle
+3,115,Helen Gunther,F,55.0,Excelsior,MN,104 / 158,18 / 45,2 / 5,1:42:52,1291,1/27/2013,25000.0,freestyle
+4,230,Mike Wright,M,49.0,Wyoming,MN,105 / 158,87 / 113,26 / 34,1:43:41,1291,1/27/2013,25000.0,freestyle
+5,499,Paul Weium,M,46.0,St. Paul,MN,106 / 158,88 / 113,27 / 34,1:43:56,1291,1/27/2013,25000.0,freestyle
+6,493,Ji Chen,M,51.0,Saint Paul,MN,107 / 158,89 / 113,14 / 21,1:45:46,1291,1/27/2013,25000.0,freestyle
+7,478,Anna Demers,F,28.0,Shell Lake,WI,108 / 158,19 / 45,8 / 8,1:45:55,1291,1/27/2013,25000.0,freestyle
+8,141,Eric Lavigne,M,40.0,Minnetonka,MN,109 / 158,90 / 113,28 / 34,1:46:24,1291,1/27/2013,25000.0,freestyle
+9,164,Austin Nash,M,15.0,Mntka,MN,110 / 158,91 / 113,2 / 4,1:46:36,1291,1/27/2013,25000.0,freestyle
+10,439,Sinthang Has,M,36.0,Roseville,MN,111 / 158,92 / 113,21 / 21,1:46:36,1291,1/27/2013,25000.0,freestyle
+11,116,Ted Haland,M,43.0,Afton,MN,112 / 158,93 / 113,29 / 34,1:46:58,1291,1/27/2013,25000.0,freestyle
+12,170,Tina Olson,F,45.0,River Falla,WI,113 / 158,20 / 45,7 / 10,1:48:34,1291,1/27/2013,25000.0,freestyle
+13,92,David Delforge,M,64.0,Chanhassen,MN,114 / 158,94 / 113,8 / 9,1:48:37,1291,1/27/2013,25000.0,freestyle
+14,458,Jeff Wolf,M,46.0,Osceola,WI,115 / 158,95 / 113,30 / 34,1:48:55,1291,1/27/2013,25000.0,freestyle
+15,67,John Baker,M,50.0,Maplewood,MN,116 / 158,96 / 113,15 / 21,1:49:33,1291,1/27/2013,25000.0,freestyle
+16,455,Anne Marchand,F,48.0,Eden Prairie,MN,117 / 158,21 / 45,8 / 10,1:49:36,1291,1/27/2013,25000.0,freestyle
+17,416,Darby Nelson,M,71.0,Champlin,MN,118 / 158,97 / 113,1 / 2,1:53:13,1291,1/27/2013,25000.0,freestyle
+18,57,Carie Alexander,F,50.0,Minneapolis,MN,119 / 158,22 / 45,3 / 5,1:53:45,1291,1/27/2013,25000.0,freestyle
+19,56,Bruce Alexander,M,52.0,Minneapolis,MN,120 / 158,98 / 113,16 / 21,1:54:31,1291,1/27/2013,25000.0,freestyle
+20,222,Bob Wheeler,M,71.0,Minneapolis,MN,121 / 158,99 / 113,2 / 2,1:55:45,1291,1/27/2013,25000.0,freestyle
+21,459,David Moore,M,50.0,Saint Paul,MN,122 / 158,100 / 113,17 / 21,1:57:07,1291,1/27/2013,25000.0,freestyle
+22,109,Matt Frost,M,50.0,Stillwater,MN,123 / 158,101 / 113,18 / 21,1:57:08,1291,1/27/2013,25000.0,freestyle
+23,220,Dan Wenkel,M,42.0,St. Paul,MN,124 / 158,102 / 113,31 / 34,1:57:22,1291,1/27/2013,25000.0,freestyle
+24,132,Maia Johnson,F,17.0,Minneapolis,MN,125 / 158,23 / 45,1 / 4,1:58:07,1291,1/27/2013,25000.0,freestyle
+25,131,Lenna Johnson,F,15.0,Minneapolis,MN,126 / 158,24 / 45,1 / 13,1:58:25,1291,1/27/2013,25000.0,freestyle
+26,401,Paul Hed,M,46.0,Ham Lake,MN,127 / 158,103 / 113,32 / 34,1:58:30,1291,1/27/2013,25000.0,freestyle
+27,217,Ami Voeltz,F,39.0,Minneapolis,MN,128 / 158,25 / 45,4 / 5,2:00:04,1291,1/27/2013,25000.0,freestyle
+28,53,Hunter Ahlquist,M,15.0,Minnetonka,MN,129 / 158,104 / 113,3 / 4,2:02:52,1291,1/27/2013,25000.0,freestyle
+29,66,Perry Avenson,M,15.0,Minnetonka,MN,130 / 158,105 / 113,4 / 4,2:03:17,1291,1/27/2013,25000.0,freestyle
+30,87,Michael Craemer,M,49.0,Minnetonka,MN,131 / 158,106 / 113,33 / 34,2:03:35,1291,1/27/2013,25000.0,freestyle
+31,171,Dan Peterson,M,49.0,Barnum,MN,132 / 158,107 / 113,34 / 34,2:03:54,1291,1/27/2013,25000.0,freestyle
+32,218,Don Voss,M,57.0,Eden Prairie,MN,133 / 158,108 / 113,19 / 21,2:04:08,1291,1/27/2013,25000.0,freestyle
+33,114,Judy Griesedieck,F,59.0,Minneapolis,MN,134 / 158,26 / 45,4 / 5,2:05:13,1291,1/27/2013,25000.0,freestyle
+34,93,Susan Diem,F,49.0,Minneapolis,MN,135 / 158,27 / 45,9 / 10,2:05:45,1291,1/27/2013,25000.0,freestyle
+35,387,Adrian Trow,M,17.0,Minnetonka,MN,137 / 158,110 / 113,7 / 7,2:06:52,1291,1/27/2013,25000.0,freestyle
+36,386,Zack Johnston,M,17.0,Minnetonka,MN,136 / 158,109 / 113,6 / 7,2:06:52,1291,1/27/2013,25000.0,freestyle
+37,382,Mary McGarveyusset,F,55.0,West Saint Paul,MN,138 / 158,28 / 45,5 / 5,2:08:55,1291,1/27/2013,25000.0,freestyle
+38,147,Andi Mackin,F,15.0,Minneapolis,MN,139 / 158,29 / 45,2 / 13,2:09:49,1291,1/27/2013,25000.0,freestyle
+39,374,Laurel Bielinski,F,15.0,Minneapolis,MN,140 / 158,30 / 45,3 / 13,2:09:51,1291,1/27/2013,25000.0,freestyle
+40,161,Bill Minge,M,61.0,Minnepolis,MN,141 / 158,111 / 113,9 / 9,2:10:39,1291,1/27/2013,25000.0,freestyle
+41,110,Anna Giesting,F,13.0,Minnetonka,MN,142 / 158,31 / 45,4 / 13,2:12:27,1291,1/27/2013,25000.0,freestyle
+42,60,Aleathea Anderson,F,30.0,Milaca,MN,143 / 158,32 / 45,5 / 5,2:20:54,1291,1/27/2013,25000.0,freestyle
+43,177,David Piper,M,59.0,Minneapolis,MN,144 / 158,112 / 113,20 / 21,2:21:33,1291,1/27/2013,25000.0,freestyle
+44,194,Laura Schmieg,F,40.0,St. Louis Park,MN,145 / 158,33 / 45,10 / 10,2:21:53,1291,1/27/2013,25000.0,freestyle
+45,95,Mark Doneux,M,50.0,Stillwater,MN,146 / 158,113 / 113,21 / 21,2:26:59,1291,1/27/2013,25000.0,freestyle
+46,442,Hannah Warling,F,15.0,Minneapolis,MN,147 / 158,34 / 45,5 / 13,2:27:57,1291,1/27/2013,25000.0,freestyle
+47,112,Guanani Gomez,F,17.0,Minneapolis,MN,148 / 158,35 / 45,2 / 4,2:28:24,1291,1/27/2013,25000.0,freestyle
+48,137,Ruby Krietzman,F,14.0,Hopkins,MN,149 / 158,36 / 45,6 / 13,2:29:00,1291,1/27/2013,25000.0,freestyle
+49,390,Claire Marti,F,15.0,Minnetonka,MN,150 / 158,37 / 45,7 / 13,2:29:04,1291,1/27/2013,25000.0,freestyle
+0,94,Sophie Dirnberger,F,13.0,Hopkins,MN,151 / 158,38 / 45,8 / 13,2:31:03,1291,1/27/2013,25000.0,freestyle
+1,83,Margaret Cleary,F,14.0,Hopkins,MN,152 / 158,39 / 45,9 / 13,2:31:17,1291,1/27/2013,25000.0,freestyle
+2,113,Oda Gregusson,F,17.0,Minnetonka,MN,153 / 158,40 / 45,3 / 4,2:43:52,1291,1/27/2013,25000.0,freestyle
+3,160,Lucianna Miller,F,13.0,Minnetonka,MN,154 / 158,41 / 45,10 / 13,2:48:54,1291,1/27/2013,25000.0,freestyle
+4,486,Addie Welch,F,14.0,Minneapolis,MN,155 / 158,42 / 45,11 / 13,2:48:59,1291,1/27/2013,25000.0,freestyle
+5,52,Anne Ahlquist,F,13.0,Minnetonka,MN,156 / 158,43 / 45,12 / 13,2:49:21,1291,1/27/2013,25000.0,freestyle
+6,166,Genna Novodvorsky,F,16.0,Minneapolis,MN,157 / 158,44 / 45,4 / 4,2:56:41,1291,1/27/2013,25000.0,freestyle
+7,86,Chloe Coultrip,F,15.0,Minneapolis,MN,158 / 158,45 / 45,13 / 13,2:57:06,1291,1/27/2013,25000.0,freestyle
+0,123,Karl Holub,M,19.0,New Brighton,MN,1 / 56,1 / 43,1 / 1,1:20:07,1293,1/27/2013,25000.0,classic
+1,404,Trevor Drake,M,24.0,Minneapolis,MN,2 / 56,2 / 43,1 / 3,1:20:41,1293,1/27/2013,25000.0,classic
+2,204,Erik Solberg,M,31.0,Eagan,MN,3 / 56,3 / 43,1 / 8,1:21:36,1293,1/27/2013,25000.0,classic
+3,181,Greg Rhodes,M,33.0,Saint Paul,MN,4 / 56,4 / 43,2 / 8,1:22:32,1293,1/27/2013,25000.0,classic
+4,410,Adam Johnson,M,24.0,Maple Grove,MN,5 / 56,5 / 43,2 / 3,1:25:35,1293,1/27/2013,25000.0,classic
+5,393,Per Nelson,M,39.0,Saint Paul,MN,6 / 56,6 / 43,3 / 8,1:26:10,1293,1/27/2013,25000.0,classic
+6,65,Devin Arenz,M,35.0,Saint Paul,MN,7 / 56,7 / 43,4 / 8,1:27:09,1293,1/27/2013,25000.0,classic
+7,64,Brett Arenz,M,33.0,Falcon Heights,MN,8 / 56,8 / 43,5 / 8,1:27:20,1293,1/27/2013,25000.0,classic
+8,88,Slater Crosby,M,47.0,Edina,MN,9 / 56,9 / 43,1 / 8,1:32:09,1293,1/27/2013,25000.0,classic
+9,441,Andy Powell,M,43.0,Marine On Saint Cr,MN,10 / 56,10 / 43,2 / 8,1:32:58,1293,1/27/2013,25000.0,classic
+10,438,Benjamin Menk,M,32.0,Minneapolis,MN,11 / 56,11 / 43,6 / 8,1:33:37,1293,1/27/2013,25000.0,classic
+11,144,Chris Lyon,M,35.0,Minneapolis,MN,12 / 56,12 / 43,7 / 8,1:33:44,1293,1/27/2013,25000.0,classic
+12,210,Pete Thurmes,M,52.0,Little Canada,MN,13 / 56,13 / 43,1 / 18,1:34:29,1293,1/27/2013,25000.0,classic
+13,417,Gregory Klave,M,58.0,Minneapolis,MN,14 / 56,14 / 43,2 / 18,1:34:59,1293,1/27/2013,25000.0,classic
+14,76,Bill Callas,M,53.0,Stillwater,MN,15 / 56,15 / 43,3 / 18,1:35:38,1293,1/27/2013,25000.0,classic
+15,162,Ken Mogren,M,64.0,Winona,MN,16 / 56,16 / 43,1 / 4,1:39:08,1293,1/27/2013,25000.0,classic
+16,231,Sara Zimmermann-White,F,43.0,Roseville,MN,17 / 56,1 / 13,1 / 3,1:40:17,1293,1/27/2013,25000.0,classic
+17,463,Greg Olson,M,43.0,Lakeland,MN,18 / 56,17 / 43,3 / 8,1:41:47,1293,1/27/2013,25000.0,classic
+18,394,Xena Huff,F,45.0,Minneapolis,MN,19 / 56,2 / 13,2 / 3,1:42:04,1293,1/27/2013,25000.0,classic
+19,140,Ken Kuznia,M,51.0,Apple Valley,MN,20 / 56,18 / 43,4 / 18,1:42:23,1293,1/27/2013,25000.0,classic
+20,403,John Miller,M,56.0,Stillwater,MN,21 / 56,19 / 43,5 / 18,1:43:57,1293,1/27/2013,25000.0,classic
+21,98,Steve Eberly,M,47.0,Minneapolis,MN,22 / 56,20 / 43,4 / 8,1:44:34,1293,1/27/2013,25000.0,classic
+22,105,James Ellinger,M,30.0,Saint Paul,MN,23 / 56,21 / 43,8 / 8,1:45:10,1293,1/27/2013,25000.0,classic
+23,201,Gerald Slater,M,60.0,Mendota Heights,MN,24 / 56,22 / 43,2 / 4,1:45:52,1293,1/27/2013,25000.0,classic
+24,421,Leif Carlson,M,48.0,Minneapolis,MN,25 / 56,23 / 43,5 / 8,1:47:11,1293,1/27/2013,25000.0,classic
+25,366,Kelly Rogers,F,53.0,Esko,MN,26 / 56,3 / 13,1 / 2,1:47:37,1293,1/27/2013,25000.0,classic
+26,195,Sandy Schreyer,F,47.0,Shoreview,MN,27 / 56,4 / 13,3 / 3,1:48:40,1293,1/27/2013,25000.0,classic
+27,212,Mark Trumper,M,51.0,Stillwater,MN,28 / 56,24 / 43,6 / 18,1:50:28,1293,1/27/2013,25000.0,classic
+28,407,Emily Johnson,F,35.0,,,29 / 56,5 / 13,1 / 2,1:54:31,1293,1/27/2013,25000.0,classic
+29,406,Paul Schaaf,M,50.0,Scandia,MN,30 / 56,25 / 43,7 / 18,1:56:46,1293,1/27/2013,25000.0,classic
+30,106,William Farquhar,M,53.0,Plymouth,MN,31 / 56,26 / 43,8 / 18,1:57:03,1293,1/27/2013,25000.0,classic
+31,229,Bob Woodruff,M,69.0,Mounds View,MN,32 / 56,27 / 43,3 / 4,1:57:15,1293,1/27/2013,25000.0,classic
+32,375,Michael Hagerty,M,43.0,,,33 / 56,28 / 43,6 / 8,1:57:27,1293,1/27/2013,25000.0,classic
+33,179,Peter Rayne,M,51.0,Ellsworth,WI,34 / 56,29 / 43,9 / 18,1:57:56,1293,1/27/2013,25000.0,classic
+34,182,Greg Richert,M,52.0,Forest Lake,MN,35 / 56,30 / 43,10 / 18,2:01:47,1293,1/27/2013,25000.0,classic
+35,368,Nels Peterson,M,50.0,Marine On Saint Cr,MN,36 / 56,31 / 43,11 / 18,2:06:12,1293,1/27/2013,25000.0,classic
+36,391,Dick Roy,M,53.0,New Brighton,MN,37 / 56,32 / 43,12 / 18,2:07:11,1293,1/27/2013,25000.0,classic
+37,165,Eric Nevalainen,M,44.0,Shoreview,MN,38 / 56,33 / 43,7 / 8,2:09:00,1293,1/27/2013,25000.0,classic
+38,443,Mark Johnson,M,54.0,Saint Paul,MN,39 / 56,34 / 43,13 / 18,2:11:08,1293,1/27/2013,25000.0,classic
+39,409,Chandler Taylor,M,46.0,Hopkins,MN,40 / 56,35 / 43,8 / 8,2:11:16,1293,1/27/2013,25000.0,classic
+40,159,David E. Miller,M,58.0,Mendota Heights,MN,41 / 56,36 / 43,14 / 18,2:11:41,1293,1/27/2013,25000.0,classic
+41,433,Tuukka Osteno,M,28.0,Saint Paul,MN,42 / 56,37 / 43,3 / 3,2:14:20,1293,1/27/2013,25000.0,classic
+42,425,Olivia Strebe,F,16.0,Minneapolis,MN,43 / 56,6 / 13,1 / 4,2:16:35,1293,1/27/2013,25000.0,classic
+43,150,James Martenson,M,57.0,Rochester,MN,44 / 56,38 / 43,15 / 18,2:19:56,1293,1/27/2013,25000.0,classic
+44,371,Kristin Hanson,F,36.0,Rice Lake,WI,45 / 56,7 / 13,2 / 2,2:21:02,1293,1/27/2013,25000.0,classic
+45,411,Paul Bloomberg,M,56.0,Eagan,MN,46 / 56,39 / 43,16 / 18,2:30:32,1293,1/27/2013,25000.0,classic
+46,431,Avery Craves,M,15.0,Minneapolis,MN,47 / 56,40 / 43,1 / 1,2:37:56,1293,1/27/2013,25000.0,classic
+47,383,Linda Bjornberg,F,62.0,West Saint Paul,MN,48 / 56,8 / 13,1 / 1,2:38:27,1293,1/27/2013,25000.0,classic
+48,427,Eleanor Chenoweth,F,17.0,Minneapolis,MN,49 / 56,9 / 13,2 / 4,2:40:42,1293,1/27/2013,25000.0,classic
+49,122,Brian Hirsch,M,54.0,Stillwater,MN,50 / 56,41 / 43,17 / 18,2:43:02,1293,1/27/2013,25000.0,classic
+0,380,Ed Ussuet,M,56.0,West Saint Paul,MN,51 / 56,42 / 43,18 / 18,2:50:23,1293,1/27/2013,25000.0,classic
+1,440,Susan Smith,F,54.0,Plymouth,MN,52 / 56,10 / 13,2 / 2,2:54:34,1293,1/27/2013,25000.0,classic
+2,492,Gary McIntrye,M,61.0,North Saint Paul,MN,53 / 56,43 / 43,4 / 4,3:06:18,1293,1/27/2013,25000.0,classic
+3,426,Julia Sjodin,F,16.0,Minneapolis,MN,54 / 56,11 / 13,3 / 4,3:25:54,1293,1/27/2013,25000.0,classic
+4,429,Clio Cullion,F,16.0,Minneapolis,MN,55 / 56,12 / 13,4 / 4,3:30:21,1293,1/27/2013,25000.0,classic
+5,186,Kendra Roedl,F,14.0,Minneapolis,MN,56 / 56,13 / 13,1 / 1,3:30:55,1293,1/27/2013,25000.0,classic
