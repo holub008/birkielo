@@ -15,6 +15,7 @@ lxml = "*"
 "html5lib" = "*"
 tabula-py = "*"
 "psycopg2" = "*"
+gender-guesser = "*"
 
 [requires]
 python_version = "3.6"

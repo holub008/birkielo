@@ -7,17 +7,20 @@ from datetime import datetime
 
 import pandas as pd
 import numpy as np
+from gender_guesser import detector
 
 import race_record_committer as rrc
 from db import get_connection
 from racer_identity import RaceRecord
 from racer_identity import RacerSource
 from racer_matcher import RacerMatcher
+from racer_identity import extract_name
 
 # the following get_*_results() functions return dataframes with the same structure, i.e. can be trivially appended
 # note that these functions are not generalized to be reused - they contain manual/custom tweaks to the data
 # that were not time efficient to generalize
 RESULTS_DIRECTORY = "/Users/kholub/birkielo/offline/data/"
+GENDER_DETECTOR = detector.Detector()
 
 
 def extract_discipline_from_race_name(race_name):
@@ -125,6 +128,8 @@ def infer_gender_from_gender_placement(results):
 
     sorted_results = results.sort_values('OverallPlace')
 
+    gender_place_column = 'GenderRank' if np.all(~pd.isnull(results.GenderRank)) else 'DivisionPlace'
+
     current_man_place = 1
     current_woman_place = 1
     # this is of course not reliable if either:
@@ -132,16 +137,23 @@ def infer_gender_from_gender_placement(results):
     # 2. women's placements are interleaved with men's placements at all
     gender_inferred_results = pd.DataFrame()
     for index, result in sorted_results.iterrows():
-        print(result)
-        if result.DivisionPlace == current_man_place:
+        slack = result.OverallPlace - current_man_place - current_woman_place + 1
+
+        if slack > 1:
+            raise ValueError('More than 1 sequential racer was missing - failing for safety instead of slacking')
+
+        if result[gender_place_column] == current_man_place or \
+                        result[gender_place_column] == (current_man_place + slack):
             result['gender'] = 'male'
             gender_inferred_results = gender_inferred_results.append(result)
-            current_man_place += 1
-        elif result.DivisionPlace == current_woman_place:
+            current_man_place += (1 + slack)
+        elif result[gender_place_column] == current_woman_place or \
+                        result[gender_place_column] == (current_woman_place + slack):
             result['gender'] = 'female'
             gender_inferred_results = gender_inferred_results.append(result)
-            current_woman_place += 1
+            current_woman_place += (1 + slack)
         else:
+            # first_name = extract_name(result.Name)[0]
             raise ValueError('Ran into indexing issues (missing division rank) inferring gender')
 
     return gender_inferred_results
@@ -220,10 +232,15 @@ def get_itiming_results(filename="itiming_results.csv",
                                       (custom_results.event_date == race.event_date)]
 
         if np.all(~pd.isnull(race_results.gender)):
-            gender_inferred_race_results = infer_gender_from_gender_placement(race_results)
-            results_with_gender.append(gender_inferred_race_results)
+            results_with_gender = results_with_gender.append(race_results)
         else:
-            results_with_gender.append(race_results)
+            try:
+                gender_inferred_race_results = infer_gender_from_gender_placement(race_results)
+            except Exception as e:
+                print(race)
+                print(e)
+            # TODO verify genders using the gender-guesser package
+            results_with_gender = results_with_gender.append(gender_inferred_race_results)
 
     results_with_gender['name'] = results_with_gender.Name
     results_with_gender['age'] = np.nan

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "ef2aceeb09ddcbf7dbce0a85b4a036fa5e5210895329bd332371792fe287eef7"
+            "sha256": "5679c87e99756d1306dde519d9e88f014ce52a876bf28a8762eca5e8f61179d9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -45,6 +45,14 @@
                 "sha256:6ec8e539cf412830e5ccf521aecf879f2c7fcf60ce446e33cd16eef1ed8a0158"
             ],
             "version": "==1.3.0"
+        },
+        "gender-guesser": {
+            "hashes": [
+                "sha256:1591c14592805ca7da06a46d5f7202511f7cb87547049a68dfccbeedb879f31b",
+                "sha256:7cb01ce5d8d43b94573498bc02c959b622872abd399622ca67d1b73ba6e7e222"
+            ],
+            "index": "pypi",
+            "version": "==0.4.0"
         },
         "html5lib": {
             "hashes": [
@@ -254,10 +262,10 @@
         },
         "soupsieve": {
             "hashes": [
-                "sha256:638535780f7b966411123d56eb3b89cd1d2e42d707270c6d7d053c7720a238f3",
-                "sha256:cb61b59c55f9f6e91928a03fe4b500ac1fcef6f8e68082a630db098ab33e2126"
+                "sha256:1d6ca207e67765d5297a59d1b5a18344a84587674d8c002cea72081c01a7f638",
+                "sha256:dff67354bff219f169ee634173c0148fcb0f7b23304ffddcfa2bb2f07accf30a"
             ],
-            "version": "==1.6.2"
+            "version": "==1.7"
         },
         "tabula-py": {
             "hashes": [

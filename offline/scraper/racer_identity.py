@@ -77,7 +77,7 @@ class RacerIdentity:
     # TODO how to appropriately represent location?
 
 
-def _extract_name(name_string):
+def extract_name(name_string):
     """
     employ a variety of strategies to decompose a name to its parts
     note this is a very euro-centric approach to structuring names... but then again, skiers are very european!
@@ -170,7 +170,7 @@ class RaceRecord(RacerIdentity):
     def __init__(self, unformatted_name, unformatted_age_range, gender,
                  duration, overall_place, gender_place,
                  race_id, racer_source):
-        parsed_name = _extract_name(unformatted_name)
+        parsed_name = extract_name(unformatted_name)
         age_range = (None, None) if (unformatted_age_range is None) else _extract_age_range(unformatted_age_range)
 
         super().__init__(parsed_name[0], parsed_name[1], parsed_name[2], age_range[0], age_range[1], gender)
