@@ -83,6 +83,7 @@ def _get_chronotrack_results(event_id,
         results_tuples = json_payload['aaData']
         part_results = pd.DataFrame(results_tuples)
         part_results.columns = result_columns
+        part_results['race_name'] = race_name
 
         results = results.append(part_results)
 
