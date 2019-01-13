@@ -372,6 +372,17 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
 def get_mtec_vasa_results(filename="Vasaloppet USA_raw.csv"):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
 
+    raw_results['gender'] = np.where(raw_results.Sex == 'M',
+                                     'male',
+                                     'female')
+    raw_results['distance'] = raw_results.distance_meters
+    raw_results['name'] = raw_results.Name
+    raw_results['age'] = raw_results.Age
+    raw_results['time'] = raw_results.Time
+    raw_results['event_name'] = 'Vasaloppet USA'
+
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+
 
 def get_mtec_mob_results(filename="Marine O'Brien_raw.csv"):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
@@ -421,6 +432,7 @@ def get_mrr_results(filename="mrr_raw.csv"):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
     raw_results['event_name'] = raw_results.event
     raw_results['discipline'] = [extract_discipline_from_race_name(name) for name in raw_results.race]
+    raw_results = raw_results[~pd.isnull(raw_results.discipline)]
     raw_results['distance'] = [extract_distance_from_text(name) * 1000 for name in raw_results.race]
     raw_results['name'] = raw_results.Name
     raw_results['time'] = raw_results.Finish
@@ -524,5 +536,6 @@ results = pd.concat([
     get_mrr_results(),
     get_orr_results(),
 ])
+
 
 
