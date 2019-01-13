@@ -86,10 +86,10 @@ def extract_name(name_string):
     """
     # removing any numbers and weird characters
     name_string = name_string.replace(u'\xa0', u' ')\
+        .replace(u'\x8e', u' ')\
         .translate({ord(k): None for k in digits})
 
     # TODO should write tests on this, since regression is so likely
-    # TODO I'm pretty sure python caches compiled regexs
     # match "first last" - this obviously isn't an all encompassing
     fl_matches = re.search(r"^([a-zA-Z\-\.]+) +([a-zA-Z\-\']+) *$", name_string)
     if fl_matches:
@@ -101,11 +101,15 @@ def extract_name(name_string):
         return fml_matches.group(1), fml_matches.group(2), fml_matches.group(3)
 
     # match "last, first"
-    lf_matches = re.search(r"^([a-zA-Z\-\']+), *([a-zA-Z\-\.]+)$", name_string)
+    lf_matches = re.search(r"^([a-zA-Z\-\' ]+), *([a-zA-Z\-\.]+)$", name_string)
     if lf_matches:
         return lf_matches.group(2), None, lf_matches.group(1)
 
-    # TODO probably makes sense to have a proper logger
+    # match "last, first middle"
+    lfm_matches = re.search(r"^([a-zA-Z\-\' ]+), *([a-zA-Z\-\.]+) +([a-zA-Z\-]+\.?) *$", name_string)
+    if lfm_matches:
+        return lfm_matches.group(2), lfm_matches.group(3), lfm_matches.group(1)
+
     print('Supplied name string "%s" does conform to known name formats' % (name_string, ))
     return None, None, None
 
