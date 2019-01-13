@@ -122,7 +122,7 @@ def itiming_extract_date(date,
 
 def infer_gender_from_gender_placement(results):
     """
-    :param results: a dataframe with at least columns Name, DivisionPlace, and OverallPlace
+    :param results: a dataframe with at least columns DivisionPlace, and OverallPlace
     :return: a like dataframe with gender added
     """
 
@@ -353,13 +353,15 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
     custom_results = raw_results.merge(custom_metadata, how="left", on=['event_name', 'race_name'])
 
-    custom_results['distance'] = np.where(pd.isnull(custom_results.distance),
-                                          [extract_distance_from_text(name) for name in custom_results.race_name],
-                                          custom_results.distance)
     custom_results['discipline'] = np.where(pd.isnull(custom_results.discipline),
                                           [extract_discipline_from_race_name(name) for name in custom_results.race_name],
                                           custom_results.discipline)
     custom_results = custom_results[~pd.isnull(custom_results.discipline)]
+
+    custom_results['distance'] = np.where(pd.isnull(custom_results.distance),
+                                          [extract_distance_from_text(name) for name in custom_results.race_name],
+                                          custom_results.distance)
+    custom_results['distance'] = custom_results.distance * 1000
 
     custom_results['date'] = custom_results.event_date
 
@@ -419,7 +421,7 @@ def get_mrr_results(filename="mrr_raw.csv"):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
     raw_results['event_name'] = raw_results.event
     raw_results['discipline'] = [extract_discipline_from_race_name(name) for name in raw_results.race]
-    raw_results['distance'] = [extract_distance_from_text(name) for name in raw_results.race]
+    raw_results['distance'] = [extract_distance_from_text(name) * 1000 for name in raw_results.race]
     raw_results['name'] = raw_results.Name
     raw_results['time'] = raw_results.Finish
     raw_results['gender'] = [extract_mrr_gender(ag) for ag in raw_results['AG (Rank)']]
@@ -432,14 +434,85 @@ def get_mrr_results(filename="mrr_raw.csv"):
     return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
-def get_orr_results(filename="vasa_pre2011.csv"):
+def extract_orr_gender(division):
+    division = str(division).lower()
+    if division.startswith('m'):
+        return 'male'
+    elif division.startswith('f'):
+        return 'female'
+    else:
+        return None
+
+
+def extract_age_range(division):
+    match = re.search(r'([0-9]{2})([0-9]{2})?', str(division))
+    if match:
+        return "%s-%s" % (match.group(1), match.group(2))
+
+    return None
+
+
+def extract_gender_place(place):
+    match = re.search(r'([0-9]+)/', place)
+    if match:
+        return int(match.group(1))
+
+    return None
+
+
+def orr_infer_gender_from_gender_placement(race_results):
+    # create columns as expected by earlier function
+    race_results['OverallPlace'] = race_results.OVERALL
+    race_results['GenderRank'] = race_results.gender_place
+
+    return infer_gender_from_gender_placement(race_results)
+
+
+def get_orr_results(filename="vasa_pre2011.csv",
+                    distance_to_discipline=pd.DataFrame(
+                        [
+                            [13 * 1000, 'freestyle'],
+                            [35 * 1000, 'freestyle'],
+                            [42 * 1000, 'classic'],
+                            [58 * 1000, 'freestyle']
+                        ],
+                        columns=['distance', 'discipline']
+                    )):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
 
+    raw_results['name'] = raw_results.FN + " " + raw_results.LN
+    raw_results = raw_results[(raw_results.name != 'Unknown Skier') & (raw_results.DIVISION != '-') &
+                              (raw_results.DIVISION != 'III')]
 
+    raw_results['distance'] = [extract_distance_from_text(name) * 1000 for name in raw_results.race_name]
+    raw_results = raw_results.merge(distance_to_discipline, how="inner", on=['distance'])
 
+    raw_results['gender'] = [extract_orr_gender(div) for div in raw_results.DIVISION]
+
+    # apparently in 2006, the 42K and 35K racers did not have gender :(
+    raw_results['gender_place'] = [extract_gender_place(place) for place in raw_results.SEXPL]
+    results_without_gender = raw_results[pd.isnull(raw_results.gender)]
+    races_without_gender = results_without_gender[['event_date', 'race_name']].drop_duplicates()
+    for index, race in races_without_gender.iterrows():
+        race_results = raw_results[(raw_results.event_date == race.event_date) &
+                                   (raw_results.race_name == race.race_name)]
+        raw_results = raw_results[(raw_results.event_date != race.event_date) |
+                                  (raw_results.race_name != race.race_name)]
+
+        gender_inferred_results = orr_infer_gender_from_gender_placement(race_results)
+
+        raw_results = raw_results.append(gender_inferred_results)
+
+    raw_results['age'] = [extract_age_range(div) for div in raw_results.DIVISION]
+
+    raw_results['time'] = raw_results.TIME
+    raw_results['date'] = raw_results.event_date
+    raw_results['event_name'] = 'Vasaloppet USA'
+
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 ##############################
-## start control flow
+# start control flow
 ##############################
 
 results = pd.concat([
