@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from myraceresults_scraper import get_mrr_races
-from myraceresults_scraper import get_mrr_results
+from incremental_scrapers.myraceresults_scraper import get_mrr_races
+from incremental_scrapers.myraceresults_scraper import get_mrr_results
 
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
@@ -65,30 +65,25 @@ def get_mrr_urls(st_urls,
 
 def get_all_results(events):
     all_results = pd.DataFrame()
-    for event in events:
-        event_data_list = get_mrr_races(event[0])
+    for event_url, event_name, event_date in events:
+        event_data_list = get_mrr_races(event_url)
 
         if not event_data_list:
-            print('Failed to handle event at: ' + event[0])
+            print('Failed to handle event at: ' + event_name)
             continue
 
-        for event_data in event_data_list:
-            # TODO this will oob if things weren't expected - desirable for now
-            event_key = event_data[3]
-            event_id = event_data[2]
-            race_name = event_data[1]
-            contest_number = event_data[0]
+        for contest_number, list_name, race_name, event_id, event_key in event_data_list:
 
-            race_results, column_names = get_mrr_results(event_id, event_key, race_name, contest_number)
+            race_results, column_names = get_mrr_results(event_id, event_key, list_name, contest_number)
             if race_results:
                 results_df = pd.DataFrame(race_results, columns=column_names)
-                results_df['date'] = event[2]
-                results_df['event'] = event[1]
-                results_df['race'] = event_data[1]
+                results_df['date'] = event_date
+                results_df['event'] = event_name
+                results_df['race'] = race_name
 
                 all_results = all_results.append(results_df)
             else:
-                print("Failed to handle race: " + event_data[1] + " " + event[1])
+                print("Failed to handle race: " + race_name + " " + event_name)
     return all_results
 
 ###########################

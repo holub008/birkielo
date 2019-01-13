@@ -1,7 +1,6 @@
 import re
 import requests
 import json
-from bs4 import BeautifulSoup
 
 EVENT_URL = "https://my5.raceresult.com/RRPublish/data/config.php?callback=no&eventid=%d"
 # expected args are event id, listname, and contest number
@@ -19,10 +18,6 @@ def get_mrr_races(mrr_url):
         return None
 
     res = requests.get(EVENT_URL % (event_id,))
-    if res.status_code != 200:
-        return None
-
-    soup = BeautifulSoup(res.content, 'lxml')
 
     json_payload = ""
     matches = re.search(r'no\((.*)\);$', res.text)
@@ -34,11 +29,14 @@ def get_mrr_races(mrr_url):
 
     event_key = event_dict['key']
     race_id_lists = event_dict['lists']
+    contest_id_to_race_name = event_dict['contests']
     # yes, this is bizarre / cruel and unusual. there are "Name"s, "ID"s, & "Contest"s which all uniquely identify
     # races and key into different data. it's debatable if using a headless browser would be simpler than hitting API
     # oh and we have event id & event key...
-    contest_id_to_race_id = [(ril['Contest'], ril['Name'], event_id, event_key) for ril in race_id_lists
-                              if ril['ShowAs'] == 'Division Results']
+    contest_id_to_race_id = [(ril['Contest'], ril['Name'], contest_id_to_race_name[str(ril['Contest'])],
+                              event_id, event_key)
+                             for ril in race_id_lists if ril['ShowAs'] == 'Division Results'
+                                and str(ril['Contest']) in contest_id_to_race_name]
 
     return contest_id_to_race_id
 
@@ -83,10 +81,10 @@ def _recursive_unnest(dictionary):
                 yield value
 
 
-def get_mrr_results(event_id, event_key, race_name, contest_number,
+def get_mrr_results(event_id, event_key, list_name, contest_number,
                     required_columns=(('Name',), ('City/State',),
                                       ('AG (Rank)', 'AG', 'AG/Rank'), ('Finish', 'Time'))):
-    url = RESULTS_URL % (event_id, event_key, race_name, contest_number)
+    url = RESULTS_URL % (event_id, event_key, list_name, contest_number)
     res = requests.get(url)
 
     matches = re.search(r'no\((.*)\);$', res.text)
@@ -115,4 +113,4 @@ def get_mrr_results(event_id, event_key, race_name, contest_number,
 
     column_names = _get_column_names_from_required_columns(required_columns)
 
-    return results_subset, required_columns
+    return results_subset, column_names
