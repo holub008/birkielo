@@ -335,9 +335,35 @@ def get_itiming_results(filename="itiming_results.csv",
 def get_chronotrack_results(filename="chronotrack_results.csv",
                             custom_metadata=pd.DataFrame(
                                 [
-                            )
+                                    ['Squirrel Hill Pursuit', '2k Kids Beat the Bunny', 'freestyle', np.nan],
+                                    ['Pepsi Challenge Cup XC Ski Race', '10K', 'freestyle', np.nan],
+                                    ['Book Across the Bay', 'Ski', 'freestyle', 10 * 1000],
+                                    ['Seeley Hills Classic Ski Race', '5K High School Race', 'classic', np.nan],
+                                    ['Seeley Hills Classic Ski Race', '2.5k High School Race', 'classic', np.nan],
+                                    ['Seeley Hills Classic', '5K High School Race', 'classic', np.nan],
+                                    ['Seeley Hills Classic', '2.5k Middle School Race', 'classic', np.nan],
+                                    ['SISU Ski Fest', '5K Junior SISU (ages12-19)', 'freestyle', np.nan],
+                                    ['SISU Ski Fest', '3K Junior SISU (ages 6-13)', 'freestyle', np.nan],
+                                    ['Pepsi Challenge Cup XC Ski Race', '10 km', 'freestyle', np.nan],
+                                    ['SISU Ski Fest', '5k Junior SISU', 'freestyle', np.nan],
+                                    ['SISU Ski Fest', '3k Junior SISU', 'freestyle', np.nan]
+                                ],
+                                columns=['event_name', 'race_name', 'discipline', 'distance'])
+                            ):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
-    raw_results['distance'] = raw_results.time /
+    custom_results = raw_results.merge(custom_metadata, how="left", on=['event_name', 'race_name'])
+
+    custom_results['distance'] = np.where(pd.isnull(custom_results.distance),
+                                          [extract_distance_from_text(name) for name in custom_results.race_name],
+                                          custom_results.distance)
+    custom_results['discipline'] = np.where(pd.isnull(custom_results.discipline),
+                                          [extract_discipline_from_race_name(name) for name in custom_results.race_name],
+                                          custom_results.discipline)
+    custom_results = custom_results[~pd.isnull(custom_results.discipline)]
+
+    custom_results['date'] = custom_results.event_date
+
+    return custom_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
 def get_mtec_vasa_results(filename="Vasaloppet USA_raw.csv"):
