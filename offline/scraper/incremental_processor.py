@@ -29,7 +29,7 @@ def extract_discipline_from_race_name(race_name):
         return 'freestyle'
     elif 'classic' in race_name_lower:
         return 'classic'
-    elif 'pursuit' in race_name_lower:
+    elif 'pursuit' in race_name_lower or 'skiathlon' in race_name_lower:
         return 'pursuit'
     elif 'sitski' in race_name_lower or 'sit ski' in race_name_lower:
         return 'sitski'
@@ -384,12 +384,57 @@ def get_mtec_mob_results(filename="Marine O'Brien_raw.csv"):
     return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
+def extract_mrr_gender(age_group):
+    age_group_lower = age_group.lower()
+    if age_group_lower.startswith('m'):
+        return 'male'
+    elif age_group_lower.startswith('f'):
+        return 'female'
+    else:
+        print('Unexpected age group format: "%s"' % (age_group,))
+        return None
+
+
+def infer_gender(name):
+    first_name = extract_name(name)[0]
+    if name:
+        inferred_gender = GENDER_DETECTOR.get_gender(first_name)
+        if inferred_gender == 'male' or inferred_gender == 'mostly_male':
+            return 'male'
+        elif inferred_gender == 'female' or inferred_gender == 'mostly_female':
+            return 'female'
+
+    return None
+
+
+def extract_age_range(age_group):
+    match = re.search(r'[0-9]+(\-|\+| |(&U))([0-9]+)?', age_group)
+    if match:
+        return match.group()
+
+    return None
+
+
 def get_mrr_results(filename="mrr_raw.csv"):
-    pass
+    raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
+    raw_results['event_name'] = raw_results.event
+    raw_results['discipline'] = [extract_discipline_from_race_name(name) for name in raw_results.race]
+    raw_results['distance'] = [extract_distance_from_text(name) for name in raw_results.race]
+    raw_results['name'] = raw_results.Name
+    raw_results['time'] = raw_results.Finish
+    raw_results['gender'] = [extract_mrr_gender(ag) for ag in raw_results['AG (Rank)']]
+    raw_results['gender'] = np.where(pd.isnull(raw_results.gender),
+                                     [infer_gender(name) for name in raw_results.name],
+                                     raw_results.gender)
+    raw_results = raw_results[~pd.isnull(raw_results.gender)]
+    raw_results['age'] = [extract_age_range(ag) for ag in raw_results['AG (Rank)']]
+
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
 def get_orr_results(filename="vasa_pre2011.csv"):
-    pass
+    raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
+
 
 
 
