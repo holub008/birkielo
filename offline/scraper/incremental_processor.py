@@ -363,15 +363,25 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
 
     custom_results['date'] = custom_results.event_date
 
+    # TODO we have location here
     return custom_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
 def get_mtec_vasa_results(filename="Vasaloppet USA_raw.csv"):
-    pass
+    raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
 
 
 def get_mtec_mob_results(filename="Marine O'Brien_raw.csv"):
-    pass
+    raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
+
+    raw_results['distance'] = raw_results.distance_meters
+    raw_results['gender'] = ['male' if g == 'M' else 'female' for g in raw_results.Sex]
+    raw_results['name'] = raw_results.Name
+    raw_results['time'] = raw_results.Time
+    raw_results['age'] = raw_results.Age
+    raw_results['event_name'] = "Marine O'Brien"
+
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
 
 
 def get_mrr_results(filename="mrr_raw.csv"):
