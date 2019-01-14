@@ -7,11 +7,11 @@ class NaiveElo:
 
     def __init__(self,
                  default_score=1000,
-                 k_factor=1,
+                 k_factor=.5,
                  log_odds_oom_differential=200,
                  score_floor=100,
                  score_ceiling=3000,
-                 max_score_change=400):
+                 max_score_change=200):
         """
         for a simple mathemtical explanation of Elo parameters, see
         https://math.stackexchange.com/questions/1731991/why-does-the-elo-rating-system-work

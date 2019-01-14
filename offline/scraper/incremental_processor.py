@@ -648,8 +648,6 @@ results = pd.concat([
     get_mrr_results(),
     get_orr_results(),
 ])
-# results.to_csv('~/all_results_parsed.csv')
-# results = pd.read_csv('~/all_results_parsed.csv')
 
 results = results[~pd.isnull(results.time)]
 results['time_parsed'] = [parse_time_millis(t) for t in results.time]
@@ -697,8 +695,7 @@ try:
 
     matched_race_records = racer_matcher.merge_to_identities()
 
-    con.rollback()
-    con.close()
+    rrc.insert_racers(cursor, matched_race_records, race_records_for_insert_valid)
 
     con.commit()
     cursor.close()

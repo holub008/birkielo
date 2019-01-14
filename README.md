@@ -50,8 +50,8 @@ but here's an example execution:
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
-* Bring vasa/pepsi/other results into the fold
 * User selected skier comparison or head to head comparison
+* Race result list and view pages
 * Improve matching logic
     - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
     - Check for more than one result in a single race (and handle or or throw out)
