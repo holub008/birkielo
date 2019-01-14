@@ -29,7 +29,9 @@ CREATE TABLE IF NOT EXISTS event_occurrence (
 );
 
 -- note this will error if it already exists - no easy solution :(
-CREATE TYPE ski_discipline AS ENUM('classic', 'freestyle', 'pursuit', 'sitski');
+CREATE TYPE ski_discipline AS ENUM('classic', 'freestyle');
+ALTER TYPE ski_discipline ADD VALUE 'pursuit';
+ALTER TYPE ski_discipline ADD VALUE 'sitski';
 
 CREATE TABLE IF NOT EXISTS race (
   id                  SERIAL PRIMARY KEY,

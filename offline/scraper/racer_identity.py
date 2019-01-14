@@ -101,7 +101,7 @@ def extract_name(name_string):
         return fml_matches.group(1), fml_matches.group(2), fml_matches.group(3)
 
     # match "last, first"
-    lf_matches = re.search(r"^([a-zA-Z\-\' ]+), *([a-zA-Z\-\.]+)$", name_string)
+    lf_matches = re.search(r"^([a-zA-Z\-\' \.]+), *([a-zA-Z\-\.]+)$", name_string)
     if lf_matches:
         return lf_matches.group(2), None, lf_matches.group(1)
 
@@ -114,16 +114,23 @@ def extract_name(name_string):
     return None, None, None
 
 
-def _parse_time_millis(time_unparsed,
-                       time_format='%H:%M:%S',
-                       time_format_fallback = '%M:%S'):
+def parse_time_millis(time_unparsed,
+                      time_format='%H:%M:%S',
+                      time_format_fallback='%M:%S',
+                      time_format_fallback2 = '%H:%M:%S.%f',
+                      time_format_fallback3 = '%M:%S.%f'):
     """
     :param time_unparsed: a string expected to represent time like format
     :param time_format: a datetime format string
     :param time_format_fallback: a alternative time format string
     :return: the number of milliseconds in the input time
     """
-    # note this breaks on > 24 hours. to prevent the added dependency for a better lib, live with it
+    # a race timer had an insane time formatting where 60 mins were counted as mins instead of hours
+    if time_unparsed.startswith('60:'):
+        match = re.search(r'60:([0-9:\.]+)$', time_unparsed)
+        if match:
+            time_unparsed = "1:00:%s" % (match.group(1))
+
     dt = None
     try:
         dt = datetime.strptime(time_unparsed, time_format)
@@ -132,9 +139,13 @@ def _parse_time_millis(time_unparsed,
             dt = datetime.strptime(time_unparsed, time_format_fallback)
         except:
             try:
-                dt = datetime.strptime(time_unparsed, time_format_fallback_fallback)
+                dt = datetime.strptime(time_unparsed, time_format_fallback2)
             except:
-                print('Failed to parse a race time from "%s"' % (time_unparsed,))
+                try:
+                    dt = datetime.strptime(time_unparsed, time_format_fallback3)
+                except:
+                    print('Failed to parse a race time from "%s"' % (time_unparsed,))
+                    return None
 
     delta = timedelta(hours=dt.hour, minutes=dt.minute, seconds=dt.second)
     return delta.total_seconds() * 1000
@@ -156,7 +167,7 @@ def _extract_age_range(unparsed_range):
     """
     matches = re.search(r"([0-9]+)\-([0-9]+)", unparsed_range)
     if matches:
-        return (int(x) for x in matches.groups())
+        return tuple(int(x) for x in matches.groups())
     else:
         matches = re.search(r"([0-9]+)", unparsed_range)
 
@@ -179,7 +190,7 @@ class RaceRecord(RacerIdentity):
 
         super().__init__(parsed_name[0], parsed_name[1], parsed_name[2], age_range[0], age_range[1], gender)
 
-        self._duration = _parse_time_millis(duration)
+        self._duration = parse_time_millis(duration)
         self._overall_place = overall_place
         self._gender_place = gender_place
         self._race_id = race_id

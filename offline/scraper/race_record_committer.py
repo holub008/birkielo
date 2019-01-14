@@ -19,15 +19,21 @@ _RACER_RESULT_INSERT_QUERY = """
 # (RETURNING clause). However, the order of RETURNING is not strictly guaranteed by postgres
 
 
-def _insert_and_get_generic(cursor, df, table_name, required_columns):
+def _insert_and_get_generic(cursor, df, table_name, required_columns,
+                            page_size=10000):
     if not set(required_columns).issubset(df.columns):
         raise ValueError('Required column names are missing in input events!')
+
+    if df.shape[0] > page_size:
+        raise ValueError('Attempting to insert more records than page size - would result in missing returned values')
+
     values_for_insert = df[required_columns].values.tolist()
-    # note we can't "safely" insert the table name here. still, we expect all table names to come internally, so string concat is OK
-    # once https://github.com/psycopg/psycopg2/issues/794 is resolved, solution looks like:
-    # query_value_format = pgs.SQL("INSERT INTO {} ({}) VALUES %s RETURNING *").format(pgs.Identifier(table_name), pgs.SQL(', ').join(map(sql.Identifier, required_columns))
+    # note we can't "safely" insert the table name here. still, we expect all table names to come internally, so string
+    # concat is OK once https://github.com/psycopg/psycopg2/issues/794 is resolved, solution looks like:
+    # query_value_format = pgs.SQL("INSERT INTO {} ({}) VALUES %s RETURNING *").format(pgs.Identifier(table_name),
+    # pgs.SQL(', ').join(map(sql.Identifier, required_columns))
     query_value_format = "INSERT INTO " + table_name + ' (' + ','.join(required_columns) + ') VALUES %s RETURNING *'
-    pge.execute_values(cursor, query_value_format, values_for_insert)
+    pge.execute_values(cursor, query_value_format, values_for_insert,page_size=page_size)
     result_set = cursor.fetchall()
     result_df = pd.DataFrame(result_set)
     # note, we assume that anything worth getting is returning an "id" column

@@ -9,12 +9,13 @@ import pandas as pd
 import numpy as np
 from gender_guesser import detector
 
-import race_record_committer as rrc
+import scraper.race_record_committer as rrc
 from db import get_connection
-from racer_identity import RaceRecord
-from racer_identity import RacerSource
-from racer_matcher import RacerMatcher
-from racer_identity import extract_name
+from scraper.racer_identity import RaceRecord
+from scraper.racer_identity import RacerSource
+from scraper.racer_matcher import RacerMatcher
+from scraper.racer_identity import extract_name
+from scraper.racer_identity import parse_time_millis
 
 # the following get_*_results() functions return dataframes with the same structure, i.e. can be trivially appended
 # note that these functions are not generalized to be reused - they contain manual/custom tweaks to the data
@@ -106,6 +107,9 @@ def get_gopher_state_results(filename="gopher_state.csv",
                                             else None
                                             for name in raw_results.race_name],
                                        raw_results.distance)
+    # the 'time' column (which is chip time) is unpopulated for some early races - time2 (gun time) is populated for all
+    # when both are populated, they are equal, some time2 is superior
+    raw_results['time'] = raw_results.time2
     raw_results['date'] = [gopher_state_extract_date(name) for name in raw_results.event_name]
 
     return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
@@ -328,7 +332,6 @@ def get_itiming_results(filename="itiming_results.csv",
     results_with_gender['name'] = results_with_gender.Name
     results_with_gender['age'] = np.nan
     results_with_gender['time'] = results_with_gender.FinishTime
-    results_with_gender['date'] = results_with_gender.event_date
     results_with_gender['location'] = results_with_gender['City, State']
 
     print('Gender inference resulted in loss of %d records' % (custom_results.shape[0] - results_with_gender.shape[0],))
@@ -348,7 +351,7 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
                                 [
                                     ['Squirrel Hill Pursuit', '2k Kids Beat the Bunny', 'freestyle', np.nan],
                                     ['Pepsi Challenge Cup XC Ski Race', '10K', 'freestyle', np.nan],
-                                    ['Book Across the Bay', 'Ski', 'freestyle', 10 * 1000],
+                                    ['Book Across the Bay', 'Ski', 'freestyle', 10],
                                     ['Seeley Hills Classic Ski Race', '5K High School Race', 'classic', np.nan],
                                     ['Seeley Hills Classic Ski Race', '2.5k High School Race', 'classic', np.nan],
                                     ['Seeley Hills Classic', '5K High School Race', 'classic', np.nan],
@@ -561,6 +564,78 @@ def get_orr_results(filename="vasa_pre2011.csv",
 
 
 ##############################
+# functions shared across many races
+##############################
+
+def enumerate_event_name(event_name):
+    event_name_lower = event_name.lower()
+
+    if 'great bear chase' in event_name_lower:
+        return 'Great Bear Chase'
+    elif 'noquemanon' in event_name_lower:
+        return 'Noquemanon Ski Marathon'
+    elif 'seeley' in event_name_lower:
+        return 'Seeley Hills Classic'
+    elif 'pepsi' in event_name_lower:
+        return 'Pepsi Challenge'
+    elif 'marine' in event_name_lower:
+        return "Marine O'Brien"
+    elif 'vasaloppet' in event_name_lower:
+        return 'Vasaloppet USA'
+    elif 'wolf track' in event_name_lower:
+        return 'Wolf Track Rendezvous'
+    elif 'nordic spirit' in event_name_lower:
+        return 'Nordic Spirit'
+    elif 'north end' in event_name_lower:
+        return 'North End Classic'
+    elif 'prebirkie' in event_name_lower or 'pre-birkie' in event_name_lower:
+        return 'Pre-Birkie'
+    elif 'squirrel' in event_name_lower:
+        return 'Squirrel Hill Ski Race'
+    elif 'sisu' in event_name_lower:
+        return 'SISU Ski Fest'
+    elif 'ashwabay' in event_name_lower:
+        return 'Mt. Ashwabay Summit Ski Race'
+    elif 'boulder lake' in event_name_lower:
+        return 'Boulder Lake Ski Race'
+    elif 'lakeland' in event_name_lower:
+        return 'Lakeland Loppet'
+    elif 'badger' in event_name_lower:
+        return 'Badget State Games'
+    elif 'book across' in event_name_lower:
+        return 'Book Across the Bay'
+    elif 'blue hills' in event_name_lower:
+        return 'Blue Hills Ascent'
+    elif 'pre-loppet' in event_name_lower:
+        return 'Pre-Loppet'
+    elif 'pursuit champs' in event_name_lower:
+        return 'MN Pursuit Champs'
+    elif ('three rivers' in event_name_lower) or ('ski rennet' in event_name_lower):
+        return 'Ski Rennet'
+    elif 'big island' in event_name_lower:
+        return 'Big Island and Back'
+    elif ('us' in event_name_lower) and ('championship' in event_name_lower):
+        return 'US Cross Country Ski Championship'
+    elif 'double pole derby' in event_name_lower:
+        return 'Double Pole Derby'
+
+    return None
+
+
+def attach_placements(results):
+    time_ordered_results = results.sort_values('time_parsed')
+
+    time_ordered_results['gender_place'] = time_ordered_results\
+        .groupby(['date', 'event_name_enumeration', 'distance', 'discipline', 'gender'])\
+        .cumcount() + 1
+    time_ordered_results['overall_place'] = time_ordered_results\
+        .groupby(['date', 'event_name_enumeration', 'distance', 'discipline'])\
+        .cumcount() + 1
+
+    return time_ordered_results
+
+
+##############################
 # start control flow
 ##############################
 
@@ -573,3 +648,61 @@ results = pd.concat([
     get_mrr_results(),
     get_orr_results(),
 ])
+# results.to_csv('~/all_results_parsed.csv')
+# results = pd.read_csv('~/all_results_parsed.csv')
+
+results = results[~pd.isnull(results.time)]
+results['time_parsed'] = [parse_time_millis(t) for t in results.time]
+# note, this knocks off a handful of labelled DNFs & DQs
+results = results[~pd.isnull(results.time_parsed)]
+
+results['event_name_enumeration'] = [enumerate_event_name(name) for name in results.event_name]
+results['date'] = pd.to_datetime(results.date)
+results['distance'] = pd.to_numeric(results.distance / 1000)
+
+results = attach_placements(results)
+
+con = None
+try:
+    con = get_connection()
+    cursor = con.cursor()
+
+    events_for_insert = results[['event_name_enumeration']].drop_duplicates()
+    events_for_insert.columns = ['name']
+    events_inserted = rrc.insert_and_get_events(cursor, events_for_insert)
+    events_inserted.columns = ['event_id', 'event_name_enumeration']
+
+    results_joined = results.merge(events_inserted, how='inner', on=['event_name_enumeration'])
+
+    event_occurrences_for_insert = results_joined[['event_id', 'date']].drop_duplicates()
+    event_occurrences_inserted = rrc.insert_and_get_event_occurrences(cursor, event_occurrences_for_insert)
+    event_occurrences_inserted.columns = ['event_occurrence_id', 'event_id', 'date']
+    event_occurrences_inserted['date'] = pd.to_datetime(event_occurrences_inserted.date)
+
+    results_joined = results_joined.merge(event_occurrences_inserted, how="inner", on=['event_id', 'date'])
+
+    races_for_insert = results_joined[['event_occurrence_id', 'distance', 'discipline']].drop_duplicates()
+    races_inserted = rrc.insert_and_get_races(cursor, races_for_insert)
+    races_inserted.columns = ['race_id', 'event_occurrence_id', 'discipline', 'distance']
+    races_inserted['distance'] = pd.to_numeric(races_inserted.distance)
+
+    results_joined = results_joined.merge(races_inserted, how="inner",
+                                                 on=['event_occurrence_id', 'discipline', 'distance'])
+    race_records_for_insert = [RaceRecord(rr['name'], str(rr.age), rr.gender, rr.time, rr.overall_place,
+                                          rr.gender_place, rr.race_id, RacerSource.RecordIngestion)
+                               for ix, rr in results_joined.iterrows()]
+    race_records_for_insert_valid = [rr for rr in race_records_for_insert if rr.get_first_name() and rr.get_last_name()]
+
+    racer_matcher = RacerMatcher(race_records_for_insert_valid)
+
+    matched_race_records = racer_matcher.merge_to_identities()
+
+    con.rollback()
+    con.close()
+
+    con.commit()
+    cursor.close()
+finally:
+    if con is not None:
+        con.rollback()
+        con.close()

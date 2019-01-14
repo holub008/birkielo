@@ -1,4 +1,4 @@
-from racer_identity import RacerIdentity
+from scraper.racer_identity import RacerIdentity
 from db import get_connection
 
 ##########################
