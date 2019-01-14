@@ -57,7 +57,7 @@ def extract_distance_from_text(text):
 
 
 def gopher_state_extract_date(race_name,
-                              date_format = "%m/%d/%Y"):
+                              date_format="%m/%d/%Y"):
     matches = re.search(r'\(([0-9]+/[0-9]+/[0-9]+)\)$', race_name)
     if matches:
         return datetime.strptime(matches.group(1), date_format)
@@ -66,7 +66,7 @@ def gopher_state_extract_date(race_name,
 
 
 def get_gopher_state_results(filename="gopher_state.csv",
-                             custom_distances = pd.DataFrame(
+                             custom_distances=pd.DataFrame(
                                                     [
                                                         ['Big Island and Back (2/3/2018)', 'Adult Skate', 10 * 1000],
                                                         ['Big Island and Back (2/3/2018)', 'Adult Classic', 10 * 1000],
@@ -74,8 +74,8 @@ def get_gopher_state_results(filename="gopher_state.csv",
                                                         ['Big Island and Back (1/30/2016)', 'Adult Skate', 10 * 1000],
                                                         ['Big Island and Back (1/30/2016)', 'Adult Classic', 10 * 1000],
                                                         ['MN Pursuit Champs (3/1/2015)', 'Indiv Pursuit', 10 * 1000]
-                                                    ], columns = ['event_name', 'race_name', 'distance']),
-                             ignore_races = pd.DataFrame(
+                                                    ], columns=['event_name', 'race_name', 'distance']),
+                             ignore_races=pd.DataFrame(
                                  [
                                      # birkielo does not exploit the youth :)
                                      # (it could be fun to include, but these races have no distance)
@@ -96,6 +96,7 @@ def get_gopher_state_results(filename="gopher_state.csv",
     raw_results = raw_results.merge(custom_distances, how="left", on=['event_name', 'race_name'])
 
     raw_results['name'] = raw_results.first_name + " " + raw_results.last_name
+    raw_results['gender'] = np.where(raw_results.gender == 'M', 'male', 'female')
     raw_results['discipline'] = [extract_discipline_from_race_name(name) for name in raw_results.race_name]
     # there's a bunch of snow shoe, team, and running events mixed in - filter them out if no discernible discipline
     raw_results = raw_results[~pd.isnull(raw_results.discipline)]
@@ -159,8 +160,7 @@ def infer_gender_from_gender_placement(results):
     return gender_inferred_results
 
 
-def infer_gender_from_name(results,
-                           placement_distance_threshold=.5):
+def infer_gender_from_name(results, placement_distance_threshold=.5):
     """
     very similar to the method using placement - although this is statistical (using name inference & distance
     measurements) vs. placement inference being closer to correct / deterministic
@@ -192,7 +192,8 @@ def infer_gender_from_name(results,
         # towards male determination. ideally, we scale relative to # of males & females
         placement_distance_from_male = abs(result[gender_place_column] - current_man_place)
         placement_distance_from_female = abs(result[gender_place_column] - current_woman_place)
-        placement_suggested_gender = 'male' if placement_distance_from_female > placement_distance_from_male else 'female'
+        placement_suggested_gender = 'male' if placement_distance_from_female > placement_distance_from_male \
+            else 'female'
 
         if name_gender == 'male':
             result['gender'] = 'male'
@@ -277,7 +278,8 @@ def get_itiming_results(filename="itiming_results.csv",
                                 ['Book Across the Bay', 'Nordic Ski', 10 * 1000, 'freestyle', None],
                                 ['Pre-Birkie', '42 km', np.nan, 'freestyle', None],
                                 ['Pre-Birkie', '26 km', np.nan, 'freestyle', None],
-                                ['Pepsi Challenge Cup Cross Country Ski Race', 'Giants Ridge 10k', np.nan, 'freestyle', None],
+                                ['Pepsi Challenge Cup Cross Country Ski Race', 'Giants Ridge 10k', np.nan, 'freestyle',
+                                 None],
                                 ['Squirrel Hill Pursuit Ski Race', '2k Beat the Bunny', np.nan, 'freestyle', None],
                                 ['Pepsi Challenge Cup XC Ski Race', 'Giants Ridge 10k', np.nan, 'freestyle', None],
                                 ['US Cross Country Ski Championship', 'Disabled Sit Ski', 12 * 1000, None, None]
@@ -298,7 +300,9 @@ def get_itiming_results(filename="itiming_results.csv",
                                        custom_results.discipline)
     custom_results = custom_results[~pd.isnull(custom_results.discipline)]
     custom_results['distance'] = np.where(pd.isnull(custom_results.distance),
-                                       [extract_distance_from_text(name) for name in custom_results.Event],
+                                       [extract_distance_from_text(name) * 1000 if extract_distance_from_text(name)
+                                        else None
+                                        for name in custom_results.Event],
                                        custom_results.distance)
 
     results_with_gender = pd.DataFrame()
@@ -325,11 +329,18 @@ def get_itiming_results(filename="itiming_results.csv",
     results_with_gender['age'] = np.nan
     results_with_gender['time'] = results_with_gender.FinishTime
     results_with_gender['date'] = results_with_gender.event_date
+    results_with_gender['location'] = results_with_gender['City, State']
 
     print('Gender inference resulted in loss of %d records' % (custom_results.shape[0] - results_with_gender.shape[0],))
     print('Total process removed %d records' % (raw_results.shape[0] - results_with_gender.shape[0],))
 
-    return results_with_gender[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+    return results_with_gender[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date',
+                                'location']]
+
+
+def chronotrack_extract_date(date_string,
+                             date_format='%m.%d.%y'):
+    return datetime.strptime(date_string, date_format)
 
 
 def get_chronotrack_results(filename="chronotrack_results.csv",
@@ -351,11 +362,15 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
                                 columns=['event_name', 'race_name', 'discipline', 'distance'])
                             ):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
+    raw_results = raw_results[raw_results.gender != 'NOT SPECIFIED']
+    raw_results['gender'] = np.where(raw_results.gender == 'M', 'male', 'female')
+
     custom_results = raw_results.merge(custom_metadata, how="left", on=['event_name', 'race_name'])
 
     custom_results['discipline'] = np.where(pd.isnull(custom_results.discipline),
-                                          [extract_discipline_from_race_name(name) for name in custom_results.race_name],
-                                          custom_results.discipline)
+                                            [extract_discipline_from_race_name(name)
+                                             for name in custom_results.race_name],
+                                            custom_results.discipline)
     custom_results = custom_results[~pd.isnull(custom_results.discipline)]
 
     custom_results['distance'] = np.where(pd.isnull(custom_results.distance),
@@ -363,10 +378,14 @@ def get_chronotrack_results(filename="chronotrack_results.csv",
                                           custom_results.distance)
     custom_results['distance'] = custom_results.distance * 1000
 
-    custom_results['date'] = custom_results.event_date
+    custom_results['date'] = [chronotrack_extract_date(d) for d in custom_results.event_date]
 
-    # TODO we have location here
-    return custom_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+    return custom_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date', 'location']]
+
+
+def mtec_extract_date(date_string,
+                      date_format='%m/%d/%Y'):
+    return datetime.strptime(date_string, date_format)
 
 
 def get_mtec_vasa_results(filename="Vasaloppet USA_raw.csv"):
@@ -380,8 +399,10 @@ def get_mtec_vasa_results(filename="Vasaloppet USA_raw.csv"):
     raw_results['age'] = raw_results.Age
     raw_results['time'] = raw_results.Time
     raw_results['event_name'] = 'Vasaloppet USA'
+    raw_results['date'] = [mtec_extract_date(d) for d in raw_results.date]
+    raw_results['location'] = raw_results.State
 
-    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date', 'location']]
 
 
 def get_mtec_mob_results(filename="Marine O'Brien_raw.csv"):
@@ -393,8 +414,10 @@ def get_mtec_mob_results(filename="Marine O'Brien_raw.csv"):
     raw_results['time'] = raw_results.Time
     raw_results['age'] = raw_results.Age
     raw_results['event_name'] = "Marine O'Brien"
+    raw_results['date'] = [mtec_extract_date(d) for d in raw_results.date]
+    raw_results['location'] = raw_results.City + ", " + raw_results.State
 
-    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date', 'location']]
 
 
 def extract_mrr_gender(age_group):
@@ -428,6 +451,11 @@ def extract_age_range(age_group):
     return None
 
 
+def mrr_extract_date(date_string,
+                     date_format='%b %d, %Y'):
+    return datetime.strptime(date_string, date_format)
+
+
 def get_mrr_results(filename="mrr_raw.csv"):
     raw_results = pd.read_csv(RESULTS_DIRECTORY + filename)
     raw_results['event_name'] = raw_results.event
@@ -442,8 +470,10 @@ def get_mrr_results(filename="mrr_raw.csv"):
                                      raw_results.gender)
     raw_results = raw_results[~pd.isnull(raw_results.gender)]
     raw_results['age'] = [extract_age_range(ag) for ag in raw_results['AG (Rank)']]
+    raw_results['date'] = [mrr_extract_date(d) for d in raw_results['date']]
+    raw_results['location'] = raw_results['City/State']
 
-    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+    return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date', 'location']]
 
 
 def extract_orr_gender(division):
@@ -454,14 +484,6 @@ def extract_orr_gender(division):
         return 'female'
     else:
         return None
-
-
-def extract_age_range(division):
-    match = re.search(r'([0-9]{2})([0-9]{2})?', str(division))
-    if match:
-        return "%s-%s" % (match.group(1), match.group(2))
-
-    return None
 
 
 def extract_gender_place(place):
@@ -478,6 +500,19 @@ def orr_infer_gender_from_gender_placement(race_results):
     race_results['GenderRank'] = race_results.gender_place
 
     return infer_gender_from_gender_placement(race_results)
+
+
+def orr_extract_date(date_string,
+                     date_format='%b %d, %Y'):
+    return datetime.strptime(date_string, date_format)
+
+
+def orr_extract_age_range(division):
+    match = re.search(r'([0-9]{2})([0-9]{2})?', str(division))
+    if match:
+        return "%s-%s" % (match.group(1), match.group(2))
+
+    return None
 
 
 def get_orr_results(filename="vasa_pre2011.csv",
@@ -515,13 +550,15 @@ def get_orr_results(filename="vasa_pre2011.csv",
 
         raw_results = raw_results.append(gender_inferred_results)
 
-    raw_results['age'] = [extract_age_range(div) for div in raw_results.DIVISION]
+    raw_results['age'] = [orr_extract_age_range(div) for div in raw_results.DIVISION]
 
     raw_results['time'] = raw_results.TIME
-    raw_results['date'] = raw_results.event_date
+    raw_results['location'] = raw_results.CITY + ', ' + raw_results.STATE
+    raw_results['date'] = [orr_extract_date(d) for d in raw_results.event_date]
     raw_results['event_name'] = 'Vasaloppet USA'
 
     return raw_results[['name', 'gender', 'age', 'discipline', 'distance', 'time', 'event_name', 'date']]
+
 
 ##############################
 # start control flow
@@ -536,6 +573,3 @@ results = pd.concat([
     get_mrr_results(),
     get_orr_results(),
 ])
-
-
-
