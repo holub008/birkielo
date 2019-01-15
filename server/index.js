@@ -3,6 +3,7 @@ const path = require('path');
 const db = require('./db');
 const store = require('./store');
 const logging = require('./logging');
+const { performance } = require('perf_hooks');
 
 const util = require('./util');
 const data = require('./data');
@@ -87,7 +88,11 @@ app.get('/api/search/', (req, res) => {
 
     // since long search strings can be slow & don't add much value in a name search
     const queryStringLimited = queryString.slice(0, 25);
+    const t0 = performance.now();
     const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
+    const t1 = performance.now();
+
+    console.log("Search took " + (t1 - t0) + " milliseconds.");
 
     res.send({
         candidates: matches ? matches : null,
