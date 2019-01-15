@@ -21,6 +21,7 @@ class UnwrappedSearchBar extends React.Component {
         this.state = {
             suggestions: [],
             selectHandler: props.selectHandler? props.selectHandler : defaultSelectHandler,
+            allowRequests: true,
             query:"",
         };
     }
@@ -42,15 +43,18 @@ class UnwrappedSearchBar extends React.Component {
     }
 
     updateSuggestions(query) {
-        // TODO there should be a timeout (e.g. 500 millis to execute the search to avoid needless requests
-        callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
-            .then(results => {
-                this.setState({ suggestions: results.candidates.slice(0, this.props.maxResults) });
-            })
-            // TODO dumping to console isn't a great long term solution
-            .catch(error => {
-                console.log(error);
-            });
+        // note this is not mutex - but that's ok
+        if (this.state.allowRequests) {
+            this.setState({allowRequests: false});
+            callBackend(`/api/search?queryString=${query}&maxResults=${this.props.maxResults}`)
+                .then(results => {
+                    this.setState({suggestions: results.candidates.slice(0, this.props.maxResults)});
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+                .finally(() => this.setState({allowRequests: true}));
+        }
     }
 
     onChange(event) {
