@@ -5,7 +5,7 @@ const util = require('../util');
 class RacerStore {
     constructor() {
         const racerQuery = {
-            name: "racer",
+            name: "racer_store",
             text: `
             SELECT
                 r.id as racer_id,

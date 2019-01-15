@@ -88,9 +88,7 @@ app.get('/api/search/', (req, res) => {
     // since long search strings can be slow & don't add much value in a name search
     const queryStringLimited = queryString.slice(0, 25);
     const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
-
-    console.log("Search took " + (t1 - t0) + " milliseconds.");
-
+    
     res.send({
         candidates: matches ? matches : null,
     });
