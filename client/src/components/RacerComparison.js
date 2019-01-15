@@ -2,47 +2,59 @@ import React from 'react';
 
 import {
     Box,
-    Text,
-    DataTable,
+    Button,
 } from "grommet";
+import { Close } from "grommet-icons";
+
 
 import Spinner from './Spinner';
 import SearchBar from './SearchBar';
 
 import {callBackend, isEmpty} from "../util/data";
+import MetricTimeline from "./MetricTimeline";
 
 // TODO if a woman & man are compared, it would be a good idea to note that they aren't compared on equal footing
 class RacerComparison extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            racers:[],
-            maxRacers: props.maxRacers ? props.maxRacers : 2,
+            racerIdsToRacerData: {},
+            maxRacers: props.maxRacers ? props.maxRacers : 5,
         }
     }
 
     addRacer(racerId) {
-        // TODO there is no mutex on this update, so a fast double click could race condition past both checks
+        const racerIdStr = racerId.toString();
+
+        const currentRacerIds = Object.keys(this.state.racerIdsToRacerData);
+
+        // there is no mutex on this update, so a fast set of clicks could race condition past both checks
         // could use the double check pattern after the API call to make this a lot less likely (but still possible
-        const existingRacerIds = this.state.racers.map(racer => racer.racerId);
-        if (this.state.racers.length < this.state.maxRacers && !existingRacerIds.includes(racerId)) {
+        if (currentRacerIds.length < this.state.maxRacers && !currentRacerIds.includes(racerIdStr)) {
             callBackend(`/api/racer/${racerId}`)
                 .then(data => {
-                    const racersCopy = this.state.racers.slice();
-                    racersCopy.push({
-                        racerId: racerId,
-                        data: data,
-                    });
-                    this.setState({racers: racersCopy});
+                    // as noted above, this is still not in mutex
+                    if (!Object.keys(this.state.racerIdsToRacerData).includes(racerIdStr)) {
+                        const racersCopy = Object.assign({}, this.state.racerIdsToRacerData);
+                        racersCopy[racerIdStr] = data;
+                        this.setState({racerIdsToRacerData: racersCopy});
+                    }
                 })
-                // TODO dumping to console isn't a great long term solution
                 .catch(error => {
                     console.log(error);
                 });
         }
     }
 
+    removeRacer(racerId) {
+        const racersCopy = Object.assign({}, this.state.racerIdsToRacerData);
+        delete racersCopy[racerId];
+
+        this.setState({racerIdsToRacerData: racersCopy});
+    }
+
     componentDidMount() {
+        // if the component is linked from a racer, always add in that racer first
         // note we wish this component to be used without a referenceRacerId, so this is not a superfluous null check
         if (this.props.referenceRacerId) {
             this.addRacer(parseInt(this.props.referenceRacerId));
@@ -53,31 +65,63 @@ class RacerComparison extends React.Component {
         this.addRacer(parseInt(event.suggestion.value));
     }
 
+    renderMetricTimeline() {
+        const racerIds = Object.keys(this.state.racerIdsToRacerData);
+        const timelines = racerIds.map(racerId => this.state.racerIdsToRacerData[racerId].metrics);
+        const names = racerIds.map(racerId => this.state.racerIdsToRacerData[racerId].racer.first_name + " " +
+            this.state.racerIdsToRacerData[racerId].racer.last_name);
+
+        return(<MetricTimeline timelines={timelines} names={names}/>);
+    }
+
+    renderDeleteRacerButtons() {
+        const racerIds = Object.keys(this.state.racerIdsToRacerData);
+        return(
+            racerIds
+                .filter(racerId => racerId !== this.props.referenceRacerId)
+                .map(racerId => {
+                    const racer = this.state.racerIdsToRacerData[racerId].racer;
+
+                    const maxWidth = racerIds.length > 1 ? 100/(racerIds.length - 1) : 100;
+
+                    return (
+                        <Button
+                            icon={<Close/>}
+                            label={racer.first_name + " " + racer.last_name}
+                            onClick={() => this.removeRacer(racerId)}
+                            size="small"
+                            key={racerId}
+                            margin={{bottom:"small"}}
+                            style={{maxWidth:`${maxWidth}%`}}
+                        />);
+                })
+        );
+    }
+
     render() {
-        if (isEmpty(this.state.racers.length) && this.props.referenceRacerId) {
+        if (isEmpty(this.state.racerIdsToRacerData)) {
             return(<Spinner/>);
         }
 
         return(
-            <Box margin={{top:"medium", left:"small"}}>
-                <Box direction="row-responsive">
-                    <Box width="medium">
-                        <Text>
-                            Note this page is a work in progress - not yet complete! <br/>
-                            Pick racers for comparison:
-                        </Text>
-                        <Box margin={{top:"small"}}>
+            <Box margin={{top:"medium", left:"small", right:"small"}}>
+                <Box direction="row" alignSelf="center">
+                    <Box alignSelf="center" border round width="xlarge">
+                        <Box margin="small" width="medium" alignSelf="center">
                             <SearchBar maxResults={20}
                                        selectHandler={(event) => this.racerSelectHandler(event)}
+                                       placeholder="Search racers for comparison"
                                        preventSearchRedirect/>
                         </Box>
-                    </Box>
-                    <Box>
-                        <DataTable/>
+                        <Box direction="row">
+                            {
+                                this.renderDeleteRacerButtons()
+                            }
+                        </Box>
                     </Box>
                 </Box>
                 {
-                    JSON.stringify(this.state.racers.map(racer=> racer.racerId))
+                    this.renderMetricTimeline()
                 }
             </Box>
         )

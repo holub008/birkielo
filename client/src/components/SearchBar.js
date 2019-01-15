@@ -9,10 +9,6 @@ import {
 
 import { withRouter } from 'react-router-dom';
 
-function defaultSuggestionDecorator(racerId, content) {
-    return(content);
-}
-
 // note that history is react-router history - this is tantamount to a redirect (SPA)
 // TODO is best UX to clear out the search bar after a selection is made?
 function defaultSelectHandler(event, history) {
@@ -24,7 +20,6 @@ class UnwrappedSearchBar extends React.Component {
         super(props);
         this.state = {
             suggestions: [],
-            suggestionDecorator: props.suggestionDecorator ? props.suggestionDecorator : defaultSuggestionDecorator,
             selectHandler: props.selectHandler? props.selectHandler : defaultSelectHandler,
             query:"",
         };
@@ -34,15 +29,13 @@ class UnwrappedSearchBar extends React.Component {
         return(this.state.suggestions.map(suggestion => {
             return({
                 label:
-                    this.state.suggestionDecorator(suggestion.racer_id,
-                        <Box fill>
-                            <Anchor>
-                                {
-                                    `${suggestion.first_name} ${suggestion.last_name}`
-                                }
-                            </Anchor>
-                        </Box>
-                    ),
+                    <Box fill>
+                        <Anchor>
+                            {
+                                `${suggestion.first_name} ${suggestion.last_name}`
+                            }
+                        </Anchor>
+                    </Box>,
                 value:`${suggestion.racer_id}`
             })
         }));
@@ -88,7 +81,7 @@ class UnwrappedSearchBar extends React.Component {
                 onChange={(event) => this.onChange(event)}
                 onSelect={(event) => this.state.selectHandler(event, this.props.history)}
                 suggestions={this.renderSuggestions()}
-                placeholder="Skier Search"
+                placeholder={this.props.placeholder ? this.props.placeholder : "Skier Search"}
                 style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
                 onKeyPress={(event) => this.checkForAndHandleEnter(event)}
             />

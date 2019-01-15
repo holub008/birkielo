@@ -31,6 +31,10 @@ class RacerSummary extends React.Component {
             .catch(error => console.log(error));
     }
 
+    getName() {
+        return this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name;
+    }
+
     renderProfile() {
         return(
             <div>
@@ -50,7 +54,7 @@ class RacerSummary extends React.Component {
                         </Box>
                         {
                             this.state.racerData.metrics.length > 1 ?
-                                <MetricTimeline timeline={this.state.racerData.metrics}/>
+                                <MetricTimeline timelines={ [this.state.racerData.metrics] } names={[this.getName()]}/>
                                 : <StatusCritical size="large"/>
                         }
                     </Box>
@@ -107,7 +111,9 @@ class RacerSummary extends React.Component {
                     <Box direction="row">
                         <Box>
                             <Heading size="medium" margin="xsmall">
-                                {this.state.racerData.racer.first_name + " " + this.state.racerData.racer.last_name}
+                                {
+                                    this.getName()
+                                }
                             </Heading>
                         </Box>
                         <Box pad="small" border="left">

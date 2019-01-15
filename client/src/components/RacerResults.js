@@ -53,7 +53,12 @@ const columns = [
         render: datum => (
             <Box pad={{ vertical: "xsmall" }}>
                 <Meter
-                    values={[{ value: 100 - datum.percent_placement * 100 }]}
+                    values={[
+                        {
+                            value: 100 - datum.percent_placement * 100,
+                            color: "rgb(17,147,154)"
+                        }
+                    ]}
                     thickness="small"
                     size="small"
                 />

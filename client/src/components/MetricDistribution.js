@@ -35,8 +35,8 @@ function MetricDistribution(props) {
             yDomain={[yDomain.min, yDomain.max]}
         >
             <VerticalBarSeries data={metrics} />
-            <XAxis />
-            <YAxis />
+            <XAxis title="Birkielo"/>
+            <YAxis title="frequency"/>
             <LineMarkSeries data={[
                 {x: props.racerScore, y:yDomain.max},
                 {x: props.racerScore, y:yDomain.min}
