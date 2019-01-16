@@ -7,6 +7,7 @@ import About from "./components/About";
 import Support from "./components/Support";
 import RacerSummary from "./components/RacerSummary";
 import RankedRacerList from "./components/RankedRacerList";
+import NotFound from "./components/NotFound";
 
 import {apiGender} from "./util/data";
 
@@ -40,6 +41,7 @@ class App extends Component {
                                 (props) => <SearchResults query={props.match.params.query}
                                                           key={props.match.params.query}/>
                             }/>
+                            <Route component={NotFound}/>
                         </Switch>
                     </div>
                 </div>

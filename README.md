@@ -50,8 +50,9 @@ but here's an example execution:
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
-* User selected skier comparison or head to head comparison
+* User selected skier head to head result comparison
 * Race result list and view pages
+* Top ranked racers over time 
 * Improve matching logic
     - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
     - Check for more than one result in a single race (and handle or or throw out)

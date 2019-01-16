@@ -14,6 +14,7 @@ import {callBackend, isEmpty} from "../util/data";
 import MetricDistribution from "./MetricDistribution";
 import MetricTimeline from "./MetricTimeline";
 import RacerComparison from "./RacerComparison";
+import NotFound from "./NotFound";
 
 const LINK_COLOR = "rgb(144,96,235)";
 
@@ -103,6 +104,9 @@ class RacerSummary extends React.Component {
             return(
                 <Spinner/>
             );
+        }
+        else if (!this.state.racerData.valid) {
+            return(<NotFound/>);
         }
 
         return(

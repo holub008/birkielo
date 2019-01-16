@@ -19,7 +19,7 @@ import '../styles/About.css';
 
 const featureTabs = {
     concept:
-        <Tab title="Concept">
+        <Tab title="Concept" key="concept">
             <Box>
                 <Text margin="small">
                     How do you find ski results? What do you hope do with them?
@@ -60,7 +60,7 @@ const featureTabs = {
             </Box>
         </Tab>,
     birkielo:
-        <Tab title="Birkielo Computation">
+        <Tab title="Birkielo Computation" key="computation">
             <Box margin="medium">
                 <Box align="center">
                     <Image src="/images/calc.jpg" style={{maxWidth:"150px"}}/>
@@ -144,7 +144,7 @@ const featureTabs = {
             </Box>
         </Tab>,
     results:
-        <Tab title="Results">
+        <Tab title="Results" key="results">
             <Box margin="medium">
                 <Text>
                     Birkielo is predicated on having access to consolidated ski results - both for providing a single

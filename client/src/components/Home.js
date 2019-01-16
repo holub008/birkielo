@@ -5,13 +5,14 @@ import {
     Grommet,
     DropButton,
     Text,
-    Image,
 } from "grommet";
 import { grommet } from "grommet/themes";
 import { Link } from 'react-router-dom';
 
 import '../styles/Home.css';
 import SearchBar from "./SearchBar";
+import EventSankey from "./EventSankey";
+import EventDonut from "./EventDonut";
 
 const DropContent = ({ onClose }) => (
     <Box pad="small">
@@ -25,6 +26,10 @@ const DropContent = ({ onClose }) => (
 );
 
 function Home(props) {
+    // note the window.innerWidth conditional - critically, note that it isn't a listener & accompanying state update
+    // if the user is on mobile screen less than 500px ----> show small graphic
+    // if the user is on a big screen shrunk less than 500px and then sizes up -----> continue to show small graphic
+    // if the user is on a big screen and shrinks it less than 500px -----> cruddy render until refresh
     return(
         <div className="home">
             <Grommet theme={grommet}>
@@ -46,12 +51,15 @@ function Home(props) {
                     <Box margin="medium" width="large" alignSelf="center">
                         <SearchBar maxResults={20}/>
                     </Box>
-                </Box>
-                <Box align="center" margin={{top:"medium"}}>
-                    <Image src="/images/skier.gif" style={{width:"50%", maxWidth:"400px"}}/>
-                    <Text style={{fontStyle: "italic"}}>
-                        Chase trails, not links
-                    </Text>
+                    <Box margin={{top: "small"}} alignSelf="center">
+                        {
+                            // TODO the EventDonut has some left/right play on a 300px screen :(
+                            window.innerWidth > 550 ?
+                                <EventSankey />
+                                :
+                                <EventDonut />
+                        }
+                    </Box>
                 </Box>
             </Grommet>
         </div>

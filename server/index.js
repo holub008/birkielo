@@ -13,6 +13,7 @@ const port = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === "production";
 
 const racerStore = new store.RacerStore();
+const raceMetricStore = new store.RaceMetricStore([2018]);
 const eventLogger = new logging.EventLogger();
 
 /**
@@ -88,7 +89,7 @@ app.get('/api/search/', (req, res) => {
     // since long search strings can be slow & don't add much value in a name search
     const queryStringLimited = queryString.slice(0, 25);
     const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
-    
+
     res.send({
         candidates: matches ? matches : null,
     });
@@ -97,13 +98,13 @@ app.get('/api/search/', (req, res) => {
 app.get('/api/racer/:id', async (req, res) => {
     const racerId = parseInt(req.params.id);
 
-    // async, does not block progression
-    eventLogger.logForELBForwardedRequest(req, "racer_summary", racerId);
-
     if (!racerId || !racerStore.containsRacerId(racerId)) {
-        res.send({});
+        res.send({valid: false});
         return;
     }
+
+    // async, does not block progression
+    eventLogger.logForELBForwardedRequest(req, "racer_summary", racerId);
 
     const racerQuery = {
         name: "racer",
@@ -225,11 +226,36 @@ app.get('/api/racer/:id', async (req, res) => {
     }
 
     res.send({
+        valid: true,
         racer: racer && racer.rows.length ? racer.rows[0] : null,
         results: racerResults ? racerResults.rows : null,
         metrics: racerMetrics ? racerMetrics.rows : null,
         relativeStatistics: relativeStatistics,
     });
+});
+
+app.get('/api/events/flow/:year', (req, res) => {
+    const year = parseInt(req.params.year);
+
+    if (!year) {
+        res.send({});
+        return;
+    }
+
+    const flowData = raceMetricStore.getFlowData(year);
+    res.send({flowData:flowData});
+});
+
+app.get('/api/events/share/:year', (req, res) => {
+    const year = parseInt(req.params.year);
+
+    if (!year) {
+        res.send({});
+        return;
+    }
+
+    const shareData = raceMetricStore.getShareData(year);
+    res.send({shareData: shareData});
 });
 
 /**
