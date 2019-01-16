@@ -57,7 +57,7 @@ function Home(props) {
                             window.innerWidth > 550 ?
                                 <EventSankey />
                                 :
-                                <EventDonut />
+                                <EventDonut year={2018} />
                         }
                     </Box>
                 </Box>

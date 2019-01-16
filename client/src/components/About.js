@@ -15,6 +15,8 @@ import {
 import { grommet } from "grommet/themes";
 import { Link } from 'react-router-dom';
 
+import EventDonut from './EventDonut';
+
 import '../styles/About.css';
 
 const featureTabs = {
@@ -32,13 +34,13 @@ const featureTabs = {
                             Commit them to memory
                         </li>
                         <li>
-                            Compare races and racers.
+                            Compare races and racers
                         </li>
                         <li>
-                            Analyze how a racer's performance has changed over time.
+                            Analyze how a racer's performance has changed over time
                         </li>
                     </ul>
-                    All of these approaches are inefficient, inaccurate, and non-reproducible.
+                    All of these approaches are inefficient, imprecise & subject to bias, and non-reproducible.
                 </Text>
                 <Text margin="small">
                     Birkielo.com is both a web scraper and an application of the&nbsp;
@@ -183,15 +185,15 @@ const featureTabs = {
                 <Text>
                     Unlike the physical results graveyards, which are effectively unrecoverable (without substantial
                     human effort), these e-graveyards can be cheaply & quickly accessed. For the uninitiated, web
-                    scraping is the process of extracting data from the internet; this frequently involves parsing html,
-                    the text data underlying most of the content you see in a browser. In fact, the majority of race
-                    results that are not PDFs are structured as html "tables"- html objects that have generally
-                    well-structured content (think excel spreadsheets for the internet). Using simple web request &
-                    parsing tools (Birkielo utilizes&nbsp;
+                    scraping is the process of extracting data from the internet; this frequently involves probing
+                    websites and processing json & html - the text data underlying much of the content you see in a
+                    browser. In fact, the majority of old race results that are not PDFs are structured as html
+                    "tables"- html objects that have generally well-structured content (think excel spreadsheets for the
+                    internet). Using simple web request & parsing tools (Birkielo utilizes&nbsp;
                     <Anchor href="https://www.crummy.com/software/BeautifulSoup/">
                         BeautifulSoup
                     </Anchor>
-                    ), we can dig up this structured data.
+                    ), we can exhume this structured data.
                 </Text>
                 <Heading size="small">Formatting Hell</Heading>
                 <Text>
@@ -233,17 +235,22 @@ const featureTabs = {
                 </Text>
                 <Heading size="small">Which Races?</Heading>
                 <Text>
-                    Races are chosen for inclusion on the basis of 1. ease of scraping (how clean & well formatted the
-                    data is) and 2. the number of racers in the race. These are measures of how much utility the races
-                    provide. To date, only the Birkie & City of Lakes
-                    Loppet have been consumed - they are the two lowest hanging fruits in this regard. Future planned
-                    adds are the Vasaloppet, Noquemanon, Pepsi Challenge, Great Bear Chase, and Seeley Hills Classic.
-                    If you would like to see other races added,&nbsp;
+                    Races are chosen for inclusion on the basis of
+                    <ol>
+                        <li>ease of scraping (how clean & well formatted the data is) </li>
+                        <li>the number of racers in the race</li>
+                    </ol>
+
+                    These provide a measure of how time efficient programming a scraper will be. To date, a handful
+                    of races have been scraped - see the below donut for a complete list of races from 2018. If you
+                    would like to see other races added,&nbsp;
                     <Link to="/support" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
-                        let me know or contribute
+                        let me know or contribute results you've dug up!
                     </Link>
-                    .
                 </Text>
+                <Box alignSelf="center">
+                    <EventDonut year={2018} />
+                </Box>
             </Box>
         </Tab>,
 };

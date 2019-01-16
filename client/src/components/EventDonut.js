@@ -3,8 +3,6 @@ import React, {Fragment} from 'react';
 import { RadialChart, Hint } from 'react-vis';
 import {callBackend} from "../util/data";
 
-const YEAR = 2018;
-
 export default class EventRadial extends React.Component {
     state = {
         pieSlices:[],
@@ -24,7 +22,7 @@ export default class EventRadial extends React.Component {
     }
 
     componentDidMount() {
-        callBackend(`/api/events/share/${YEAR}`)
+        callBackend(`/api/events/share/${this.props.year}`)
             .then(data => this.setState({ pieSlices: this.processToPieSlices(data.shareData) }))
             .catch(error => console.log(error));
     }
@@ -32,9 +30,9 @@ export default class EventRadial extends React.Component {
     renderSliceHint(){
         const displayData = {};
         displayData['Race'] = this.state.hoveredSlice.name;
-        displayData[`${YEAR} # of Skiers`] = this.state.hoveredSlice.theta;
+        displayData[`${this.props.year} # of Skiers`] = this.state.hoveredSlice.theta;
         displayData['Mean Birkielo'] = this.state.hoveredSlice.mean_elo.toFixed(1);
-        return(<Hint value={displayData}/>);
+        return(<Hint x={215} y={170} value={displayData}/>);
     }
 
     render() {
