@@ -109,6 +109,7 @@ class RacerSummary extends React.Component {
             return(<NotFound/>);
         }
 
+        // TODO the icons need tooltips / hover text
         return(
             <Grommet theme={grommet}>
                 <Box direction="row-responsive" gap="small">
@@ -129,12 +130,21 @@ class RacerSummary extends React.Component {
                         </Box>
                     </Box>
                     <Box pad="small" align="center" direction="row" gap="small" border="left">
-                        <User onClick={() => this.setState({profileState:"user"})}
-                              color={ this.getIconColor("user") }/>
-                        <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
-                                  color={ this.getIconColor("neighborhood") }/>
-                        <Group onClick={() => this.setState({profileState:"compare"})}
-                               color={ this.getIconColor("compare") }/>
+                        <div title="Skier Profile" style={{cursor: "pointer" }}>
+                            <User onClick={() => this.setState({profileState:"user"})}
+                                  color={ this.getIconColor("user") }
+                            />
+                        </div>
+                        <div title="Nearest Competitors" style={{cursor: "pointer" }}>
+                            <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
+                                      color={ this.getIconColor("neighborhood") }
+                            />
+                        </div>
+                        <div title="Compare to Competitors" style={{cursor: "pointer" }}>
+                            <Group onClick={() => this.setState({profileState:"compare"})}
+                                   color={ this.getIconColor("compare") }
+                            />
+                        </div>
                     </Box>
                 </Box>
                 {
