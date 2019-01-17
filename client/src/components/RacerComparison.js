@@ -82,10 +82,6 @@ class RacerComparison extends React.Component {
         }
     }
 
-    racerSelectHandler(event) {
-        this.addRacer(parseInt(event.suggestion.value));
-    }
-
     renderMetricTimeline() {
         const racerIds = Object.keys(this.state.racerIdsToRacerData);
         const timelines = racerIds.map(racerId => this.state.racerIdsToRacerData[racerId].metrics);
@@ -137,9 +133,10 @@ class RacerComparison extends React.Component {
                     <Box alignSelf="center" border round width="xlarge">
                         <Box margin="small" width="medium" alignSelf="center">
                             <SearchBar maxResults={20}
-                                       selectHandler={(event) => this.racerSelectHandler(event)}
+                                       selectHandler={event => this.addRacer(parseInt(event.suggestion.value))}
+                                       enterHandler={racer => this.addRacer(racer.racer_id)}
                                        placeholder="Search racers for comparison"
-                                       preventSearchRedirect/>
+                            />
                         </Box>
                         <Box direction="row">
                             {

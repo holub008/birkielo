@@ -166,13 +166,13 @@ class RacerResultHeadToHead extends React.Component {
                         <Box
                             border="right"
                             onClick={() => this.setState({join: "outer"})}
-                            style={{cursor: "pointer" }}
+                            style={{cursor: this.state.join !== "outer" ? "pointer" : "auto" }}
                         >
                             <VennIcon join="outer" highlight={this.state.join !== "outer"}/>
                         </Box>
                         <Box
                             onClick={() => this.setState({join: "inner"})}
-                            style={{cursor: "pointer" }}
+                            style={{cursor: this.state.join !== "inner" ? "pointer" : "auto" }}
                         >
                             <VennIcon join="inner" highlight={this.state.join !== "inner"}/>
                         </Box>

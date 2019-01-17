@@ -73,8 +73,10 @@ class UnwrappedSearchBar extends React.Component {
 
     // this is gross, but grommet does not seem to provide a method for handling "enter"
     checkForAndHandleEnter(event) {
-        if (event.key === 'Enter' && !this.props.preventSearchRedirect) {
-            this.props.history.push(`/search/${this.state.query}`);
+        if (event.key === 'Enter') {
+            this.props.enterHandler ?
+                this.props.enterHandler(this.state.suggestions[0]) :
+                this.props.history.push(`/search/${this.state.query}`);
         }
     }
 

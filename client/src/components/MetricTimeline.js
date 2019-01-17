@@ -45,7 +45,6 @@ function MetricTimeline(props) {
             return({
                 x: new Date(point.date).getTime(),
                 y: point.elo,
-                label: "blahblah",
             })
         });
 
@@ -56,8 +55,10 @@ function MetricTimeline(props) {
     });
 
     const legendItems = props.names.map((name, index) => {
+        const timeline = props.timelines[index];
+        const latestElo = timeline[0].elo;
         return ({
-            title: name,
+            title: `${name}: ${latestElo.toFixed(1)}`,
             color: EXTENDED_DISCRETE_COLOR_RANGE[index],
         });
     });

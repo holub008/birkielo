@@ -12,6 +12,7 @@ import RacerList from './RacerList';
 import {callBackend, isEmpty} from "../util/data";
 
 const MAX_RACERS = 51;
+const MIN_RACERS = 1;
 
 class RacerNeighborhood extends React.Component {
     constructor(props) {
@@ -47,22 +48,37 @@ class RacerNeighborhood extends React.Component {
             );
         }
 
-        const racersListMid = this.state.racers.length / 2;
+        const focusRacer = this.state.racers.filter(racer => racer.racer_id === parseInt(this.props.racerId));
+        // TODO unchecked list access
+        const racersListMid = this.state.racers.indexOf(focusRacer[0]);
         const interval = this.state.nRacers / 2;
-        const racersForDisplay = this.state.racers.slice(racersListMid - interval,  racersListMid + interval);
+        const racersForDisplay = this.state.racers.slice(Math.max(racersListMid - interval, 0),
+            Math.min(racersListMid + interval, this.state.racers.length));
 
         return(
             <Box style={{maxWidth:"700px"}} margin={{top:"medium", left:"medium"}}>
                 <Text size="large">
                     {`Neighboring ${this.state.nRacers - 1} Competitors`}
                 </Text>
-                <RangeInput
-                    onChange={event => this.setState({ nRacers: event.target.value })}
-                    value={this.state.nRacers}
-                    step={2}
-                    min={1}
-                    max={MAX_RACERS}
-                />
+                <Box direction="row">
+                    <Text>
+                        {
+                            MIN_RACERS - 1
+                        }
+                    </Text>
+                    <RangeInput
+                        onChange={event => this.setState({ nRacers: event.target.value })}
+                        value={this.state.nRacers}
+                        step={2}
+                        min={MIN_RACERS}
+                        max={MAX_RACERS}
+                    />
+                    <Text>
+                        {
+                            MAX_RACERS - 1
+                        }
+                    </Text>
+                </Box>
                 <RacerList racers={racersForDisplay}/>
             </Box>);
     }
