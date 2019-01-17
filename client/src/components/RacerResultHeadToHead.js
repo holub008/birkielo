@@ -128,7 +128,8 @@ class RacerResultHeadToHead extends React.Component {
                 header: "Event",
                 render: datum => `${new Date(datum.event_date).getFullYear()} 
                     ${datum.event_name.split(/[ ]+/).map(str => str.slice(0,7)).join(" ")} 
-                    ${shortenDiscipline(datum.discipline)} ${datum.distance}K`
+                    ${shortenDiscipline(datum.discipline)} ${datum.distance}K`,
+                primary: true,
             }];
         }
         else {

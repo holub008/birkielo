@@ -43,6 +43,7 @@ but here's an example execution:
 (cd offline/ && 
     pipenv run python scraper/birkie_processor.py &&
     pipenv run python scraper/coll_scraper.py &&
+    pipenv run python scraper/incremental_processor.py &&
     pipenv run python scoring/elo_executor.py)
 ```
 
@@ -50,8 +51,9 @@ but here's an example execution:
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
-* User selected skier head to head result comparison
-* Race result list and view pages
+* Tuning Elo computations
+* Per event & per race results
+* Views on race metrics
 * Top ranked racers over time 
 * Improve matching logic
     - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
