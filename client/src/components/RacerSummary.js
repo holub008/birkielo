@@ -17,13 +17,18 @@ import RacerComparison from "./RacerComparison";
 import NotFound from "./NotFound";
 
 const LINK_COLOR = "rgb(144,96,235)";
+const VALID_PROFILE_STATES = ['user', 'neighborhood', 'compare'];
 
 class RacerSummary extends React.Component {
+    constructor(props){
+        super(props);
 
-    state = {
-        racerData: {},
-        profileState: "user",
-    };
+        const validatedProfileState = VALID_PROFILE_STATES.includes(props.view) ? props.view : "user";
+        this.state = {
+            racerData: {},
+            profileState: validatedProfileState,
+        };
+    }
 
     componentDidMount() {
         callBackend("/api/racer/" + this.props.racerId)

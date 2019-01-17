@@ -27,7 +27,12 @@ class App extends Component {
                     <div className="page">
                         <Switch>
                             <Route path="/" exact component={Home} />
-                            <Route path={"/racer/:racer_id"} render={
+                            <Route path={"/racer/:racer_id/:view"} exact render={
+                                (props) => <RacerSummary racerId={props.match.params.racer_id}
+                                                         key={props.match.params.racer_id}
+                                                         view={props.match.params.view}/>
+                            }/>
+                            <Route path={"/racer/:racer_id"} exact render={
                                 (props) => <RacerSummary racerId={props.match.params.racer_id}
                                                          key={props.match.params.racer_id}/>
                             }/>
