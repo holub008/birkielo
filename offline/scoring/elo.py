@@ -7,13 +7,13 @@ class NaiveElo:
 
     def __init__(self,
                  default_score=1000,
-                 k_factor=.5,
+                 k_factor=2,
                  log_odds_oom_differential=200,
                  score_floor=100,
                  score_ceiling=3000,
                  max_score_change=200):
         """
-        for a simple mathemtical explanation of Elo parameters, see
+        for a simple mathematical explanation of Elo parameters, see
         https://math.stackexchange.com/questions/1731991/why-does-the-elo-rating-system-work
         :param default_score: the prior score for a racer with no history
         :param k_factor: corresponds directly to the Elo k-factor, but much defaulting to lower than typical weight
@@ -51,7 +51,7 @@ class NaiveElo:
         """
         time_ordered_grouped_races = results\
             .sort_values('event_date')\
-            .groupby(['event_date', 'race_id', 'racer_gender'], sort=False)
+            .groupby(['event_date', 'race_id'], sort=False)
 
         scores_through_time_sparse = pd.DataFrame()
         for race, results in time_ordered_grouped_races:
