@@ -68,3 +68,27 @@ export function dedupeDates(raceResults) {
 
     return finalResults;
 }
+
+export function milliTimeRender(millis){
+    const hours = Math.floor(millis / 1000 / 60 / 60);
+    const minutes = Math.floor((millis - hours * 1000 * 60 * 60) / 1000 / 60);
+    return hours + "h" + minutes + "m"
+}
+
+export function shortenDiscipline(discipline) {
+    if (discipline === 'freestyle') {
+        return 'fs';
+    }
+    else if (discipline === 'classic') {
+        return 'cl';
+    }
+    else if (discipline === 'pursuit') {
+        return 'pur';
+    }
+    else if (discipline === 'sitski') {
+        return 'sit';
+    }
+    else {
+        return discipline;
+    }
+}

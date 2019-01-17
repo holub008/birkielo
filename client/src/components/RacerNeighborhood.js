@@ -51,7 +51,6 @@ class RacerNeighborhood extends React.Component {
         const interval = this.state.nRacers / 2;
         const racersForDisplay = this.state.racers.slice(racersListMid - interval,  racersListMid + interval);
 
-        // TODO the DataTable render in RacerList is atrociously laggy - just use a DOM table
         return(
             <Box style={{maxWidth:"700px"}} margin={{top:"medium", left:"medium"}}>
                 <Text size="large">

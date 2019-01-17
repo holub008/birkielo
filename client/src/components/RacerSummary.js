@@ -86,7 +86,7 @@ class RacerSummary extends React.Component {
             return(<RacerNeighborhood racerId={this.props.racerId}/>);
         }
         else if(this.state.profileState === 'compare') {
-            return(<RacerComparison referenceRacerId={this.props.racerId}/>)
+            return(<RacerComparison referenceRacerId={parseInt(this.props.racerId)}/>)
         }
     }
 

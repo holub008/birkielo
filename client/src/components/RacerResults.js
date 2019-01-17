@@ -8,16 +8,10 @@ import {
 } from "grommet";
 import { Contract, Expand } from 'grommet-icons';
 
-import { dedupeDates } from "../util/data";
+import { dedupeDates, milliTimeRender } from "../util/data";
 
 const LINK_COLOR = "rgb(144,96,235)";
 
-function milliTimeRender(millis){
-    // TODO it's too late to figure this out elegantly :)
-    const hours = Math.floor(millis / 1000 / 60 / 60);
-    const minutes = Math.floor((millis - hours * 1000 * 60 * 60) / 1000 / 60);
-    return hours + "h" + minutes + "m"
-}
 
 const columns = [
     {
@@ -36,8 +30,6 @@ const columns = [
     {
         property: "distance",
         header: "Distance (K)",
-        render: datum =>
-            datum.distance
     },
     {
         property: "duration",
@@ -83,7 +75,7 @@ function shrinkColumns(columns) {
                 colCopy.render;
             return colCopy;
         }
-    )
+    );
 
     return shrunkenColumns;
 }
@@ -93,7 +85,7 @@ class RacerResults extends React.Component {
         super(props);
 
         this.state = {
-            shrinkTable: false,
+            shrinkTable: window.innerWidth < 650,
         };
     }
 
@@ -103,7 +95,7 @@ class RacerResults extends React.Component {
             .sort((a, b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
             .map(result => {
                 const resultCopy = Object.assign({}, result);
-                resultCopy.percent_placement = result.gender_place / result.race_size;
+                resultCopy.percent_placement = result.gender_place / result.gender_racers;
                 return (resultCopy);
             });
 

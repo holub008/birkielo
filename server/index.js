@@ -131,18 +131,26 @@ app.get('/api/racer/:id', async (req, res) => {
         name: "racer_results",
         // TODO the race size calculation is a full table scan & this query may not quite produce a valid ranking
         text: `
-            WITH race_size AS (
+            WITH gender_race_size AS (
                 SELECT
                     race_id as race_id,
                     gender,
-                    count(1) as race_size
+                    count(1) as racers
                 FROM race_result
                 GROUP BY race_id, gender
+            ),
+            total_race_size AS (
+                SELECT
+                    race_id,
+                    SUM(racers) as racers
+                 FROM gender_race_size
+                 GROUP BY race_id
             )
             SELECT
                 rr.gender_place,
                 rr.overall_place,
-                rs.race_size,
+                grs.racers as gender_racers,
+                trs.racers as total_racers,
                 rr.duration,
                 r.distance,
                 r.discipline,
@@ -151,9 +159,11 @@ app.get('/api/racer/:id', async (req, res) => {
             FROM race_result rr
             JOIN race r
                 ON rr.race_id = r.id
-            JOIN race_size rs
-                ON r.id = rs.race_id
-                    AND rr.gender = rs.gender
+            JOIN gender_race_size grs
+                ON r.id = grs.race_id
+                    AND rr.gender = grs.gender
+            JOIN total_race_size trs
+                ON r.id = trs.race_id
             JOIN event_occurrence eo
                 ON r.event_occurrence_id = eo.id
             JOIN event e

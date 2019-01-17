@@ -3,15 +3,16 @@ import React from 'react';
 import {
     Box,
     Button,
+    Text,
 } from "grommet";
 import { Close } from "grommet-icons";
-
 
 import Spinner from './Spinner';
 import SearchBar from './SearchBar';
 
 import {callBackend, isEmpty} from "../util/data";
 import MetricTimeline from "./MetricTimeline";
+import RacerResultHeadToHead from "./RacerResultHeadToHead";
 
 // TODO if a woman & man are compared, it would be a good idea to note that they aren't compared on equal footing
 class RacerComparison extends React.Component {
@@ -20,11 +21,13 @@ class RacerComparison extends React.Component {
         this.state = {
             racerIdsToRacerData: {},
             maxRacers: props.maxRacers ? props.maxRacers : 5,
+            selectedRacerId: null,
         }
     }
 
     addRacer(racerId) {
         const racerIdStr = racerId.toString();
+        const selectedRacerId = this.props.referenceRacerId === racerId ? null : racerId;
 
         const currentRacerIds = Object.keys(this.state.racerIdsToRacerData);
 
@@ -37,7 +40,10 @@ class RacerComparison extends React.Component {
                     if (!Object.keys(this.state.racerIdsToRacerData).includes(racerIdStr)) {
                         const racersCopy = Object.assign({}, this.state.racerIdsToRacerData);
                         racersCopy[racerIdStr] = data;
-                        this.setState({racerIdsToRacerData: racersCopy});
+                        this.setState({
+                            racerIdsToRacerData: racersCopy,
+                            selectedRacerId: selectedRacerId,
+                        });
                     }
                 })
                 .catch(error => {
@@ -49,15 +55,30 @@ class RacerComparison extends React.Component {
     removeRacer(racerId) {
         const racersCopy = Object.assign({}, this.state.racerIdsToRacerData);
         delete racersCopy[racerId];
+        const updatedState = {racerIdsToRacerData: racersCopy};
 
-        this.setState({racerIdsToRacerData: racersCopy});
+        if (this.state.selectedRacerId === racerId) {
+            updatedState.selectedRacerId = null;
+        }
+
+        this.setState(updatedState);
+    }
+
+    toggleSelectedRacer(racerId) {
+        if (this.state.selectedRacerId === racerId) {
+            this.setState({selectedRacerId: null});
+        }
+        else {
+            this.setState({selectedRacerId: racerId});
+        }
+
     }
 
     componentDidMount() {
         // if the component is linked from a racer, always add in that racer first
         // note we wish this component to be used without a referenceRacerId, so this is not a superfluous null check
         if (this.props.referenceRacerId) {
-            this.addRacer(parseInt(this.props.referenceRacerId));
+            this.addRacer(this.props.referenceRacerId);
         }
     }
 
@@ -75,7 +96,7 @@ class RacerComparison extends React.Component {
     }
 
     renderDeleteRacerButtons() {
-        const racerIds = Object.keys(this.state.racerIdsToRacerData);
+        const racerIds = Object.keys(this.state.racerIdsToRacerData).map(racerId => parseInt(racerId));
         return(
             racerIds
                 .filter(racerId => racerId !== this.props.referenceRacerId)
@@ -86,13 +107,18 @@ class RacerComparison extends React.Component {
 
                     return (
                         <Button
-                            icon={<Close/>}
-                            label={racer.first_name + " " + racer.last_name}
-                            onClick={() => this.removeRacer(racerId)}
+                            icon={<Close onClick={() => this.removeRacer(racerId)} />}
+                            label={
+                                <Box onClick={() => this.toggleSelectedRacer(racerId)}>
+                                    {racer.first_name + " " + racer.last_name}
+                                    </Box>
+                            }
                             size="small"
                             key={racerId}
                             margin={{bottom:"small"}}
                             style={{maxWidth:`${maxWidth}%`}}
+                            primary={this.state.selectedRacerId === racerId}
+                            color="rgb(17,147,154)"
                         />);
                 })
         );
@@ -103,6 +129,8 @@ class RacerComparison extends React.Component {
             return(<Spinner/>);
         }
 
+        const leftRacerId = this.props.referenceRacerId;
+        const rightRacerId = this.state.selectedRacerId;
         return(
             <Box margin={{top:"medium", left:"small", right:"small"}}>
                 <Box direction="row" alignSelf="center">
@@ -120,9 +148,26 @@ class RacerComparison extends React.Component {
                         </Box>
                     </Box>
                 </Box>
-                {
-                    this.renderMetricTimeline()
-                }
+                <Box direction="row-responsive" justify="center" margin={{vertical: "large"}}>
+                    <Box align="center" fill="horizontal" border="right">
+                        {
+                            rightRacerId ?
+                                <RacerResultHeadToHead
+                                    racerLeft={this.state.racerIdsToRacerData[leftRacerId]}
+                                    racerRight={this.state.racerIdsToRacerData[rightRacerId]}
+                                />
+                                :
+                                <Text>
+                                    Search and select racers to compare race by race results
+                                </Text>
+                        }
+                    </Box>
+                    <Box align="center" fill="horizontal">
+                        {
+                            this.renderMetricTimeline()
+                        }
+                    </Box>
+                </Box>
             </Box>
         )
     }

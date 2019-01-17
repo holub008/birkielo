@@ -45,6 +45,7 @@ const defaultAdditionalColumns = [
 function RacerList(props) {
     const additionalColumns = props.additionalColumns ? props.additionalColumns : defaultAdditionalColumns;
     const columns = alwaysColumns.slice().concat(additionalColumns);
+    // note the DataTable render in RacerList is atrociously laggy when in react dev mode
     return(<DataTable columns={columns} data={props.racers} size="large"/>);
 }
 
