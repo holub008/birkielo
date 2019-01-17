@@ -50,7 +50,7 @@ class RacerNeighborhood extends React.Component {
 
         const focusRacer = this.state.racers.filter(racer => racer.racer_id === parseInt(this.props.racerId));
         // TODO unchecked list access
-        const racersListMid = this.state.racers.indexOf(focusRacer[0]);
+        const racersListMid = this.state.racers.indexOf(focusRacer[0]) + 1;
         const interval = this.state.nRacers / 2;
         const racersForDisplay = this.state.racers.slice(Math.max(racersListMid - interval, 0),
             Math.min(racersListMid + interval, this.state.racers.length));
