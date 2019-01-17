@@ -29,7 +29,8 @@ module.exports ={
                         roe.middle_name,
                         roe.last_name,
                         roe.elo,
-                        RANK() OVER (ORDER BY roe.elo DESC) as rank
+                        -- note that this amounts to random tie breaks
+                        ROW_NUMBER() OVER (ORDER BY roe.elo DESC) as rank
                     FROM racer_to_elo roe
                 )
                 SELECT
@@ -88,7 +89,8 @@ module.exports ={
                         roe.middle_name,
                         roe.last_name,
                         roe.elo,
-                        RANK() OVER (ORDER BY roe.elo DESC) as rank
+                        -- note that this amounts to random tie breaks
+                        ROW_NUMBER() OVER (ORDER BY roe.elo DESC) as rank
                     FROM racer_to_elo roe
                 ),
                 center_racer AS (
