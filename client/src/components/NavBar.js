@@ -15,6 +15,7 @@ import SearchBar from './SearchBar';
 
 class MenuDrop extends React.Component {
     render() {
+        // TODO user has to click exactly on the text of the drop tabs to navigate
         return (
             <Box margin={{horizontal: "large"}}>
                 <Menu
@@ -24,6 +25,10 @@ class MenuDrop extends React.Component {
                                     Home
                                  </Link>,
                           onClick: () => {} },
+                        { label: <Link to={"/event"} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                                Results
+                            </Link>,
+                            onClick: () => {} },
                         { label: <Link to={"/about"} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
                                     About
                                  </Link>,

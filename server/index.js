@@ -243,6 +243,115 @@ app.get('/api/racer/:id', async (req, res) => {
     });
 });
 
+app.get('/api/events/', async (req, res) => {
+
+    const eventsQuery = {
+        name: "events",
+        text: `
+            SELECT
+                e.name as event_name,
+                e.id as event_id
+            FROM event e
+        `,
+        values: [],
+    };
+
+    const events = await db.query(eventsQuery)
+        .catch(e => console.error(`Failed to query all events`));
+
+    res.send({events: events ? events.rows : []});
+});
+
+app.get('/api/events/:id', async (req, res) => {
+    const eventId = parseInt(req.params.id);
+
+    if (!eventId) {
+        res.send({
+            event_name: null,
+            races: []
+        });
+        return;
+    }
+
+    const raceQuery = {
+        name: "races_for_event",
+        text: `
+            SELECT
+                e.name as event_name,
+                eo.date as race_date,
+                r.discipline as discipline,
+                r.distance as distance,
+                r.id as race_id
+            FROM event e
+            JOIN event_occurrence eo
+                ON e.id = eo.event_id
+            JOIN race r
+                ON r.event_occurrence_id = eo.id
+            WHERE
+                e.id = $1
+        `,
+        values: [ eventId ],
+    };
+
+    const races = await db.query(raceQuery)
+        .catch(e => console.error(`Failed to query races for event_id = '${eventId}'`));
+
+    res.send({
+        event_name: races && races.rows.length ? races.rows[0].event_name : null,
+        races: races ? races.rows : [],
+    });
+});
+
+app.get('/api/races/:id', async (req, res) => {
+    const raceId = parseInt(req.params.id);
+
+    if (!raceId) {
+        res.send({results:[]});
+        return;
+    }
+
+    // TODO definitely need to add 'name' to race_result - only way to match results post-hoc
+    const raceResultQuery = {
+        name: "results_for_race",
+        text: `
+            SELECT
+                e.name as event_name,
+                eo.date,
+                r.discipline,
+                r.distance,
+                rcr.id as racer_id,
+                rcr.first_name,
+                rcr.last_name,
+                rr.gender,
+                rr.gender_place,
+                rr.overall_place
+            FROM race r
+            JOIN event_occurrence eo
+                ON eo.id = r.event_occurrence_id
+            JOIN event e
+                ON e.id = eo.event_id
+            JOIN race_result rr
+                ON r.id = rr.race_id
+            LEFT JOIN racer rcr
+                ON rcr.id = rr.racer_id
+            WHERE
+                r.id = $1
+        `,
+        values: [ raceId ],
+    };
+
+    const results = await db.query(raceResultQuery)
+        .catch(e => console.error(`Failed to query results for race_id = '${raceId}'`));
+
+    res.send({
+        event_name: results && results.rows.length ? results.rows[0].event_name : null,
+        date: results && results.rows.length ? results.rows[0].date : null,
+        discipline: results && results.rows.length ? results.rows[0].discipline : null,
+        distance: results && results.rows.length ? results.rows[0].distance : null,
+        results: results ? results.rows : [],
+    });
+});
+
 app.get('/api/events/flow/:year', (req, res) => {
     const year = parseInt(req.params.year);
 

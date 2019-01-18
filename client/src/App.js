@@ -13,6 +13,8 @@ import {apiGender} from "./util/data";
 
 import './App.css';
 import SearchResults from "./components/SearchResults";
+import EventSummary from "./components/EventSummary";
+import EventList from "./components/EventList";
 
 class App extends Component {
     render() {
@@ -45,6 +47,12 @@ class App extends Component {
                             <Route path="/search/:query" exact render={
                                 (props) => <SearchResults query={props.match.params.query}
                                                           key={props.match.params.query}/>
+                            }/>
+                            <Route path="/event/:event_id?" render={
+                                (props) => props.match.params.event_id ?
+                                    <EventSummary eventId={props.match.params.event_id}/>
+                                    :
+                                    <EventList/>
                             }/>
                             <Route component={NotFound}/>
                         </Switch>

@@ -63,6 +63,8 @@ class RacerStore {
 class RaceMetricStore {
     /*
      this class acts as a pre-loaded cache on commonly requested & expensive to compute data
+     it is NOT intended to be used for anything other than toys - e.g. visualizations, where faithfulness to DB is not
+     that important
      TODO could be feasible to replace with materialized views
      */
 
@@ -159,6 +161,7 @@ class RaceMetricStore {
                 name: "event_share",
                 text: `
                         select
+                          e.id as event_id,
                           e.name as event_name,
                           avg(rm.elo) as mean_elo,
                           count(1) as total_entrants
