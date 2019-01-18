@@ -79,6 +79,8 @@ CREATE TABLE IF NOT EXISTS race_result (
   -- TODO once matching logic is improved, we can unique on racer_id, race_id
 );
 
+ALTER TABLE race_result ADD COLUMN name VARCHAR(128);
+
 COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record. will contain records not tied to a racer identity';
 COMMENT ON COLUMN race_result.racer_id IS 'nullable if the result cannot be uniquely or safely tied to a racer identity';
 COMMENT ON COLUMN race_result.duration IS 'time to complete the race in milliseconds';

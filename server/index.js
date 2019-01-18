@@ -310,7 +310,6 @@ app.get('/api/races/:id', async (req, res) => {
         return;
     }
 
-    // TODO definitely need to add 'name' to race_result - only way to match results post-hoc
     const raceResultQuery = {
         name: "results_for_race",
         text: `
@@ -320,8 +319,7 @@ app.get('/api/races/:id', async (req, res) => {
                 r.discipline,
                 r.distance,
                 rcr.id as racer_id,
-                rcr.first_name,
-                rcr.last_name,
+                rr.name,
                 rr.gender,
                 rr.gender_place,
                 rr.overall_place
