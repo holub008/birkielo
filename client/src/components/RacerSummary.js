@@ -135,17 +135,17 @@ class RacerSummary extends React.Component {
                         </Box>
                     </Box>
                     <Box pad="small" align="center" direction="row" gap="small" border="left">
-                        <div title="Skier Profile" style={{cursor: "pointer" }}>
+                        <div title="Skier Profile" style={{cursor: "pointer"}}>
                             <User onClick={() => this.setState({profileState:"user"})}
                                   color={ this.getIconColor("user") }
                             />
                         </div>
-                        <div title="Nearest Competitors" style={{cursor: "pointer" }}>
+                        <div title="Nearest Competitors" style={{cursor: "pointer"}}>
                             <Elevator onClick={() => this.setState({profileState:"neighborhood"})}
                                       color={ this.getIconColor("neighborhood") }
                             />
                         </div>
-                        <div title="Compare to Competitors" style={{cursor: "pointer" }}>
+                        <div title="Compare to Competitors" style={{cursor: "pointer"}}>
                             <Group onClick={() => this.setState({profileState:"compare"})}
                                    color={ this.getIconColor("compare") }
                             />

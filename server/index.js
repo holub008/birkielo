@@ -152,10 +152,12 @@ app.get('/api/racer/:id', async (req, res) => {
                 grs.racers as gender_racers,
                 trs.racers as total_racers,
                 rr.duration,
+                r.id as race_id,
                 r.distance,
                 r.discipline,
                 eo.date as event_date,
-                e.name as event_name
+                e.name as event_name,
+                e.id as event_id
             FROM race_result rr
             JOIN race r
                 ON rr.race_id = r.id
@@ -296,8 +298,37 @@ app.get('/api/events/:id', async (req, res) => {
     const races = await db.query(raceQuery)
         .catch(e => console.error(`Failed to query races for event_id = '${eventId}'`));
 
+    const eventTimelineQuery = {
+        name: "event_timeline",
+        text: `
+            SELECT
+              eo.date,
+              COUNT(distinct rr.racer_id) as n_racers,
+              AVG(rm.elo) as elo
+            FROM event e
+            JOIN event_occurrence eo
+              ON e.id = eo.event_id
+            JOIN race r 
+              ON r.event_occurrence_id = eo.id
+            JOIN race_result rr
+              ON rr.race_id = r.id
+            JOIN racer_metrics rm
+              ON rm.racer_id = rr.racer_id
+                -- TODO this is a somewhat weak reliance
+                AND eo.date = rm.date
+            WHERE
+                e.id = $1
+            GROUP BY 1
+        `,
+        values: [ eventId ],
+    };
+
+    const eventTimeline = await db.query(eventTimelineQuery)
+        .catch(e => console.error(`Failed to query event timeline for event_id = '${eventId}'`));
+
     res.send({
         event_name: races && races.rows.length ? races.rows[0].event_name : null,
+        event_timeline: eventTimeline ? eventTimeline.rows : [],
         races: races ? races.rows : [],
     });
 });

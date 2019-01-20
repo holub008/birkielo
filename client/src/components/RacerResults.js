@@ -8,6 +8,8 @@ import {
 } from "grommet";
 import { Contract, Expand } from 'grommet-icons';
 
+import { Link } from 'react-router-dom';
+
 import { dedupeDates, milliTimeRender } from "../util/data";
 
 const LINK_COLOR = "rgb(144,96,235)";
@@ -22,6 +24,13 @@ const columns = [
     {
         property: "event_name",
         header: "Event Name",
+        render: datum =>
+            <Link to={`/event/${datum.event_id}`}
+                  style={{textDecoration: "none", color: "rgb(144,96,235)", cursor: "pointer"}}>
+                {
+                    datum.event_name
+                }
+            </Link>,
     },
     {
         property: "discipline",
@@ -70,7 +79,8 @@ function shrinkColumns(columns) {
         col => {
             const colCopy = Object.assign({}, col);
             colCopy.render = col.property === 'event_name' ?
-                datum => datum.event_name.split(/[ ]+/).map(str => str.slice(0,7)).join(" ")
+                datum =>
+                    datum.event_name.split(/[ ]+/).map(str => str.slice(0,7)).join(" ")
                 :
                 colCopy.render;
             return colCopy;

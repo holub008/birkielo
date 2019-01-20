@@ -15,6 +15,7 @@ import NotFound from './NotFound';
 
 import { callBackend } from "../util/data";
 import RaceList from "./RaceList";
+import MetricTimeline from "./MetricTimeline";
 
 class EventSummary extends React.Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class EventSummary extends React.Component {
         this.state = {
             callComplete: false,
             races: null,
+            timeline: null,
             eventName: null,
             selectedTabIndex: -1,
         };
@@ -33,6 +35,7 @@ class EventSummary extends React.Component {
             .then(data => this.setState({
                 races: data.races,
                 eventName: data.event_name,
+                timeline: data.event_timeline,
             }))
             .catch(error => console.log(error))
             .finally(() => this.setState({callComplete: true}));
@@ -57,6 +60,8 @@ class EventSummary extends React.Component {
             return(<Spinner/>);
         }
 
+        console.log(this.state.timeline)
+
         return(
             <Grommet theme={grommet}>
                 <Box>
@@ -78,12 +83,11 @@ class EventSummary extends React.Component {
                         </Box>
                     </AccordionPanel>
                     <AccordionPanel header={this.renderPanelHeader("Statistics", this.state.selectedTabIndex === 2)}>
+                        <MetricTimeline timelines={ [this.state.timeline] } names={[this.state.eventName]}/>
                     </AccordionPanel>
                 </Accordion>
             </Grommet>
         )
-
-
     }
 }
 

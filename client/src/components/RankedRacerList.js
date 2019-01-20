@@ -2,7 +2,6 @@ import React from 'react';
 
 import {
     Grommet,
-    Anchor,
     Box,
     Heading
 } from "grommet";

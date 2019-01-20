@@ -6,7 +6,6 @@ import {
     Heading,
     Text,
     TextInput,
-    RangeInput,
     Table,
     TableBody,
     TableHeader,

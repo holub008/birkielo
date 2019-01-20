@@ -17,9 +17,8 @@ const alwaysColumns = [
                         {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                     </b>:
                     <Text align="center">
-
                         <Link to={`/racer/${datum.racer_id}`}
-                              style={{color: "rgb(144,96,235)"}}>
+                              style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
                             {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                         </Link>
                     </Text>

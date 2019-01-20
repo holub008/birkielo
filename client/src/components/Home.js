@@ -38,7 +38,7 @@ function Home(props) {
                         <Box border="right" alignSelf="center">
                             <Text margin={{right:"small"}}> Search </Text>
                         </Box>
-                        <Box border="right">
+                        <Box border="right" style={{cursor: "pointer"}}>
                             <DropButton
                                 dropContent={<DropContent/>}
                                 dropAlign={{top:"bottom"}}>
@@ -47,11 +47,12 @@ function Home(props) {
                                 </Text>
                             </DropButton>
                         </Box>
-                            <Link to="/event/" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+                        <Box style={{cursor: "pointer"}}>
+                            <Link to="/event/" style={{
+                                textDecoration: "none",
+                                color: "rgb(144,96,235)"}}>
                                 Races
                             </Link>
-                        <Box>
-
                         </Box>
                     </Box>
                     <Box margin="medium" width="large" alignSelf="center">
