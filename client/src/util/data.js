@@ -72,7 +72,9 @@ export function dedupeDates(raceResults) {
 export function milliTimeRender(millis){
     const hours = Math.floor(millis / 1000 / 60 / 60);
     const minutes = Math.floor((millis - hours * 1000 * 60 * 60) / 1000 / 60);
-    return hours + "h" + minutes + "m"
+    const seconds = Math.floor((millis - hours * 1000 * 60 * 60 - minutes * 1000 * 60) / 1000);
+
+    return `${hours}h${minutes}m${seconds}s`;
 }
 
 export function shortenDiscipline(discipline) {

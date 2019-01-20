@@ -160,10 +160,12 @@ class RaceResult extends React.Component {
                 <ChapterPrevious
                     color="rgb(144,96,235)"
                     onClick={() => this.setState({currentPage: Math.max(0, this.state.currentPage - 10)})}
+                    style={{cursor: "pointer" }}
                 />
                 <CaretPrevious
                     color="rgb(144,96,235)"
                     onClick={() => this.setState({currentPage: Math.max(0, this.state.currentPage - 1)})}
+                    style={{cursor: "pointer" }}
                 />
                 <Text>
                     {
@@ -179,6 +181,7 @@ class RaceResult extends React.Component {
                         this.setState({
                             currentPage: Math.min(Math.floor(this.state.results.length / PAGE_SIZE),
                                 this.state.currentPage + 1)})}
+                    style={{cursor: "pointer" }}
                 />
                 <ChapterNext
                     color="rgb(144,96,235)"
@@ -186,6 +189,7 @@ class RaceResult extends React.Component {
                         this.setState({
                             currentPage: Math.min(Math.floor(this.state.results.length / PAGE_SIZE),
                                 this.state.currentPage + 10)})}
+                    style={{cursor: "pointer" }}
                 />
             </Box>
         );
@@ -227,16 +231,16 @@ class RaceResult extends React.Component {
                         </Box>
 
                     </Box>
-                    <Box alignSelf="start" margin={{left: "small", top: "small"}}>
+                    <Box margin={{left: "small", top: "small"}} style={{maxWidth: "500px"}}>
                         <RaceResultSearchBar
                             results={this.state.results}
                             selectHandler={index => this.setState({currentPage:  Math.floor(index / PAGE_SIZE)})}
                         />
                     </Box>
-                    <Box alignSelf="start">
-                        {
-                            this.renderCurrentLocation()
-                        }
+                    {
+                        this.renderCurrentLocation()
+                    }
+                    <Box>
                         <Table>
                             <TableHeader>
                                 <TableRow>
@@ -269,10 +273,10 @@ class RaceResult extends React.Component {
                                 }
                             </TableBody>
                         </Table>
-                        {
-                            this.renderCurrentLocation()
-                        }
                     </Box>
+                    {
+                        this.renderCurrentLocation()
+                    }
                 </Box>
             </Grommet>
         );

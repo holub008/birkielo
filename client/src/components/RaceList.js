@@ -64,7 +64,7 @@ class RaceList extends React.Component {
                                 <ul>
                                 {
                                     dateToRace[raceYear].map(race =>
-                                        <li key={raceYear}>
+                                        <li key={race.race_id}>
                                             <Link to={`/race/${race.race_id}`}
                                                   style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
                                                 {
