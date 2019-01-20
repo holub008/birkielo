@@ -3,18 +3,18 @@ import React from 'react';
 import {
     Grommet,
     Box,
-    DataTable,
     Heading,
+    Accordion,
+    AccordionPanel,
+    Text,
 } from "grommet";
 import { grommet } from "grommet/themes";
-
-import {Link} from 'react-router-dom';
 
 import Spinner from './Spinner';
 import NotFound from './NotFound';
 
-
 import { callBackend } from "../util/data";
+import RaceList from "./RaceList";
 
 class EventSummary extends React.Component {
     constructor(props) {
@@ -24,6 +24,7 @@ class EventSummary extends React.Component {
             callComplete: false,
             races: null,
             eventName: null,
+            selectedTabIndex: -1,
         };
     }
 
@@ -35,6 +36,17 @@ class EventSummary extends React.Component {
             }))
             .catch(error => console.log(error))
             .finally(() => this.setState({callComplete: true}));
+    }
+
+    renderPanelHeader(title, active) {
+        return(
+            <Box direction="row" align="center" pad="medium" gap="small">
+                <strong>
+                    <Text>{title}</Text>
+                </strong>
+                <Text color="brand">{active ? "-" : "+"}</Text>
+            </Box>
+        );
     }
 
     render() {
@@ -51,8 +63,23 @@ class EventSummary extends React.Component {
                     <Heading margin="none">
                         {this.state.eventName}
                     </Heading>
-
                 </Box>
+                <Accordion
+                    activeIndex={this.state.selectedTabIndex}
+                    onActive={newActiveIndex =>
+                        this.setState({ selectedTabIndex: newActiveIndex })
+                    }
+                >
+                    <AccordionPanel
+                        header={this.renderPanelHeader("Results by Year", this.state.selectedTabIndex === 1)}
+                    >
+                        <Box>
+                            <RaceList races={this.state.races} />
+                        </Box>
+                    </AccordionPanel>
+                    <AccordionPanel header={this.renderPanelHeader("Statistics", this.state.selectedTabIndex === 2)}>
+                    </AccordionPanel>
+                </Accordion>
             </Grommet>
         )
 

@@ -7,7 +7,7 @@ class NaiveElo:
 
     def __init__(self,
                  default_score=1000,
-                 k_factor=2,
+                 k_factor=1,
                  log_odds_oom_differential=200,
                  score_floor=100,
                  score_ceiling=3000,

@@ -15,6 +15,7 @@ import './App.css';
 import SearchResults from "./components/SearchResults";
 import EventSummary from "./components/EventSummary";
 import EventList from "./components/EventList";
+import RaceResult from "./components/RaceResult";
 
 class App extends Component {
     render() {
@@ -43,7 +44,9 @@ class App extends Component {
                             <Route path="/support" exact component={Support}/>
                             <Route path="/rankings/:sex" exact render={
                                 (props) => <RankedRacerList gender={apiGender(props.match.params.sex)}
-                                                            minRank={1}/>}/>
+                                                            minRank={1}
+                                                            key={props.match.params.sex}/>
+                            }/>
                             <Route path="/search/:query" exact render={
                                 (props) => <SearchResults query={props.match.params.query}
                                                           key={props.match.params.query}/>
@@ -53,6 +56,9 @@ class App extends Component {
                                     <EventSummary eventId={props.match.params.event_id}/>
                                     :
                                     <EventList/>
+                            }/>
+                            <Route path="/race/:race_id" render={
+                                (props) => <RaceResult raceId={props.match.params.race_id}/>
                             }/>
                             <Route component={NotFound}/>
                         </Switch>

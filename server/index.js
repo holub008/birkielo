@@ -278,7 +278,7 @@ app.get('/api/events/:id', async (req, res) => {
         text: `
             SELECT
                 e.name as event_name,
-                eo.date as race_date,
+                eo.date as event_date,
                 r.discipline as discipline,
                 r.distance as distance,
                 r.id as race_id
@@ -306,7 +306,7 @@ app.get('/api/races/:id', async (req, res) => {
     const raceId = parseInt(req.params.id);
 
     if (!raceId) {
-        res.send({results:[]});
+        res.send({results:[], raceMetadata: {}});
         return;
     }
 
@@ -315,6 +315,7 @@ app.get('/api/races/:id', async (req, res) => {
         text: `
             SELECT
                 e.name as event_name,
+                e.id as event_id,
                 eo.date,
                 r.discipline,
                 r.distance,
@@ -322,7 +323,8 @@ app.get('/api/races/:id', async (req, res) => {
                 rr.name,
                 rr.gender,
                 rr.gender_place,
-                rr.overall_place
+                rr.overall_place,
+                rr.duration
             FROM race r
             JOIN event_occurrence eo
                 ON eo.id = r.event_occurrence_id
@@ -341,12 +343,25 @@ app.get('/api/races/:id', async (req, res) => {
     const results = await db.query(raceResultQuery)
         .catch(e => console.error(`Failed to query results for race_id = '${raceId}'`));
 
-    res.send({
-        event_name: results && results.rows.length ? results.rows[0].event_name : null,
+    const raceMetadata = {
+        eventName: results && results.rows.length ? results.rows[0].event_name : null,
+        eventId: results && results.rows.length ? results.rows[0].event_id : null,
         date: results && results.rows.length ? results.rows[0].date : null,
         discipline: results && results.rows.length ? results.rows[0].discipline : null,
         distance: results && results.rows.length ? results.rows[0].distance : null,
-        results: results ? results.rows : [],
+    };
+
+    const resultsMinimal = results ?
+        results.rows.map(result => {
+            const {racer_id, name, gender, gender_place, overall_place, duration, ...shared } = result;
+            return {racer_id, name, gender, gender_place, overall_place, duration}
+        })
+        :
+        [];
+
+    res.send({
+        raceMetadata: raceMetadata,
+        results: resultsMinimal,
     });
 });
 

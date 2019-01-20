@@ -38,14 +38,20 @@ function Home(props) {
                         <Box border="right" alignSelf="center">
                             <Text margin={{right:"small"}}> Search </Text>
                         </Box>
-                        <Box>
+                        <Box border="right">
                             <DropButton
                                 dropContent={<DropContent/>}
                                 dropAlign={{top:"bottom"}}>
-                                <Text color="rgb(144,96,235)">
+                                <Text color="rgb(144,96,235)" margin={{right: "small"}}>
                                     Rankings
                                 </Text>
                             </DropButton>
+                        </Box>
+                            <Link to="/event/" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+                                Races
+                            </Link>
+                        <Box>
+
                         </Box>
                     </Box>
                     <Box margin="medium" width="large" alignSelf="center">
