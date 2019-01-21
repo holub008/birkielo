@@ -37,6 +37,9 @@ function MetricTimeline(props) {
         throw new Error("Attempted to create a timeline plot with mismatched series and names");
     }
 
+    const metricProperty = props.metricProperty ? props.metricProperty : "elo";
+    const metricLabel = props.metricLabel ? props.metricLabel : "Birkielo";
+
     const dateToEloList = props.timelines.map((timeline, index) => {
 
         const color = EXTENDED_DISCRETE_COLOR_RANGE[index];
@@ -44,7 +47,7 @@ function MetricTimeline(props) {
         const pointSeries = timeline.map(point => {
             return({
                 x: new Date(point.date).getTime(),
-                y: point.elo,
+                y: point[metricProperty],
             })
         });
 
@@ -56,16 +59,23 @@ function MetricTimeline(props) {
 
     const legendItems = props.names.map((name, index) => {
         const timeline = props.timelines[index];
-        const latestElo = timeline[0].elo;
-        return ({
-            title: `${name}: ${latestElo.toFixed(1)}`,
-            color: EXTENDED_DISCRETE_COLOR_RANGE[index],
-        });
+        if (timeline.length) {
+            const latestElo = timeline[0][metricProperty];
+            return ({
+                title: `${name}: ${latestElo.toFixed(1)}`,
+                color: EXTENDED_DISCRETE_COLOR_RANGE[index],
+            });
+        }
+        else {
+            return({title: null, color: null});
+        }
     });
+
+    const legendItemsProcessed = legendItems.filter(item => item.title !== null);
 
     return(
         <XYPlot
-            width={300}
+            width={props.width ? props.width : 300}
             height={300}
             xType="time"
         >
@@ -83,12 +93,12 @@ function MetricTimeline(props) {
             }
             {
                 dateToEloList.length > 1 ?
-                    <DiscreteColorLegend items={legendItems} height={200} orientation="vertical"/>
+                    <DiscreteColorLegend items={legendItemsProcessed} height={200} orientation="vertical"/>
                 :
                     <Fragment />
             }
             <XAxis title="Date"/>
-            <YAxis title="Birkielo"/>
+            <YAxis title={metricLabel}/>
         </XYPlot>
     );
 }

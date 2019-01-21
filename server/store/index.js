@@ -182,7 +182,7 @@ class RaceMetricStore {
                             and eo.date <  to_date($1::varchar, 'yyyy') + interval '1 year'
                         group by 1  
                         order by 2 desc
-            `,
+                `,
                 values: [year.toString()]
             };
 
@@ -194,6 +194,29 @@ class RaceMetricStore {
                     throw "Failed to query event share: " + e;
                 });
         });
+
+        this.averageEloByYear = [];
+
+        const averageEloQuery = {
+            name: "average_elo_by_year",
+            text: `
+                        select
+                            make_date(cast(date_part('year', rm.date) as integer), 1, 1) as date,
+                            avg(rm.elo) as elo
+                        from racer_metrics rm
+                        group by 1
+                        order by 1 desc
+                `,
+            values: []
+        };
+
+        db.query(averageEloQuery)
+            .then(rs => {
+                this.averageEloByYear = rs.rows;
+            })
+            .catch(e => {
+                throw "Failed to query average elo by year: " + e;
+            });
     }
 
     getFlowData(year) {
@@ -202,6 +225,10 @@ class RaceMetricStore {
 
     getShareData(year) {
         return this.shareData[year];
+    }
+
+    getAverageEloByYear() {
+        return this.averageEloByYear;
     }
 }
 

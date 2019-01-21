@@ -36,6 +36,7 @@ class EventSummary extends React.Component {
                 races: data.races,
                 eventName: data.event_name,
                 timeline: data.event_timeline,
+                averageTimeline: data.average_timeline,
             }))
             .catch(error => console.log(error))
             .finally(() => this.setState({callComplete: true}));
@@ -60,8 +61,6 @@ class EventSummary extends React.Component {
             return(<Spinner/>);
         }
 
-        console.log(this.state.timeline)
-
         return(
             <Grommet theme={grommet}>
                 <Box>
@@ -83,7 +82,26 @@ class EventSummary extends React.Component {
                         </Box>
                     </AccordionPanel>
                     <AccordionPanel header={this.renderPanelHeader("Statistics", this.state.selectedTabIndex === 2)}>
-                        <MetricTimeline timelines={ [this.state.timeline] } names={[this.state.eventName]}/>
+                        <Box direction="column">
+                            <Box margin={{left: "small"}}>
+                                <Text> Racers by Year </Text>
+                                <MetricTimeline
+                                    timelines={ [this.state.timeline] }
+                                    names={[this.state.eventName]}
+                                    width={Math.max(300, window.innerWidth * .66)}
+                                    metricProperty="n_racers"
+                                    metricLabel="Racers"
+                                />
+                            </Box>
+                            <Box margin={{left: "small"}}>
+                                <Text> Birkielo by Year </Text>
+                                <MetricTimeline
+                                    timelines={ [this.state.timeline, this.state.averageTimeline] }
+                                    names={[this.state.eventName, 'All races average']}
+                                    width={Math.max(300, window.innerWidth * .66)}
+                                />
+                            </Box>
+                        </Box>
                     </AccordionPanel>
                 </Accordion>
             </Grommet>

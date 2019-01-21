@@ -303,7 +303,8 @@ app.get('/api/events/:id', async (req, res) => {
         text: `
             SELECT
               eo.date,
-              COUNT(distinct rr.racer_id) as n_racers,
+              -- node-postgres doesn't handle integer types nicely
+              CAST(COUNT(distinct rr.racer_id) AS FLOAT) as n_racers,
               AVG(rm.elo) as elo
             FROM event e
             JOIN event_occurrence eo
@@ -319,6 +320,7 @@ app.get('/api/events/:id', async (req, res) => {
             WHERE
                 e.id = $1
             GROUP BY 1
+            ORDER BY 1 desc
         `,
         values: [ eventId ],
     };
@@ -326,9 +328,12 @@ app.get('/api/events/:id', async (req, res) => {
     const eventTimeline = await db.query(eventTimelineQuery)
         .catch(e => console.error(`Failed to query event timeline for event_id = '${eventId}'`));
 
+    const averageEloByYear = raceMetricStore.getAverageEloByYear();
+
     res.send({
         event_name: races && races.rows.length ? races.rows[0].event_name : null,
         event_timeline: eventTimeline ? eventTimeline.rows : [],
+        average_timeline: averageEloByYear,
         races: races ? races.rows : [],
     });
 });
