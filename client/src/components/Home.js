@@ -7,21 +7,23 @@ import {
     Text,
 } from "grommet";
 import { grommet } from "grommet/themes";
-import { Link } from 'react-router-dom';
 
 import '../styles/Home.css';
 import SearchBar from "./SearchBar";
 import EventSankey from "./EventSankey";
 import EventDonut from "./EventDonut";
+import BirkieloLink from "./BirkieloLink";
+
+import {getClickableColor} from "../util/data";
 
 const DropContent = ({ onClose }) => (
     <Box pad="small">
-        <Link to="/rankings/women" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+        <BirkieloLink to="/rankings/women">
             Women
-        </Link>
-        <Link to="/rankings/men" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+        </BirkieloLink>
+        <BirkieloLink to="/rankings/men">
             Men
-        </Link>
+        </BirkieloLink>
     </Box>
 );
 
@@ -42,17 +44,15 @@ function Home(props) {
                             <DropButton
                                 dropContent={<DropContent/>}
                                 dropAlign={{top:"bottom"}}>
-                                <Text color="rgb(144,96,235)" margin={{right: "small"}}>
+                                <Text color={getClickableColor()} margin={{right: "small"}}>
                                     Rankings
                                 </Text>
                             </DropButton>
                         </Box>
                         <Box style={{cursor: "pointer"}}>
-                            <Link to="/event/" style={{
-                                textDecoration: "none",
-                                color: "rgb(144,96,235)"}}>
+                            <BirkieloLink to="/event/">
                                 Races
-                            </Link>
+                            </BirkieloLink>
                         </Box>
                     </Box>
                     <Box margin="medium" width="large" alignSelf="center">
@@ -60,7 +60,6 @@ function Home(props) {
                     </Box>
                     <Box margin={{top: "small"}} alignSelf="center">
                         {
-                            // TODO the EventDonut has some left/right play on a 300px screen :(
                             window.innerWidth > 550 ?
                                 <EventSankey />
                                 :

@@ -6,7 +6,6 @@ export async function callBackend(endpoint) {
     }
     catch (error) {
         console.log(error);
-        console.log(response);
     }
     if (response.status !== 200) throw Error(response);
 
@@ -69,12 +68,15 @@ export function dedupeDates(raceResults) {
     return finalResults;
 }
 
-export function milliTimeRender(millis){
-    const hours = Math.floor(millis / 1000 / 60 / 60);
-    const minutes = Math.floor((millis - hours * 1000 * 60 * 60) / 1000 / 60);
-    const seconds = Math.floor((millis - hours * 1000 * 60 * 60 - minutes * 1000 * 60) / 1000);
+export function milliTimeRender(millis, includeSeconds = true) {
+    // in the !includeSeconds case, this has the effect of pushing any seconds >= 30 to the next minute
+    const millisForRender = includeSeconds ? millis : (millis + 30 * 1000);
 
-    return `${hours}h${minutes}m${seconds}s`;
+    const hours = Math.floor(millisForRender / 1000 / 60 / 60);
+    const minutes = Math.floor((millisForRender - hours * 1000 * 60 * 60) / 1000 / 60);
+    const seconds = Math.floor((millisForRender - hours * 1000 * 60 * 60 - minutes * 1000 * 60) / 1000);
+
+    return includeSeconds ? `${hours}h${minutes}m${seconds}s` : `${hours}h${minutes}m`;
 }
 
 export function shortenDiscipline(discipline) {
@@ -93,4 +95,12 @@ export function shortenDiscipline(discipline) {
     else {
         return discipline;
     }
+}
+
+export function getClickableColor() {
+    return "rgb(144,96,235)";
+}
+
+export function getMetricHighlightColor() {
+    return "rgb(17,147,154)";
 }

@@ -8,7 +8,7 @@ import {
 } from "grommet";
 import { FormDown, FormNext } from "grommet-icons";
 
-import {Link} from 'react-router-dom';
+import BirkieloLink from './BirkieloLink';
 
 const MenuButton = ({ label, open, submenu, ...rest }) => {
     const Icon = open ? FormDown : FormNext;
@@ -65,12 +65,11 @@ class RaceList extends React.Component {
                                 {
                                     dateToRace[raceYear].map(race =>
                                         <li key={race.race_id}>
-                                            <Link to={`/race/${race.race_id}`}
-                                                  style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                                            <BirkieloLink to={`/race/${race.race_id}`}>
                                                 {
                                                     `${parseFloat(race.distance).toFixed(0)}K - ${race.discipline}`
                                                 }
-                                            </Link>
+                                            </BirkieloLink>
                                         </li>
                                     )
                                 }

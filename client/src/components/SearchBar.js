@@ -1,5 +1,5 @@
 import React from "react";
-import {callBackend} from "../util/data";
+import {callBackend, getClickableColor} from "../util/data";
 
 import {
     Anchor,
@@ -10,7 +10,6 @@ import {
 import { withRouter } from 'react-router-dom';
 
 // note that history is react-router history - this is tantamount to a redirect (SPA)
-// TODO is best UX to clear out the search bar after a selection is made?
 function defaultSelectHandler(event, history) {
     history.push(`/racer/${event.suggestion.value}`);
 }
@@ -88,7 +87,7 @@ class UnwrappedSearchBar extends React.Component {
                 onSelect={(event) => this.state.selectHandler(event, this.props.history)}
                 suggestions={this.renderSuggestions()}
                 placeholder={this.props.placeholder ? this.props.placeholder : "Skier Search"}
-                style={{color: "rgb(144,96,235)", backgroundColor: "#e6f1f0"}}
+                style={{color: getClickableColor(), backgroundColor: "#e6f1f0"}}
                 onKeyPress={(event) => this.checkForAndHandleEnter(event)}
             />
         );
@@ -96,6 +95,6 @@ class UnwrappedSearchBar extends React.Component {
 }
 
 const SearchBar = withRouter(({history, ...forwardedProps}) =>
-    <UnwrappedSearchBar history={history} {...forwardedProps}/>)
+    <UnwrappedSearchBar history={history} {...forwardedProps}/>);
 
 export default SearchBar;

@@ -13,9 +13,9 @@ import {
     Image
 } from "grommet";
 import { grommet } from "grommet/themes";
-import { Link } from 'react-router-dom';
 
 import EventDonut from './EventDonut';
+import BirkieloLink from "./BirkieloLink";
 
 import '../styles/About.css';
 
@@ -244,9 +244,9 @@ const featureTabs = {
                     These provide a measure of how time efficient programming a scraper will be. To date, a handful
                     of races have been scraped - see the below donut for a complete list of races from 2018. If you
                     would like to see other races added,&nbsp;
-                    <Link to="/support" style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+                    <BirkieloLink to="/support">
                         let me know or contribute results you've dug up!
-                    </Link>
+                    </BirkieloLink>
                 </Text>
                 <Box alignSelf="center">
                     <EventDonut year={2018} />
@@ -256,7 +256,7 @@ const featureTabs = {
 };
 
 function getTabs(referenceFeature) {
-    var referenceTab = featureTabs[referenceFeature];
+    let referenceTab = featureTabs[referenceFeature];
     if (!referenceTab) {
         referenceFeature = 'concept';
         referenceTab = featureTabs[referenceFeature];

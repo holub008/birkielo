@@ -1,7 +1,5 @@
 import React from 'react';
 
-import {Link} from 'react-router-dom';
-
 import {
     Grommet,
     Box,
@@ -13,15 +11,16 @@ import { grommet } from "grommet/themes";
 import Spinner from './Spinner';
 
 import { callBackend } from "../util/data";
+import BirkieloLink from "./BirkieloLink";
 
 const COLUMNS = [
     {
         property: "event_name",
         header: "Event",
         render: datum =>
-                <Link to={`/event/${datum.event_id}`} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                <BirkieloLink to={`/event/${datum.event_id}`}>
                     {datum.event_name}
-                </Link>,
+                </BirkieloLink>,
         primary: true,
         search: true
     }

@@ -15,12 +15,11 @@ import {
 import { grommet } from "grommet/themes";
 import { CaretNext, CaretPrevious, ChapterNext, ChapterPrevious } from "grommet-icons";
 
-import {Link} from 'react-router-dom';
-
 import Spinner from './Spinner';
 import NotFound from './NotFound';
+import BirkieloLink from './BirkieloLink';
 
-import { callBackend, milliTimeRender } from "../util/data";
+import { callBackend, milliTimeRender, getClickableColor } from "../util/data";
 
 const PAGE_SIZE = 50;
 
@@ -34,9 +33,9 @@ const COLUMNS = [
         property: "name",
         header: "Name",
         render: datum => datum.racer_id ?
-            <Link to={`/racer/${datum.racer_id}`} style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+            <BirkieloLink to={`/racer/${datum.racer_id}`}>
                 {datum.name}
-            </Link>
+            </BirkieloLink>
             :
             datum.racer_id
     },
@@ -55,7 +54,7 @@ const COLUMNS = [
     },
 ];
 
-class RaceResultSearchBar extends React.Component {
+class RaceResultsSearchBar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -112,7 +111,7 @@ class RaceResultSearchBar extends React.Component {
     }
 }
 
-class RaceResult extends React.Component {
+class RaceResults extends React.Component {
     constructor(props) {
         super(props);
 
@@ -157,12 +156,12 @@ class RaceResult extends React.Component {
         return(
             <Box direction="row" margin={{top: "small", bottom: "small"}} alignSelf="center">
                 <ChapterPrevious
-                    color="rgb(144,96,235)"
+                    color={getClickableColor()}
                     onClick={() => this.setState({currentPage: Math.max(0, this.state.currentPage - 10)})}
                     style={{cursor: "pointer" }}
                 />
                 <CaretPrevious
-                    color="rgb(144,96,235)"
+                    color={getClickableColor()}
                     onClick={() => this.setState({currentPage: Math.max(0, this.state.currentPage - 1)})}
                     style={{cursor: "pointer" }}
                 />
@@ -175,7 +174,7 @@ class RaceResult extends React.Component {
                     }
                 </Text>
                 <CaretNext
-                    color="rgb(144,96,235)"
+                    color={getClickableColor()}
                     onClick={() =>
                         this.setState({
                             currentPage: Math.min(Math.floor(this.state.results.length / PAGE_SIZE),
@@ -183,7 +182,7 @@ class RaceResult extends React.Component {
                     style={{cursor: "pointer" }}
                 />
                 <ChapterNext
-                    color="rgb(144,96,235)"
+                    color={getClickableColor()}
                     onClick={() =>
                         this.setState({
                             currentPage: Math.min(Math.floor(this.state.results.length / PAGE_SIZE),
@@ -210,12 +209,11 @@ class RaceResult extends React.Component {
                 <Box>
                     <Box direction="column">
                         <Box>
-                            <Link to={`/event/${this.state.raceMetadata.eventId}`}
-                                  style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
+                            <BirkieloLink to={`/event/${this.state.raceMetadata.eventId}`}>
                                 <Heading margin="none" size="small">
                                     {this.state.raceMetadata.eventName}
                                 </Heading>
-                             </Link>
+                             </BirkieloLink>
                         </Box>
                         <Box direction="row">
                             <Box border="right" margin={{right: "small"}} pad="small">
@@ -282,4 +280,4 @@ class RaceResult extends React.Component {
     }
 }
 
-export default RaceResult;
+export default RaceResults;

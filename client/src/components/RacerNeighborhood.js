@@ -9,7 +9,7 @@ import {
 import Spinner from './Spinner';
 import RacerList from './RacerList';
 
-import {callBackend, isEmpty} from "../util/data";
+import {callBackend, } from "../util/data";
 
 const MAX_RACERS = 51;
 const MIN_RACERS = 1;
@@ -42,14 +42,13 @@ class RacerNeighborhood extends React.Component {
     onRangeChange = event => this.setState({ value: event.target.value });
 
     render() {
-        if (isEmpty(this.state.racers)) {
+        if (!this.state.racers.length) {
             return(
                 <Spinner/>
             );
         }
 
         const focusRacer = this.state.racers.filter(racer => racer.racer_id === parseInt(this.props.racerId));
-        // TODO unchecked list access
         const racersListMid = this.state.racers.indexOf(focusRacer[0]) + 1;
         const interval = this.state.nRacers / 2;
         const racersForDisplay = this.state.racers.slice(Math.max(racersListMid - interval, 0),

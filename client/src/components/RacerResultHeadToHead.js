@@ -7,10 +7,14 @@ import {
 } from 'grommet';
 import { Contract, Expand } from 'grommet-icons';
 
-import { dedupeDates, milliTimeRender, shortenDiscipline } from "../util/data";
+import {
+    dedupeDates,
+    getClickableColor,
+    milliTimeRender,
+    shortenDiscipline} from "../util/data";
 import VennIcon from "./VennIcon";
 
-const LINK_COLOR = "rgb(144,96,235)";
+const LINK_COLOR = getClickableColor();
 
 function racesMatch(raceLeft, raceRight) {
     return (raceLeft.event_name === raceRight.event_name &&
@@ -19,7 +23,7 @@ function racesMatch(raceLeft, raceRight) {
         raceLeft.discipline === raceRight.discipline);
 }
 
-function outerJoinRaceLists(racesLeft, racesRight,
+function outerJoinRaceLists(racesLeft, racesRight, includeSeconds,
                             nullFieldRender="") {
     /**
      * this belongs as a library call with hash/merge joins, but it's simple & avoids a dependency to roll own n^2
@@ -59,7 +63,7 @@ function outerJoinRaceLists(racesLeft, racesRight,
     return racesJoined;
 }
 
-function innerJoinRaceLists(racesLeft, racesRight,
+function innerJoinRaceLists(racesLeft, racesRight, includeSeconds,
                             nullFieldRender="") {
     const racesJoined = [];
     racesLeft.forEach(rl => {
@@ -109,10 +113,12 @@ class RacerResultHeadToHead extends React.Component {
 
         let joinedData;
         if (joinMethod === "outer") {
-            joinedData = outerJoinRaceLists(this.props.racerLeft.results, this.props.racerRight.results);
+            joinedData = outerJoinRaceLists(this.props.racerLeft.results, this.props.racerRight.results,
+                !this.state.shrinkTable);
         }
         else {
-            joinedData = innerJoinRaceLists(this.props.racerLeft.results, this.props.racerRight.results);
+            joinedData = innerJoinRaceLists(this.props.racerLeft.results, this.props.racerRight.results,
+                !this.state.shrinkTable);
         }
 
         const resultsForRender = dedupeDates(joinedData)

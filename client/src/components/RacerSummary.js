@@ -3,20 +3,19 @@ import React from 'react';
 import { Heading, Box, Grommet, Text } from 'grommet';
 import { grommet } from "grommet/themes";
 import { Elevator, Group, User, StatusUnknown, StatusCritical } from "grommet-icons";
-import { Link } from 'react-router-dom';
-
 
 import Spinner from './Spinner';
 import RacerResults from './RacerResults';
 import RacerNeighborhood from './RacerNeighborhood';
-
-import {callBackend, isEmpty} from "../util/data";
+import BirkieloLink from './BirkieloLink';
 import MetricDistribution from "./MetricDistribution";
 import MetricTimeline from "./MetricTimeline";
 import RacerComparison from "./RacerComparison";
 import NotFound from "./NotFound";
 
-const LINK_COLOR = "rgb(144,96,235)";
+import {callBackend, isEmpty, getClickableColor, } from "../util/data";
+
+const LINK_COLOR = getClickableColor();
 const VALID_PROFILE_STATES = ['user', 'neighborhood', 'compare'];
 
 class RacerSummary extends React.Component {
@@ -33,7 +32,6 @@ class RacerSummary extends React.Component {
     componentDidMount() {
         callBackend("/api/racer/" + this.props.racerId)
             .then(data => this.setState({ racerData: data }))
-            // TODO dumping to console isn't a great long term solution
             .catch(error => console.log(error));
     }
 
@@ -54,9 +52,9 @@ class RacerSummary extends React.Component {
                                         .toFixed(1)
                                 }
                             </Text>
-                            <Link to="/about/birkielo" style={{textDecoration: "none"}}>
-                                <StatusUnknown color="rgb(144,96,235)"/>
-                            </Link>
+                            <BirkieloLink to="/about/birkielo">
+                                <StatusUnknown color={LINK_COLOR}/>
+                            </BirkieloLink>
                         </Box>
                         {
                             this.state.racerData.metrics.length > 1 ?
@@ -100,7 +98,7 @@ class RacerSummary extends React.Component {
             return (null);
         }
         else {
-            return(LINK_COLOR); // todo this belongs in an even higher shared location
+            return(LINK_COLOR);
         }
     }
 
@@ -114,7 +112,7 @@ class RacerSummary extends React.Component {
             return(<NotFound/>);
         }
 
-        // TODO the icons need tooltips / hover text
+        // TODO the icons need a proper tooltip / hover text
         return(
             <Grommet theme={grommet}>
                 <Box direction="row-responsive" gap="small">

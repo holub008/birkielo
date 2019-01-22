@@ -30,10 +30,7 @@ class SearchResults extends React.Component {
                     maxResults: maxResults,
                 });
             })
-            // TODO dumping to console isn't a great long term solution
-            .catch(error => {
-                console.log(error);
-            });
+            .catch(error => console.log(error));
     }
 
     componentDidMount() {
@@ -41,35 +38,34 @@ class SearchResults extends React.Component {
     }
 
     render() {
-        if (isEmpty(this.state.results)) {
-            // TODO differentiate unfinished request and no results (but current search is never empty)
+        if (!this.state.results.length) {
+            // note that current search is never empty- but if that occurs in the future, need to render as so
             return(<Spinner />);
         }
-        else {
-            const query = this.props.query;
-            return(
-                <Grommet theme={grommet}>
-                    <Box pad="small">
-                        <Heading level={3} margin={"small"}>
-                            {
-                                `Results for search '${query}'`
-                            }
-                        </Heading>
-                        <Box style={{width:"30%", minWidth:"300px"}}>
-                            <RacerList racers={this.state.results} additionalColumns={[]} />
-                        </Box>
-                        <Box style={{width:"10%", minWidth:"100px", marginBottom:"5%"}}>
-                            <Select
-                                id="select"
-                                name="select"
-                                value={this.state.maxResults.toString()}
-                                options={["10", "25", "50"]}
-                                onChange={({ option }) => this.updateResults(query, option)}
-                            />
-                        </Box>
+
+        const query = this.props.query;
+        return(
+            <Grommet theme={grommet}>
+                <Box pad="small">
+                    <Heading level={3} margin={"small"}>
+                        {
+                            `Results for search '${query}'`
+                        }
+                    </Heading>
+                    <Box style={{width:"30%", minWidth:"300px"}}>
+                        <RacerList racers={this.state.results} additionalColumns={[]} />
                     </Box>
-                </Grommet>);
-        }
+                    <Box style={{width:"10%", minWidth:"100px", marginBottom:"5%"}}>
+                        <Select
+                            id="select"
+                            name="select"
+                            value={this.state.maxResults.toString()}
+                            options={["10", "25", "50"]}
+                            onChange={({ option }) => this.updateResults(query, option)}
+                        />
+                    </Box>
+                </Box>
+            </Grommet>);
     }
 }
 

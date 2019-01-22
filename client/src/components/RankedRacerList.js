@@ -7,13 +7,12 @@ import {
 } from "grommet";
 import {grommet} from "grommet/themes/index";
 
-import {Link} from 'react-router-dom';
-
 import Spinner from "./Spinner";
 import NotFound from "./NotFound";
 import RacerList from "./RacerList";
 
-import {callBackend, isEmpty, properGender} from "../util/data";
+import {callBackend, properGender} from "../util/data";
+import BirkieloLink from "./BirkieloLink";
 
 
 class RankedRacerList extends React.Component {
@@ -21,7 +20,7 @@ class RankedRacerList extends React.Component {
     constructor(props) {
        super(props);
        this.state = {
-           rankings: {},
+           rankings: [],
            callComplete: false,
        }
     }
@@ -35,20 +34,19 @@ class RankedRacerList extends React.Component {
                 .then(data => this.setState({
                     rankings: data.rankings,
                 }))
-                // TODO dumping to console isn't a great long term solution
                 .catch(error => console.log(error));
         }
     }
 
     render() {
-        if (isEmpty(this.state.rankings) && !this.state.callComplete) {
+        if (!this.state.rankings.length && !this.state.callComplete) {
             return(
                 <Grommet theme={grommet}>
                     <Spinner/>
                 </Grommet>
             );
         }
-        else if (isEmpty(this.state.rankings)) {
+        else if (!this.state.rankings.length) {
             return(
                 <Grommet theme={grommet}>
                     <NotFound />
@@ -65,12 +63,11 @@ class RankedRacerList extends React.Component {
                             {`Top ${properGender(this.props.gender)}`}
                         </Heading>
                         <Box alignSelf="end" align="start">
-                            <Link to={`/rankings/${this.props.gender === 'male' ? "women" : "men"}`}
-                                  style={{textDecoration: "none", color:"rgb(144,96,235)"}}>
-                                        {
-                                            this.props.gender === 'male' ? "Women" : "Men"
-                                        }
-                            </Link>
+                            <BirkieloLink to={`/rankings/${this.props.gender === 'male' ? "women" : "men"}`}>
+                                {
+                                    this.props.gender === 'male' ? "Women" : "Men"
+                                }
+                            </BirkieloLink>
                         </Box>
                     </Box>
                     <Box style={{maxWidth:"700px"}}>

@@ -10,11 +10,13 @@ import { Close } from "grommet-icons";
 import Spinner from './Spinner';
 import SearchBar from './SearchBar';
 
-import {callBackend, isEmpty} from "../util/data";
+import {
+    callBackend,
+    isEmpty,
+    getMetricHighlightColor } from "../util/data";
 import MetricTimeline from "./MetricTimeline";
 import RacerResultHeadToHead from "./RacerResultHeadToHead";
 
-// TODO if a woman & man are compared, it would be a good idea to note that they aren't compared on equal footing
 class RacerComparison extends React.Component {
     constructor(props) {
         super(props);
@@ -114,7 +116,7 @@ class RacerComparison extends React.Component {
                             margin={{bottom:"small"}}
                             style={{maxWidth:`${maxWidth}%`}}
                             primary={this.state.selectedRacerId === racerId}
-                            color="rgb(17,147,154)"
+                            color={getMetricHighlightColor()}
                         />);
                 })
         );

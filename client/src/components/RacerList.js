@@ -6,6 +6,8 @@ import {
 } from "grommet";
 import {Link} from 'react-router-dom';
 
+import {getClickableColor} from "../util/data";
+
 const alwaysColumns = [
     {
         property: "first_name",
@@ -18,7 +20,7 @@ const alwaysColumns = [
                     </b>:
                     <Text align="center">
                         <Link to={`/racer/${datum.racer_id}`}
-                              style={{textDecoration: "none", color: "rgb(144,96,235)"}}>
+                              style={{textDecoration: "none", color: getClickableColor()}}>
                             {`${datum.first_name} ${datum.middle_name ? datum.middle_name : ""} ${datum.last_name}`}
                         </Link>
                     </Text>
