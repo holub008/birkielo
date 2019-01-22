@@ -15,7 +15,7 @@ import './App.css';
 import SearchResults from "./components/SearchResults";
 import EventSummary from "./components/EventSummary";
 import EventList from "./components/EventList";
-import RaceResult from "./components/RaceResult";
+import RaceResults from "./components/RaceResults";
 
 class App extends Component {
     render() {
@@ -58,7 +58,7 @@ class App extends Component {
                                     <EventList/>
                             }/>
                             <Route path="/race/:race_id" render={
-                                (props) => <RaceResult raceId={props.match.params.race_id}/>
+                                (props) => <RaceResults raceId={props.match.params.race_id}/>
                             }/>
                             <Route component={NotFound}/>
                         </Switch>

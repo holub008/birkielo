@@ -229,7 +229,7 @@ class RaceResults extends React.Component {
 
                     </Box>
                     <Box margin={{left: "small", top: "small"}} style={{maxWidth: "500px"}}>
-                        <RaceResultSearchBar
+                        <RaceResultsSearchBar
                             results={this.state.results}
                             selectHandler={index => this.setState({currentPage:  Math.floor(index / PAGE_SIZE)})}
                         />
