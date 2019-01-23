@@ -84,7 +84,7 @@ class EventSummary extends React.Component {
                     <AccordionPanel header={this.renderPanelHeader("Statistics", this.state.selectedTabIndex === 2)}>
                         <Box direction="column">
                             <Box margin={{left: "small"}}>
-                                <Text> Racers by Year </Text>
+                                <Text> Racers of this event by year </Text>
                                 <MetricTimeline
                                     timelines={ [this.state.timeline] }
                                     names={[this.state.eventName]}
@@ -94,7 +94,7 @@ class EventSummary extends React.Component {
                                 />
                             </Box>
                             <Box margin={{left: "small"}}>
-                                <Text> Birkielo by Year </Text>
+                                <Text> Average Birkielo of this event's racers by year </Text>
                                 <MetricTimeline
                                     timelines={ [this.state.timeline, this.state.averageTimeline] }
                                     names={[this.state.eventName, 'All races average']}

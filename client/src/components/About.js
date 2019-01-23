@@ -18,16 +18,16 @@ import EventDonut from './EventDonut';
 import BirkieloLink from "./BirkieloLink";
 
 import '../styles/About.css';
+import {withRouter} from "react-router-dom";
 
-const featureTabs = {
-    concept:
+const featureTabs = [
         <Tab title="Concept" key="concept">
             <Box>
                 <Text margin="small">
-                    How do you find ski results? What do you hope do with them?
+                    How do you find ski results? What do you hope to do with them?
                 </Text>
                 <Text margin="small">
-                    In all likellihood, the answer to the first question is some combination of trawling skinnyski &
+                    In all likelihood, the answer to the first question is some combination of trawling skinnyski and
                     googling. Answers to the second question may vary:
                     <ul>
                         <li>
@@ -40,7 +40,8 @@ const featureTabs = {
                             Analyze how a racer's performance has changed over time
                         </li>
                     </ul>
-                    All of these approaches are inefficient, imprecise & subject to bias, and non-reproducible.
+                    To these ends, tab juggling, control-F, and other manual efforts are typically employed. All of
+                    these approaches are inefficient, imprecise and subject to bias, and non-reproducible.
                 </Text>
                 <Text margin="small">
                     Birkielo.com is both a web scraper and an application of the&nbsp;
@@ -50,7 +51,7 @@ const featureTabs = {
                     &nbsp;(commonly used in chess) to cross country ski results. It provides indexed and searchable
                     access to ski results and produces a rating system for comparison between racers, between races, and
                     with racers over time. To these ends, the site contains search tools and visualizations. The end
-                    result is improved analysis & insight and saved time.
+                    result is improved analysis, deeper insight, and saved time.
                 </Text>
                 <Text margin="small">
                     Chase trails, not links.
@@ -61,7 +62,6 @@ const featureTabs = {
                 </Box>
             </Box>
         </Tab>,
-    birkielo:
         <Tab title="Birkielo Computation" key="computation">
             <Box margin="medium">
                 <Box align="center">
@@ -74,18 +74,18 @@ const featureTabs = {
                     <AccordionPanel label="A Child">
                         <Box margin="small">
                             <Text>
-                                Every ski racer gets a score. Over time, if a skier races well & beats other skiers, they get
-                                a higher score. If a skier does not race well, they get a lower score.
+                                Every skier gets a score. Over time, if a skier races well and beats other skiers, they
+                                get a higher score. If a skier does not race well, they get a lower score.
                             </Text>
                         </Box>
                     </AccordionPanel>
                     <AccordionPanel label="An Adult">
                         <Box margin="small">
                             <Text margin="small">
-                                Every ski racer gets a score, with the average score around 1000. This score gives some
-                                expectation for how well a skier should do in any given race. If the average score of racers
-                                in a race is 1100 and my score is 1100, I should expect to beat half the competitors & lose
-                                to half the competitors. Imagine the scenarios:
+                                Every skier gets a score, with the average score around 1000. This score gives some
+                                expectation for how well a skier should do in any given race. If the average score of
+                                skiers in a race is 1100 and my score is 1100, I should expect to beat half the
+                                competitors and lose to half the competitors. Imagine the scenarios:
                                 <ul>
                                     <li>I beat (and lose to) exactly half. My score must be just about right.</li>
                                     <li>I beat more than half. My score should be adjusted upwards a bit (but not too much,
@@ -97,16 +97,16 @@ const featureTabs = {
                                 </ul>
                             </Text>
                             <Text margin="small">
-                                The key outcome to note is that score changes are relative to the competitiveness of race
-                                the score is being updated for. A good skier winning a race of bad skiers doesn't say much
-                                about their ability, and vice versa.
+                                The key outcome to note is that score changes are relative to the competitiveness of the
+                                race the score is being updated for. A good skier winning a race of bad skiers doesn't
+                                say much about their ability.
                             </Text>
                             <Text margin="small">
-                                So, how are scores determined? For a given race & racer, take all other competitors in the
-                                race that were beaten; for each competitor, add an amount to the racer score
-                                inversely proportional to the score difference between the racer & competitor. Now take
-                                all the competitors that beat the racer; for each competitor, subtract an amount from
-                                the racer score inversely proportional to the score difference between the racer &
+                                So, how are scores determined? For a given race and skier, take all other competitors in
+                                the race that were beaten; for each competitor, add an amount to the skier score
+                                inversely proportional to the score difference between the skier and competitor. Now take
+                                all the competitors that beat the skier; for each competitor, subtract an amount from
+                                the skier score inversely proportional to the score difference between the skier and
                                 competitor.
                             </Text>
                         </Box>
@@ -145,7 +145,6 @@ const featureTabs = {
                 </Accordion>
             </Box>
         </Tab>,
-    results:
         <Tab title="Results" key="results">
             <Box margin="medium">
                 <Text>
@@ -159,8 +158,8 @@ const featureTabs = {
                 <Text>
                     In a period of history adjacent to the reign of three pin bindings, ski results were only
                     communicated in physical, paper format. As the internet rose in popularity in the early 2000s,
-                    results were increasingly published in electronic formats (e.g. PDF & html in the form of web pages)
-                    ; one only need look at the magnitude of&nbsp;
+                    results were increasingly published in electronic formats (e.g. PDF and html in the form of web
+                    pages); one need only look at the magnitude of&nbsp;
                     <Anchor href="http://www.skinnyski.com/racing/results/1997-1998/">
                         results published on skinnyski.com
                     </Anchor> to grasp this trend. Today, I am not aware of any large race that does not publish online.
@@ -170,7 +169,7 @@ const featureTabs = {
                 <br/>
                 <Text>
                     But what happens to results once the post-race lust of result creepers has worn off? They sit in the
-                    archives of web servers all over the internet, gathering dust & suffering&nbsp;
+                    archives of web servers all over the internet, gathering dust and suffering&nbsp;
                     <Anchor href="http://lambda-diode.com/opinion/ecc-memory">
                         bit flips
                     </Anchor>
@@ -178,18 +177,18 @@ const featureTabs = {
                     <Anchor href="https://fasterskier.com/fsarticle/dubay-discusses-mistake-birkie-dq/">
                         Joe Dubay will be credited with winning the 2012 Birkie
                     </Anchor>
-                    . This sad fate harkens the "graveyard" allusion; Birkielo is the gracious grave-robber,
-                    indexing long dead race results & giving them new life.
+                    . This sad fate harkens the "graveyard" allusion; Birkielo is the gracious grave robber,
+                    indexing long dead race results and giving them new life.
                 </Text>
                 <Heading size="small">Scraping (not skis)</Heading>
                 <Text>
                     Unlike the physical results graveyards, which are effectively unrecoverable (without substantial
-                    human effort), these e-graveyards can be cheaply & quickly accessed. For the uninitiated, web
+                    human effort), these e-graveyards can be cheaply and quickly accessed. For the uninitiated, web
                     scraping is the process of extracting data from the internet; this frequently involves probing
-                    websites and processing json & html - the text data underlying much of the content you see in a
+                    websites and processing json and html - the text data underlying much of the content you see in a
                     browser. In fact, the majority of old race results that are not PDFs are structured as html
                     "tables"- html objects that have generally well-structured content (think excel spreadsheets for the
-                    internet). Using simple web request & parsing tools (Birkielo utilizes&nbsp;
+                    internet). Using simple web request and parsing tools (Birkielo utilizes&nbsp;
                     <Anchor href="https://www.crummy.com/software/BeautifulSoup/">
                         BeautifulSoup
                     </Anchor>
@@ -216,16 +215,16 @@ const featureTabs = {
                 <br/>
                 <Text>
                     To this stew of data, Birkielo sprinkles simple heuristics (e.g. scan for several common time formats,
-                    look for several types of name ordering), algorithms (e.g. to derive gender from gender placement &
-                    overall placement), and weakly structure text search tools - namely regular expressions - to produce
-                    a unified, well structured data set.
+                    look for several types of name ordering), algorithms (e.g. to derive gender from gender placement
+                    and overall placement), and weakly structured text search tools - namely regular expressions - to
+                    produce a unified, well-structured data set.
                 </Text>
                 <Heading size="small">Matching</Heading>
                 <Text>
                     Once results are consolidated, Birkielo seeks to make them attributable to a single racer
-                    responsible for them- attach an "identity" to the result. I refer to this as matching results. The
+                    responsible for them - attach an "identity" to the result. I refer to this as matching results. The
                     simple approach employed at time of writing is to match on name equality. Certainly there are cases
-                    where this fails - e.g. "Matthew Liebsch" sometimes gives his name as "Matt Liebsch" &
+                    where this fails - e.g. "Matthew Liebsch" sometimes gives his name as "Matt Liebsch" and
                     "Caitlin Compton" changed her name to "Caitlin Gregg" after marriage. Furthermore, the name
                     "Mark Johnson" undoubtedly corresponds to multiple racers because it is such a common name. Possible
                     solutions exist - what I will refer to as fuzzy matching techniques. Using age, location, average
@@ -237,11 +236,11 @@ const featureTabs = {
                 <Text>
                     Races are chosen for inclusion on the basis of
                     <ol>
-                        <li>ease of scraping (how clean & well formatted the data is) </li>
+                        <li>ease of scraping (how clean and well-formatted the data is) </li>
                         <li>the number of racers in the race</li>
                     </ol>
 
-                    These provide a measure of how time efficient programming a scraper will be. To date, a handful
+                    These provide a measure of how time-efficient programming a scraper will be. To date, a handful
                     of races have been scraped - see the below donut for a complete list of races from 2018. If you
                     would like to see other races added,&nbsp;
                     <BirkieloLink to="/support">
@@ -253,36 +252,58 @@ const featureTabs = {
                 </Box>
             </Box>
         </Tab>,
-};
+];
 
-function getTabs(referenceFeature) {
-    let referenceTab = featureTabs[referenceFeature];
-    if (!referenceTab) {
-        referenceFeature = 'concept';
-        referenceTab = featureTabs[referenceFeature];
+function getActiveTabIndex(referenceFeature) {
+    if (referenceFeature === 'computation') {
+        return 1;
+    }
+    else if (referenceFeature === 'results') {
+        return 2;
     }
 
-    const tabs = [referenceTab];
-    Object.keys(featureTabs)
-        .filter(feature => feature !== referenceFeature)
-        .forEach(feature => tabs.push(featureTabs[feature]));
-
-    return tabs;
+    return 0;
 }
 
-// NOTE: grommet does not correctly use activeTab when initially rendering the <Tabs> - it always renders activeTab=0
-// regardless of how it is configured. the result is that we hack the tab ordering so that the props.feature tab
-// is at index 0, and we leave the <Tabs> uncontrolled. if no props.feature is specified, we default to the concept tab
-function About(props) {
-    return (
-        <Grommet theme={grommet}>
-            <Tabs >
-                {
-                    getTabs(props.feature)
-                }
-            </Tabs>
-        </Grommet>
-    );
+function getTabKey(index) {
+    if (index === 1) {
+        return 'computation';
+    }
+    else if (index === 2) {
+        return 'results';
+    }
+
+    return 'concept';
 }
+
+class AboutUnWrapped extends React.Component {
+
+    state ={
+        activeTabIndex: getActiveTabIndex(this.props.feature),
+    };
+
+    render() {
+        return (
+            <Grommet theme={grommet}>
+                <Tabs
+                    activeIndex={this.state.activeTabIndex}
+                    onActive={i => {
+                        this.props.history.push(`/about/${getTabKey(i)}`);
+                        // note this is necessary because react lazily does not re-render this component on history push
+                        // we could key the about element from app route, but this is more efficient
+                        this.setState({activeTabIndex: i})
+                    }}
+                >
+                    {
+                        featureTabs
+                    }
+                </Tabs>
+            </Grommet>
+        );
+    }
+}
+
+const About = withRouter(({history, ...forwardedProps}) =>
+    <AboutUnWrapped history={history} {...forwardedProps}/>);
 
 export default About;

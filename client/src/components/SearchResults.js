@@ -8,7 +8,7 @@ import {
 } from "grommet";
 import { grommet } from "grommet/themes";
 
-import {callBackend, isEmpty} from "../util/data";
+import {callBackend} from "../util/data";
 
 import RacerList from "./RacerList";
 import Spinner from "./Spinner";
