@@ -276,31 +276,21 @@ function getTabKey(index) {
     return 'concept';
 }
 
-class AboutUnWrapped extends React.Component {
-
-    state ={
-        activeTabIndex: getActiveTabIndex(this.props.feature),
-    };
-
-    render() {
-        return (
-            <Grommet theme={grommet}>
-                <Tabs
-                    activeIndex={this.state.activeTabIndex}
-                    onActive={i => {
-                        this.props.history.push(`/about/${getTabKey(i)}`);
-                        // note this is necessary because react lazily does not re-render this component on history push
-                        // we could key the about element from app route, but this is more efficient
-                        this.setState({activeTabIndex: i})
-                    }}
-                >
-                    {
-                        featureTabs
-                    }
-                </Tabs>
-            </Grommet>
-        );
-    }
+function AboutUnWrapped(props) {
+    return (
+        <Grommet theme={grommet}>
+            <Tabs
+                activeIndex={getActiveTabIndex(props.feature)}
+                onActive={i => {
+                    props.history.push(`/about/${getTabKey(i)}`);
+                }}
+            >
+                {
+                    featureTabs
+                }
+            </Tabs>
+        </Grommet>
+    );
 }
 
 const About = withRouter(({history, ...forwardedProps}) =>

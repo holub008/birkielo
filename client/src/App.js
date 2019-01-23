@@ -40,7 +40,7 @@ class App extends Component {
                                                          key={props.match.params.racer_id}/>
                             }/>
                             <Route path="/about/:feature?" render={
-                                (props) => <About feature={props.match.params.feature}/>}/>
+                                (props) => <About feature={props.match.params.feature} key={props.match.params.feature}/>}/>
                             <Route path="/support" exact component={Support}/>
                             <Route path="/rankings/:sex" exact render={
                                 (props) => <RankedRacerList gender={apiGender(props.match.params.sex)}
