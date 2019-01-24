@@ -40,7 +40,7 @@ const featureTabs = [
                             Analyze how a racer's performance has changed over time
                         </li>
                     </ul>
-                    To these ends, tab juggling, control-F, and other manual efforts are typically employed. All of
+                    To these ends, tab juggling, Control+F, and other manual efforts are typically employed. All of
                     these approaches are inefficient, imprecise and subject to bias, and non-reproducible.
                 </Text>
                 <Text margin="small">
@@ -57,8 +57,8 @@ const featureTabs = [
                     Chase trails, not links.
                 </Text>
                 <Box align="center">
-                    <Image src="/images/birkie_hills.jpg"
-                         style={{width:"75%", maxWidth: "500px"}}/>
+                    <Image src="/images/roerich_fire_blossom.jpg"
+                         style={{width:"75%", maxWidth: "750px"}}/>
                 </Box>
             </Box>
         </Tab>,
@@ -92,7 +92,7 @@ const featureTabs = [
                                         in case the race was a fluke).</li>
                                     <li>I beat less than half. My score should be adjusted downwards a bit (but not too much,
                                         in case the race was a fluke).</li>
-                                    <li>I won the race. My score should be adjusted upwards substantially - it's clear I'm
+                                    <li>I won the race. My score should be adjusted upwards substantially&mdash;it's clear I'm
                                     much better than my current score.</li>
                                 </ul>
                             </Text>
@@ -148,11 +148,11 @@ const featureTabs = [
         <Tab title="Results" key="results">
             <Box margin="medium">
                 <Text>
-                    Birkielo is predicated on having access to consolidated ski results - both for providing a single
+                    Birkielo is predicated on having access to consolidated ski results&mdash;both for providing a single
                     source of results to users as well as performing aggregate analysis (rankings).
                     As result inquisitors will surely verify, ski results are spread across a variety of
-                    sources; even worse, these results often contain disparate content - different formatting, missing
-                    data, data with different representations, etc. How does Birkielo jump these hurdles?
+                    sources; even worse, these results often contain disparate content&mdash;different formatting,
+                    missing data, data with different representations, etc. How does Birkielo jump these hurdles?
                 </Text>
                 <Heading size="small">The Result Graveyards</Heading>
                 <Text>
@@ -185,9 +185,9 @@ const featureTabs = [
                     Unlike the physical results graveyards, which are effectively unrecoverable (without substantial
                     human effort), these e-graveyards can be cheaply and quickly accessed. For the uninitiated, web
                     scraping is the process of extracting data from the internet; this frequently involves probing
-                    websites and processing json and html - the text data underlying much of the content you see in a
+                    websites and processing json and html&mdash;the text data underlying much of the content you see in a
                     browser. In fact, the majority of old race results that are not PDFs are structured as html
-                    "tables"- html objects that have generally well-structured content (think excel spreadsheets for the
+                    "tables"&mdash;html objects that have generally well-structured content (think excel spreadsheets for the
                     internet). Using simple web request and parsing tools (Birkielo utilizes&nbsp;
                     <Anchor href="https://www.crummy.com/software/BeautifulSoup/">
                         BeautifulSoup
@@ -203,31 +203,38 @@ const featureTabs = [
                     </Anchor>
                     ), the attributes of the data may have arbitrary content . For example, a race time of 1 hour, 3
                     minutes, and 37 seconds may be reported as "1:03:37", "1:03:37.00", "1:04", "1:03.37", etc. A place
-                    of 23 out of 100 may be reported as "23/100", "23" (where the total number of racers is in another
-                    column, or implicit) - then add in the complexity introduced by including gender placement. Names
+                    of 23 out of 100 may be reported as "23/100" or "23" (where the total number of racers is in another
+                    column, or implicit)&mdash;then add in the complexity introduced by including gender placement. Names
                     may be reported as "Karl Holub", "Karl J Holub", "Holub, Karl", or&nbsp;
                     <Anchor href="http://results.birkie.com/participant.php?event_id=38&bib=57">
                         "Karl 599 Hwy 20 Holub"
                     </Anchor>
-                    . Results may or may not include the racer gender. How can we programmatically - that is, as if we
-                    were writing a cooking recipe for data - express how to coerce this data to similar format?
+                    . Results may or may not include the racer gender. How can we programmatically, that is, as if we
+                    were writing a cooking recipe for data, express how to coerce this data to similar format?
                 </Text>
                 <br/>
                 <Text>
                     To this stew of data, Birkielo sprinkles simple heuristics (e.g. scan for several common time formats,
                     look for several types of name ordering), algorithms (e.g. to derive gender from gender placement
-                    and overall placement), and weakly structured text search tools - namely regular expressions - to
-                    produce a unified, well-structured data set.
+                    and overall placement), and weakly structured text search tools&mdash;namely regular
+                    expressions&mdash;to produce a unified, well-structured data set.
                 </Text>
                 <Heading size="small">Matching</Heading>
                 <Text>
                     Once results are consolidated, Birkielo seeks to make them attributable to a single racer
-                    responsible for them - attach an "identity" to the result. I refer to this as matching results. The
-                    simple approach employed at time of writing is to match on name equality. Certainly there are cases
-                    where this fails - e.g. "Matthew Liebsch" sometimes gives his name as "Matt Liebsch" and
-                    "Caitlin Compton" changed her name to "Caitlin Gregg" after marriage. Furthermore, the name
+                    responsible for them&mdash;attach an "identity" to the result. I refer to this as matching results.
+                    The simple approach employed at time of writing is to match on name equality. Certainly there are
+                    cases where this fails; e.g.&nbsp;
+                    <BirkieloLink to="/racer/22952">
+                        "Matthew Liebsch"
+                    </BirkieloLink>
+                    &nbsp;sometimes gives his name as "Matt Liebsch" and&nbsp;
+                    <BirkieloLink to="/racer/9264">
+                        "Caitlin Gregg"
+                    </BirkieloLink>
+                    &nbsp;changed her name from "Caitlin Compton" after marriage. Furthermore, the name
                     "Mark Johnson" undoubtedly corresponds to multiple racers because it is such a common name. Possible
-                    solutions exist - what I will refer to as fuzzy matching techniques. Using age, location, average
+                    solutions exist&mdash;what I will refer to as fuzzy matching techniques. Using age, location, average
                     rank, and other associated data often present in results, it may be possible to match results to
                     racers where names alone don't identify the racer. However, this represents a complex endeavour, and
                     has not yet been implemented.
@@ -241,7 +248,7 @@ const featureTabs = [
                     </ol>
 
                     These provide a measure of how time-efficient programming a scraper will be. To date, a handful
-                    of races have been scraped - see the below donut for a complete list of races from 2018. If you
+                    of events have been scraped. See the below donut for a complete list of races from 2018. If you
                     would like to see other races added,&nbsp;
                     <BirkieloLink to="/support">
                         let me know or contribute results you've dug up!
