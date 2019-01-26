@@ -1,7 +1,7 @@
 import psycopg2 as pg
 
 
-def get_connection(host="birkielo2.cb5jkztmh9et.us-east-2.rds.amazonaws.com",
+def get_connection(host="db.birkielo.com",
                    port=5432,
                    username="kholub",
                    database="birkielo"):

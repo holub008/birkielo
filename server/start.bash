@@ -1,8 +1,7 @@
 #!/bin/bash
 
 export PGUSER=birkielo
-# TODO really need to cname this
-export PGHOST=birkielo2.cb5jkztmh9et.us-east-2.rds.amazonaws.com
+export PGHOST=db.birkielo.com
 export PGDATABASE=birkielo
 export PGPORT=5432
 

@@ -1,5 +1,5 @@
 # dump the old tables
-pg_dump -h birkielo.cb5jkztmh9et.us-east-2.rds.amazonaws.com -p 5432 -U kholub -d birkielo -f ~/birkielo.dmp
+pg_dump -h db.birkielo.com -p 5432 -U kholub -d birkielo -f ~/birkielo.dmp
 
 # set up local postgres
 brew install postgresql
