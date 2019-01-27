@@ -12,7 +12,6 @@ SELECT
   rr.duration,
   rr.id as race_result_id,
   rr.gender as race_result_gender,
-  ra.id as racer_id,
   ra.first_name,
   ra.middle_name,
   ra.last_name,
@@ -46,13 +45,18 @@ WINDOW w AS (
 
 
 class ResultFetcher:
-    def __init__(self,
-                 connection_supplier=get_connection):
+    def __init__(self, connection=None):
         """
 
-        :param connection_supplier: a function supplying database connections - this class handles their lifespan
+        :param connection: a nullable db connection. if not supplied, the fetcher may only be used in a context manager
+         if supplied, the user is in control of proper shutdown and transaction management
         """
-        self._connection_supplier = connection_supplier
+        self._connection = connection
+
+    def _query_precondition(self):
+        if not self._connection:
+            raise ValueError('Connection is unset. Either supply and manually manage the connection, or use in context '
+                             'manager')
 
     def get_results(self,
                     min_date=None,
@@ -64,22 +68,22 @@ class ResultFetcher:
         :return: a pandas dataframe corresponding to all matched results in the supplied date range
         """
 
+        self._query_precondition()
+
         min_date = datetime.min.date() if min_date is None else min_date
         max_date = datetime.max.date() if max_date is None else max_date
 
         if min_date > max_date:
             raise ValueError('min_date argument cannot be greater than max_date argument')
 
-        # just let any exceptions bubble
-        rs = []
-        with self._connection_supplier() as con:
-            cursor = con.cursor()
-            cursor.execute(_RESULTS_QUERY_FORMAT, (min_date, max_date))
-            rs = cursor.fetchall()
+        # just let any exceptions bubble - either the context manager will clean up, or client is handling
+        cursor = self._connection.cursor()
+        cursor.execute(_RESULTS_QUERY_FORMAT, (min_date, max_date))
+        rs = cursor.fetchall()
 
         results_df = pd.DataFrame(rs)
         results_df.columns = ('event_date', 'race_id', 'gender_place', 'overall_place', 'duration', 'race_result_id',
-                              'race_result_gender', 'racer_id', 'first_name', 'middle_name', 'last_name', 'racer_id',
+                              'race_result_gender', 'first_name', 'middle_name', 'last_name', 'racer_id',
                               'racer_gender')
 
         # since pandas dislikes datetime.date types (https://github.com/pandas-dev/pandas/issues/8802)
@@ -93,15 +97,24 @@ class ResultFetcher:
         :param date: the date in time (inclusive) up to which metrics are fetched
         :return: a dataframe with columns "date", "racer_id", "elo", unique on racer_id
         """
+
+        self._query_precondition()
+
         date = datetime.max.date() if date is None else date
 
-        rs = []
-        with self._connection_suppler() as con:
-            cursor = con.cursor()
-            cursor.execute(_METRICS_QUERY_FORMAT, (date,))
-            rs = cursor.fetchall()
+        cursor = self._connection.cursor()
+        cursor.execute(_METRICS_QUERY_FORMAT, (date,))
+        rs = cursor.fetchall()
 
         results_df = pd.DataFrame(rs)
         results_df.columns = ('racer_id', 'elo', 'date')
 
         return results_df
+
+    def __enter__(self):
+        self._connection = self._connection if self._connection else get_connection()
+        return self
+
+    def __exit__(self):
+        if self._connection:
+            self._connection.close()

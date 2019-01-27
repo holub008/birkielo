@@ -4,15 +4,29 @@ from scoring.result_fetcher import ResultFetcher
 from db import get_connection
 
 
-def _remove_same_racer_in_same_race(results):
+def _remove_same_racer_in_same_race(results_fetcher, cursor):
+    """
+    :param results_fetcher: a result fetcher object in transaction with cursor
+    :param cursor: a db cursor in transaction with the results_fetcher
+    :return: void (updates the transaction)
+    """
+    results = result_fetcher.get_results()
+    race_racer_counts = results.groupby(['race_id', 'racer_id']).size().reset_index(name='counts')
+    problem_racers = race_racer_counts[race_racer_counts['counts'] > 1][['racer_id']].drop_duplicates()
+
+    update_query = "UPDATE race_result SET racer_id = null WHERE racer_id IN %s"
+    cursor.execute(update_query, (tuple(problem_racers['racer_id']), ))
+
+
+def _resolve_gender_conflicts(result_fetcher, cursor):
     pass
 
 
-def _resolve_gender_conflicts(results):
+def _camelcasify_racer_name(result_fetcher, cursor):
     pass
 
 
-def _remap_known_names(result_fetcher, known_name_mapping_supplier = lambda: {
+def _remap_known_names(result_fetcher, cursor, known_name_mapping_supplier = lambda: {
                  ('Matt', 'Liebsch'): ('Matthew', 'Liebsch'),
                  ('Caitlin', 'Compton'): ('Caitlin', 'Gregg')
              }):
@@ -42,16 +56,35 @@ def _remap_known_names(result_fetcher, known_name_mapping_supplier = lambda: {
     merged_results = from_results.merge(to_results, how="inner", on=['to_first_name', 'to_last_name'])
 
     racer_id_updates = merged_results[['racer_id_x', 'racer_id_y']].drop_duplicates()
-    racers_for_deletion = merged_results[['racer_id_x']].drop_duplicates()
+
+    for index, update in racer_id_updates.iterrows():
+        update_query = "UPDATE race_result SET racer_id = %s where racer_id = %s"
+        cursor.execute(update_query, (update['racer_id_y'], update['racer_id_x']))
+
+        metric_delete_query = "DELETE FROM racer_metric WHERE racer_id = %s"
+        cursor.execute(metric_delete_query, (update['racer_id_x']))
+
+        racer_delete_query = "DELETE FROM racer WHERE id = %s"
+        cursor.execute(racer_delete_query, (update['racer_id_x']))
+
 
 if __name__ == '__main__':
     con = None
     try:
         con = get_connection()
-        result_fetcher = ResultFetcher(connection_supplier=lambda: con)
+        cursor = con.cursor()
 
+        result_fetcher = ResultFetcher(con)
 
-        con.commit()
+        _camelcasify_racer_name(result_fetcher, cursor)
+        _remap_known_names(result_fetcher, cursor)
+        _remove_same_racer_in_same_race(result_fetcher, cursor)
+        _resolve_gender_conflicts(result_fetcher, cursor)
+
+        #con.commit()
+        cursor.close()
+    except Exception as e:
+        print('Failed to clean up results: %s' % e)
     finally:
         if con:
             con.rollback()

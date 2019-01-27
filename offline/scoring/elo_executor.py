@@ -4,9 +4,9 @@ from db import get_connection
 from scoring.score_committer import insert_scores
 from scoring.score_committer import clear_prior_scores
 
-fetcher = ResultFetcher()
-results = fetcher.get_results()
-
+results = None
+with ResultFetcher() as fetcher:
+    results = fetcher.get_results()
 
 elo_scorer = NaiveElo()
 historical_elos = elo_scorer.blank_run(results)
