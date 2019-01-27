@@ -28,6 +28,11 @@ CREATE TABLE IF NOT EXISTS event_occurrence (
   date     DATE    NOT NULL
 );
 
+ALTER TABLE event_occurrence
+  ADD CONSTRAINT fk_event_occurrence
+  FOREIGN KEY (event_id)
+  REFERENCES event(id);
+
 -- note this will error if it already exists - no easy solution :(
 CREATE TYPE ski_discipline AS ENUM('classic', 'freestyle');
 ALTER TYPE ski_discipline ADD VALUE 'pursuit';
@@ -40,6 +45,11 @@ CREATE TABLE IF NOT EXISTS race (
   distance            NUMERIC(4, 1), -- allow for up to thousand KM races :)
   UNIQUE (event_occurrence_id, discipline, distance)
 );
+
+ALTER TABLE race
+    ADD CONSTRAINT fk_race
+    FOREIGN KEY (event_occurrence_id)
+    REFERENCES event_occurrence(id);
 
 COMMENT ON COLUMN race.distance IS 'the distance of the race in kilometers';
 
@@ -80,6 +90,14 @@ CREATE TABLE IF NOT EXISTS race_result (
 );
 
 ALTER TABLE race_result ADD COLUMN name VARCHAR(128);
+ALTER TABLE race_result
+    ADD CONSTRAINT fk_race_result_racer
+    FOREIGN KEY (racer_id)
+    REFERENCES racer(id);
+ALTER TABLE race_result
+    ADD CONSTRAINT  fk_race_result_race
+    FOREIGN KEY (race_id)
+    REFERENCES  race(id);
 
 COMMENT ON TABLE race_result IS 'the base, racer-level of storage for a race result record. will contain records not tied to a racer identity';
 COMMENT ON COLUMN race_result.racer_id IS 'nullable if the result cannot be uniquely or safely tied to a racer identity';
@@ -97,6 +115,11 @@ CREATE TABLE IF NOT EXISTS racer_metrics (
   elo      FLOAT   NOT NULL,
   UNIQUE (racer_id, date)
 );
+
+ALTER TABLE racer_metrics
+    ADD CONSTRAINT fk_racer_metrics
+    FOREIGN KEY (racer_id)
+    REFERENCES racer(id);
 
 COMMENT ON TABLE racer_metrics IS 'represents the time series of racer metrics. sparse in the sense that only dates with metric updates are included in the table';
 
