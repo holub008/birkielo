@@ -7,17 +7,23 @@ _RESULTS_QUERY_FORMAT = """
 SELECT
   eo.date as event_date,
   r.id as race_id,
-  ra.id as racer_id,
-  ra.gender as racer_gender,
   rr.gender_place,
   rr.overall_place,
-  rr.duration
+  rr.duration,
+  rr.id as race_result_id,
+  rr.gender as race_result_gender,
+  ra.id as racer_id,
+  ra.first_name,
+  ra.middle_name,
+  ra.last_name,
+  ra.id as racer_id,
+  ra.gender as racer_gender
 FROM event_occurrence eo
 JOIN race r
   ON eo.id = r.event_occurrence_id
 JOIN race_result rr
   ON r.id = rr.race_id
-JOIN racer ra
+LEFT JOIN racer ra
   ON rr.racer_id = ra.id
 WHERE
   eo.date >= %s
@@ -41,7 +47,7 @@ WINDOW w AS (
 
 class ResultFetcher:
     def __init__(self,
-                 connection_supplier = get_connection):
+                 connection_supplier=get_connection):
         """
 
         :param connection_supplier: a function supplying database connections - this class handles their lifespan
@@ -72,8 +78,9 @@ class ResultFetcher:
             rs = cursor.fetchall()
 
         results_df = pd.DataFrame(rs)
-        results_df.columns = ('event_date', 'race_id', 'racer_id', 'racer_gender',
-                              'gender_place', 'overall_place', 'duration')
+        results_df.columns = ('event_date', 'race_id', 'gender_place', 'overall_place', 'duration', 'race_result_id',
+                              'race_result_gender', 'racer_id', 'first_name', 'middle_name', 'last_name', 'racer_id',
+                              'racer_gender')
 
         # since pandas dislikes datetime.date types (https://github.com/pandas-dev/pandas/issues/8802)
         results_df['event_date'] = pd.to_datetime(results_df.event_date)
