@@ -52,7 +52,7 @@ class RacerSummary extends React.Component {
                                         .toFixed(1)
                                 }
                             </Text>
-                            <BirkieloLink to="/about/birkielo">
+                            <BirkieloLink to="/about/computation">
                                 <StatusUnknown color={LINK_COLOR}/>
                             </BirkieloLink>
                         </Box>
