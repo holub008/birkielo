@@ -66,6 +66,7 @@ const columns = [
                     ]}
                     thickness="small"
                     size="small"
+                    background="rgb(17,210,220,.5)"
                 />
             </Box>
         )
@@ -114,7 +115,8 @@ class RacerResults extends React.Component {
             .sort((a, b) => new Date(b.event_date).getTime() - new Date(a.event_date).getTime())
             .map(result => {
                 const resultCopy = Object.assign({}, result);
-                resultCopy.percent_placement = result.gender_place / result.gender_racers;
+                // min of .000001 because grommet filters out falsy values from the final meter :(
+                resultCopy.percent_placement = Math.max((result.gender_place - 1) / result.gender_racers, .000001);
                 return (resultCopy);
             });
 
