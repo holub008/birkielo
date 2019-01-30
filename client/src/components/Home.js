@@ -49,9 +49,16 @@ function Home(props) {
                                 </Text>
                             </DropButton>
                         </Box>
+                        <Box border="right" style={{cursor: "pointer"}}>
+                            <Box margin={{right: "small"}}>
+                                <BirkieloLink to="/event/">
+                                    Races
+                                </BirkieloLink>
+                            </Box>
+                        </Box>
                         <Box style={{cursor: "pointer"}}>
-                            <BirkieloLink to="/event/">
-                                Races
+                            <BirkieloLink to="/about/">
+                                About
                             </BirkieloLink>
                         </Box>
                     </Box>

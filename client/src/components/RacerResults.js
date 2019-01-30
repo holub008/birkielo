@@ -26,7 +26,7 @@ const columns = [
     },
     {
         property: "event_name",
-        header: "Event Name",
+        header: "Event",
         render: datum =>
             <BirkieloLink to={`/event/${datum.event_id}`}>
                 {
