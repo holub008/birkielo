@@ -33,7 +33,7 @@ def _insert_and_get_generic(cursor, df, table_name, required_columns,
     # query_value_format = pgs.SQL("INSERT INTO {} ({}) VALUES %s RETURNING *").format(pgs.Identifier(table_name),
     # pgs.SQL(', ').join(map(sql.Identifier, required_columns))
     query_value_format = "INSERT INTO " + table_name + ' (' + ','.join(required_columns) + ') VALUES %s RETURNING *'
-    pge.execute_values(cursor, query_value_format, values_for_insert,page_size=page_size)
+    pge.execute_values(cursor, query_value_format, values_for_insert, page_size=page_size)
     result_set = cursor.fetchall()
     result_df = pd.DataFrame(result_set)
     # note, we assume that anything worth getting is returning an "id" column

@@ -16,11 +16,6 @@ HAVING
   COUNT(1) > 1;
 
 
--- TODO: correct non-camel-cased names
--- TODO: I think it makes sense to remove any racer_id from a race_result (& corresponding racer) if coinciding
--- TODO: it looks like some of these races were double counted (e.g. 3283)
-
-
 -- instances of race results showing different genders for the same racer
 SELECT
   r.first_name,
@@ -37,4 +32,11 @@ HAVING
   COUNT(DISTINCT rr.gender) > 1;
 
 
--- TODO this sitting around 1K is concerning
+SELECT
+  overall_place
+FROM race_result
+WHERE
+  race_id = 2745
+ORDER BY 1;
+
+-- TODO 2006 birkebeiner & korte smooshed both disciplines together, so overall places are hosed :(

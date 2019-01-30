@@ -115,6 +115,6 @@ class ResultFetcher:
         self._connection = self._connection if self._connection else get_connection()
         return self
 
-    def __exit__(self):
+    def __exit__(self, type, value, traceback):
         if self._connection:
             self._connection.close()
