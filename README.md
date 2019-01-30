@@ -52,10 +52,7 @@ but here's an example execution:
 In approximate order of `E[value/effort]`:
 
 * Tuning Elo computations
-* Improve matching logic
-    - Some obvious name shortening and hyphenation changes (e.g. matthew -> matt)
-    - Check for more than one result in a single race (and handle or or throw out)
-    - Parse out age and location data
 * Top ranked racers over time 
+* Improve matching logic (e.g. parsing out age and location data)
 * Pro results
 * Allow user input for matching (e.g. if someone is incorrectly matched)
