@@ -37,7 +37,7 @@ const COLUMNS = [
                 {datum.name}
             </BirkieloLink>
             :
-            datum.racer_id
+            datum.name
     },
     {
         property: "gender",
