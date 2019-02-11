@@ -163,11 +163,14 @@ class RacerResultHeadToHead extends React.Component {
         const data = this.getData(this.state.join);
 
         return(
-            <Box>
+            <Box direction="column">
                 <Box direction="row" justify="center">
                     <Box
                         direction="row"
                         margin={{left:"small"}}
+                        alignSelf="start"
+                        align="start"
+                        alignContent="start"
                         fill="horizontal"
                     >
                         <Box
