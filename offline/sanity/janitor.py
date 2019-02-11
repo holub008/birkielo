@@ -21,6 +21,8 @@ def _remove_same_racer_in_same_race(result_fetcher, cursor):
 
     update_query = "UPDATE race_result SET racer_id = null WHERE racer_id IN %s"
     cursor.execute(update_query, (tuple(problem_racers['racer_id']), ))
+    delete_query = "DELETE FROM racer WHERE id IN %s"
+    cursor.execute(delete_query, (tuple(problem_racers['racer_id']), ))
 
 
 def _rerank_races(results, race_ids_for_gender_reranking):
@@ -239,7 +241,7 @@ def _remap_known_names(result_fetcher, cursor, known_name_mapping_supplier=lambd
     racer_id_updates = merged_results[['racer_id_x', 'racer_id_y']].drop_duplicates()
 
     for index, update in racer_id_updates.iterrows():
-        update_query = "UPDATE race_result SET racer_id = %s where racer_id = %s"
+        update_query = "UPDATE race_result SET racer_id = %s WHERE racer_id = %s"
         cursor.execute(update_query, (int(update['racer_id_y']), int(update['racer_id_x'])))
 
         metric_delete_query = "DELETE FROM racer_metrics WHERE racer_id = %s"
