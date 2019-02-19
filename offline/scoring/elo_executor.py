@@ -13,7 +13,7 @@ with ResultFetcher() as fetcher:
 # ignore unmatched results, since we have no racer to track scores over time
 results = results[~pd.isnull(results['racer_id'])]
 
-elo_scorer = NaiveElo()
+elo_scorer = NaiveElo(k_factor=2)
 historical_elos = elo_scorer.blank_run(results)
 historical_elos['elo'] = historical_elos['score']
 historical_elos['date'] = historical_elos['event_date']
