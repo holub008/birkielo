@@ -2,16 +2,29 @@ import pandas as pd
 import numpy as np
 from scipy import stats
 
+from abc import ABC, abstractmethod
 
-class NaiveElo:
+
+class Rater(ABC):
+
+    @abstractmethod
+    def blank_run(self, results):
+        pass
+
+    @abstractmethod
+    def get_uninformed_default(self):
+        pass
+
+
+class NaiveElo(Rater):
 
     def __init__(self,
                  default_score=1000,
                  k_factor=1,
                  log_odds_oom_differential=200,
+                 max_score_change=200,
                  score_floor=100,
-                 score_ceiling=3000,
-                 max_score_change=200):
+                 score_ceiling=3000):
         """
         for a simple mathematical explanation of Elo parameters, see
         https://math.stackexchange.com/questions/1731991/why-does-the-elo-rating-system-work
@@ -97,9 +110,14 @@ class NaiveElo:
 
         return score_updates
 
+    def get_uninformed_default(self):
+        return self._default_score
 
-class NearestNeighborElo:
+    def __str__(self):
+        return "NaiveElo_k=%d_maxchange=%d" % (self._k_factor, self._max_score_change)
 
+
+class NearestNeighborElo(NaiveElo):
     def __init__(self,
                  neighborhood_proportion=.1,
                  max_neighborhood_size=20,
@@ -119,47 +137,9 @@ class NearestNeighborElo:
          to have a score log_odds_oom_differential higher than B
         :param max_score_change the maximum change in score that may occur in any one race
         """
-        self._default_score = default_score
+        super().__init__(default_score, k_factor, log_odds_oom_differential, max_score_change)
         self._neighborhood_proportion = neighborhood_proportion
         self._max_neighborhood_size = max_neighborhood_size
-        self._k_factor = k_factor
-        self._log_odds_oom_differential=log_odds_oom_differential
-        self._max_score_change = max_score_change
-
-    def blank_run(self, results):
-        """
-        run the naive elo algorithm from a blank slate - i.e. no one has scores
-        :param results: the race results to be considered in the updates
-        :return: a dataframe with "sparse" scores over time for racers
-        """
-        previous_scores = results['racer_id'].drop_duplicates().to_frame()
-        previous_scores['score'] = self._default_score
-
-        return self.update_batch(previous_scores, results)
-
-    def update_batch(self, previous_scores, results):
-        """
-        run the naive elo algorithm start from a set of previous scores
-        :param previous_scores: a dataframe with columns "racer_id", "score"
-        :param results: the race results to be considered in the updates
-        :return: a dataframe with "sparse" scores over time for racers
-        """
-        time_ordered_grouped_races = results\
-            .sort_values('event_date')\
-            .groupby(['event_date', 'race_id'], sort=False)
-
-        scores_through_time_sparse = pd.DataFrame()
-        for race, results in time_ordered_grouped_races:
-            race_scoped_updates = self._update_single_race(previous_scores, results)
-            previous_scores = previous_scores.merge(race_scoped_updates, how='left', on=['racer_id'])
-            previous_scores['score'] = np.where(pd.isnull(previous_scores.score_y),
-                                                previous_scores.score_x,
-                                                previous_scores.score_y)
-            previous_scores = previous_scores.drop(columns=['score_x', 'score_y'])
-            race_scoped_updates['event_date'] = race[0]
-            scores_through_time_sparse = scores_through_time_sparse.append(race_scoped_updates)
-
-        return scores_through_time_sparse
 
     def _update_single_race(self, previous_scores, results):
         prior_score_joined_results = results.merge(previous_scores, on='racer_id', how='left')
@@ -195,6 +175,11 @@ class NearestNeighborElo:
                                                  ignore_index=True)
 
         return score_updates
+
+    def __str__(self):
+        return "NearestNeighborElo_k=%d_maxchange=%d_proportion=%dsize=%d" % (self._k_factor, self._max_score_change,
+                                                                              self._neighborhood_proportion,
+                                                                              self._max_neighborhood_size)
 
 
 class MeanElo(NaiveElo):
@@ -287,3 +272,10 @@ class MeanElo(NaiveElo):
                                                  ignore_index=True)
 
         return score_updates
+
+    def get_uninformed_default(self):
+        return self._prior_score_mean
+
+    def __str__(self):
+        return "MeanElo_k=%d_maxchange=%d_std=%d" % (self._k_factor, self._max_score_change,
+                                                     self._prior_score_standard_deviation)

@@ -20,6 +20,7 @@ import BirkieloLink from "./BirkieloLink";
 import '../styles/About.css';
 import {withRouter} from "react-router-dom";
 
+// note, I used http://hilite.me/ for code -> html creation, then a jsx converter
 const featureTabs = [
         <Tab title="Concept" key="concept">
             <Box>
@@ -41,7 +42,7 @@ const featureTabs = [
                         </li>
                     </ul>
                     To these ends, tab juggling, Control+F, and other manual efforts are typically employed. All of
-                    these approaches are inefficient, imprecise and subject to bias, and non-reproducible.
+                    these approaches are inefficient, subject to bias, and non-reproducible.
                 </Text>
                 <Text margin="small">
                     Birkielo.com is both a web scraper and an application of the&nbsp;
@@ -50,11 +51,10 @@ const featureTabs = [
                     </Anchor>
                     &nbsp;(commonly used in chess) to cross country ski results. It provides indexed and searchable
                     access to ski results and produces a rating system for comparison between racers, between races, and
-                    with racers over time. To these ends, the site contains search tools and visualizations. The end
-                    result is improved analysis, deeper insight, and saved time.
+                    with racers over time. The end result is improved analysis, deeper insight, and saved time.
                 </Text>
                 <Text margin="small">
-                    Chase trails, not links.
+                    Chase trails, not links!
                 </Text>
                 <Box align="center">
                     <Image src="/images/roerich_fire_blossom.jpg"
@@ -62,83 +62,208 @@ const featureTabs = [
                 </Box>
             </Box>
         </Tab>,
-        <Tab title="Birkielo Computation" key="computation">
+        <Tab title="Birkielo Score" key="computation">
             <Box margin="medium">
                 <Box align="center">
                     <Image src="/images/calc.jpg" style={{maxWidth:"150px"}}/>
                 </Box>
                 <Text>
-                    Explain as if I'm:
+                    Explain score computation as if I'm:
                 </Text>
                 <Accordion>
                     <AccordionPanel label="A Child">
                         <Box margin="small">
                             <Text>
                                 Every skier gets a score. Over time, if a skier races well and beats other skiers, they
-                                get a higher score. If a skier does not race well, they get a lower score.
+                                get a higher score. If a skier does not race well and loses to other skiers, they get a
+                                lower score. Skiers with higher scores will usually beat those with lower scores.
                             </Text>
                         </Box>
                     </AccordionPanel>
                     <AccordionPanel label="An Adult">
                         <Box margin="small">
                             <Text margin="small">
+                                Birkielo ratings can very approximately be interpreted as: "If skier A has a rating 200
+                                points greater than skier B, skier A is 10 times as likely to beat skier B in a race
+                                than to lose. At a 400 point differential, the odds of victory grow to 100:1, and so
+                                on.
+                            </Text>
+                            <Text margin="small">
+                                A layman's description of how scores are determined follows:
+                            </Text>
+                            <Text margin="small">
                                 Every skier gets a score, with the average score around 1000. This score gives some
-                                expectation for how well a skier should do in any given race. If the average score of
+                                expectation for how well a skier should do in any given race. If the median score of
                                 skiers in a race is 1100 and my score is 1100, I should expect to beat half the
                                 competitors and lose to half the competitors. Imagine the scenarios:
                                 <ul>
                                     <li>I beat (and lose to) exactly half. My score must be just about right.</li>
                                     <li>I beat more than half. My score should be adjusted upwards a bit (but not too much,
-                                        in case the race was a fluke).</li>
-                                    <li>I beat less than half. My score should be adjusted downwards a bit (but not too much,
-                                        in case the race was a fluke).</li>
-                                    <li>I won the race. My score should be adjusted upwards substantially&mdash;it's clear I'm
-                                    much better than my current score.</li>
+                                        in case the race was a fluke for me or my competitors).</li>
+                                    <li>I beat less than half. My score should be adjusted downwards a bit (again, not
+                                        too much).</li>
+                                    <li>I won the race. My score should be adjusted upwards substantially because it's
+                                        clear I'm much better than my current score.</li>
                                 </ul>
                             </Text>
                             <Text margin="small">
-                                The key outcome to note is that score changes are relative to the competitiveness of the
+                                This update can be iterated across all races a skier has participated in. The key
+                                outcome to note is that score changes are relative to the competitiveness of the
                                 race the score is being updated for. A good skier winning a race of bad skiers doesn't
                                 say much about their ability.
                             </Text>
                             <Text margin="small">
                                 So, how are scores determined? For a given race and skier, take all other competitors in
-                                the race that were beaten; for each competitor, add an amount to the skier score
+                                the race that were beaten; for each beaten competitor, add an amount to the skier score
                                 inversely proportional to the score difference between the skier and competitor. Now take
-                                all the competitors that beat the skier; for each competitor, subtract an amount from
-                                the skier score inversely proportional to the score difference between the skier and
-                                competitor.
+                                all the competitors that beat the skier; for each winning competitor, subtract an amount
+                                from the skier score inversely proportional to the score difference between the skier
+                                and competitor.
                             </Text>
                         </Box>
                     </AccordionPanel>
-                    <AccordionPanel label="A Computer Scientist">
+                    <AccordionPanel label="A Programmer">
                         <Box margin="small">
                             <Text>
-                                The scoring algorithm has not been finalized. In the interest of not rewriting this section
-                                with future changes it is left for a later date. Do feel free to read the&nbsp;
+                                Expressing the "adult" tab in pseudocode, with a few added parameters:
+                            </Text>
+                            <Box>
+                                <div style={{background: '#ffffff', overflow: 'auto', width: 'auto', border: 'solid gray', borderWidth: '.1em .1em .1em .8em', padding: '.2em .6em'}}>
+                                    <pre style={{margin: 0, lineHeight: '125%'}}>
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>for</span> race&nbsp;
+                                        <span style={{color: '#000000', fontWeight: 'bold'}}>in</span> races{"\n"}{"    "}
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>for</span> update_racer&nbsp;
+                                        <span style={{color: '#000000', fontWeight: 'bold'}}>in</span> race{"\n"}{"        "}
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>if</span>
+                                        &nbsp;not update_racer
+                                        <span style={{color: '#333333'}}>.</span>score{"\n"}{"            "}update_racer
+                                        <span style={{color: '#333333'}}>.</span>score&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;default_score{"\n"}{"        "}scale_racer_score&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>10</span>&nbsp;
+                                        <span style={{color: '#333333'}}>^</span> (update_racer
+                                        <span style={{color: '#333333'}}>.</span>score&nbsp;
+                                        <span style={{color: '#333333'}}>/</span> log_odds_differential){"\n"}{"        "}
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>for</span> competitor&nbsp;
+                                        <span style={{color: '#000000', fontWeight: 'bold'}}>in</span> setdiff(race, update_racer){"\n"}{"            "}scale_competitor_score&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>10</span>&nbsp;
+                                        <span style={{color: '#333333'}}>^</span> (competitor
+                                        <span style={{color: '#333333'}}>.</span>score&nbsp;
+                                        <span style={{color: '#333333'}}>/</span> log_odds_differential){"\n"}{"            "}p_win&nbsp;
+                                        <span style={{color: '#333333'}}>=</span> scale_racer_score&nbsp;
+                                        <span style={{color: '#333333'}}>/</span> (scale_racer_score&nbsp;
+                                        <span style={{color: '#333333'}}>+</span> scale_competitor_score){"\n"}{"            "}outcome&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>0</span>&nbsp;
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>if</span> competitor
+                                        <span style={{color: '#333333'}}>.</span>time&nbsp;
+                                        <span style={{color: '#333333'}}>&lt;</span> update_racer
+                                        <span style={{color: '#333333'}}>.</span>time&nbsp;
+                                        <span style={{color: '#008800', fontWeight: 'bold'}}>else</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>1</span>{"\n"}{"            "}update_racer
+                                        <span style={{color: '#333333'}}>.</span>score&nbsp;
+                                        <span style={{color: '#333333'}}>+=</span> k_factor&nbsp;
+                                        <span style={{color: '#333333'}}>*</span> (outcome&nbsp;
+                                        <span style={{color: '#333333'}}>-</span> p_win){"\n"}
+                                    </pre>
+                                </div>
+
+                            </Box>
+                            <Text margin={{top:"small"}}>
+                                Birkielo ratings run with the following parameterization:
+                            </Text>
+                            <Box>
+                                <div style={{background: '#ffffff', overflow: 'auto', width: 'auto', border: 'solid gray', borderWidth: '.1em .1em .1em .8em', padding: '.2em .6em'}}>
+                                    <pre style={{margin: 0, lineHeight: '125%'}}>default_score&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>1000</span>{"\n"}k_factor&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>2</span>{"\n"}log_odds_differential&nbsp;
+                                        <span style={{color: '#333333'}}>=</span>&nbsp;
+                                        <span style={{color: '#0000DD', fontWeight: 'bold'}}>200</span>{"\n"}
+                                    </pre>
+                                </div>
+                            </Box>
+                            <Text margin={{top:"small"}}>
+                                For practical purposes, a per-race maximum score change is instituted (200 points). This
+                                is to prevent corner cases such as a top racer sand-bagging one race only to sky rocket
+                                their rating with a follow up top placement. It has the downside of reducing the speed
+                                with which tail racers (both bad and good) reach their true ratings; slow and
+                                conservative is acceptable, if not preferred, in this case because most top competitors
+                                do many races.
+                            </Text>
+                            <Text margin={{top:"small"}}>
+                                You can also read the actual implementation and several other attempted approaches&nbsp;
                                 <Anchor href="https://github.com/holub008/birkielo/tree/master/offline/scoring">
-                                code
+                                    here.
                                 </Anchor>
-                                .
                             </Text>
                         </Box>
                     </AccordionPanel>
                     <AccordionPanel label="A Statistician">
                         <Box margin="small">
-                            <Text>
-                                The scoring algorithm has not been finalized. In the interest of not rewriting this section
-                                with future changes it is left for a later date. The procedure is highly derivative of the&nbsp;
+                            <Text margin="small">
+                                The birkielo rating system is highly derivative of the&nbsp;
                                 <Anchor href="https://en.wikipedia.org/wiki/Elo_rating_system#Theory">
                                     Elo rating
                                 </Anchor>
-                                &nbsp;as in chess and will share much of the math.
-
-                                If you are interested in running some statistical simulations or seeing methods explored in
-                                the development of Birkielo, see&nbsp;
+                                &nbsp;as in chess. In that setting, all matches are of course 1 on 1. As in the
+                                "programmer" tab above, if the log scale odds differential is parameterized as 200,
+                                we expect that a score gap of 200 points between two competitors implies the higher
+                                rated player is 10 times more likely to win than lose against the lower rated player.
+                                The math won't be covered here in further detail, but the above wikipedia link and&nbsp;
+                                <Anchor href="https://math.stackexchange.com/a/1733081">
+                                    this post
+                                </Anchor>&nbsp;elucidate the model.
+                            </Text>
+                            <Text margin="small">
+                                The birkielo rating system naively carries out the Elo rating system by deconstructing
+                                a race (an n skier vs. n skier match) into n*(n-1) matchups (as if every racer had a
+                                one on one competition with each other racer in the race). This has a couple statistical
+                                implications that differ from traditional Elo:
+                                <ul>
+                                    <li>Score updates are correlated with one another within a race</li>
+                                    <li>The system will be more confident in the measured outcome from a single race
+                                        vs. a single chess match, since the sample size has grown substantially
+                                        (shrinking variance via Law of Large Numbers).</li>
+                                </ul>
+                                Both of these facts are not accounted for by the traditional Elo rating system; Birkielo
+                                ratings weakly account for them by:
+                                <ul>
+                                    <li>imposing a score update cap of 200 points on each race</li>
+                                    <li>substantially shrinking the k-factor (reactivity) of the scoring system</li>
+                                </ul>
+                                Both temper the overconfidence that traditional Elo rating systems would be subject to.
+                            </Text>
+                            <h4>
+                                Ranking Validation
+                            </h4>
+                            <Text margin="small">
+                                How was this methodology (and its parameterization) selected? A little bit of empiricism
+                                and a bit of chi-by-eye! First, a toy dataset was constructed, where "true" skier ratings are
+                                static IID Gaussian random variables, with races being a subset of the entire racer
+                                population and race outcomes a Gaussian sample with mean of the skier's true rating.
+                                This dataset was used to check for properties like:
+                                <ul>
+                                    <li>Convergence: Does the rating implied ranking converge reasonably close to
+                                        "true" ranking? Reasonably defined by Spearman's rank correlation. </li>
+                                    <li>Speed of convergence: How many races does it take for the rating implied
+                                        ranking to become reasonably close to the "true" ranking</li>
+                                </ul>
+                            </Text>
+                            <Text margin="small">
+                                Next, empirical validation was performed via forward chaining -
+                            </Text>
+                            <h4>
+                                Simulating
+                            </h4>
+                            <Text margin="small">
+                                If you are interested in running any of the statistical simulations or seeing methods
+                                explored in the development of birkielo ratings, see&nbsp;
                                 <Anchor href="https://github.com/holub008/birkielo/blob/master/offline/scoring/simulate/ranking_experiments.R">
-                                    here
+                                    here.
                                 </Anchor>
-                                .
                             </Text>
                         </Box>
                     </AccordionPanel>
@@ -148,7 +273,7 @@ const featureTabs = [
         <Tab title="Results" key="results">
             <Box margin="medium">
                 <Text>
-                    Birkielo is predicated on having access to consolidated ski results&mdash;both for providing a single
+                    Birkielo is predicated on access to consolidated ski results&mdash;both for providing a single
                     source of results to users as well as performing aggregate analysis (rankings).
                     As result inquisitors will surely verify, ski results are spread across a variety of
                     sources; even worse, these results often contain disparate content&mdash;different formatting,

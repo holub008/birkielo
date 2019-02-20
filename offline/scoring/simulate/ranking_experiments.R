@@ -1,4 +1,5 @@
 library(dplyr)
+library(ggplot2)
 
 # assumes the underlying distribution of skier skill is normal
 # TODO would be interesting to experiment with other distributions (particularly other exponential family)
@@ -176,6 +177,68 @@ mean_elo <- function(results,
   score_history
 }
 
+nearest_neighbor_elo <- function(results,
+                                 window_size=.1, 
+                                 log_odds_oom_differential = 400,
+                                 k_factor = 2,
+                                 default_score = 1000) {
+  racers <- results %>%
+    distinct(racer_id) %>%
+    mutate(score = default_score)
+  
+  score_history <- data.frame()
+  
+  for (ix in sort(unique(results$iteration))) {
+    race_results <- results %>% 
+      filter(iteration == ix)%>%
+      mutate(
+        race_rank = rank(time)
+      ) %>%
+      inner_join(racers, by = c('racer_id' = 'racer_id'))
+    
+    # TODO it's likely faster to just do a self antijoin
+    updated_racers <- data.frame()
+    for (update_racer_id in race_results$racer_id) {
+      racer <- race_results %>% 
+        filter(racer_id == update_racer_id) %>%
+        mutate(
+          linear_scale_score = 10 ^ (score / log_odds_oom_differential)
+        ) 
+      
+      lower_allowed_rank <- racer$race_rank - window_size * nrow(race_results)
+      upper_allowed_rank <- racer$race_rank + window_size * nrow(race_results)
+      
+      score_increment <- race_results %>%
+        filter(racer_id != update_racer_id) %>%
+        filter(race_rank <= upper_allowed_rank & race_rank >= lower_allowed_rank) %>%
+        mutate(
+          linear_scale_competitor_score = 10 ^ (score / log_odds_oom_differential),
+          p_racer = racer$linear_scale_score / (linear_scale_competitor_score + racer$linear_scale_score),
+          outcome = ifelse(racer$race_rank < race_rank, 1, 0),
+          score_change = k_factor * (outcome - p_racer)
+        ) %>%
+        pull(score_change) %>%
+        sum()
+      
+      racer$updated_score <- racer$score + score_increment
+      
+      updated_racers <- bind_rows(updated_racers, racer)
+    }
+    
+    racers <- racers %>%
+      left_join(updated_racers %>% select(racer_id, updated_score), by = c('racer_id' = 'racer_id')) %>%
+      mutate(
+        score = ifelse(!is.na(updated_score), updated_score, score)
+      ) %>%
+      select(-updated_score)
+    score_history <- bind_rows(score_history, racers %>% 
+                                 select(racer_id, score) %>%
+                                 mutate(iteration = ix))
+  }
+  
+  score_history
+}
+
 eds_prior <- function(rank_percentile, prior_mean = 1000, prior_sd = 400) {
   finite_q_percentile <- max(min(rank_percentile, .999), .001)
   score <- qnorm(1 - finite_q_percentile, prior_mean, prior_sd)
@@ -257,32 +320,33 @@ rank_correlation_over_time <- function(historical_scores_joined) {
 ###########################
 
 population <- generate_population(n_racers=1e3)
-all_results <- simulate_races(population, n_trials=200)
+all_results <- simulate_races(population, n_trials=100)
 
 all_results %>% 
-  inner_join(population, by = 'racer_id') %>% 
   filter(iteration == 1) %>%
+  inner_join(population, by = 'racer_id') %>% 
   ggplot(aes(true_score, time)) + 
     geom_point()
 
 elo_scores <- naive_elo(all_results)
 elo_scores_mean_algo <- mean_elo(all_results)
+elo_scores_nn <- nearest_neighbor_elo(all_results)
 
-final_scores_joined <- elo_scores %>%
+final_scores_joined <- elo_scores_nn %>%
   filter(iteration == 20) %>%
   mutate(
     predicted_rank = rank(-score)
   ) %>%
-  inner_join(elo_scores_mean_algo %>%
+  inner_join(elo_scores %>%
                filter(iteration == 20) %>%
                mutate(
                  predicted_rank = rank(-score)
                ), by = c('racer_id' = 'racer_id'),
-             suffix = c('.naive', '.mean'))
+             suffix = c('.nn', '.naive'))
 
-ggplot(final_scores_joined) + geom_point(aes(predicted_rank.naive, predicted_rank.mean))
+ggplot(final_scores_joined) + geom_point(aes(predicted_rank.nn, predicted_rank.naive))
 
-final_scores <- elo_scores_mean_algo %>%
+final_scores <- elo_scores_nn %>%
   filter(iteration == 20) %>%
   mutate(
     predicted_rank = rank(-score)
@@ -294,7 +358,7 @@ true_joined_scores <- population %>%
 ggplot(true_joined_scores) + geom_point(aes(predicted_rank, true_rank))
 ggplot(true_joined_scores) + geom_point(aes(true_rank, score))
 
-true_joined_history <- elo_scores %>%
+true_joined_history <- elo_scores_nn %>%
   inner_join(population, by = c('racer_id' = 'racer_id'))
 
 rank_correlation_over_time(true_joined_history) %>%
