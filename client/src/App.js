@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import About from "./components/About";
+import Privacy from "./components/Privacy";
 import Support from "./components/Support";
 import RacerSummary from "./components/RacerSummary";
 import RankedRacerList from "./components/RankedRacerList";
@@ -60,6 +61,7 @@ class App extends Component {
                             <Route path="/race/:race_id" render={
                                 (props) => <RaceResults raceId={props.match.params.race_id}/>
                             }/>
+                            <Route path="/privacy" component={Privacy}/>
                             <Route component={NotFound}/>
                         </Switch>
                     </div>

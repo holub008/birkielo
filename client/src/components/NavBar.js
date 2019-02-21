@@ -45,6 +45,13 @@ function UnWrappedMenuDrop(props) {
                             </Text>,
                         onClick: () => {props.history.push('/support')},
                     },
+                    {
+                        label:
+                            <Text color={getClickableColor()}>
+                                Privacy
+                            </Text>,
+                        onClick: () => {props.history.push('/privacy')},
+                    },
                 ]}
                 icon={<MenuIcon color="#e6f1f0"/>}
             />
