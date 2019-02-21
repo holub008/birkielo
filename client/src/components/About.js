@@ -68,7 +68,7 @@ const featureTabs = [
                     <Image src="/images/calc.jpg" style={{maxWidth:"150px"}}/>
                 </Box>
                 <Text>
-                    Explain score computation as if I'm:
+                    Explain birkielo scoring as if I'm:
                 </Text>
                 <Accordion>
                     <AccordionPanel label="A Child">
@@ -208,19 +208,18 @@ const featureTabs = [
                                 <Anchor href="https://en.wikipedia.org/wiki/Elo_rating_system#Theory">
                                     Elo rating
                                 </Anchor>
-                                &nbsp;as in chess. In that setting, all matches are of course 1 on 1. As in the
+                                &nbsp;as in chess. In that setting, all matches are of course 1 vs. 1. As in the
                                 "programmer" tab above, if the log scale odds differential is parameterized as 200,
                                 we expect that a score gap of 200 points between two competitors implies the higher
                                 rated player is 10 times more likely to win than lose against the lower rated player.
-                                The math won't be covered here in further detail, but the above wikipedia link and&nbsp;
+                                I won't cover the math in further detail, but the above wikipedia link and&nbsp;
                                 <Anchor href="https://math.stackexchange.com/a/1733081">
                                     this post
                                 </Anchor>&nbsp;elucidate the model.
                             </Text>
                             <Text margin="small">
                                 The birkielo rating system naively carries out the Elo rating system by deconstructing
-                                a race (an n skier vs. n skier match) into n*(n-1) matchups (as if every racer had a
-                                one on one competition with each other racer in the race). This has a couple statistical
+                                a race (an n skier vs. n skier match) into n*(n-1) individual matchups. This has a couple statistical
                                 implications that differ from traditional Elo:
                                 <ul>
                                     <li>Score updates are correlated with one another within a race</li>
@@ -231,37 +230,95 @@ const featureTabs = [
                                 Both of these facts are not accounted for by the traditional Elo rating system; Birkielo
                                 ratings weakly account for them by:
                                 <ul>
-                                    <li>imposing a score update cap of 200 points on each race</li>
-                                    <li>substantially shrinking the k-factor (reactivity) of the scoring system</li>
+                                    <li>Imposing a score update cap of 200 points on each race. This may be thought of
+                                    as a hard regularization.</li>
+                                    <li>Substantially shrinking the k-factor (reactivity) of the scoring system. This
+                                    may be thought of as a soft regularization.</li>
                                 </ul>
                                 Both temper the overconfidence that traditional Elo rating systems would be subject to.
                             </Text>
                             <h4>
-                                Ranking Validation
+                                Model Selection & Validation
                             </h4>
                             <Text margin="small">
-                                How was this methodology (and its parameterization) selected? A little bit of empiricism
-                                and a bit of chi-by-eye! First, a toy dataset was constructed, where "true" skier ratings are
-                                static IID Gaussian random variables, with races being a subset of the entire racer
-                                population and race outcomes a Gaussian sample with mean of the skier's true rating.
-                                This dataset was used to check for properties like:
+                                Before arriving at the final model, several hypothesized rating models were developed:
                                 <ul>
-                                    <li>Convergence: Does the rating implied ranking converge reasonably close to
-                                        "true" ranking? Reasonably defined by Spearman's rank correlation. </li>
-                                    <li>Speed of convergence: How many races does it take for the rating implied
-                                        ranking to become reasonably close to the "true" ranking</li>
+                                    <li>Naive Elo (the selected model): Break a race into n*(n-1) 1 vs. 1 matchups and
+                                        perform standard Elo</li>
+                                    <li>Mean Elo: For each racer, compute mean rating of defeated skiers and mean rating
+                                        of winning skiers, then perform standard Elo for both averages</li>
+                                    <li>Nearest Neighbor Elo: Similar to Naive Elo, but instead of considering all
+                                        n-1 competitors, only consider k * (n-1) competitors for k &lte; 1.</li>
+                                    <li>Empirical Distribution Smoothing: Assume a prior distribution of skier skill.
+                                        After a race completes, compute updated scores as a weighted average of the
+                                        racer previous rating and the empirical pre-race rating distribution, or
+                                        the prior quantile if the first race.
+                                    </li>
                                 </ul>
                             </Text>
                             <Text margin="small">
-                                Next, empirical validation was performed via forward chaining -
+                                As a first pass test, a toy data set was constructed, with "true" skier ratings as static
+                                IID Gaussian random variables over time. Races in this set contain a subset of the entire
+                                racer population and race outcomes are a Gaussian sampling with mean of the skier's true
+                                rating.
+                            </Text>
+                            <Text margin="small">
+                                Several key properties of the model were assessed using this set:
+                                <ul>
+                                    <li>Convergence: Does the implied ranking converge reasonably close to
+                                        "true" ranking? Here, and throughout validation, Spearman's rank correlation
+                                        (rho) was used. </li>
+                                    <li>Speed of convergence: How many races does it take for the implied
+                                        ranking to become reasonably close to the "true" ranking?</li>
+                                    <li>Stability of score distribution: For human interpretability, it is desirable
+                                        that the score distribution remains relatively stable over time (e.g. the
+                                        variance doesn't substantially shrink or grow as time goes on).</li>
+                                </ul>
+                                Below is a visual example of rho convergence over time for a Naive Elo model. Predictions achieve
+                                quite high correlation by 5 races, and has converged to, for practical purposes, perfect
+                                prediction by 15 races.
+                            </Text>
+                            <Image src="/images/naive_elo_toy_rho.jpg"
+                                   style={{margin:"auto", width: "90%", maxWidth:"700px"}}/>
+                            <Text margin="small">
+                                Using this first pass, the 3 Elo variants (Naive, Mean, & Nearest Neighbor) were found
+                                to have desirable characteristics.
+                            </Text>
+                            <Text margin="small">
+                                In reality, the toy data is missing several complexities present in real data:
+                                <ul>
+                                    <li>Stationarity: Skier skill is generally not constant over time (nor its variance)
+                                    </li>
+                                    <li>Sparsity: Most skiers do not race more than a few times</li>
+                                    <li>Dropout: Below average skiers have a higher propensity to quit</li>
+                                </ul>
+                                So, we need an empirical method of validation to select a final model (and
+                                parameterization). Forward chaining is a method of sequential cross validation:
+                                <ul>
+                                    <li>build the model to time t</li>
+                                    <li>predict the placements for race at time t + 1</li>
+                                    <li>compute accuracy of predictions using actual placements at time t + 1</li>
+                                    <li>repeat from top</li>
+                                </ul>
+                                Using a grid search over the 3 model varieties and parameters, forward chaining produced
+                                a picture of the most favorable models (filtered down for demonstration purposes):
+                            </Text>
+                            <Image src="/images/rater_search.jpg"
+                                 style={{margin:"auto", width: "90%", maxWidth:"700px"}}/>
+                            <Text margin="small">
+                                The bottom red line is Mean Elo, which performed rather poorly, likely due to no
+                                weighting on the number of racers beaten / lost to. The middle 3 purple lines are
+                                Nearest Neighbor variants. They perform reasonably bu worse than the top 5 green lines
+                                &emdash;all flavors of Naive Elo. While they are mostly comparable, there appears to be
+                                some improvement in smaller k (k=1,2), which generally suggests a less reactive model.
                             </Text>
                             <h4>
-                                Simulating
+                                Implementation
                             </h4>
                             <Text margin="small">
-                                If you are interested in running any of the statistical simulations or seeing methods
-                                explored in the development of birkielo ratings, see&nbsp;
-                                <Anchor href="https://github.com/holub008/birkielo/blob/master/offline/scoring/simulate/ranking_experiments.R">
+                                If you are interested in running any of the simulations, seeing methods
+                                explored in the development of birkielo ratings, or the final implementation, see&nbsp;
+                                <Anchor href="https://github.com/holub008/birkielo/blob/master/offline/scoring/">
                                     here.
                                 </Anchor>
                             </Text>
