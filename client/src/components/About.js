@@ -83,13 +83,13 @@ const featureTabs = [
                     <AccordionPanel label="An Adult">
                         <Box margin="small">
                             <Text margin="small">
-                                Birkielo ratings can very approximately be interpreted as: "If skier A has a rating 200
+                                Birkielo ratings can approximately be interpreted as: "If skier A has a rating 200
                                 points greater than skier B, skier A is 10 times as likely to beat skier B in a race
                                 than to lose. At a 400 point differential, the odds of victory grow to 100:1, and so
                                 on.
                             </Text>
                             <Text margin="small">
-                                A layman's description of how scores are determined follows:
+                                A layman's description of how scores are determined follows.
                             </Text>
                             <Text margin="small">
                                 Every skier gets a score, with the average score around 1000. This score gives some
@@ -125,7 +125,7 @@ const featureTabs = [
                     <AccordionPanel label="A Programmer">
                         <Box margin="small">
                             <Text>
-                                Expressing the "adult" tab in pseudocode, with a few added parameters:
+                                Expressing the "adult" tab precisely and in pseudocode, with a few added parameters:
                             </Text>
                             <Box>
                                 <div style={{background: '#ffffff', overflow: 'auto', width: 'auto', border: 'solid gray', borderWidth: '.1em .1em .1em .8em', padding: '.2em .6em'}}>
@@ -222,7 +222,7 @@ const featureTabs = [
                                 a race (an n skier vs. n skier match) into n*(n-1) individual matchups. This has a couple statistical
                                 implications that differ from traditional Elo:
                                 <ul>
-                                    <li>Score updates are correlated with one another within a race</li>
+                                    <li>Score updates are correlated with one another within a competition</li>
                                     <li>The system will be more confident in the measured outcome from a single race
                                         vs. a single chess match, since the sample size has grown substantially
                                         (shrinking variance via Law of Large Numbers).</li>
@@ -238,7 +238,7 @@ const featureTabs = [
                                 Both temper the overconfidence that traditional Elo rating systems would be subject to.
                             </Text>
                             <h4>
-                                Model Selection & Validation
+                                Model Development
                             </h4>
                             <Text margin="small">
                                 Before arriving at the final model, several hypothesized rating models were developed:
@@ -248,35 +248,36 @@ const featureTabs = [
                                     <li>Mean Elo: For each racer, compute mean rating of defeated skiers and mean rating
                                         of winning skiers, then perform standard Elo for both averages</li>
                                     <li>Nearest Neighbor Elo: Similar to Naive Elo, but instead of considering all
-                                        n-1 competitors, only consider k * (n-1) competitors for k &lte; 1.</li>
+                                        n-1 competitors, only consider the nearest k * (n-1) competitors for
+                                        k &le; 1.</li>
                                     <li>Empirical Distribution Smoothing: Assume a prior distribution of skier skill.
                                         After a race completes, compute updated scores as a weighted average of the
-                                        racer previous rating and the empirical pre-race rating distribution, or
-                                        the prior quantile if the first race.
+                                        racer's previous rating and the empirical pre-race rating distribution quantile,
+                                        or the prior quantile if it's the racer's first race.
                                     </li>
                                 </ul>
                             </Text>
                             <Text margin="small">
-                                As a first pass test, a toy data set was constructed, with "true" skier ratings as static
-                                IID Gaussian random variables over time. Races in this set contain a subset of the entire
+                                As a first pass test, a toy data set was constructed, with "true" skier rating drawn
+                                from a Gaussian distribution. Races in this set contain a subset of the entire
                                 racer population and race outcomes are a Gaussian sampling with mean of the skier's true
-                                rating.
+                                rating. Skier outcomes are a stationary process in this data.
                             </Text>
                             <Text margin="small">
                                 Several key properties of the model were assessed using this set:
                                 <ul>
-                                    <li>Convergence: Does the implied ranking converge reasonably close to
+                                    <li>Convergence: Does the implied ranking converge reasonably close to the
                                         "true" ranking? Here, and throughout validation, Spearman's rank correlation
-                                        (rho) was used. </li>
+                                        (rho) is used. </li>
                                     <li>Speed of convergence: How many races does it take for the implied
                                         ranking to become reasonably close to the "true" ranking?</li>
                                     <li>Stability of score distribution: For human interpretability, it is desirable
                                         that the score distribution remains relatively stable over time (e.g. the
-                                        variance doesn't substantially shrink or grow as time goes on).</li>
+                                        mean and variance don't substantially shrink or grow over time).</li>
                                 </ul>
                                 Below is a visual example of rho convergence over time for a Naive Elo model. Predictions achieve
-                                quite high correlation by 5 races, and has converged to, for practical purposes, perfect
-                                prediction by 15 races.
+                                quite high correlation by 5 races, and have converged to practically perfect prediction
+                                by 15 races.
                             </Text>
                             <Image src="/images/naive_elo_toy_rho.jpg"
                                    style={{margin:"auto", width: "90%", maxWidth:"700px"}}/>
@@ -284,6 +285,9 @@ const featureTabs = [
                                 Using this first pass, the 3 Elo variants (Naive, Mean, & Nearest Neighbor) were found
                                 to have desirable characteristics.
                             </Text>
+                            <h4>
+                                Model Selection & Validation
+                            </h4>
                             <Text margin="small">
                                 In reality, the toy data is missing several complexities present in real data:
                                 <ul>
@@ -293,10 +297,11 @@ const featureTabs = [
                                     <li>Dropout: Below average skiers have a higher propensity to quit</li>
                                 </ul>
                                 So, we need an empirical method of validation to select a final model (and
-                                parameterization). Forward chaining is a method of sequential cross validation:
+                                parameterization). Forward chaining is a method of sequential cross validation that
+                                may provide such inference. The method:
                                 <ul>
                                     <li>build the model to time t</li>
-                                    <li>predict the placements for race at time t + 1</li>
+                                    <li>predict the placements for the race at time t + 1</li>
                                     <li>compute accuracy of predictions using actual placements at time t + 1</li>
                                     <li>repeat from top</li>
                                 </ul>
@@ -307,9 +312,9 @@ const featureTabs = [
                                  style={{margin:"auto", width: "90%", maxWidth:"700px"}}/>
                             <Text margin="small">
                                 The bottom red line is Mean Elo, which performed rather poorly, likely due to no
-                                weighting on the number of racers beaten / lost to. The middle 3 purple lines are
-                                Nearest Neighbor variants. They perform reasonably bu worse than the top 5 green lines
-                                &emdash;all flavors of Naive Elo. While they are mostly comparable, there appears to be
+                                weighting on the number of racers beaten and lost to. The middle 3 purple lines are
+                                Nearest Neighbor variants. They perform reasonably but worse than the top 5 green lines
+                                &mdash;all flavors of Naive Elo. While they are mostly comparable, there appears to be
                                 some improvement in smaller k (k=1,2), which generally suggests a less reactive model.
                             </Text>
                             <h4>
@@ -317,7 +322,7 @@ const featureTabs = [
                             </h4>
                             <Text margin="small">
                                 If you are interested in running any of the simulations, seeing methods
-                                explored in the development of birkielo ratings, or the final implementation, see&nbsp;
+                                explored in the development, or the final implementation, see&nbsp;
                                 <Anchor href="https://github.com/holub008/birkielo/blob/master/offline/scoring/">
                                     here.
                                 </Anchor>
