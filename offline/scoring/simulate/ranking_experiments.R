@@ -319,8 +319,8 @@ rank_correlation_over_time <- function(historical_scores_joined) {
 ## start control flow
 ###########################
 
-population <- generate_population(n_racers=1e3)
-all_results <- simulate_races(population, n_trials=100)
+population <- generate_population(n_racers=3e2)
+all_results <- simulate_races(population, n_trials=25)
 
 all_results %>% 
   filter(iteration == 1) %>%
@@ -332,21 +332,21 @@ elo_scores <- naive_elo(all_results)
 elo_scores_mean_algo <- mean_elo(all_results)
 elo_scores_nn <- nearest_neighbor_elo(all_results)
 
-final_scores_joined <- elo_scores_nn %>%
+final_scores_joined <- elo_scores %>%
   filter(iteration == 20) %>%
   mutate(
     predicted_rank = rank(-score)
   ) %>%
-  inner_join(elo_scores %>%
+  inner_join(elo_scores_nn %>%
                filter(iteration == 20) %>%
                mutate(
                  predicted_rank = rank(-score)
                ), by = c('racer_id' = 'racer_id'),
-             suffix = c('.nn', '.naive'))
+             suffix = c('.naive', '.nn'))
 
 ggplot(final_scores_joined) + geom_point(aes(predicted_rank.nn, predicted_rank.naive))
 
-final_scores <- elo_scores_nn %>%
+final_scores <- elo_scores %>%
   filter(iteration == 20) %>%
   mutate(
     predicted_rank = rank(-score)
@@ -358,12 +358,13 @@ true_joined_scores <- population %>%
 ggplot(true_joined_scores) + geom_point(aes(predicted_rank, true_rank))
 ggplot(true_joined_scores) + geom_point(aes(true_rank, score))
 
-true_joined_history <- elo_scores_nn %>%
+true_joined_history <- elo_scores %>%
   inner_join(population, by = c('racer_id' = 'racer_id'))
 
 rank_correlation_over_time(true_joined_history) %>%
   ggplot() +
-    geom_point(aes(iteration, abs(true_observed_rank_correlation)))
+    geom_point(aes(iteration, abs(true_observed_rank_correlation))) +
+    ylab('Spearman Rho')
 
 #####
 eds_scores <- empirical_distribution_smoothing(all_results)
