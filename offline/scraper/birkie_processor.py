@@ -3,10 +3,10 @@ import numpy as np
 
 from db import get_connection
 
-import race_record_committer as rrc
-from racer_identity import RaceRecord
-from racer_identity import RacerSource
-from racer_matcher import RacerMatcher
+import scraper.race_record_committer as rrc
+from scraper.racer_identity import RaceRecord
+from scraper.racer_identity import RacerSource
+from scraper.racer_matcher import RacerMatcher
 
 # TODO it seems like data is missing for 2007
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'

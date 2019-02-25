@@ -118,19 +118,20 @@ def get_results_for_race(race,
 ######################
 ## start control flow
 ######################
-events = get_events()
-races = get_races_for_event(events)
-# it's a copy of 7216 for some reason
-races_deduped = [r for r in races if not r[2] == 7217]
-all_results = [get_results_for_race(r) for r in races_deduped]
+if __name__ == '__main__':
+    events = get_events()
+    races = get_races_for_event(events)
+    # it's a copy of 7216 for some reason
+    races_deduped = [r for r in races if not r[2] == 7217]
+    all_results = [get_results_for_race(r) for r in races_deduped]
 
-total_results = pd.DataFrame()
-for result in all_results:
-    total_results = total_results.append(result)
+    total_results = pd.DataFrame()
+    for result in all_results:
+        total_results = total_results.append(result)
 
-# remove dummy rows
-total_results_clean = total_results[total_results.TIME != 'TIME']
-total_results_clean = total_results_clean[['CITY', 'DIVISION', 'DIVPL', 'FN', 'LN', 'OVERALL', 'SEXPL', 'STATE',
-                                           'TIME', 'event_date', 'race_name']]
+    # remove dummy rows
+    total_results_clean = total_results[total_results.TIME != 'TIME']
+    total_results_clean = total_results_clean[['CITY', 'DIVISION', 'DIVPL', 'FN', 'LN', 'OVERALL', 'SEXPL', 'STATE',
+                                               'TIME', 'event_date', 'race_name']]
 
-total_results_clean.to_csv(STORAGE_DIRECTORY + "vasa_pre2011.csv")
+    total_results_clean.to_csv(STORAGE_DIRECTORY + "vasa_pre2011.csv")

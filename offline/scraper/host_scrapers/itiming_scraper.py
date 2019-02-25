@@ -158,27 +158,28 @@ def get_all_results_for_event(event):
 ## start control flow
 ##########################
 
-# 2006 is the first year of non-pdf results
-all_years_results = []
-for year in range(2006, 2019):
-    list_page_url = ITIMING_LIST_PAGE_FORMAT % (year,)
-    res = requests.get(list_page_url)
-    soup = BeautifulSoup(res.content, 'lxml')
-    events_html = soup.find_all('table', {"id": "resultstable"})
+if __name__ == "main":
+    # 2006 is the first year of non-pdf results
+    all_years_results = []
+    for year in range(2006, 2019):
+        list_page_url = ITIMING_LIST_PAGE_FORMAT % (year,)
+        res = requests.get(list_page_url)
+        soup = BeautifulSoup(res.content, 'lxml')
+        events_html = soup.find_all('table', {"id": "resultstable"})
 
-    all_event_details = [extract_event_details(eh) for eh in events_html]
-    all_results = [get_all_results_for_event(event) for event in all_event_details]
+        all_event_details = [extract_event_details(eh) for eh in events_html]
+        all_results = [get_all_results_for_event(event) for event in all_event_details]
 
-    all_years_results += all_results
+        all_years_results += all_results
 
-itiming_results = pd.DataFrame()
-chrono_results = pd.DataFrame()
-for source, event_results in [r for r in all_years_results if r]:
-    if source == ResultSource.Chrono:
-        chrono_results = chrono_results.append(event_results)
-    else:
-        itiming_results = itiming_results.append(event_results)
+    itiming_results = pd.DataFrame()
+    chrono_results = pd.DataFrame()
+    for source, event_results in [r for r in all_years_results if r]:
+        if source == ResultSource.Chrono:
+            chrono_results = chrono_results.append(event_results)
+        else:
+            itiming_results = itiming_results.append(event_results)
 
 
-chrono_results.to_csv(STORAGE_DIRECTORY + "/chronotrack_results.csv")
-itiming_results.to_csv(STORAGE_DIRECTORY + "/itiming_results.csv")
+    chrono_results.to_csv(STORAGE_DIRECTORY + "/chronotrack_results.csv")
+    itiming_results.to_csv(STORAGE_DIRECTORY + "/itiming_results.csv")

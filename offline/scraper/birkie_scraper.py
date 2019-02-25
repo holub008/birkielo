@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import time
 
 # since we like the birkie, avoid straining their systems as we pull data
-TIME_BETWEEN_REQUESTS = 10
+TIME_BETWEEN_REQUESTS = 1
 MAX_RESPONSE_TIME = 10 # very generous - sometimes birkie site can be slow
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 URL_FORMAT_2007 = "http://results.birkie.com/index.php?page_number=%d&test=1"
@@ -47,14 +47,14 @@ def get_2016_on_results(year,
             tables = soup.find_all('table')
             results_table = tables[3]
             df = pd.read_html(str(results_table))[0]
-            if df.shape[0] < 5: # unlike the other page, a dummy row NaN row is inserted if there are no results. this means we may throw out 1 legitimate result
+            if df.shape[0] < 4: # unlike the other page, a dummy row NaN row is inserted if there are no results. this means we may throw out 1 legitimate result
                 break
             else:
                 # first, the 2nd row contains the true column metadata
-                column_names = df.loc[[1]].values[0].tolist()
+                column_names = df.loc[[0]].values[0].tolist()
                 df.columns = column_names
                 # next, we know that the first two rows and last column are garbage
-                results = df.loc[2:][:-1]
+                results = df.loc[1:][:-1]
                 # finally, since we don't have an event column
                 event_name = results_table.find('th').find('div').string
                 results['Event'] = event_name
@@ -125,6 +125,6 @@ results_2006 = get_2006_results()
 results_2007 = get_2007_to_2015_results()
 results_2016 = get_2016_on_results(2016)
 results_2018 = get_2016_on_results(2018)
+results_2019 = get_2016_on_results(2019)
 
 # 1999 - 2005 will require pdf parsing, which we'll look at later
-get_pdf_results()

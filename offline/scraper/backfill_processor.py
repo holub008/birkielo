@@ -1,5 +1,5 @@
 ##########################################################
-## this file ingests data scraped in incremental_scrapers/
+## this file presumes that data has been scraped according to the main control path in host_scrapers/*.py
 ##########################################################
 
 import re

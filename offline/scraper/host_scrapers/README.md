@@ -5,5 +5,5 @@ This directory contains a handful of standalone scrapers. At time of writing, th
 All scripts can be run with pipenv, for example (from offline/):
 
 ```bash
-pipenv run python scraper/incremental_scraper/itiming_scraper.py
+pipenv run python scraper/host_scrapers/itiming_scraper.py
 ```

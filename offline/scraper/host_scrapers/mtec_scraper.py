@@ -205,18 +205,19 @@ def get_race_results(races):
 ## start control flow
 #################################
 
-# 4 years of vasaloppet: https://www.mtecresults.com/race/show/251/
-# 6 years of marine o'brien: https://www.mtecresults.com/event/show/208/
-events ={'Vasaloppet USA': 82, "Marine O'Brien": 208}
+if __name__ == '__main__':
+    # 4 years of vasaloppet: https://www.mtecresults.com/race/show/251/
+    # 6 years of marine o'brien: https://www.mtecresults.com/event/show/208/
+    events ={'Vasaloppet USA': 82, "Marine O'Brien": 208}
 
-final_results = {}
-for event_name, event_id in events.items():
-    occurrence_to_event_ids = get_occurrences_to_event_ids(event_id)
-    event_ids = [ey[1] for ey in occurrence_to_event_ids]
-    all_races = expand_event_to_races(event_ids)
-    races_with_metadata = _attach_race_metadata_and_filter_structured(all_races)
-    results = get_race_results(races_with_metadata)
-    final_results[event_name] = results
+    final_results = {}
+    for event_name, event_id in events.items():
+        occurrence_to_event_ids = get_occurrences_to_event_ids(event_id)
+        event_ids = [ey[1] for ey in occurrence_to_event_ids]
+        all_races = expand_event_to_races(event_ids)
+        races_with_metadata = _attach_race_metadata_and_filter_structured(all_races)
+        results = get_race_results(races_with_metadata)
+        final_results[event_name] = results
 
-for event_name,results in final_results.items():
-    results.to_csv(STORAGE_DIRECTORY + event_name + "_raw.csv")
+    for event_name,results in final_results.items():
+        results.to_csv(STORAGE_DIRECTORY + event_name + "_raw.csv")

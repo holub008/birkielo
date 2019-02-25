@@ -17,7 +17,7 @@ STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
 def get_events():
     res = requests.get(GS_LIST_PAGE)
-    soup = BeautifulSoup(res.content)
+    soup = BeautifulSoup(res.content, features="lxml")
     selects = soup.find_all('select', {"id": "events"})
     if not selects or not len(selects) == 1:
         raise ValueError('Could not find expected event select list')
@@ -30,7 +30,7 @@ def get_races_from_events(events):
     all_races = []
     for event_id, event_name in events:
         res = requests.get(GS_RESULTS_HOME_FORMAT % (event_id))
-        soup = BeautifulSoup(res.content)
+        soup = BeautifulSoup(res.content, features="lxml")
 
         selects = soup.find_all('select', {"id":"races"})
         if not selects:
@@ -46,7 +46,7 @@ def get_races_from_events(events):
 
 
 def _get_anchor_content(html_content):
-    soup = BeautifulSoup(html_content)
+    soup = BeautifulSoup(html_content, features="lxml")
     anchors = soup.find_all('a')
     if not anchors:
         raise ValueError('Unexpected did not find anchor html')
@@ -74,13 +74,14 @@ def get_results_from_races(races):
 ############################
 ## start control flow
 ############################
-events = get_events()
-races = get_races_from_events(events)
-results = get_results_from_races(races)
+if __name__ == '__main__':
+    events = get_events()
+    races = get_races_from_events(events)
+    results = get_results_from_races(races)
 
-# some running cruft making it in
-ski_results = results[~results.event_name.str.contains('Snow Shoe')]
-ski_results = ski_results[~ski_results.event_name.str.contains('Snowshoe')]
-ski_results = ski_results[~ski_results.event_name.str.contains('Snowshoe')]
+    # some running cruft making it in
+    ski_results = results[~results.event_name.str.contains('Snow Shoe')]
+    ski_results = ski_results[~ski_results.event_name.str.contains('Snowshoe')]
+    ski_results = ski_results[~ski_results.event_name.str.contains('Snowshoe')]
 
-ski_results.to_csv(STORAGE_DIRECTORY + "gopher_state.csv")
+    ski_results.to_csv(STORAGE_DIRECTORY + "gopher_state.csv")

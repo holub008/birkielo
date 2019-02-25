@@ -2,8 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
-from incremental_scrapers.myraceresults_scraper import get_mrr_races
-from incremental_scrapers.myraceresults_scraper import get_mrr_results
+from host_scrapers.myraceresults_scraper import get_mrr_races
+from host_scrapers.myraceresults_scraper import get_mrr_results
 
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
@@ -89,19 +89,19 @@ def get_all_results(events):
 ###########################
 ## start control flow
 ###########################
+if __name__ == '__main__':
+    st_events = get_all_st_events()
+    st_event_urls = [e[0] for e in st_events]
 
-st_events = get_all_st_events()
-st_event_urls = [e[0] for e in st_events]
+    mrr_urls, original_indices = get_mrr_urls(st_event_urls)
+    st_events_followable = [st_events[ix] for ix in original_indices]
 
-mrr_urls, original_indices = get_mrr_urls(st_event_urls)
-st_events_followable = [st_events[ix] for ix in original_indices]
+    # list of tuples: mrr url, event name, event date
+    events = [(e[1], e[0][1], e[0][2]) for e in zip(st_events_followable, mrr_urls)]
 
-# list of tuples: mrr url, event name, event date
-events = [(e[1], e[0][1], e[0][2]) for e in zip(st_events_followable, mrr_urls)]
-
-results = get_all_results(events)
-results.to_csv(STORAGE_DIRECTORY + "mrr_raw.csv")
-# TODO handle the following failures:
-# Failed to handle event at: https://www.superiortiming.com/2013/01/noquemanon-ski-marathon-2013-live-results/
-# Failed to handle event at: https://my3.raceresult.com/details/index.php?eventid=10035
-# Failed to handle event at: https://my2.raceresult.com/details/index.php?eventid=9194&lang=en
+    results = get_all_results(events)
+    results.to_csv(STORAGE_DIRECTORY + "mrr_raw.csv")
+    # TODO handle the following failures:
+    # Failed to handle event at: https://www.superiortiming.com/2013/01/noquemanon-ski-marathon-2013-live-results/
+    # Failed to handle event at: https://my3.raceresult.com/details/index.php?eventid=10035
+    # Failed to handle event at: https://my2.raceresult.com/details/index.php?eventid=9194&lang=en
