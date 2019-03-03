@@ -2,6 +2,10 @@ import pandas as pd
 import psycopg2.sql as pgs
 import psycopg2.extras as pge
 
+from scraper.racer_identity import RaceRecord
+from scraper.racer_identity import RacerSource
+from scraper.racer_matcher import RacerMatcher
+
 _RACER_INSERT_QUERY = """
     INSERT INTO racer (first_name, middle_name, last_name, gender, age_lower, age_upper)
     VALUES (%s, %s, %s, %s, %s, %s)
@@ -9,7 +13,8 @@ _RACER_INSERT_QUERY = """
 """
 
 _RACER_RESULT_INSERT_QUERY = """
-    INSERT INTO race_result (racer_id, race_id, overall_place, gender_place, duration, gender, age_lower, age_upper)
+    INSERT INTO race_result
+      (racer_id, race_id, overall_place, gender_place, duration, gender, age_lower, age_upper, name)
     VALUES %s
 """
 
@@ -43,15 +48,23 @@ def _insert_and_get_generic(cursor, df, table_name, required_columns,
 
 def insert_and_get_events(cursor, events):
     """
-    insert event and get it in the same transaction. note it is assumed this event does not exist in db yet.
-    at some point in the future, this function may be extended to return a pre-existing event, but since it requires
-    already knowing the event details & some level of fuzzy matching, it's high effort & not currently implemented.
+    insert event and get it in the same transaction.
 
     :param cursor: a writable cursor object. this function makes no mutation to it besides the insert and select
     :param events: a dataframe representing events. required columns: "name"
-    :return: a dataframe representing the inserted events (notably including the db backed event id)
+    :return: a dataframe representing the db backed events
     """
-    return _insert_and_get_generic(cursor, events, "event", ['name'])
+    cursor.execute("SELECT id, name from event")
+    all_existing_events = pd.DataFrame(cursor.fetchall(), columns=['id', 'name'])
+    joined_events = events.merge(all_existing_events, how="left", on='name')
+    events_for_insert = joined_events[pd.isnull(joined_events.id)]
+    existing_events = joined_events[~pd.isnull(joined_events.id)]
+
+    if events_for_insert.shape[0] > 0:
+        inserted_events = _insert_and_get_generic(cursor, events, "event", ['name'])
+        return pd.concat([inserted_events, existing_events])
+    else:
+        return existing_events
 
 
 def insert_and_get_event_occurrences(cursor, event_occurrences):
@@ -101,8 +114,46 @@ def insert_racers(cursor, racers_to_race_record_indices, race_results):
                             racer_identity.get_age_lower(), racer_identity.get_age_upper()))
             result_set = cursor.fetchall()
             racer_identity_id = result_set[0][0]
-
+        race_result_name = "%s %s %s" % (racer_identity.get_first_name(),
+                                         racer_identity.get_middle_name() if racer_identity.get_middle_name() else "",
+                                         racer_identity.get_last_name())
         values_for_insert = [(racer_identity_id, rr.get_race_id(), rr.get_overall_place(), rr.get_gender_place(),
-                              rr.get_duration(), rr.get_gender().value, rr.get_age_lower(), rr.get_age_upper())
+                              rr.get_duration(), rr.get_gender().value, rr.get_age_lower(), rr.get_age_upper(),
+                              race_result_name)
                              for rr in race_results_for_racer]
         pge.execute_values(cursor, _RACER_RESULT_INSERT_QUERY, values_for_insert)
+
+
+def insert_flattened_results(cursor, results):
+    events = results.drop_duplicates('event_name')[['event_name']]
+    events = events.rename({'event_name': 'name'}, axis = 'columns')
+    events_inserted = insert_and_get_events(cursor, events)
+    events_inserted.columns = ['event_name', 'event_id']
+
+    results_joined = results.merge(events_inserted, how='inner', on=['event_name'])
+
+    event_occurrences_for_insert = results_joined[['event_id', 'date']].drop_duplicates()
+    event_occurrences_inserted = insert_and_get_event_occurrences(cursor, event_occurrences_for_insert)
+    event_occurrences_inserted.columns = ['event_occurrence_id', 'event_id', 'date']
+    event_occurrences_inserted['date'] = pd.to_datetime(event_occurrences_inserted.date)
+
+    results_joined = results_joined.merge(event_occurrences_inserted, how="inner", on=['event_id', 'date'])
+
+    races_for_insert = results_joined[['event_occurrence_id', 'distance', 'discipline']].drop_duplicates()
+    races_inserted = insert_and_get_races(cursor, races_for_insert)
+    races_inserted.columns = ['race_id', 'event_occurrence_id', 'discipline', 'distance']
+    races_inserted['distance'] = pd.to_numeric(races_inserted.distance)
+
+    results_joined = results_joined.merge(races_inserted, how="inner",
+                                          on=['event_occurrence_id', 'discipline', 'distance'])
+    race_records_for_insert = [RaceRecord(rr['name'], str(rr.age), rr.gender, rr.time, rr.overall_place,
+                                          rr.gender_place, rr.race_id, RacerSource.RecordIngestion)
+                               for ix, rr in results_joined.iterrows()]
+    race_records_for_insert_valid = [rr for rr in race_records_for_insert if
+                                     rr.get_first_name() and rr.get_last_name()]
+
+    racer_matcher = RacerMatcher(race_records_for_insert_valid)
+
+    matched_race_records = racer_matcher.merge_to_identities()
+
+    insert_racers(cursor, matched_race_records, race_records_for_insert_valid)

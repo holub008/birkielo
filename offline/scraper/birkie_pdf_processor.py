@@ -4,6 +4,10 @@ import tabula as tb
 import pandas as pd
 import numpy as np
 
+from scraper.racer_identity import parse_time_millis
+from db import get_connection
+import scraper.race_record_committer as rrc
+
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
 def extract_duration(cluster):
@@ -22,25 +26,25 @@ def extract_rank(cluster):
 results99m = tb.read_pdf(STORAGE_DIRECTORY + "1999BirkebeinerMen.pdf", pages="1-105", pandas_options={'header': None})
 results99m.columns = ['rank_duration', 'bib_name', 'hometown', 'state', 'country', 'class', 'class_rank', '25_club']
 results99m['name'] = [' '.join(x.split(' ')[1:]) for x in results99m.bib_name]
-results99m['location'] = results99m.hometown + results99m.state + results99m.country
+results99m['location'] = results99m.hometown + ', ' + results99m.state + ', ' + results99m.country
 results99m['duration'] = [extract_duration(rd) for rd in results99m.rank_duration]
 results99m['gender_place'] = [extract_rank(rd) for rd in results99m.rank_duration]
 results99f = tb.read_pdf(STORAGE_DIRECTORY + "1999BirkebeinerWomen.pdf", pages="all", pandas_options={'header': None})
 results99f = results99f.iloc[2:]
 results99f.columns = ['gender_place', 'duration', 'bib', 'name', 'hometown', 'state', 'country', 'class', 'class_rank',
                       '25_club', 'pace']
-results99f['location'] = results99f.hometown + results99f.state + results99f.country
+results99f['location'] = results99f.hometown + ', ' + results99f.state + ', ' + results99f.country
 
 results01m = tb.read_pdf(STORAGE_DIRECTORY + "2001BirkebeinerMen.pdf", pages="all", pandas_options={'header': None})
 results01m = results01m.iloc[1:]
 results01m.columns = ['gender_place', 'duration', 'bib', 'name', 'hometown', 'state', 'country', 'class', 'class_rank',
                       '25_club', 'pace']
-results01m['location'] = results01m.hometown + results01m.state + results01m.country
+results01m['location'] = results01m.hometown + ', ' + results01m.state + ', ' + results01m.country
 results01f = tb.read_pdf(STORAGE_DIRECTORY + "2001BirkebeinerWomen.pdf", pages="all", pandas_options={'header': None})
 results01f = results01f.iloc[1:]
 results01f.columns = ['gender_place', 'duration', 'bib', 'name', 'hometown', 'state', 'country', 'class', 'class_rank',
                       '25_club', 'pace']
-results01f['location'] = results01f.hometown + results01f.state + results01f.country
+results01f['location'] = results01f.hometown + ', ' + results01f.state + ', ' + results01f.country
 
 # pdfs for 02/03/04 are the same format - first page parses differently from the remainders due to added text header
 # note that it would be great to use the "area" argument of the read_pdf function, but it doesn't seem to work
@@ -248,6 +252,7 @@ results05 = results05[['age', 'location', 'gender_place', 'name', 'race_name', '
 results05['date'] = '2005-02-26'
 results05['gender'] = np.where(results05.race_name.str.contains('Women'), 'female', 'male')
 results05['discipline'] = np.where(results05.race_name.str.contains('Classic'), 'classic', 'freestyle')
+results05['distance'] = 51.0
 
 results99m['date'] = '1999-02-20'
 results99f['date'] = '1999-02-20'
@@ -255,6 +260,8 @@ results99m['gender'] = 'male'
 results99f['gender'] = 'female'
 results99m['discipline'] = 'freestyle'
 results99f['discipline'] = 'freestyle'
+results99f['distance'] = 52.0
+results99m['distance'] = 52.0
 
 results01m['date'] = '2001-02-24'
 results01f['date'] = '2001-02-24'
@@ -262,11 +269,16 @@ results01m['gender'] = 'male'
 results01f['gender'] = 'female'
 results01m['discipline'] = 'freestyle'
 results01f['discipline'] = 'freestyle'
+results01f['distance'] = 51.0
+results01m['distance'] = 51.0
+
 
 results02m['date'] = '2002-02-23'
 results02f['date'] = '2002-02-23'
 results02m['gender'] = 'male'
 results02f['gender'] = 'female'
+results02f['distance'] = 47.0
+results02m['distance'] = 47.0
 results02m['discipline'] = np.where((results02m.race_name == "Men's Classic") |
                                     (results02m.race_name == "MBenir'kse Cbleaisnseicr"),
                                     'classic', 'freestyle')
@@ -276,6 +288,8 @@ results03m['date'] = '2003-02-22'
 results03f['date'] = '2003-02-22'
 results03m['gender'] = 'male'
 results03f['gender'] = 'female'
+results03f['distance'] = 51.0
+results03m['distance'] = 51.0
 results03m['discipline'] = np.where((results03m.race_name == "Men's Classic") |
                                     (results03m.race_name == "MBenir'kse Cbleaisnseicr"),
                                     'classic', 'freestyle')
@@ -287,6 +301,8 @@ results04m['date'] = '2004-02-21'
 results04f['date'] = '2004-02-21'
 results04m['gender'] = 'male'
 results04f['gender'] = 'female'
+results04f['distance'] = 51.0
+results04m['distance'] = 51.0
 results04m['discipline'] = np.where((results04m.race_name == "Men's Classic") |
                                     (results04m.race_name == "MBenir'kse Cbleaisnseicr"),
                                     'classic', 'freestyle')
@@ -294,15 +310,59 @@ results04f['discipline'] = np.where(results04f.race_name.str.contains("Women's C
                                     results04f.race_name.str.contains("WomBenir'ks eCbleaisnseicr"),
                                     'classic', 'freestyle')
 
-##########################
-# with results (mostly) parsed out, we need to derive gender agnostic overall place
-##########################
 all_results = results05.append([results04m, results04f, results03m, results03f, results02m, results02f, results01m,
                                 results01f, results99m, results99f])[['name', 'age', 'gender', 'location', 'duration',
-                                                                      'discipline', 'date', 'gender_place']]
+                                                                      'discipline', 'distance', 'date', 'gender_place']]
 # I spot checked these are - they are cases of malformed names (e.g. last or first name only)
 all_results = all_results[~pd.isnull(all_results.name)]
 # a handful of yet misaligned columns - gross but too lazy to fix at source
 all_results['duration'] = np.where(all_results.duration.str.len() < 7, all_results.age, all_results.duration)
+# a few additional have borked ages
+all_results['age'] = np.where(all_results.age.str.len() <= 3, all_results.age, None)
 all_results.to_csv(STORAGE_DIRECTORY + 'pdf_birkie.csv')
 
+##########################
+# with results (mostly) parsed out, we need to derive gender agnostic overall place
+##########################
+all_results['time'] = all_results.duration
+all_results['duration'] = [parse_time_millis(t) for t in all_results.duration]
+
+def attach_placements(results):
+    time_ordered_results = results.sort_values('duration')
+
+    time_ordered_results['gender_place'] = time_ordered_results\
+        .groupby(['date', 'discipline', 'gender'])\
+        .cumcount() + 1
+    time_ordered_results['overall_place'] = time_ordered_results\
+        .groupby(['date', 'discipline'])\
+        .cumcount() + 1
+
+    return time_ordered_results
+
+all_results = attach_placements(all_results)
+all_results['event_name'] = 'American Birkebeiner'
+all_results['date'] = pd.to_datetime(all_results.date)
+all_results.drop('duration', axis = 'columns')
+
+# age and location are too spotty to be included, me thinks :(
+all_results['age'] = None
+all_results['location'] = None
+
+####################
+# run final insert
+####################
+
+con = None
+try:
+    con = get_connection()
+    cursor = con.cursor()
+
+    rrc.insert_flattened_results(cursor, all_results)
+    # I ran sanity/janitor.py right after this - they can be reasonably run independently,
+    # but they would ideally be the same txn
+    con.commit()
+    cursor.close()
+finally:
+    if con is not None:
+        con.rollback()
+        con.close()
