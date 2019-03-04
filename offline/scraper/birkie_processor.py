@@ -51,6 +51,17 @@ def process_2016_on_results(df):
                             df['Ag Grp  Place'].str.contains('M'))
     df = df.assign(gender=['male' if (np.logical_and(x, not pd.isnull(x))) else 'female' for x in is_male])
 
+    df['distance'] = pd.to_numeric(df.Event.str.extract("^([0-9]+)k")[0], errors="coerce")
+    df['discipline'] = df.Event.str.extract(' ([a-zA-Z]+)$')[0].str.lower()
+
+    conditions = [
+        (df.discipline == 'skate'),
+        # haakon doesn't have a discipline and is therefore freestyle
+        (df.discipline == 'haakon'),
+        (df.discipline == 'classic')]
+    condition_disciplines = ['freestyle', 'freestyle', 'classic']
+    df['discipline'] = np.select(conditions, condition_disciplines, default="to_fail")
+
     return df
 
 
@@ -169,51 +180,49 @@ def create_race_records(processed_2006, processed_2007, processed_2016_on):
 
     return [rr for rr in racer_records if not rr.get_first_name() is None]
 
-####################################
-# start control flow
-####################################
 
-clean_2007 = handle_messups_2007(pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2007to2015.csv'))
-processed_2007 = process_2007_to_2015_results(clean_2007)
-# TODO, not suprisingly, prince haakon 2012, 2014 are hosed because men and women overlap from the start
-# these races aren't competitive, so low priority for now
+if __name__ == '__main__':
+    clean_2007 = handle_messups_2007(pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2007to2015.csv'))
+    processed_2007 = process_2007_to_2015_results(clean_2007)
+    # TODO, not suprisingly, prince haakon 2012, 2014 are hosed because men and women overlap from the start
+    # these races aren't competitive, so low priority for now
 
-results_2016 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2016.csv')
-results_2016['year'] = 2016
-results_2018 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2018.csv')
-results_2018['year'] = 2018
-results_2016_on = pd.concat([results_2016, results_2018])
-processed_2016_on = process_2016_on_results(results_2016_on)
+    results_2016 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2016.csv')
+    results_2016['year'] = 2016
+    results_2018 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2018.csv')
+    results_2018['year'] = 2018
+    results_2016_on = pd.concat([results_2016, results_2018])
+    processed_2016_on = process_2016_on_results(results_2016_on)
 
-results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
-processed_2006 = process_2006_results(results_2006)
+    results_2006 = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2006.csv')
+    processed_2006 = process_2006_results(results_2006)
 
-con = None
-try:
-    con = get_connection()
-    cursor = con.cursor()
+    con = None
+    try:
+        con = get_connection()
+        cursor = con.cursor()
 
-    events = rrc.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
-    event_id = events.id[0]
+        events = rrc.insert_and_get_events(cursor, pd.DataFrame({"name": ['American Birkebeiner']}))
+        event_id = events.id[0]
 
-    event_occurrences = get_birkie_occurences(event_id)
-    event_occurrences = rrc.insert_and_get_event_occurrences(cursor, event_occurrences)
-    event_occurrences['event_occurrence_id'] = event_occurrences.id
-    event_occurrences = event_occurrences.drop('id', 1)
+        event_occurrences = get_birkie_occurences(event_id)
+        event_occurrences = rrc.insert_and_get_event_occurrences(cursor, event_occurrences)
+        event_occurrences['event_occurrence_id'] = event_occurrences.id
+        event_occurrences = event_occurrences.drop('id', 1)
 
-    processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
-    processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
-    processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
+        processed_2006 = attach_race_details_2006(cursor, processed_2006, event_occurrences)
+        processed_2007 = attach_race_details_2007(cursor, processed_2007, event_occurrences)
+        processed_2016_on = attach_race_details_2016(cursor, processed_2016_on, event_occurrences)
 
-    race_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
+        race_records = create_race_records(processed_2006, processed_2007, processed_2016_on)
 
-    matcher = RacerMatcher(race_records)
-    racers_to_record_indices = matcher.merge_to_identities()
-    rrc.insert_racers(cursor, racers_to_record_indices, race_records)
+        matcher = RacerMatcher(race_records)
+        racers_to_record_indices = matcher.merge_to_identities()
+        rrc.insert_racers(cursor, racers_to_record_indices, race_records)
 
-    con.commit()
-    cursor.close()
-finally:
-    if con is not None:
-        con.rollback()
-        con.close()
+        con.commit()
+        cursor.close()
+    finally:
+        if con is not None:
+            con.rollback()
+            con.close()

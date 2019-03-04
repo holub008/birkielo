@@ -8,6 +8,7 @@ from scraper.racer_identity import RaceRecord
 from scraper.racer_identity import RacerSource
 from scraper.racer_identity import parse_time_millis
 from scraper.result_parsing_utils import extract_discipline_from_race_name, attach_placements
+from scraper.birkie_processor import process_2016_on_results
 
 import scraper.host_scrapers.gopher_state_scraper as gss
 import scraper.host_scrapers.myraceresults_scraper as mrrs
@@ -16,43 +17,8 @@ import scraper.host_scrapers.mtec_scraper as mts
 
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
 
-def process_birkie_results(df):
-    # since the age group isn't reported for cash winners, we just assume top 6 NaNs are men
-    is_male = np.logical_or(np.logical_and(pd.isnull(df['Ag Grp  Place']), df['Overall Place'] < 7),
-                            df['Ag Grp  Place'].str.contains('M'))
-    df = df.assign(gender=['male' if (np.logical_and(x, not pd.isnull(x))) else 'female' for x in is_male])
-
-    return df
-
-
-def attach_birkie_race_details(processed_results):
-    processed_results['distance'] = pd.to_numeric(processed_results.Event.str.extract("^([0-9]+)k")[0], errors="coerce")
-    processed_results['discipline'] = processed_results.Event.str.extract(' ([a-zA-Z]+)$')[0].str.lower()
-
-    conditions = [
-        (processed_results.discipline == 'skate'),
-        # haakon doesn't have a discipline and is therefore freestyle
-        (processed_results.discipline == 'haakon'),
-        (processed_results.discipline == 'classic')]
-    condition_disciplines = ['freestyle', 'freestyle', 'classic']
-    processed_results['discipline'] = np.select(conditions, condition_disciplines, default="to_fail")
-
-    return processed_results
-
-
-def create_birkie_race_results(results):
-    racer_records = pd.DataFrame()
-    for index, row in results.iterrows():
-        ag_grp_place = row['Ag Grp  Place'] if (not pd.isna(row['Ag Grp  Place'])) else None
-        race_record = RaceRecord(row.Name, ag_grp_place, row.gender, row['Finish  Time'],
-                                 row['Overall Place'], row['Gender Place'], row.race_id,
-                                 RacerSource.RecordIngestion)
-        racer_records.append(race_record)
-
-    return [rr for rr in racer_records if not rr.get_first_name() is None]
-
-
 def get_event_occurrences():
+    pass
     return {
         "American Birkebeiner": "2019-02-23",
         "City of Lakes Loppet": "2019-02-02",
@@ -68,9 +34,12 @@ def get_event_occurrences():
 
 def get_birkie_results():
     results = pd.read_csv(DEFAULT_DATA_DIRECTORY + '/birkie2019.csv')
-    results = process_birkie_results(results)
-    results = attach_birkie_race_details(results)
+    results = process_2016_on_results(results)
     results['event_name'] = 'American Birkebeiner'
+    results['date'] = '2019-02-23'
+    results = results.rename({'City, State, Nation': 'location', 'Finish  Time': 'time',
+                              'Overall Place': 'overall_place', 'Gender Place': 'gender_place',
+                              'Name': 'name'}, axis='columns')
 
     return results
 
@@ -99,6 +68,11 @@ def get_myraceresults_results():
 
 
 if __name__ == "__main__":
+    all_results = pd.concat([
+        get_birkie_results(),
+        get_gopher_state_results()
+    ])
+    
     con = None
     try:
         con = get_connection()
