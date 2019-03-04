@@ -4,6 +4,7 @@
 import re
 import requests
 import json
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -70,6 +71,21 @@ def get_results_from_races(races):
         all_results = all_results.append(race_results)
 
     return all_results
+
+def extract_date_from_race_name(race_name,
+                              date_format="%m/%d/%Y"):
+    matches = re.search(r'\(([0-9]+/[0-9]+/[0-9]+)\)$', race_name)
+    if matches:
+        return datetime.strptime(matches.group(1), date_format)
+
+    return None
+
+def extract_event(event_name):
+    matches = re.search(r'^([a-zA-Z ]+)\s+\(([0-9]+/[0-9]+/[0-9]+)\)$', event_name)
+    if matches:
+        return matches.group(1)
+
+    return None
 
 ############################
 ## start control flow

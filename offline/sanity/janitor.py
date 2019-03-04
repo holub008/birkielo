@@ -21,6 +21,8 @@ def _remove_same_racer_in_same_race(result_fetcher, cursor):
 
     update_query = "UPDATE race_result SET racer_id = null WHERE racer_id IN %s"
     cursor.execute(update_query, (tuple(problem_racers['racer_id']), ))
+    update_query = "DELETE FROM racer_metrics WHERE racer_id IN %s"
+    cursor.execute(update_query, (tuple(problem_racers['racer_id']), ))
     delete_query = "DELETE FROM racer WHERE id IN %s"
     cursor.execute(delete_query, (tuple(problem_racers['racer_id']), ))
 
