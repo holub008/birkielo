@@ -29,12 +29,15 @@ def _extract_race_id_from_url(url):
 
 
 # returns None if the event shouldn't / can't be scraped
+# TODO sometimes mtec truncates / ellipsisizes
 def _extract_discipline_from_race_name(race_name):
     race_name_lower = race_name.lower()
     if 'skate' in race_name_lower or 'free' in race_name_lower:
         return 'freestyle'
-    elif 'classic' in race_name_lower:
+    elif 'classic' in race_name_lower or 'class...' in race_name_lower:
         return 'classic'
+    elif 'pursuit' in race_name_lower:
+        return 'pursuit'
     else:
         raise ValueError('Could not determine discipline of race from name: ' + race_name)
 
@@ -63,6 +66,14 @@ def _extract_occurrence_date_from_event_page(soup):
         raise ValueError('Could not find any event dates matching expected format and structure')
 
     return event_date
+
+
+def extract_placement(placement):
+    matches = re.search(r'([0-9]+) / [0-9]+', placement)
+    if matches:
+        return matches.group(1)
+    else:
+        raise ValueError('Unexpected mtec race placement: %s' % (placement, ))
 
 
 def get_occurrences_to_event_ids(base_event_id):
@@ -114,7 +125,7 @@ def expand_event_to_races(event_ids):
 
 # this adds in "version" - a seemingly pointless but required parameter, distance, & discipline
 # additionally, thin down the results pages to only those including structured results
-def _attach_race_metadata_and_filter_structured(all_races):
+def attach_race_metadata_and_filter_structured(all_races, fallback_discipline=None):
     races_with_metadata = []
     for race in all_races:
         race_name = race[0]
@@ -123,8 +134,11 @@ def _attach_race_metadata_and_filter_structured(all_races):
         try:
             discipline = _extract_discipline_from_race_name(race_name)
         except ValueError as ve:
-            print(ve)
-            continue
+            if fallback_discipline:
+                discipline = fallback_discipline
+            else:
+                print(ve)
+                continue
 
         res = requests.get(RACE_PAGE_URL_FORMAT % (race_id,))
         soup = BeautifulSoup(res.content, 'lxml')
@@ -169,14 +183,12 @@ def _attach_race_metadata_and_filter_structured(all_races):
 def get_race_results(races):
     results = pd.DataFrame()
     for date, distance, discipline, race_id, version in races:
-        print('starting new race')
         # this a safety check (as opposed to while True) in case unexpected behavior occurs - prevent hammering the site
         # we don't expected to scrape more than 5K results from an individual race on mtec
         total_requests = 0
         while total_requests < 5000 / 50:
             offset = total_requests * 50
             url = RACE_RESULT_URL_FORMAT % (race_id, version, offset)
-            print('firing off request')
             res = requests.get(url)  # requests automatically handles the compressed response for us :)
             soup = BeautifulSoup(res.content, 'lxml')
 
@@ -201,10 +213,6 @@ def get_race_results(races):
 
     return results
 
-#################################
-## start control flow
-#################################
-
 if __name__ == '__main__':
     # 4 years of vasaloppet: https://www.mtecresults.com/race/show/251/
     # 6 years of marine o'brien: https://www.mtecresults.com/event/show/208/
@@ -215,7 +223,7 @@ if __name__ == '__main__':
         occurrence_to_event_ids = get_occurrences_to_event_ids(event_id)
         event_ids = [ey[1] for ey in occurrence_to_event_ids]
         all_races = expand_event_to_races(event_ids)
-        races_with_metadata = _attach_race_metadata_and_filter_structured(all_races)
+        races_with_metadata = attach_race_metadata_and_filter_structured(all_races)
         results = get_race_results(races_with_metadata)
         final_results[event_name] = results
 

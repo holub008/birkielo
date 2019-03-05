@@ -9,6 +9,7 @@ from scraper.racer_identity import RacerSource
 from scraper.racer_identity import parse_time_millis
 from scraper.result_parsing_utils import extract_discipline_from_race_name, attach_placements
 from scraper.birkie_processor import process_2016_on_results
+import scraper.host_scrapers.mtec_scraper as mts
 
 import scraper.host_scrapers.gopher_state_scraper as gss
 import scraper.host_scrapers.myraceresults_scraper as mrrs
@@ -63,8 +64,30 @@ def get_gopher_state_results(event_names_to_distance = pd.DataFrame({'event_name
 
     return results
 
-def get_myraceresults_results():
-    pass
+def get_myraceresults_results(events = pd.DataFrame({
+    "event_name": ['City of Lakes Loppet', 'Nordic Spirit', 'Mt. Ashwabay Summit Ski Race'],
+    "mtec_event_id": [2844, 2843, 2849],
+    "discipline": [None, 'freestyle', 'freestyle']})):
+    mtec_results = []
+    for index, event in events.iterrows():
+        all_races = mts.expand_event_to_races([event.mtec_event_id])
+        races_with_metadata = mts.attach_race_metadata_and_filter_structured(all_races, event.discipline)
+        results = mts.get_race_results(races_with_metadata)
+        results = results.rename({'Time': 'time', 'Age': 'age', 'Name': 'name'}, axis='columns')
+        results['distance'] = results['distance_meters'] / 1000.0
+        if 'City' in results.columns and 'State' in results.columns:
+            results['location'] = results.City + ', ' + results.State
+        else:
+            results['location'] = None
+        results['gender'] = np.where(results.Sex == 'M', 'male', 'female')
+        results['overall_place'] = [mts.extract_placement(p) for p in results.Overall]
+        results['gender_place'] = [mts.extract_placement(p) for p in results['SexPl']]
+        results['event_name'] = event.event_name
+        mtec_results.append(results)
+
+    return pd.concat(mtec_results)
+
+
 
 
 if __name__ == "__main__":
@@ -72,7 +95,7 @@ if __name__ == "__main__":
         get_birkie_results(),
         get_gopher_state_results()
     ])
-    
+
     con = None
     try:
         con = get_connection()
