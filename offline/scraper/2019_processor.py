@@ -10,6 +10,7 @@ from scraper.racer_identity import parse_time_millis
 from scraper.result_parsing_utils import extract_discipline_from_race_name, attach_placements
 from scraper.birkie_processor import process_2016_on_results
 import scraper.host_scrapers.mtec_scraper as mts
+import scraper.host_scrapers.myraceresults_scraper as mrrs
 
 import scraper.host_scrapers.gopher_state_scraper as gss
 import scraper.host_scrapers.myraceresults_scraper as mrrs
@@ -21,14 +22,9 @@ DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
 def get_event_occurrences():
     pass
     return {
-        "American Birkebeiner": "2019-02-23",
-        "City of Lakes Loppet": "2019-02-02",
         "Ski Rennet": "2019-01-19",
         "Noquemanon Ski Marathon": "2019-01-26",
         "SISU Ski Fest": "2019-01-12",
-        "Pre-Loppet": "2019-01-06",
-        "Big Island and Back": "2019-02-09",
-        "Nordic Spirit": "2019-01-26",
         "Vasaloppet USA": "2019-02-09"
     }
 
@@ -64,10 +60,10 @@ def get_gopher_state_results(event_names_to_distance = pd.DataFrame({'event_name
 
     return results
 
-def get_myraceresults_results(events = pd.DataFrame({
-    "event_name": ['City of Lakes Loppet', 'Nordic Spirit', 'Mt. Ashwabay Summit Ski Race'],
-    "mtec_event_id": [2844, 2843, 2849],
-    "discipline": [None, 'freestyle', 'freestyle']})):
+def get_mtec_results(events=pd.DataFrame({
+    "event_name": ['City of Lakes Loppet', 'Nordic Spirit', 'Mt. Ashwabay Summit Ski Race', 'Pre-Loppet'],
+    "mtec_event_id": [2844, 2843, 2849, 2823],
+    "discipline": [None, 'freestyle', 'freestyle', None]})):
     mtec_results = []
     for index, event in events.iterrows():
         all_races = mts.expand_event_to_races([event.mtec_event_id])
@@ -88,12 +84,34 @@ def get_myraceresults_results(events = pd.DataFrame({
     return pd.concat(mtec_results)
 
 
+def get_myraceresults_results(events=pd.DataFrame({
+    "event_name": ['Vasaloppet USA', 'Noquemanon Ski Marathon', 'Pepsi Challenge'],
+    "event_url": ['https://my3.raceresult.com/117060/', 'https://my5.raceresult.com/115565/',
+                  'https://my2.raceresult.com/118903/']})):
+    results = []
+    for index, event in events.iterrows():
+        races = mrrs.get_mrr_races(event.event_url)
+        for contest_number, list_name, race_name, event_id, event_key in races:
+            results = mrrs.get_mrr_results(event_id, event_key, list_name, contest_number)
+            results_df = pd.DataFrame(results, columns = ['name', 'location', 'age_group', 'time'])
+            results_df['gender'] = np.where(results_df.age_group.str.startswith('M'), 'male', 'female')
+
+
+            results.append(results_df)
+
+    return pd.concat(results)
+
+def get_chronotrack_results(events=pd.DataFrame({})):
+    pass
 
 
 if __name__ == "__main__":
     all_results = pd.concat([
         get_birkie_results(),
-        get_gopher_state_results()
+        get_gopher_state_results(),
+        get_mtec_results(),
+        get_myraceresults_results(),
+        get_chronotrack_results()
     ])
 
     con = None

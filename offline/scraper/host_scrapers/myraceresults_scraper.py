@@ -30,15 +30,20 @@ def get_mrr_races(mrr_url):
     event_key = event_dict['key']
     race_id_lists = event_dict['lists']
     contest_id_to_race_name = event_dict['contests']
-    # yes, this is bizarre / cruel and unusual. there are "Name"s, "ID"s, & "Contest"s which all uniquely identify
-    # races and key into different data. it's debatable if using a headless browser would be simpler than hitting API
-    # oh and we have event id & event key...
-    contest_id_to_race_id = [(ril['Contest'], ril['Name'], contest_id_to_race_name[str(ril['Contest'])],
-                              event_id, event_key)
-                             for ril in race_id_lists if ril['ShowAs'] == 'Division Results'
-                                and str(ril['Contest']) in contest_id_to_race_name]
+    is_grouped_event = any(ril['Contest'] == 0 for ril in race_id_lists)
+    if is_grouped_event:
+        return [(0, 'Result Lists|Overall Results', contest_name, event_id, event_key)
+                for _, contest_name in contest_id_to_race_name.items()]
+    else:
+        # yes, this is bizarre / cruel and unusual. there are "Name"s, "ID"s, & "Contest"s which all uniquely identify
+        # races and key into different data. it's debatable if using a headless browser would be simpler than hitting API
+        # oh and we have event id & event key...
+        contest_id_to_race_id = [(ril['Contest'], ril['Name'], contest_id_to_race_name[str(ril['Contest'])],
+                                  event_id, event_key)
+                                 for ril in race_id_lists if (ril['ShowAs'] == 'Division Results' or ril['ShowAs'] == '')
+                                    and str(ril['Contest']) in contest_id_to_race_name]
 
-    return contest_id_to_race_id
+        return contest_id_to_race_id
 
 
 def _index_subset(lst, ixs):
