@@ -7,7 +7,7 @@ import scraper.race_record_committer as rrc
 from scraper.racer_identity import RaceRecord
 from scraper.racer_identity import RacerSource
 from scraper.racer_identity import parse_time_millis
-from scraper.result_parsing_utils import extract_discipline_from_race_name, attach_placements
+from scraper.result_parsing_utils import extract_discipline_from_race_name, extract_distance_from_race_name, attach_placements
 from scraper.birkie_processor import process_2016_on_results
 import scraper.host_scrapers.mtec_scraper as mts
 import scraper.host_scrapers.myraceresults_scraper as mrrs
@@ -86,20 +86,31 @@ def get_mtec_results(events=pd.DataFrame({
 
 def get_myraceresults_results(events=pd.DataFrame({
     "event_name": ['Vasaloppet USA', 'Noquemanon Ski Marathon', 'Pepsi Challenge'],
-    "event_url": ['https://my3.raceresult.com/117060/', 'https://my5.raceresult.com/115565/',
-                  'https://my2.raceresult.com/118903/']})):
-    results = []
+    "url": ['https://my3.raceresult.com/117060/', 'https://my5.raceresult.com/115565/',
+                  'https://my2.raceresult.com/118903/'],
+    "date": ['2019-02-09', '2019-01-26', '2019-03-02']})):
+    total_results = []
     for index, event in events.iterrows():
-        races = mrrs.get_mrr_races(event.event_url)
+        races = mrrs.get_mrr_races(event.url)
         for contest_number, list_name, race_name, event_id, event_key in races:
-            results = mrrs.get_mrr_results(event_id, event_key, list_name, contest_number)
-            results_df = pd.DataFrame(results, columns = ['name', 'location', 'age_group', 'time'])
+            results, column_names = mrrs.get_mrr_results(event_id, event_key, list_name, contest_number, race_name = race_name)
+            results_df = pd.DataFrame(results, columns = ['name', 'location', 'age_group', 'time', 'race_name'])
             results_df['gender'] = np.where(results_df.age_group.str.startswith('M'), 'male', 'female')
+            results_df['discipline'] = [extract_discipline_from_race_name(n) for n in results_df.race_name]
+            # ignore undetectable disciplines and non-ski discplines
+            results_df = results_df[~pd.isnull(results_df.discipline)]
+            results_df['distance'] = [extract_distance_from_race_name(n) for n in results_df.race_name]
+            results_df['duration'] = [parse_time_millis(t) for t in results_df.time]
+            # ignore DNFs and borked time formats
+            results_df = results_df[~pd.isnull(results_df.duration)]
+            results_df['date'] = event.date
+            results_df['event_name'] = event.event_name
+            results_df = attach_placements(results_df)
 
+            total_results.append(results_df)
 
-            results.append(results_df)
+    return pd.concat(total_results)
 
-    return pd.concat(results)
 
 def get_chronotrack_results(events=pd.DataFrame({})):
     pass

@@ -32,18 +32,15 @@ def get_mrr_races(mrr_url):
     contest_id_to_race_name = event_dict['contests']
     is_grouped_event = any(ril['Contest'] == 0 for ril in race_id_lists)
     if is_grouped_event:
-        return [(0, 'Result Lists|Overall Results', contest_name, event_id, event_key)
-                for _, contest_name in contest_id_to_race_name.items()]
+        return [(0, 'Result Lists|Overall Results', None, event_id, event_key)]
     else:
         # yes, this is bizarre / cruel and unusual. there are "Name"s, "ID"s, & "Contest"s which all uniquely identify
         # races and key into different data. it's debatable if using a headless browser would be simpler than hitting API
         # oh and we have event id & event key...
-        contest_id_to_race_id = [(ril['Contest'], ril['Name'], contest_id_to_race_name[str(ril['Contest'])],
+        return [(ril['Contest'], ril['Name'], contest_id_to_race_name[str(ril['Contest'])],
                                   event_id, event_key)
-                                 for ril in race_id_lists if (ril['ShowAs'] == 'Division Results' or ril['ShowAs'] == '')
+                                 for ril in race_id_lists if (ril['ShowAs'] == 'Overall Results' or ril['Name'] == 'Result Lists|Overall Results')
                                     and str(ril['Contest']) in contest_id_to_race_name]
-
-        return contest_id_to_race_id
 
 
 def _index_subset(lst, ixs):
@@ -86,9 +83,16 @@ def _recursive_unnest(dictionary):
                 yield value
 
 
-def get_mrr_results(event_id, event_key, list_name, contest_number,
+def _extract_race_name_from_grouped_event(race_key):
+    matches = re.match(r'#[0-9]+_(.*)$', race_key)
+    if matches:
+        return matches.group(1)
+    raise ValueError('supplied race key did not have expected form')
+
+def get_mrr_results(event_id, event_key, list_name, contest_number, race_name = None,
                     required_columns=(('Name',), ('City/State',),
                                       ('AG (Rank)', 'AG', 'AG/Rank'), ('Finish', 'Time'))):
+    is_grouped_event = contest_number == 0
     url = RESULTS_URL % (event_id, event_key, list_name, contest_number)
     res = requests.get(url)
 
@@ -111,11 +115,22 @@ def get_mrr_results(event_id, event_key, list_name, contest_number,
     if any(x < 0 for x in desired_column_indices):
         return None, None
 
+    column_names = _get_column_names_from_required_columns(required_columns) + ['race_name']
+
     result_data = event_dict['data']
-    results = list(_recursive_unnest(result_data))
-    # off by 1 fun times - must be an implicit id column
-    results_subset = [_index_subset(result[1:], desired_column_indices) for result in results]
+    if is_grouped_event:
+        total_results = []
+        for race_key, results in result_data.items():
+            race_name = _extract_race_name_from_grouped_event(race_key)
+            results_subset = [_index_subset(result[1:], desired_column_indices) + [race_name] for result in results]
 
-    column_names = _get_column_names_from_required_columns(required_columns)
+            total_results += results_subset
 
-    return results_subset, column_names
+        return total_results, column_names
+
+    else:
+        results = list(_recursive_unnest(result_data))
+        # off by 1 fun times - must be an implicit id column
+        results_subset = [_index_subset(result[1:], desired_column_indices) + [race_name] for result in results]
+
+        return results_subset, column_names
