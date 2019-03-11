@@ -85,10 +85,10 @@ def get_mtec_results(events=pd.DataFrame({
 
 
 def get_myraceresults_results(events=pd.DataFrame({
-    "event_name": ['Vasaloppet USA', 'Noquemanon Ski Marathon', 'Pepsi Challenge'],
+    "event_name": ['Vasaloppet USA', 'Noquemanon Ski Marathon', 'Pepsi Challenge', 'Great Bear Chase'],
     "url": ['https://my3.raceresult.com/117060/', 'https://my5.raceresult.com/115565/',
-                  'https://my2.raceresult.com/118903/'],
-    "date": ['2019-02-09', '2019-01-26', '2019-03-02']})):
+                  'https://my2.raceresult.com/118903/', 'https://my1.raceresult.com/118905/'],
+    "date": ['2019-02-09', '2019-01-26', '2019-03-02', '2019-03-09']})):
     total_results = []
     for index, event in events.iterrows():
         races = mrrs.get_mrr_races(event.url)
