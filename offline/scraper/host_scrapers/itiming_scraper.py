@@ -52,7 +52,7 @@ def extract_event_details(event_html):
     return event_name, event_date, results_urls
 
 
-def _get_chronotrack_results(event_id,
+def scrape_chronotrack_results(event_id,
                              result_columns = ('uid', 'place', 'name', 'bib', 'time', 'pace', 'location', 'age',
                                                'gender', 'age_group', 'age_group_place')):
     event_res = requests.get(CHRONOTRACK_EVENT_FORMAT % (event_id,))
@@ -81,8 +81,7 @@ def _get_chronotrack_results(event_id,
             raise ValueError('Unable to query race result data')
 
         results_tuples = json_payload['aaData']
-        part_results = pd.DataFrame(results_tuples)
-        part_results.columns = result_columns
+        part_results = pd.DataFrame(results_tuples, columns=result_columns)
         part_results['race_name'] = race_name
 
         results = results.append(part_results)
@@ -134,7 +133,7 @@ def get_all_results_for_event(event):
         chronotrack_match = re.search(SCRAPABLE_CHRONOTRACK_REGEX, url)
         if chronotrack_match:
             event_id = int(chronotrack_match.group(1))
-            results = _get_chronotrack_results(event_id)
+            results = scrape_chronotrack_results(event_id)
             results['event_name'] = event_name
             results['event_date'] = event_date
 

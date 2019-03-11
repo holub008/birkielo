@@ -37,6 +37,7 @@ ALTER TABLE event_occurrence
 CREATE TYPE ski_discipline AS ENUM('classic', 'freestyle');
 ALTER TYPE ski_discipline ADD VALUE 'pursuit';
 ALTER TYPE ski_discipline ADD VALUE 'sitski';
+ALTER TYPE ski_discipline ADD VALUE 'skijor';
 
 CREATE TABLE IF NOT EXISTS race (
   id                  SERIAL PRIMARY KEY,

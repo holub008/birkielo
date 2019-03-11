@@ -4,29 +4,18 @@ import numpy as np
 from db import get_connection
 
 import scraper.race_record_committer as rrc
-from scraper.racer_identity import RaceRecord
-from scraper.racer_identity import RacerSource
 from scraper.racer_identity import parse_time_millis
 from scraper.result_parsing_utils import extract_discipline_from_race_name, extract_distance_from_race_name, attach_placements
 from scraper.birkie_processor import process_2016_on_results
 import scraper.host_scrapers.mtec_scraper as mts
 import scraper.host_scrapers.myraceresults_scraper as mrrs
-
 import scraper.host_scrapers.gopher_state_scraper as gss
 import scraper.host_scrapers.myraceresults_scraper as mrrs
 import scraper.host_scrapers.mtec_scraper as mts
+from scraper.host_scrapers.itiming_scraper import scrape_chronotrack_results
 
 
 DEFAULT_DATA_DIRECTORY = '/Users/kholub/birkielo/offline/data'
-
-def get_event_occurrences():
-    pass
-    return {
-        "Ski Rennet": "2019-01-19",
-        "Noquemanon Ski Marathon": "2019-01-26",
-        "SISU Ski Fest": "2019-01-12",
-        "Vasaloppet USA": "2019-02-09"
-    }
 
 
 def get_birkie_results():
@@ -38,7 +27,8 @@ def get_birkie_results():
                               'Overall Place': 'overall_place', 'Gender Place': 'gender_place',
                               'Name': 'name'}, axis='columns')
 
-    return results
+    return results[['overall_place', 'gender_place', 'name', 'location', 'time', 'gender', 'distance', 'discipline',
+                    'event_name', 'date']]
 
 
 def get_gopher_state_results(event_names_to_distance = pd.DataFrame({'event_name': ['Turtle River Pursuit', 'Big Island and Back'],
@@ -50,6 +40,7 @@ def get_gopher_state_results(event_names_to_distance = pd.DataFrame({'event_name
     results_2019 = results_2019[~results_2019.race_name.str.contains('Bike') & ~results_2019.race_name.str.contains('Tm')]
     results_2019['date'] = [gss.extract_date_from_race_name(n) for n in results_2019.event_name]
     results_2019['discipline'] = [extract_discipline_from_race_name(n) for n in results_2019.race_name]
+    results_2019 = results_2019[~pd.isnull(results_2019.discipline)]
     results_2019['event_name'] = [gss.extract_event(n) for n in results_2019.event_name]
     results_2019['name'] = results_2019.first_name + " " + results_2019.last_name
     results_2019['gender'] = np.where(results_2019.gender == 'M', 'male', 'female')
@@ -58,7 +49,8 @@ def get_gopher_state_results(event_names_to_distance = pd.DataFrame({'event_name
 
     results = attach_placements(results_2019).merge(event_names_to_distance, how="inner", on=['event_name'])
 
-    return results
+    return results[['overall_place', 'gender_place', 'name', 'location', 'time', 'gender', 'distance', 'discipline',
+                    'event_name', 'date']]
 
 def get_mtec_results(events=pd.DataFrame({
     "event_name": ['City of Lakes Loppet', 'Nordic Spirit', 'Mt. Ashwabay Summit Ski Race', 'Pre-Loppet'],
@@ -81,7 +73,8 @@ def get_mtec_results(events=pd.DataFrame({
         results['event_name'] = event.event_name
         mtec_results.append(results)
 
-    return pd.concat(mtec_results)
+    return pd.concat(mtec_results)[['overall_place', 'gender_place', 'name', 'location', 'time', 'gender', 'distance',
+                                    'discipline', 'event_name', 'date', 'age']]
 
 
 def get_myraceresults_results(events=pd.DataFrame({
@@ -109,11 +102,43 @@ def get_myraceresults_results(events=pd.DataFrame({
 
             total_results.append(results_df)
 
-    return pd.concat(total_results)
+    return pd.concat(total_results)[['overall_place', 'gender_place', 'name', 'location', 'time', 'gender', 'distance',
+                                     'discipline', 'event_name', 'date']]
 
 
-def get_chronotrack_results(events=pd.DataFrame({})):
-    pass
+def get_chronotrack_results(events=pd.DataFrame({
+    "event_name": ['Ski Rennet', 'SISU Ski Fest'],
+    "chronotrack_id": [47021, 36425],
+    "date": ['2019-01-19', '2019-01-12']}),
+    race_overrides=pd.DataFrame({
+        "race_name": ['2K Para Nordic Cup', '5K Hauska Heikki Ski'],
+        "discipline": ['sitski', 'freestyle'],
+        "distance": [2.0, 5.0]
+    })
+):
+    total_results = []
+    for index, event in events.iterrows():
+        results = scrape_chronotrack_results(event.chronotrack_id)
+        results['distance'] = [extract_distance_from_race_name(n) for n in results.race_name]
+        results['discipline'] = [extract_discipline_from_race_name(n) for n in results.race_name]
+        results['event_name'] = event.event_name
+        results['date'] = event.date
+
+        results['duration'] = [parse_time_millis(t) for t in results.time]
+        results = attach_placements(results)
+
+        total_results.append(results)
+
+    results_df = pd.concat(total_results)
+    results_with_overrides = results_df.merge(race_overrides, how='inner', on=['race_name'],
+                                              suffixes=('', '_override'))
+    results_with_overrides['distance'] = np.where(pd.isnull(results_with_overrides.distance),
+                                                  results_with_overrides.distance_override, results_with_overrides.distance)
+    results_with_overrides['discipline'] = np.where(pd.isnull(results_with_overrides.discipline),
+                                                  results_with_overrides.discipline_override, results_with_overrides.discipline)
+
+    return results_with_overrides[['overall_place', 'gender_place', 'name', 'location', 'time', 'gender', 'distance', 'discipline',
+                    'event_name', 'date', 'age']]
 
 
 if __name__ == "__main__":

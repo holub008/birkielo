@@ -11,6 +11,8 @@ def extract_discipline_from_race_name(race_name):
         return 'pursuit'
     elif 'sitski' in race_name_lower or 'sit ski' in race_name_lower or 'adaptive' in race_name_lower:
         return 'sitski'
+    elif 'skijor' in race_name_lower:
+        return 'skijor'
     # sigh...
     elif 'vasa' in race_name_lower:
         return 'freestyle'
