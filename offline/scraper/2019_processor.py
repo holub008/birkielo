@@ -130,7 +130,7 @@ def get_chronotrack_results(events=pd.DataFrame({
         total_results.append(results)
 
     results_df = pd.concat(total_results)
-    results_with_overrides = results_df.merge(race_overrides, how='inner', on=['race_name'],
+    results_with_overrides = results_df.merge(race_overrides, how='left', on=['race_name'],
                                               suffixes=('', '_override'))
     results_with_overrides['distance'] = np.where(pd.isnull(results_with_overrides.distance),
                                                   results_with_overrides.distance_override, results_with_overrides.distance)
