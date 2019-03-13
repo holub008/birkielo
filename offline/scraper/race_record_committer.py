@@ -61,7 +61,7 @@ def insert_and_get_events(cursor, events):
     existing_events = joined_events[~pd.isnull(joined_events.id)]
 
     if events_for_insert.shape[0] > 0:
-        inserted_events = _insert_and_get_generic(cursor, events, "event", ['name'])
+        inserted_events = _insert_and_get_generic(cursor, events_for_insert, "event", ['name'])
         return pd.concat([inserted_events, existing_events])
     else:
         return existing_events
@@ -89,19 +89,25 @@ def insert_and_get_races(cursor, races):
     return _insert_and_get_generic(cursor, races, "race", ['event_occurrence_id', 'discipline', 'distance'])
 
 
-def insert_racers(cursor, racers_to_race_record_indices, race_results):
+def insert_racers(cursor, racers_to_race_record_indices, race_results,
+                  racers_per_result_batch=100):
     """
     note that this function does no batching in the name of correctness (postgres does not guarantee the order
     of returning statements), and is slow due to network overhead
     :param cursor: a writable connection object. this function makes no mutation to it besides the insert and select
     :param racers_to_race_record_indices: a list of tuples with racer identities in first position. will be mutated
     :param race_results: a list of raw race results, indexed by the prior argument
+    :param racers_per_result_batch: for inserting race results in bulk - the number of racers to group in a batch. note
+    that any new racers are inserted individually (not batched), so workloads with a large number of new racers aren't
+    much optimized with this parameter
     :return: void
     """
 
-    # TODO this should be batched
+    results_batch = []
     for ix, racer_to_ix in enumerate(racers_to_race_record_indices):
-        if ix % 1000 == 0 and ix != 0:
+        if ix % racers_per_result_batch == 0 and ix != 0:
+            pge.execute_values(cursor, _RACER_RESULT_INSERT_QUERY, results_batch)
+            results_batch = []
             print("Inserted %s of %s racers" % (ix, len(racers_to_race_record_indices)))
 
         racer_identity = racer_to_ix[0]
@@ -117,31 +123,41 @@ def insert_racers(cursor, racers_to_race_record_indices, race_results):
         race_result_name = "%s %s %s" % (racer_identity.get_first_name(),
                                          racer_identity.get_middle_name() if racer_identity.get_middle_name() else "",
                                          racer_identity.get_last_name())
-        values_for_insert = [(racer_identity_id, rr.get_race_id(), rr.get_overall_place(), rr.get_gender_place(),
+        racer_results = [(racer_identity_id, rr.get_race_id(), rr.get_overall_place(), rr.get_gender_place(),
                               rr.get_duration(), rr.get_gender().value, rr.get_age_lower(), rr.get_age_upper(),
                               race_result_name)
                              for rr in race_results_for_racer]
-        pge.execute_values(cursor, _RACER_RESULT_INSERT_QUERY, values_for_insert)
+        results_batch += racer_results
+
+    if len(results_batch):
+        pge.execute_values(cursor, _RACER_RESULT_INSERT_QUERY, results_batch)
 
 
-def insert_flattened_results(cursor, results):
+def insert_flattened_results(cursor, results,
+                             racers_per_result_batch=100):
+    """
+    :param cursor: a writable connection object. this function makes no mutation to it besides inserts and selects
+    :param results: a dataframe with columns: ['age', 'date', 'discipline', 'distance', 'event_name', 'gender', 'gender_place', 'location', 'name', 'overall_place', 'time']
+    :param racers_per_result_batch: as passed to insert_racers
+    :return: void
+    """
     events = results.drop_duplicates('event_name')[['event_name']]
-    events = events.rename({'event_name': 'name'}, axis = 'columns')
+    events = events.rename({'event_name': 'name'}, axis='columns')
     events_inserted = insert_and_get_events(cursor, events)
-    events_inserted.columns = ['event_name', 'event_id']
+    events_inserted = events_inserted.rename({'name': 'event_name', 'id': 'event_id'}, axis='columns')
 
     results_joined = results.merge(events_inserted, how='inner', on=['event_name'])
 
     event_occurrences_for_insert = results_joined[['event_id', 'date']].drop_duplicates()
     event_occurrences_inserted = insert_and_get_event_occurrences(cursor, event_occurrences_for_insert)
-    event_occurrences_inserted.columns = ['event_occurrence_id', 'event_id', 'date']
+    event_occurrences_inserted =  event_occurrences_inserted.rename({'id': 'event_occurrence_id'}, axis='columns')
     event_occurrences_inserted['date'] = pd.to_datetime(event_occurrences_inserted.date)
 
     results_joined = results_joined.merge(event_occurrences_inserted, how="inner", on=['event_id', 'date'])
 
     races_for_insert = results_joined[['event_occurrence_id', 'distance', 'discipline']].drop_duplicates()
     races_inserted = insert_and_get_races(cursor, races_for_insert)
-    races_inserted.columns = ['race_id', 'event_occurrence_id', 'discipline', 'distance']
+    races_inserted = races_inserted.rename({'id': 'race_id'}, axis='columns')
     races_inserted['distance'] = pd.to_numeric(races_inserted.distance)
 
     results_joined = results_joined.merge(races_inserted, how="inner",
@@ -156,4 +172,4 @@ def insert_flattened_results(cursor, results):
 
     matched_race_records = racer_matcher.merge_to_identities()
 
-    insert_racers(cursor, matched_race_records, race_records_for_insert_valid)
+    insert_racers(cursor, matched_race_records, race_records_for_insert_valid, racers_per_result_batch)

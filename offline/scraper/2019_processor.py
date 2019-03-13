@@ -149,6 +149,7 @@ if __name__ == "__main__":
         get_myraceresults_results(),
         get_chronotrack_results()
     ])
+    all_results['date'] = pd.to_datetime(all_results.date)
 
     con = None
     try:
