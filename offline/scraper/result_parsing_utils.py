@@ -38,10 +38,10 @@ def attach_placements(results):
     time_ordered_results = results.sort_values('duration')
 
     time_ordered_results['gender_place'] = time_ordered_results\
-        .groupby(['event_name', 'date', 'discipline', 'gender'])\
+        .groupby(['event_name', 'date', 'discipline', 'distance', 'gender'])\
         .cumcount() + 1
     time_ordered_results['overall_place'] = time_ordered_results\
-        .groupby(['event_name', 'date', 'discipline'])\
+        .groupby(['event_name', 'date', 'discipline', 'distance'])\
         .cumcount() + 1
 
     return time_ordered_results
