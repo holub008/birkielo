@@ -213,7 +213,9 @@ def _casify_racer_names(result_fetcher, cursor):
 # these two get special treatment because they are both the number 1 ranked skiers, & they both have name variants
 def _remap_known_names(result_fetcher, cursor, known_name_mapping_supplier=lambda: {
                  ('Matt', 'Liebsch'): ('Matthew', 'Liebsch'),
-                 ('Caitlin', 'Compton'): ('Caitlin', 'Gregg')
+                 ('Caitlin', 'Compton'): ('Caitlin', 'Gregg'),
+                 ('Phillip', 'Pearsall'): ('Jim', 'Pearsall'),
+                 ('Vesselina', 'Pearsall'): ('Vessa', 'Pearsall')
              }):
     results = result_fetcher.get_results()
     name_mapping = known_name_mapping_supplier()

@@ -32,11 +32,13 @@ HAVING
   COUNT(DISTINCT rr.gender) > 1;
 
 
+-- a handful of races had results smooshed together :(
 SELECT
-  overall_place
+  race_id,
+  MIN(overall_place)
 FROM race_result
-WHERE
-  race_id = 2745
-ORDER BY 1;
+GROUP BY 1
+HAVING
+  MIN(overall_place) > 1;
+-- fixed in: https://github.com/holub008/birkielo/commit/586a21d5ba275eca8e28d4f5bde5227af1322e92
 
--- TODO 2006 birkebeiner & korte smooshed both disciplines together, so overall places are hosed :(
