@@ -1,8 +1,11 @@
 import requests
 import re
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 import pandas as pd
+
+from scraper.event_occurrence_arbiter import EventOccurrenceArbiter
 
 SKINNYSKI_LIST_PAGE_URL = "https://www.skinnyski.com/racing/results/default.asp"
 
@@ -38,9 +41,9 @@ def _parse_event_element(element, season_year):
     day = int(date_matches.group(2))
     event_year = season_year
     if short_month not in ('nov', 'dec'):
-        event_year -= 1
+        event_year += 1
 
-    event_date = "%d-%02d-%02d" % (event_year, _short_month_to_int_month(short_month), day)
+    event_date = datetime(year=event_year, month=_short_month_to_int_month(short_month), day=day)
     event_name = event_anchor.text
     event_link = event_anchor['href']
 
@@ -65,7 +68,21 @@ def get_all_result_links(year,
             raise ValueError('Not yet equipped to handle years before 2004!')
 
 
-
 if __name__ == '__main__':
     all_season_events = [get_all_result_links(y) for y in range(2004, 2019)]
     all_season_events_df = pd.concat(all_season_events)
+
+    occurrence_arbiter = EventOccurrenceArbiter()
+
+    event_occurrences_for_scraping = pd.DataFrame()
+    for index, candidate_event in all_season_events_df.iterrows():
+        scrape_event = occurrence_arbiter.should_keep(candidate_event.event_name, candidate_event.event_date)
+        if scrape_event:
+            candidate_event['event_name_enum'] = occurrence_arbiter.enumerate_event_name(candidate_event.event_name)
+            event_occurrences_for_scraping = event_occurrences_for_scraping.append(candidate_event)
+
+
+    mtec_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('mtecresults')]
+    orr_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('onlineraceresults')]
+    mrr_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('.raceresult.com')]
+    itiming_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('itiming')]
