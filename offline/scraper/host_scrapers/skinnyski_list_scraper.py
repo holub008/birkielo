@@ -1,11 +1,13 @@
 import requests
 import re
 from datetime import datetime
+import time
 
 from bs4 import BeautifulSoup
 import pandas as pd
 
 from scraper.event_occurrence_arbiter import EventOccurrenceArbiter
+from scraper.host_scrapers import mtec_scraper as mts, myraceresults_scraper as mrrs, onlineraceresults_scraper as orrs
 
 SKINNYSKI_LIST_PAGE_URL = "https://www.skinnyski.com/racing/results/default.asp"
 
@@ -81,8 +83,28 @@ if __name__ == '__main__':
             candidate_event['event_name_enum'] = occurrence_arbiter.enumerate_event_name(candidate_event.event_name)
             event_occurrences_for_scraping = event_occurrences_for_scraping.append(candidate_event)
 
+    mtec_events = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('mtecresults')]
+    orr_events = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('onlineraceresults')]
+    mrr_events = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('.raceresult.com')]
+    # from manual inspection, all of these appear to be pdfs
+    # itiming_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('itiming')]
 
-    mtec_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('mtecresults')]
-    orr_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('onlineraceresults')]
-    mrr_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('.raceresult.com')]
-    itiming_results = event_occurrences_for_scraping[event_occurrences_for_scraping.event_link.str.contains('itiming')]
+    orr_results = []
+    for index, event_occurrence in orr_events.iterrows():
+        time.sleep(1)
+        event_id = orrs.extract_event_id(event_occurrence.event_link)
+        if event_id:
+            races = orrs.get_races_for_event([(event_id, event_occurrence.event_date)])
+        else:
+            race_page_link = event_occurrence.event_link.replace('view_plain_text', 'view_race')
+            events = orrs.get_events(race_page_url=race_page_link, event_date=event_occurrence.event_date)
+            races = orrs.get_races_for_event(events)
+
+        orr_results += [orrs.get_results_for_race(r) for r in races]
+
+
+    for index, mtec_event_occurrence in mtec_events.iterrows():
+        event_id = mts.extract_race_id_from_url(mtec_event_occurrence.event_link)
+        all_races = mts.expand_event_to_races([event_id])
+        races_with_metadata = mts.attach_race_metadata_and_filter_structured(all_races)
+        results = mts.get_race_results(races_with_metadata)

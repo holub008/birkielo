@@ -13,14 +13,14 @@ RACE_PAGE_URL_FORMAT = "https://www.mtecresults.com/race/show/%d/"
 RACE_RESULT_URL_FORMAT = "https://www.mtecresults.com/race/quickResults?raceid=%d&version=%d&overall=yes&offset=%d&perPage=50"
 
 
-def _extract_event_id_from_url(url):
+def extract_event_id_from_url(url):
     matches = re.search(r'/event/show/([0-9]+)', url)
     if matches:
         return int(matches.group(1))
     else:
         raise ValueError('Supplied url does not have expected structure')
 
-def _extract_race_id_from_url(url):
+def extract_race_id_from_url(url):
     matches = re.search(r'/race/show/([0-9]+)', url)
     if matches:
         return int(matches.group(1))
@@ -82,21 +82,23 @@ def get_occurrences_to_event_ids(base_event_id):
 
     all_lists = soup.find_all('li')
     year_list = _search_year_list(all_lists)
-    occurrence_to_parent_ids = [(int(a.text.strip()), _extract_event_id_from_url(a['href']))
+    occurrence_to_parent_ids = [(int(a.text.strip()), extract_event_id_from_url(a['href']))
                                 for a in year_list.find_all('a')]
 
     return occurrence_to_parent_ids
 
 
 # since a parent occurrence is only one race among the occurrence, expand to all races
-def expand_event_to_races(event_ids):
+def expand_event_to_races(event_ids,
+                          occurrence_date=None):
     all_races = []
     for event_id in event_ids:
         event_page_url = EVENT_PAGE_URL_FORMAT % (event_id,)
         res = requests.get(event_page_url)
         soup = BeautifulSoup(res.content, 'lxml')
 
-        occurrence_date = _extract_occurrence_date_from_event_page(soup)
+        if not occurrence_date:
+            occurrence_date = _extract_occurrence_date_from_event_page(soup)
 
         divs = soup.find_all('div')
         for div in divs:
@@ -110,7 +112,7 @@ def expand_event_to_races(event_ids):
                         race_name_headers = child_divs[0].find_all(re.compile('^h[1-6]$'))
                         if race_name_headers:
                             race_name = race_name_headers[0].text.strip()
-                            race_id = _extract_race_id_from_url(ca['href'])
+                            race_id = extract_race_id_from_url(ca['href'])
 
                             all_races.append((
                                 race_name,

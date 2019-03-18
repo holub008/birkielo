@@ -13,10 +13,10 @@ ORR_RESULTS_URL = "http://onlineraceresults.com/race/view_race.php?race_id=%d&re
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
 
-def _extract_event_id(event_url):
-    match = re.search(r'/event/view_event.php\?event_id=([0-9]+)/?$', event_url)
+def extract_event_id(content):
+    match = re.search(r'/event/view_event.php\?event_id=([0-9]+)', content)
     if not match:
-        raise ValueError('Failed to find event id in purported event url')
+        return None
 
     return int(match.group(1))
 
@@ -42,24 +42,33 @@ def _extract_event_data(row):
     anchor = row.find_all('a')
     if not anchor:
         raise ValueError('Unable to find event link in search result row')
-    event_id = _extract_event_id(anchor[0]['href'])
+    event_id = extract_event_id(anchor[0]['href'])
 
     return event_id, event_date
 
 
-def get_events(query='vasa'):
-    res = requests.post(ORR_SEARCH_URL, data={"name": query})
-    soup = BeautifulSoup(res.content)
+def get_events(query=None, race_page_url=None, event_date=None):
+    if race_page_url:
+        res = requests.get(race_page_url)
+        event_id = extract_event_id(res.text)
 
-    tables = soup.find_all('table', {"class":"search-results"})
-    if not tables:
-        raise ValueError('Could not find expected results table')
+        return [(event_id, event_date)]
 
-    rows = tables[0].find_all('tr')
-    if len(rows) < 2:
-        raise ValueError('Could not find expected results rows')
+    elif query:
+        res = requests.post(ORR_SEARCH_URL, data={"name": query})
+        soup = BeautifulSoup(res.content, 'lxml')
 
-    return [_extract_event_data(row) for row in rows[1:]]
+        tables = soup.find_all('table', {"class":"search-results"})
+        if not tables:
+            raise ValueError('Could not find expected results table')
+
+        rows = tables[0].find_all('tr')
+        if len(rows) < 2:
+            raise ValueError('Could not find expected results rows')
+
+        return [_extract_event_data(row) for row in rows[1:]]
+    else:
+        raise ValueError('need to supply either a race url or query')
 
 
 def _extract_race_details(anchor):
@@ -73,7 +82,7 @@ def get_races_for_event(events):
     for event_id, event_date in events:
         event_url = ORR_EVENT_FORMAT % (event_id,)
         res = requests.get(event_url)
-        soup = BeautifulSoup(res.content)
+        soup = BeautifulSoup(res.content, 'lxml')
 
         races_div = soup.find_all('div', {"id": "orr-event-races"})
         if not races_div:
@@ -119,7 +128,7 @@ def get_results_for_race(race,
 ## start control flow
 ######################
 if __name__ == '__main__':
-    events = get_events()
+    events = get_events(query='vasa')
     races = get_races_for_event(events)
     # it's a copy of 7216 for some reason
     races_deduped = [r for r in races if not r[2] == 7217]

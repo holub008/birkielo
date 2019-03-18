@@ -40,6 +40,7 @@ class EventOccurrenceArbiter:
             "double pole derby": "Double Pole Derby",
             "sisu": "SISU Ski Fest",
             "us cross country ski championship": "US Cross Country Ski Championship",
+            "us nationals": "US Cross Country Ski Championship",
             "ashwabay": "Mt. Ashwabay Summit Ski Race",
             "big island and back": " Big Island and Back",
             "vasa": "Vasaloppet USA",
@@ -56,7 +57,13 @@ class EventOccurrenceArbiter:
             "prebirkie": "Pre-Birkie",
             "wolf track": "Wolf Track Rendezvous",
             "badger state": "Badger State Games",
-            "turtle river": "Turtle River Pursuit"}
+            "turtle river": "Turtle River Pursuit",
+            "langlauf": "Langlauf at St. John's",
+            "inga-lami": "Snowflake / Inga-lami",
+            "snowflake": "Snowflake / Inga-lami",
+            "governor's cup": "Governor's Cup",
+            "master's world cup": "Master's World Cup",
+            "nicolet norski": "Nicolet Norski"}
 
     def enumerate_event_name(self, candidate_event_name):
         candidate_event_name_lower = candidate_event_name.lower()
