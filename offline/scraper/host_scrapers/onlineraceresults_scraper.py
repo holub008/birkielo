@@ -109,7 +109,7 @@ def get_results_for_race(race,
     cookie = {"PHPSESSID": cookie_session_id}
     requests.get(ORR_PRELOAD_URL % (race_id,), cookies=cookie)
     res = requests.get(ORR_RESULTS_URL % (race_id,), cookies=cookie)
-    soup = BeautifulSoup(res.content)
+    soup = BeautifulSoup(res.content, 'lxml')
 
     result_div = soup.find_all('div',{"id": "race-results-table"})
     if not result_div:
@@ -123,6 +123,9 @@ def get_results_for_race(race,
     results_df['race_name'] = race_name
 
     return results_df
+
+def attach_gender_from_sex_place(results):
+    results.groupby(['race_name', 'event_name'])
 
 ######################
 ## start control flow
