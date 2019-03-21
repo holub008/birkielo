@@ -25,7 +25,7 @@ def extract_discipline_from_race_name(race_name):
 
 def extract_distance_from_race_name(race_name):
     race_name_lower = race_name.lower()
-    matches = re.search(r'([0-9]+)k', race_name_lower)
+    matches = re.search(r'([0-9\.]+)k', race_name_lower)
 
     if matches:
         return int(matches.group(1))
