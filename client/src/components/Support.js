@@ -44,6 +44,9 @@ function Help() {
                             <Currency size="large"/>
                             <Text>I cover the ~$30/month to host this site; if you enjoy it, please consider donating
                                 to groups growing the ski community.</Text>
+                            <Button label="Birkie Foundation" onClick={() =>
+                                window.location.href = "https://www.birkie.com/membership/
+                            }/>
                             <Button label="Loppet Foundation" onClick={() =>
                                 window.location.href = "https://www.loppet.org/donate/"
                             }/>
