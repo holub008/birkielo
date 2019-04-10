@@ -10,7 +10,7 @@ export default class EventRadial extends React.Component {
     };
 
     processToPieSlices(data) {
-        return(data.map((event, ix) => ({
+        return(data.map(event => ({
                 theta: event.total_entrants,
                 // this is a manually determined value (but note, it is close to our expected ELO) to build
                 // an informative contrast between events
@@ -36,7 +36,7 @@ export default class EventRadial extends React.Component {
     }
 
     render() {
-        if (!this.state.pieSlices) {
+        if (!this.state.pieSlices.length) {
             return(<Fragment />);
         }
 

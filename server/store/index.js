@@ -3,7 +3,12 @@ const util = require('../util');
 
 
 class RacerStore {
-    constructor() {
+    constructor(racers) {
+        this.racers = racers;
+        Object.freeze(this);
+    }
+
+    static async createFromDB() {
         const racerQuery = {
             name: "racer_store",
             text: `
@@ -20,14 +25,8 @@ class RacerStore {
 
         this.racers = [];
 
-        db.query(racerQuery)
-            .then(rs => {
-                this.racers = rs.rows;
-                Object.freeze(this);
-            })
-            .catch(e => {
-                throw "Failed to query racers: " + e;
-            });
+        return db.query(racerQuery)
+            .then(rs => new RacerStore(rs.rows));
     }
 
     fuzzyRankNames(query) {
@@ -68,163 +67,146 @@ class RaceMetricStore {
      TODO could be feasible to replace with materialized views
      */
 
-    constructor(years) {
+    constructor(flowData, shareData, averageEloByYear) {
+        this.flowData = flowData;
+        this.shareData = shareData;
+        this.averageEloByYear = averageEloByYear;
+        Object.freeze(this);
+    }
 
-        this.flowData = {};
-
-        years.forEach(year => {
-            const raceFlowQuery = {
-                name: "race_flow",
-                text: `
-                    with year_races as (
-                        select
-                            r.id as race_id,
-                            eo.date,
-                            e.name as event_name
-                        from event_occurrence eo
-                        join event e
-                            on e.id = eo.event_id
-                        join race r
-                            on r.event_occurrence_id = eo.id
-                        where
-                            eo.date >= to_date($1::varchar, 'yyyy')
-                            and eo.date <  to_date($1::varchar, 'yyyy') + interval '1 year'
-                    ),
-                    repeat_racers as (
-                        select
-                            rr.racer_id
-                        from race_result rr
-                        join year_races yr
-                            on yr.race_id = rr.race_id
-                        group by 
-                            rr.racer_id
-                        having
-                            count(1) > 1
-                    ),
-                    repeat_racer_races as (
-                        select
-                          rr.racer_id,
-                          yr.date,
-                          yr.event_name
-                        from repeat_racers rpr
-                        join race_result rr
-                          on rpr.racer_id = rr.racer_id
-                        join year_races yr
-                          on yr.race_id = rr.race_id
-                    ),
-                    source_target_pairings as (
-                        select
-                          rrr1.racer_id,
-                          rrr1.event_name as source_event,
-                          rrr1.date as source_date,
-                          rrr2.event_name as target_event,
-                          rrr2.date as target_date,
-                          rrr2.date - rrr1.date as days_between,
-                          row_number() OVER (partition by rrr1.racer_id, rrr1.date order by rrr2.date - rrr1.date) as event_source_date_proximity
-                        from repeat_racer_races rrr1
-                        join repeat_racer_races rrr2
-                          on rrr1.racer_id = rrr2.racer_id
-                            and rrr1.date < rrr2.date 
-                        order by racer_id
-                    )
+    static async createFromDB(year) {
+        const raceFlowQuery = {
+            name: "race_flow",
+            text: `
+                with year_races as (
                     select
-                         stp.source_event,
-                         stp.source_date,
-                         stp.target_event,
-                         stp.target_date,
-                         count(1) as n_racers
-                    from source_target_pairings stp
+                        r.id as race_id,
+                        eo.date,
+                        e.name as event_name
+                    from event_occurrence eo
+                    join event e
+                        on e.id = eo.event_id
+                    join race r
+                        on r.event_occurrence_id = eo.id
                     where
-                      stp.event_source_date_proximity = 1
-                    group by
-                      stp.source_event, 
-                      stp.source_date, 
-                      stp.target_event, 
-                      stp.target_date
+                        eo.date >= to_date($1::varchar, 'yyyy')
+                        and eo.date <  to_date($1::varchar, 'yyyy') + interval '1 year'
+                ),
+                repeat_racers as (
+                    select
+                        rr.racer_id
+                    from race_result rr
+                    join year_races yr
+                        on yr.race_id = rr.race_id
+                    group by 
+                        rr.racer_id
+                    having
+                        count(1) > 1
+                ),
+                repeat_racer_races as (
+                    select
+                      rr.racer_id,
+                      yr.date,
+                      yr.event_name
+                    from repeat_racers rpr
+                    join race_result rr
+                      on rpr.racer_id = rr.racer_id
+                    join year_races yr
+                      on yr.race_id = rr.race_id
+                ),
+                source_target_pairings as (
+                    select
+                      rrr1.racer_id,
+                      rrr1.event_name as source_event,
+                      rrr1.date as source_date,
+                      rrr2.event_name as target_event,
+                      rrr2.date as target_date,
+                      rrr2.date - rrr1.date as days_between,
+                      row_number() OVER (partition by rrr1.racer_id, rrr1.date order by rrr2.date - rrr1.date) as event_source_date_proximity
+                    from repeat_racer_races rrr1
+                    join repeat_racer_races rrr2
+                      on rrr1.racer_id = rrr2.racer_id
+                        and rrr1.date < rrr2.date 
+                    order by racer_id
+                )
+                select
+                     stp.source_event,
+                     stp.source_date,
+                     stp.target_event,
+                     stp.target_date,
+                     count(1) as n_racers
+                from source_target_pairings stp
+                where
+                  stp.event_source_date_proximity = 1
+                group by
+                  stp.source_event, 
+                  stp.source_date, 
+                  stp.target_event, 
+                  stp.target_date
+        `,
+            values: [year.toString()]
+        };
+
+        const flowPromise = db.query(raceFlowQuery);
+
+        const eventShareQuery = {
+            name: "event_share",
+            text: `
+                    select
+                      e.id as event_id,
+                      e.name as event_name,
+                      avg(rm.elo) as mean_elo,
+                      count(1) as total_entrants
+                    from race_result rr
+                    join racer rcr
+                      on rcr.id = rr.racer_id
+                    join race r
+                      on r.id = rr.race_id
+                    join event_occurrence eo
+                      on r.event_occurrence_id = eo.id
+                    join event e
+                      on e.id = eo.event_id
+                    join racer_metrics rm
+                      on rm.racer_id = rcr.id
+                        and rm.date = eo.date
+                    where
+                        eo.date >= to_date($1::varchar, 'yyyy')
+                        and eo.date <  to_date($1::varchar, 'yyyy') + interval '1 year'
+                    group by 1  
+                    order by 2 desc
             `,
-                values: [year.toString()]
-            };
+            values: [year.toString()]
+        };
 
-            db.query(raceFlowQuery)
-                .then(rs => {
-                    this.flowData[year] = rs.rows;
-                })
-                .catch(e => {
-                    throw "Failed to query racer flow: " + e;
-                });
-        });
-
-        this.shareData = {};
-
-        years.forEach(year => {
-            const eventShareQuery = {
-                name: "event_share",
-                text: `
-                        select
-                          e.id as event_id,
-                          e.name as event_name,
-                          avg(rm.elo) as mean_elo,
-                          count(1) as total_entrants
-                        from race_result rr
-                        join racer rcr
-                          on rcr.id = rr.racer_id
-                        join race r
-                          on r.id = rr.race_id
-                        join event_occurrence eo
-                          on r.event_occurrence_id = eo.id
-                        join event e
-                          on e.id = eo.event_id
-                        join racer_metrics rm
-                          on rm.racer_id = rcr.id
-                            and rm.date = eo.date
-                        where
-                            eo.date >= to_date($1::varchar, 'yyyy')
-                            and eo.date <  to_date($1::varchar, 'yyyy') + interval '1 year'
-                        group by 1  
-                        order by 2 desc
-                `,
-                values: [year.toString()]
-            };
-
-            db.query(eventShareQuery)
-                .then(rs => {
-                    this.shareData[year] = rs.rows;
-                })
-                .catch(e => {
-                    throw "Failed to query event share: " + e;
-                });
-        });
-
-        this.averageEloByYear = [];
+        const sharePromise = db.query(eventShareQuery);
 
         const averageEloQuery = {
             name: "average_elo_by_year",
             text: `
-                        select
-                            make_date(cast(date_part('year', rm.date) as integer), 1, 1) as date,
-                            avg(rm.elo) as elo
-                        from racer_metrics rm
-                        group by 1
-                        order by 1 desc
+                    select
+                        make_date(cast(date_part('year', rm.date) as integer), 1, 1) as date,
+                        avg(rm.elo) as elo
+                    from racer_metrics rm
+                    group by 1
+                    order by 1 desc
                 `,
             values: []
         };
 
-        db.query(averageEloQuery)
-            .then(rs => {
-                this.averageEloByYear = rs.rows;
-            })
-            .catch(e => {
-                throw "Failed to query average elo by year: " + e;
+        const eloPromise = db.query(averageEloQuery);
+
+        return Promise.all([flowPromise, sharePromise, eloPromise])
+            .then(result => {
+                return new RaceMetricStore(result[0].rows, result[1].rows, result[2].rows);
             });
     }
 
-    getFlowData(year) {
-        return this.flowData[year];
+    getFlowData() {
+        return this.flowData;
     }
 
-    getShareData(year) {
-        return this.shareData[year];
+    getShareData() {
+        return this.shareData;
     }
 
     getAverageEloByYear() {

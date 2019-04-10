@@ -8,24 +8,21 @@ const db = require('../db');
  */
 class EventLogger {
 
-    constructor() {
+    constructor(eventTypes) {
+        this.allowedEventTypes = eventTypes;
+        this.shouldSurfaceDisallowedEventTypes = eventTypes.length > 0;
+    }
+
+    static async createFromDB() {
         const siteEventTypeQuery = {
             name: "site_event_types",
             text: `SELECT unnest(enum_range(NULL::site_event)) as site_event`,
             values: [],
         };
 
-        this.allowedEventTypes = [];
-        this.shouldSurfaceDisallowedEventTypes = true;
-
-        db.query(siteEventTypeQuery)
+        return db.query(siteEventTypeQuery)
             .then(rs => {
-                this.allowedEventTypes = rs.rows.map(row => row.site_event);
-            })
-            .catch(e => {
-               console.log("Failed to query allowed event types - no logging will be done");
-               console.log(e);
-               this.shouldSurfaceDisallowedEventTypes = false;
+                return new EventLogger(rs.rows.map(row => row.site_event));
             });
     }
 

@@ -124,12 +124,11 @@ def get_results_for_race(race,
 
     return results_df
 
+
 def attach_gender_from_sex_place(results):
     results.groupby(['race_name', 'event_name'])
 
-######################
-## start control flow
-######################
+
 if __name__ == '__main__':
     events = get_events(query='vasa')
     races = get_races_for_event(events)

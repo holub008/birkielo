@@ -12,9 +12,32 @@ const app = express();
 const port = process.env.PORT || 5000;
 const isProduction = process.env.NODE_ENV === "production";
 
-const racerStore = new store.RacerStore();
-const raceMetricStore = new store.RaceMetricStore([2018]);
-const eventLogger = new logging.EventLogger();
+let racerStore;
+store.RacerStore.createFromDB()
+    .then(s => racerStore = s)
+    .catch(e => {
+        console.error('Racer store creation rejected - failing fast');
+        throw e;
+    });
+
+const shareAndFlowYear = 2018;
+let raceMetricStore;
+store.RaceMetricStore.createFromDB(shareAndFlowYear)
+    .then(s => raceMetricStore = s)
+    .catch(e => {
+        console.error(e);
+        // TODO probably better to force a handle of rejected promise in the client
+        raceMetricStore = new store.RaceMetricStore([], [], {});
+    });
+
+let eventLogger;
+logging.EventLogger.createFromDB()
+    .then(l => eventLogger = l)
+    .catch(e => {
+        console.error(e);
+        console.log('Due to failed logger creation, no logging will occur.');
+        eventLogger = new logging.EventLogger([]);
+    });
 
 /**
  * API endpoints
@@ -48,28 +71,26 @@ if (isProduction) {
     app.use(requireHTTPS);
 }
 
-app.get('/api/racers', async (req, res) => {
+app.get('/api/racers', (req, res) => {
     const gender = req.query.gender;
     const minRank = parseInt(req.query.minRank);
     const racerId = parseInt(req.query.racerId);
     const pageSize = parseInt(req.query.nRacers) || 50;
 
-    if (((gender != 'male' && gender != 'female') || !minRank) && !racerId) {
+    if (((gender !== 'male' && gender !== 'female') || !minRank) && !racerId) {
         res.send({});
         return;
     }
 
-    let rankings;
     if (racerId) {
-        rankings = await data.rankingsNeighborhood(racerId, Math.floor(pageSize / 2));
+        data.rankingsNeighborhood(racerId, Math.floor(pageSize / 2))
+            .then(rankings => res.send({rankings: rankings}));
     }
     // note that via a preconditions check above, minRank is defined
     else {
-        rankings = await data.rankings(gender, minRank, pageSize);
+        data.rankings(gender, minRank, pageSize)
+            .then(rankings => res.send({rankings: rankings}));
     }
-    res.send({
-        rankings: rankings
-    })
 });
 
 // note that maxResults returns an arbitrary set up to maxResults (i.e. not selected via relevance)
@@ -87,14 +108,14 @@ app.get('/api/search/', (req, res) => {
 
     // since long search strings can be slow & don't add much value in a name search
     const queryStringLimited = queryString.slice(0, 25);
-    const matches = racerStore.fuzzyRankNames(queryString).slice(0, maxResults);
+    const matches = racerStore.fuzzyRankNames(queryStringLimited).slice(0, maxResults);
 
     res.send({
         candidates: matches ? matches : null,
     });
 });
 
-app.get('/api/racer/:id', async (req, res) => {
+app.get('/api/racer/:id', (req, res) => {
     const racerId = parseInt(req.params.id);
 
     if (!racerId || !racerStore.containsRacerId(racerId)) {
@@ -123,129 +144,144 @@ app.get('/api/racer/:id', async (req, res) => {
         values: [ racerId ]
     };
 
-    // TODO almost all these queries could all be run in parallel...
-    const racer = await db.query(racerQuery)
-        .catch(e => console.error(`Failed to query racer details for id = '${racerId}'`));
-
-    const racerResultQuery = {
-        name: "racer_results",
-        // TODO the race size calculation is a full table scan & this query may not quite produce a valid ranking
-        text: `
-            WITH gender_race_size AS (
-                SELECT
-                    race_id as race_id,
-                    gender,
-                    count(1) as racers
-                FROM race_result
-                GROUP BY race_id, gender
-            ),
-            total_race_size AS (
-                SELECT
-                    race_id,
-                    SUM(racers) as racers
-                 FROM gender_race_size
-                 GROUP BY race_id
-            )
-            SELECT
-                rr.gender_place,
-                rr.overall_place,
-                grs.racers as gender_racers,
-                trs.racers as total_racers,
-                rr.duration,
-                r.id as race_id,
-                r.distance,
-                r.discipline,
-                eo.date as event_date,
-                e.name as event_name,
-                e.id as event_id
-            FROM race_result rr
-            JOIN race r
-                ON rr.race_id = r.id
-            JOIN gender_race_size grs
-                ON r.id = grs.race_id
-                    AND rr.gender = grs.gender
-            JOIN total_race_size trs
-                ON r.id = trs.race_id
-            JOIN event_occurrence eo
-                ON r.event_occurrence_id = eo.id
-            JOIN event e
-                ON eo.event_id = e.id
-            WHERE
-                rr.racer_id = $1
-        `,
-        values: [ racerId ]
-    };
-
-    const racerResults = await db.query(racerResultQuery)
-        .catch(e => console.error(`Failed to query race results for racer_id = '${racerId}'`));
-
-    const racerMetricsQuery = {
-        name: "racer_metrics",
-        text: `
-            SELECT
-                rm.date,
-                rm.elo
-            FROM racer_metrics rm
-            WHERE
-                rm.racer_id = $1
-            ORDER BY date desc
-        `,
-        values: [ racerId ]
-    };
-
-    const racerMetrics = await db.query(racerMetricsQuery)
-        .catch(e => console.error(`Failed to query race metrics for racer_id = '${racerId}'`));
-
-    let relativeStatistics;
-    if (racer && racer.rows.length &&
-        racerMetrics && racerMetrics.rows.length) {
-        const racerGender = racer.rows[0].gender;
-        const racerElo = racerMetrics.rows[0].elo;
-
-        // TODO this query is expensive to run on a per-request basis
-        const rankQuery = {
-            name: "rank_metrics",
-            text: `
-                SELECT DISTINCT ON (rm.racer_id)
-                    rm.racer_id,
-                    LAST_VALUE(elo) OVER racer_window as elo
-                FROM racer_metrics rm
-                JOIN racer r
-                    ON rm.racer_id = r.id
-                WHERE
-                    r.gender = $1
-                WINDOW racer_window AS (
-                    PARTITION BY rm.racer_id ORDER BY rm.date
-                    ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
-                )
-        `,
-            values: [ racerGender ]
-        };
-
-        const scoreResultSet = await db.query(rankQuery)
-            .catch(e => console.error(`Failed to query rankings.`));
-
-        if (scoreResultSet && scoreResultSet.rows.length) {
-            const rankings = scoreResultSet.rows.map(row => row.elo);
-            relativeStatistics = {
-                totalDistribution: util.histogramBin(rankings),
-                ranking: util.rank(rankings, racerElo),
-                totalCompetitors: rankings.length
+    db.query(racerQuery)
+        .then(racerRS => {
+            if (!racerRS.rowCount) {
+                res.send({valid: false});
+                return;
             }
-        }
 
-    }
+            const racer = racerRS.rows[0];
 
-    res.send({
-        valid: true,
-        racer: racer && racer.rows.length ? racer.rows[0] : null,
-        results: racerResults ? racerResults.rows : null,
-        metrics: racerMetrics ? racerMetrics.rows : null,
-        relativeStatistics: relativeStatistics,
-    });
+            const racerResultQuery = {
+                name: "racer_results",
+                // TODO the race size calculation is a full table scan & this query may not quite produce a valid ranking
+                text: `
+                    WITH gender_race_size AS (
+                        SELECT
+                            race_id as race_id,
+                            gender,
+                            count(1) as racers
+                        FROM race_result
+                        GROUP BY race_id, gender
+                    ),
+                    total_race_size AS (
+                        SELECT
+                            race_id,
+                            SUM(racers) as racers
+                         FROM gender_race_size
+                         GROUP BY race_id
+                    )
+                    SELECT
+                        rr.gender_place,
+                        rr.overall_place,
+                        grs.racers as gender_racers,
+                        trs.racers as total_racers,
+                        rr.duration,
+                        r.id as race_id,
+                        r.distance,
+                        r.discipline,
+                        eo.date as event_date,
+                        e.name as event_name,
+                        e.id as event_id
+                    FROM race_result rr
+                    JOIN race r
+                        ON rr.race_id = r.id
+                    JOIN gender_race_size grs
+                        ON r.id = grs.race_id
+                            AND rr.gender = grs.gender
+                    JOIN total_race_size trs
+                        ON r.id = trs.race_id
+                    JOIN event_occurrence eo
+                        ON r.event_occurrence_id = eo.id
+                    JOIN event e
+                        ON eo.event_id = e.id
+                    WHERE
+                        rr.racer_id = $1
+                `,
+                values: [ racerId ]
+            };
+
+            const racerMetricsQuery = {
+                name: "racer_metrics",
+                text: `
+                    SELECT
+                        rm.date,
+                        rm.elo
+                    FROM racer_metrics rm
+                    WHERE
+                        rm.racer_id = $1
+                    ORDER BY date desc
+                `,
+                values: [ racerId ]
+            };
+
+            Promise.all([db.query(racerResultQuery), db.query(racerMetricsQuery)])
+                .then(results => {
+                    if (!results[0].rowCount || !results[1].rowCount) {
+                        res.send({valid: false});
+                        return;
+                    }
+
+                    const racerResults = results[0].rows;
+                    const racerMetrics = results[1].rows;
+
+                    // TODO this query is expensive to run on a per-request basis
+                    const rankQuery = {
+                        name: "rank_metrics",
+                        text: `
+                            SELECT DISTINCT ON (rm.racer_id)
+                                rm.racer_id,
+                                LAST_VALUE(elo) OVER racer_window as elo
+                            FROM racer_metrics rm
+                            JOIN racer r
+                                ON rm.racer_id = r.id
+                            WHERE
+                                r.gender = $1
+                            WINDOW racer_window AS (
+                                PARTITION BY rm.racer_id ORDER BY rm.date
+                                ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
+                            )
+                    `,
+                        values: [ racer.gender ]
+                    };
+
+                    db.query(rankQuery)
+                        .then(results => {
+                            const rankings = results.rows.map(row => row.elo);
+                            const relativeStatistics = {
+                                totalDistribution: util.histogramBin(rankings),
+                                ranking: util.rank(rankings, racerMetrics[0].elo),
+                                totalCompetitors: rankings.length
+                            };
+
+                            res.send({
+                                valid: true,
+                                racer: racer,
+                                results: racerResults,
+                                metrics: racerMetrics,
+                                relativeStatistics: relativeStatistics,
+                            });
+                        })
+                        .catch(e => {
+                            console.error(e);
+                            // while technically we could display the data gotten so far in UI, opt for a simpler all
+                            // or nothing approach
+                            res.send({valid: false});
+                        });
+                })
+                .catch(e => {
+                    console.error(e);
+                    res.send({valid: false});
+                });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send({valid: false});
+        });
 });
 
-app.get('/api/events/', async (req, res) => {
+app.get('/api/events/', (req, res) => {
 
     const eventsQuery = {
         name: "events",
@@ -258,18 +294,22 @@ app.get('/api/events/', async (req, res) => {
         values: [],
     };
 
-    const events = await db.query(eventsQuery)
-        .catch(e => console.error(`Failed to query all events`));
-
-    res.send({events: events ? events.rows : []});
+    db.query(eventsQuery)
+        .then(events => res.send({events: events.rows}),
+            e => {
+                console.error(e);
+                res.send({events: []});
+            });
 });
 
-app.get('/api/events/:id', async (req, res) => {
+app.get('/api/events/:id', (req, res) => {
     const eventId = parseInt(req.params.id);
 
     if (!eventId) {
         res.send({
             event_name: null,
+            eventTimeline: [],
+            averageTimeline: [],
             races: []
         });
         return;
@@ -294,9 +334,6 @@ app.get('/api/events/:id', async (req, res) => {
         `,
         values: [ eventId ],
     };
-
-    const races = await db.query(raceQuery)
-        .catch(e => console.error(`Failed to query races for event_id = '${eventId}'`));
 
     const eventTimelineQuery = {
         name: "event_timeline",
@@ -325,20 +362,27 @@ app.get('/api/events/:id', async (req, res) => {
         values: [ eventId ],
     };
 
-    const eventTimeline = await db.query(eventTimelineQuery)
-        .catch(e => console.error(`Failed to query event timeline for event_id = '${eventId}'`));
-
-    const averageEloByYear = raceMetricStore.getAverageEloByYear();
-
-    res.send({
-        event_name: races && races.rows.length ? races.rows[0].event_name : null,
-        event_timeline: eventTimeline ? eventTimeline.rows : [],
-        average_timeline: averageEloByYear,
-        races: races ? races.rows : [],
-    });
+    Promise.all([db.query(raceQuery), db.query(eventTimelineQuery)])
+        .then(results => {
+            res.send({
+                event_name: results[0].rowCount ? results[0].rows[0].event_name : null,
+                event_timeline: results[1].rows,
+                average_timeline: raceMetricStore.getAverageEloByYear(),
+                races: results[0].rows,
+            });
+        })
+        .catch(e => {
+            console.error(e);
+            res.send({
+                event_name: null,
+                eventTimeline: [],
+                averageTimeline: [],
+                races: []
+            });
+        });
 });
 
-app.get('/api/races/:id', async (req, res) => {
+app.get('/api/races/:id', (req, res) => {
     const raceId = parseInt(req.params.id);
 
     if (!raceId) {
@@ -376,52 +420,56 @@ app.get('/api/races/:id', async (req, res) => {
         values: [ raceId ],
     };
 
-    const results = await db.query(raceResultQuery)
-        .catch(e => console.error(`Failed to query results for race_id = '${raceId}'`));
+    db.query(raceResultQuery)
+        .then(results => {
+            const resultsMinimal = results.rows.map(result => {
+                const {racer_id, name, gender, gender_place, overall_place, duration, ...shared } = result;
+                return {racer_id, name, gender, gender_place, overall_place, duration}
+            });
 
-    const raceMetadata = {
-        eventName: results && results.rows.length ? results.rows[0].event_name : null,
-        eventId: results && results.rows.length ? results.rows[0].event_id : null,
-        date: results && results.rows.length ? results.rows[0].date : null,
-        discipline: results && results.rows.length ? results.rows[0].discipline : null,
-        distance: results && results.rows.length ? results.rows[0].distance : null,
-    };
+            const raceMetadata = {
+                eventName: results.rowCount ? results.rows[0].event_name : null,
+                eventId: results.rowCount ? results.rows[0].event_id : null,
+                date: results.rowCount ? results.rows[0].date : null,
+                discipline:results.rowCount ? results.rows[0].discipline : null,
+                distance: results.rowCount ? results.rows[0].distance : null,
+            };
 
-    const resultsMinimal = results ?
-        results.rows.map(result => {
-            const {racer_id, name, gender, gender_place, overall_place, duration, ...shared } = result;
-            return {racer_id, name, gender, gender_place, overall_place, duration}
+            res.send({
+                raceMetadata: raceMetadata,
+                results: resultsMinimal,
+            });
         })
-        :
-        [];
-
-    res.send({
-        raceMetadata: raceMetadata,
-        results: resultsMinimal,
-    });
+        .catch(e => {
+            console.error(e);
+            res.send({
+                raceMetadata: {},
+                results: [],
+            });
+        });
 });
 
 app.get('/api/events/flow/:year', (req, res) => {
     const year = parseInt(req.params.year);
 
-    if (!year) {
-        res.send({});
+    if (year !== shareAndFlowYear) {
+        res.send({flowData: []});
         return;
     }
 
-    const flowData = raceMetricStore.getFlowData(year);
-    res.send({flowData:flowData});
+    const flowData = raceMetricStore.getFlowData();
+    res.send({flowData: flowData});
 });
 
 app.get('/api/events/share/:year', (req, res) => {
     const year = parseInt(req.params.year);
 
-    if (!year) {
-        res.send({});
+    if (year !== shareAndFlowYear) {
+        res.send({shareData: []});
         return;
     }
 
-    const shareData = raceMetricStore.getShareData(year);
+    const shareData = raceMetricStore.getShareData();
     res.send({shareData: shareData});
 });
 

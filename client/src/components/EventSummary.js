@@ -23,8 +23,9 @@ class EventSummary extends React.Component {
 
         this.state = {
             callComplete: false,
-            races: null,
-            timeline: null,
+            races: [],
+            timeline: [],
+            averageTimeline: [],
             eventName: null,
             selectedTabIndex: -1,
         };
@@ -54,12 +55,17 @@ class EventSummary extends React.Component {
     }
 
     render() {
-        if (this.state.callComplete && !this.state.races) {
+        if (this.state.callComplete && !this.state.races.length) {
             return(<NotFound/>);
         }
-        else if (!this.state.races) {
+        else if (!this.state.callComplete) {
             return(<Spinner/>);
         }
+
+        const eloTimelineNames = this.state.averageTimeline.length ?
+            [this.state.eventName, 'All races average'] : [this.state.eventName];
+        const eloTimelines = this.state.averageTimeline.length ?
+            [this.state.timeline, this.state.averageTimeline] : [this.state.timeline];
 
         return(
             <Grommet theme={grommet}>
@@ -96,8 +102,8 @@ class EventSummary extends React.Component {
                             <Box margin={{left: "small"}}>
                                 <Text> Average Birkielo of this event's racers by year </Text>
                                 <MetricTimeline
-                                    timelines={ [this.state.timeline, this.state.averageTimeline] }
-                                    names={[this.state.eventName, 'All races average']}
+                                    timelines={ eloTimelines }
+                                    names={ eloTimelineNames }
                                     width={Math.max(300, window.innerWidth * .66)}
                                 />
                             </Box>

@@ -116,7 +116,7 @@ class RaceResults extends React.Component {
         super(props);
 
         this.state = {
-            results: null,
+            results: [],
             raceMetadata: null,
             callComplete: false,
             currentPage: 0,
@@ -194,7 +194,7 @@ class RaceResults extends React.Component {
     }
 
     render() {
-        if (!this.state.results && this.state.callComplete) {
+        if (!this.state.results.length && this.state.callComplete) {
             return(<Grommet theme={grommet}> <NotFound /> </Grommet>)
         }
 

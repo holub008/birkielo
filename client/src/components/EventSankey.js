@@ -14,8 +14,8 @@ inspired by: https://github.com/uber/react-vis/blob/master/showcase/sankey/link-
 export default class EventSankey extends React.Component {
     state = {
         activeLink: null,
-        nodes: null,
-        links: null,
+        nodes: [],
+        links: [],
     };
 
     structureFlowData(data) {
@@ -50,15 +50,12 @@ export default class EventSankey extends React.Component {
                                 value: linkage.n_racers,
                             }));
 
-        return ({links:links, nodes: nodes});
+        return {links:links, nodes: nodes};
     }
 
     componentDidMount() {
         callBackend(`/api/events/flow/${YEAR}`)
-            .then(data => {
-                let {links, nodes} = this.structureFlowData(data.flowData);
-                this.setState({ links: links, nodes: nodes});
-            })
+            .then(data => this.setState(this.structureFlowData(data.flowData)))
             .catch(error => console.log(error));
     }
 
@@ -88,7 +85,7 @@ export default class EventSankey extends React.Component {
     render() {
         const {activeLink} = this.state;
 
-        return ( isEmpty(this.state.nodes) ?
+        return (this.state.nodes.length === 0) ?
                 <Fragment/>
                 :
                 <Sankey
@@ -107,6 +104,5 @@ export default class EventSankey extends React.Component {
                 >
                     {activeLink && this.renderHint()}
                 </Sankey>
-        );
     }
 }
