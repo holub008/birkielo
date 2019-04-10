@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 
 import { Sankey, Hint } from 'react-vis';
-import { callBackend, isEmpty } from "../util/data";
+import { callBackend } from "../util/data";
 
 const BLURRED_LINK_OPACITY = 0.3;
 const FOCUSED_LINK_OPACITY = 0.6;

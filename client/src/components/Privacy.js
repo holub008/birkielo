@@ -5,7 +5,6 @@ import { grommet } from "grommet/themes";
 import {
     Box,
     Text,
-    Anchor,
     Grommet,
     Heading,
 } from "grommet";
