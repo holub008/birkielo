@@ -51,6 +51,7 @@ but here's an example execution:
 ## Feature Pipeline
 In approximate order of `E[value/effort]`:
 
+* Race ranking "prediction"
 * Tuning Elo computations
 * Top ranked racers over time 
 * Improve matching logic (e.g. parsing out age and location data)
