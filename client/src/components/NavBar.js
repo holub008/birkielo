@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import {
     Grommet,
     Box,
-    Image,
     Text,
     Menu
 } from "grommet";
@@ -90,8 +89,7 @@ class NavBar extends React.Component {
                     <Box align="center" alignSelf="center" style={{width:"33%"}}>
                             <BirkieloLink to="/">
                                 <Box align="center">
-                                    <Image src="/images/logo.png" alt="" fit="cover"
-                                           style={{height: "50%", width:"50%"}}/>
+                                    <img src="/images/logo.png" alt="" width="50%"/>
                                 </Box>
                             </BirkieloLink>
                     </Box>
