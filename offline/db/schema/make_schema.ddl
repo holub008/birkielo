@@ -24,7 +24,7 @@ COMMENT ON TABLE event IS 'an enum-like table representing the distinct set of e
 
 CREATE TABLE IF NOT EXISTS event_occurrence (
   id       SERIAL PRIMARY KEY,
-  event_id INTEGER NOT NULL, -- TODO foreign key
+  event_id INTEGER NOT NULL,
   date     DATE    NOT NULL
 );
 
@@ -41,7 +41,7 @@ ALTER TYPE ski_discipline ADD VALUE 'skijor';
 
 CREATE TABLE IF NOT EXISTS race (
   id                  SERIAL PRIMARY KEY,
-  event_occurrence_id INTEGER        NOT NULL, -- TODO foreign key
+  event_occurrence_id INTEGER        NOT NULL,
   discipline          SKI_DISCIPLINE NOT NULL,
   distance            NUMERIC(4, 1), -- allow for up to thousand KM races :)
   UNIQUE (event_occurrence_id, discipline, distance)
@@ -73,10 +73,14 @@ COMMENT ON COLUMN racer.location IS 'a potentially unstructured string for the m
 -- "believe" because 1. some racers share names 2. some racers may have several different names in results (e.g. name change)
 -- this table exists to accommodate amendment when either of the cases are discovered
 
+CREATE TYPE division AS ENUM('citizen', 'high_school');
+ALTER TABLE racer ADD COLUMN division DIVISION NOT NULL DEFAULT 'citizen';
+ALTER TABLE racer ADD COLUMN team TEXT;
+
 CREATE TABLE IF NOT EXISTS race_result (
   id            SERIAL PRIMARY KEY,
-  racer_id      INTEGER, --TODO foreign key?
-  race_id       INTEGER NOT NULL, --TODO foreign key
+  racer_id      INTEGER,
+  race_id       INTEGER NOT NULL,
   overall_place INTEGER,
   gender_place  INTEGER,
   duration      BIGINT,
