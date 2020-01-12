@@ -44,7 +44,6 @@ def get_mtec_results(events=pd.DataFrame({
         all_races = mts.expand_event_to_races([event.mtec_event_id])
         races_with_metadata = mts.attach_race_metadata_and_filter_structured(all_races, event.discipline)
         results = mts.get_race_results(races_with_metadata)
-        print(results.shape)
         results = results.rename({'Time': 'time', 'Age': 'age', 'Name': 'name'}, axis='columns')
         results['distance'] = results['distance_meters'] / 1000.0
         if 'City' in results.columns and 'State' in results.columns:
@@ -52,7 +51,7 @@ def get_mtec_results(events=pd.DataFrame({
         else:
             results['location'] = None
         results['gender'] = np.where(results.Sex == 'M', 'male', 'female')
-        results['overall_place'] = [mts.extract_placement(p) for p in results.Overall]
+        results['overall_place'] = [mts.extract_placement(p) for p in results['Overall']]
         results['gender_place'] = [mts.extract_placement(p) for p in results['SexPl']]
         results['event_name'] = event.event_name
         mtec_results.append(results)
@@ -130,13 +129,15 @@ if __name__ == "__main__":
         get_mtec_results(pd.DataFrame({
             "event_name": ['Ski Rennet', 'Pre-Loppet', "Skadi's Chase"],
             "mtec_event_id": [3374, 3343, 3329],
-            "discipline": [None, 'freestyle', 'freestyle']})),
+            "discipline": [None, None, 'freestyle']})),
         get_myraceresults_results(events=pd.DataFrame({
             "event_name": ['SISU Ski Fest'],
             "url": ['https://my.raceresult.com/146348/'],
             "date": ['2020-01-11']}))
     ])
     all_results['date'] = pd.to_datetime(all_results.date)
+    # mtec gives the distance (incorrectly) as 0.0 on their site
+    all_results['distance'] = np.where(all_results['distance'] == 0, 13.0, all_results['distance'])
 
     con = None
     try:

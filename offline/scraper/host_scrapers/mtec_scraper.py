@@ -51,7 +51,7 @@ def _parse_results_div_table(parent_div):
     header_div = parent_div.find('div', {'class': 'runnersearch-header-row'})
     headers = [d.text for d in header_div.find_all('div', {'class': 'runnersearch-header-cell'})]
 
-    results_list = [parse_result_div(result_div)
+    results_list = [_parse_result_div(result_div)
                     for result_div in parent_div.find_all('div', {'class': 'runnersearch-row'})]
 
     return pd.DataFrame(results_list, columns=headers)
@@ -69,7 +69,7 @@ def _extract_date_from_arbitrary_text(text):
 
 
 def _extract_occurrence_date_from_event_page(soup):
-    divs = soup.find_all('div', {"class":"raceinfobox box-shadow"})
+    divs = soup.find_all('div', {"class": "raceinfobox box-shadow"})
     candidate_dates = [date for div in divs for date in _extract_date_from_arbitrary_text(div.text)]
 
     event_date = ""
@@ -88,7 +88,7 @@ def extract_placement(placement):
     if matches:
         return matches.group(1)
     else:
-        raise ValueError('Unexpected mtec race placement: %s' % (placement, ))
+        raise ValueError('Unexpected mtec race placement: "%s"' % (placement, ))
 
 
 def get_occurrences_to_event_ids(base_event_id):
@@ -213,11 +213,10 @@ def get_race_results(races):
             res = requests.get(url)  # requests automatically handles the compressed response for us :)
             soup = BeautifulSoup(res.content, 'lxml')
 
-            tables = soup.find_all('table')
+            table = soup.find('div', {'class': 'runnersearch'})
 
-            if len(tables) > 1:
-                results_table = tables[1]
-                partial_results = _parse_results_div_table(soup.find('div', {'class': 'runnersearch'}))
+            if table:
+                partial_results = _parse_results_div_table(table)
                 partial_results['mtec_race_id'] = race_id
                 partial_results['date'] = date
                 partial_results['distance_meters'] = distance
@@ -233,6 +232,7 @@ def get_race_results(races):
             total_requests += 1
 
     return results
+
 
 if __name__ == '__main__':
     # 4 years of vasaloppet: https://www.mtecresults.com/race/show/251/
