@@ -3,6 +3,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
+from scraper.result_parsing_utils import extract_discipline_from_race_name
+
 STORAGE_DIRECTORY = '/Users/kholub/birkielo/offline/data/'
 
 # URL for getting all race years & ids
@@ -20,6 +22,7 @@ def extract_event_id_from_url(url):
     else:
         raise ValueError('Supplied url does not have expected structure')
 
+
 def extract_race_id_from_url(url):
     matches = re.search(r'/race/show/([0-9]+)', url)
     if matches:
@@ -28,8 +31,6 @@ def extract_race_id_from_url(url):
         raise ValueError('Supplied url does not have expected structure')
 
 
-# returns None if the event shouldn't / can't be scraped
-# TODO sometimes mtec truncates / ellipsisizes
 def _extract_discipline_from_race_name(race_name):
     race_name_lower = race_name.lower()
     if 'skate' in race_name_lower or 'free' in race_name_lower:
@@ -40,6 +41,20 @@ def _extract_discipline_from_race_name(race_name):
         return 'pursuit'
     else:
         raise ValueError('Could not determine discipline of race from name: ' + race_name)
+
+
+def _parse_result_div(result_div):
+    return [d.find('a').text for d in result_div.find_all('div', {'class': 'runnersearch-cell'})]
+
+
+def _parse_results_div_table(parent_div):
+    header_div = parent_div.find('div', {'class': 'runnersearch-header-row'})
+    headers = [d.text for d in header_div.find_all('div', {'class': 'runnersearch-header-cell'})]
+
+    results_list = [parse_result_div(result_div)
+                    for result_div in parent_div.find_all('div', {'class': 'runnersearch-row'})]
+
+    return pd.DataFrame(results_list, columns=headers)
 
 
 def _search_year_list(lists):
@@ -133,14 +148,6 @@ def attach_race_metadata_and_filter_structured(all_races, fallback_discipline=No
         race_name = race[0]
         occurrence_date = race[1]
         race_id = race[2]
-        try:
-            discipline = _extract_discipline_from_race_name(race_name)
-        except ValueError as ve:
-            if fallback_discipline:
-                discipline = fallback_discipline
-            else:
-                print(ve)
-                continue
 
         res = requests.get(RACE_PAGE_URL_FORMAT % (race_id,))
         soup = BeautifulSoup(res.content, 'lxml')
@@ -161,7 +168,6 @@ def attach_race_metadata_and_filter_structured(all_races, fallback_discipline=No
         else:
             raise ValueError('Race page or result link does not have expected structure')
 
-        distance_meters = -1
         spans = soup.find_all('span', {"class":"raceinfotexthigher"})
         if spans:
             distance_span = [span for span in spans if ('KIL' in span.text or 'kil' in span.text)]
@@ -176,6 +182,19 @@ def attach_race_metadata_and_filter_structured(all_races, fallback_discipline=No
         else:
             # this div not being present is an indicator that it's a text result summary - not structured results
             continue
+
+        discipline = extract_discipline_from_race_name(race_name)
+        if not discipline:
+            page_title = soup.find('title').text
+            # this is pretty hacky, but mte seems to do this with
+            discipline = extract_discipline_from_race_name(page_title)
+        if not discipline:
+            if fallback_discipline:
+                discipline = fallback_discipline
+            else:
+                print("skipping race with no identifiable discpline: '%s'" % (race_name, ))
+                continue
+
 
         races_with_metadata.append((occurrence_date, distance_meters, discipline, race_id, race_version))
 
@@ -198,7 +217,7 @@ def get_race_results(races):
 
             if len(tables) > 1:
                 results_table = tables[1]
-                partial_results = pd.read_html(str(results_table))[0]
+                partial_results = _parse_results_div_table(soup.find('div', {'class': 'runnersearch'}))
                 partial_results['mtec_race_id'] = race_id
                 partial_results['date'] = date
                 partial_results['distance_meters'] = distance

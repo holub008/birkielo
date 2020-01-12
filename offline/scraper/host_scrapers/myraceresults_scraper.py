@@ -19,7 +19,6 @@ def get_mrr_races(mrr_url):
 
     res = requests.get(EVENT_URL % (event_id,))
 
-    json_payload = ""
     matches = re.search(r'no\((.*)\);$', res.text)
     if matches:
         json_payload = matches.group(1)
@@ -30,7 +29,8 @@ def get_mrr_races(mrr_url):
     event_key = event_dict['key']
     race_id_lists = event_dict['lists']
     contest_id_to_race_name = event_dict['contests']
-    is_grouped_event = any(ril['Contest'] == 0 for ril in race_id_lists)
+    # is_grouped_event = any(ril['Contest'] == 0 for ril in race_id_lists)
+    is_grouped_event = False
     if is_grouped_event:
         return [(0, 'Result Lists|Overall Results', None, event_id, event_key)]
     else:

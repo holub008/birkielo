@@ -1,5 +1,6 @@
 import re
 
+
 def extract_discipline_from_race_name(race_name):
     race_name_lower = race_name.lower()
     if 'skate' in race_name_lower or 'free' in race_name_lower:
