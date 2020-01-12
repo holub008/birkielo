@@ -20,7 +20,7 @@ store.RacerStore.createFromDB()
         throw e;
     });
 
-const shareAndFlowYear = 2018;
+const shareAndFlowYear = 2019;
 let raceMetricStore;
 store.RaceMetricStore.createFromDB(shareAndFlowYear)
     .then(s => raceMetricStore = s)

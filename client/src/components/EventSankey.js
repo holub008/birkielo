@@ -6,7 +6,7 @@ import { callBackend } from "../util/data";
 const BLURRED_LINK_OPACITY = 0.3;
 const FOCUSED_LINK_OPACITY = 0.6;
 
-const YEAR = 2018;
+const YEAR = 2019;
 
 /*
 inspired by: https://github.com/uber/react-vis/blob/master/showcase/sankey/link-event.js
