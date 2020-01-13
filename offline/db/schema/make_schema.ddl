@@ -145,3 +145,28 @@ CREATE TABLE IF NOT EXISTS user_tracking (
 
 GRANT INSERT ON TABLE user_tracking TO birkielo;
 GRANT USAGE, SELECT ON SEQUENCE user_tracking_id_seq TO birkielo;
+
+BEGIN;
+
+ALTER TABLE event_occurrence
+DROP CONSTRAINT fk_event_occurrence,
+ADD CONSTRAINT fk_event_occurrence
+   FOREIGN KEY (event_id)
+   REFERENCES event(id)
+   ON DELETE CASCADE;
+
+ALTER TABLE race
+DROP CONSTRAINT fk_race,
+ADD CONSTRAINT fk_race
+   FOREIGN KEY (event_occurrence_id)
+   REFERENCES event_occurrence(id)
+   ON DELETE CASCADE;
+
+ALTER TABLE race_result
+DROP CONSTRAINT fk_race_result_race,
+ADD CONSTRAINT fk_race_result_race
+  FOREIGN KEY (race_id)
+  REFERENCES race(id)
+  ON DELETE CASCADE;
+
+ROLLBACK;

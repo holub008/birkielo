@@ -127,17 +127,13 @@ def get_chronotrack_results(events=pd.DataFrame({
 if __name__ == "__main__":
     all_results = pd.concat([
         get_mtec_results(pd.DataFrame({
-            "event_name": ['Ski Rennet', 'Pre-Loppet', "Skadi's Chase"],
-            "mtec_event_id": [3374, 3343, 3329],
-            "discipline": [None, None, 'freestyle']})),
-        get_myraceresults_results(events=pd.DataFrame({
-            "event_name": ['SISU Ski Fest'],
-            "url": ['https://my.raceresult.com/146348/'],
-            "date": ['2020-01-11']}))
+            "event_name": ["Skadi's Chase"],
+            "mtec_event_id": [3329],
+            "discipline": ['freestyle']}))
     ])
     all_results['date'] = pd.to_datetime(all_results.date)
-    # mtec gives the distance (incorrectly) as 0.0 on their site
-    all_results['distance'] = np.where(all_results['distance'] == 0, 13.0, all_results['distance'])
+    # i believe the HS skiers did one less lap
+    all_results.iloc[50:]['distance'] = 6.0
 
     con = None
     try:
